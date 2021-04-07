@@ -1,0 +1,46 @@
+.choose-language h1.title {
+  text-align: center;
+  color: var(--ion-color-second-app);
+  font-weight: 700 !important;
+  font-size: 22px;
+  margin: 50px 0 30PX 0;
+}
+
+.lang-bg {
+  background: var(--ion-color-second-app);
+  width : 90%;
+  border-radius: 10px;
+  padding: 25px;
+  margin: 15px auto;
+}
+
+.lang-bg ion-img {
+  width: 90px!important;
+  margin: 15px auto;
+}
+
+.button-start {
+  margin: 50px auto 0 auto;
+  text-align: center;
+}
+
+ion-button {
+  --background : var(--ion-color-second-app)!important;
+  --border-radius: 50px!important;
+  font-size: 22px !important;
+  font-weight: 500;
+  width: 90%;
+  height: 55px;
+  --box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.16);
+
+  ion-img {
+    max-width: 45px;
+    height: auto;
+  }
+}
+
+.button-start ion-img {
+  padding-right: 10px;
+}
+
+

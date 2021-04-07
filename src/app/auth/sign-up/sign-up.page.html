@@ -1,0 +1,171 @@
+<ion-content class="background">
+  <div class="top-title">
+    <h3> Sign Up </h3>
+    <!-- <ion-img slot="end" src="../../../assets/images/spray 4.png"> </ion-img> -->
+  </div>
+
+  <div class="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+
+          <ion-item>
+            <ion-label position="floating">Firstname</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating">Lastname</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating"></ion-label>
+            <ion-input type="date"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list>
+            <ion-radio-group value="gender">
+              <ion-list-header>
+                <ion-label>Gender</ion-label>
+              </ion-list-header>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item>
+                      <ion-label>male</ion-label>
+                      <ion-radio slot="start" value="male"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+
+                  <ion-col size="6">
+                    <ion-item>
+                      <ion-label>Female</ion-label>
+                      <ion-radio slot="start" value="female"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list>
+            <ion-item>
+              <ion-label>Recommended By</ion-label>
+              <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+                <ion-select-option value="brown">A friend </ion-select-option>
+                <ion-select-option value="blonde">Government</ion-select-option>
+                <ion-select-option value="black">Other</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list>
+            <ion-item>
+              <ion-label>I agree terms and conditions</ion-label>
+              <ion-checkbox slot="start"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row ion-align-items-center>
+        <ion-col size="12">
+          <ion-button>
+            Sign Up
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row ion-align-items-center>
+        <ion-col size="12">
+          <p class="no-account">
+            Don’t have an account yet ? <span>
+              <a [routerLink]="['/auth/sign-in']"> Sign In </a>
+            </span>
+          </p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </div>
+
+</ion-content>
