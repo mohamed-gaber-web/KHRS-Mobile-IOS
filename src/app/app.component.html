@@ -1,3 +1,48 @@
+<ion-menu side="start" menuId="custom" contentId="main" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list class="ion-margin-top">
+      <ion-item>All Courses</ion-item>
+      <ion-item>My Courses</ion-item>
+      <ion-item>privacy policy</ion-item>
+      <ion-item>Faq</ion-item>
+      <ion-item>Setting</ion-item>
+      <ion-item>Logout</ion-item>
+
+    </ion-list>
+
+    <ion-list class="ion-margin-top info">
+      <ion-item>
+        <ion-icon name="map-outline"></ion-icon>
+        <ion-text> Lorem ipsum dolor sit amet, consectetur </ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="phone-portrait-outline"></ion-icon>
+        <ion-text> 0000-000-00 </ion-text>
+      </ion-item>
+      <ion-item><ion-icon name="mail-outline"></ion-icon>
+       <ion-text> info@example.com </ion-text>
+      </ion-item>
+
+    </ion-list>
+
+    <div class="social-media">
+      <ul>
+        <li> <a href=""> <ion-img src="../assets/icon/facebook.png"></ion-img></a> </li>
+        <li> <a href=""> <ion-img src="../assets/icon/instagram.png"></ion-img></a> </li>
+        <li> <a href=""> <ion-img src="../assets/icon/youtube (1) 1.png"></ion-img></a> </li>
+      </ul>
+    </div>
+
+  </ion-content>
+</ion-menu>
+
+
+
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
