@@ -15,15 +15,15 @@ const routes: Routes = [
       //   path: 'tab2',
       //   loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       // },
-      {
-        path: 'auth',
-        loadChildren: () => import('../auth/auth-routing.module').then(m => m.AuthPageRoutingModule)
-      },
-      {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
-      }
+      // {
+      //   path: 'auth',
+      //   loadChildren: () => import('../auth/auth-routing.module').then(m => m.AuthPageRoutingModule)
+      // },
+      // {
+      //   path: '',
+      //   redirectTo: '/tabs/tab1',
+      //   pathMatch: 'full'
+      // }
     ]
   },
   {
