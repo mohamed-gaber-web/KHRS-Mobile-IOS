@@ -1,34 +1,26 @@
 <div class="choose-language">
   <h1 class="title"> Choose Language </h1>
+  <ion-img class="icon-down" src="../../assets/icon/icon-down.png"></ion-img>
 </div>
 
 
 <ion-content>
 
-  <ion-grid class="ion-text-center lang-bg">
+  <ion-grid class="lang-bg">
 
     <ion-row>
 
-      <ion-col size="6">
-        <ion-img src="../../assets/images/arabic-512.png"></ion-img>
+      <ion-col size="4" *ngFor="let flag of flagsLanguage">
+        <ion-img [src]="flag.imgSrc" class="lang-img"></ion-img>
+        <h3> <ion-text> {{ flag.name }} </ion-text> </h3>
       </ion-col>
 
-      <ion-col size="6">
-        <ion-img src="../../assets/images/turkiy-512.png"></ion-img>
-      </ion-col>
-
-      <ion-col size="6">
-        <ion-img src="../../assets/images/danish-512.png"></ion-img>
-      </ion-col>
-
-      <ion-col size="6">
-        <ion-img src="../../assets/images/artrya-512.png"></ion-img>
-      </ion-col>
     </ion-row>
 
   </ion-grid>
   <div class="button-start">
-    <ion-button (click)="goToIntroPage()">
+    <ion-spinner *ngIf="isLoading"></ion-spinner>
+    <ion-button *ngIf="!isLoading" (click)="goToIntroPage()">
       <ion-img src="../../assets/images/logo-hand-2.png"></ion-img>
       START
     </ion-button>

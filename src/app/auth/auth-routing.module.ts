@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthPage } from './auth.page';
 
+import { UserProfilePage } from './user-profile/user-profile.page';
+
 const routes: Routes = [
   {
     path: '',
@@ -18,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'user-profile',
-    loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+    loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfilePageModule)
   }
 ];
 

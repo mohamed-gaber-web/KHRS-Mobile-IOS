@@ -25,3 +25,13 @@ ion-header ion-img {
     padding-left: 10px;
   }
 }
+
+
+ion-card, ion-item, ion-list {
+  --background: #fff!important;
+  padding: 0;
+}
+
+// ion-label {
+//   color: var(--ion-color-second-app)!important;
+// }

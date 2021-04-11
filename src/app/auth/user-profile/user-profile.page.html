@@ -18,8 +18,100 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-toolbar>
+  <ion-title>
+    Update Profile
+  </ion-title>
+</ion-toolbar>
+
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-list>
+            <ion-item>
+              <ion-label color="primary"> Firstname: Mohamed </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary"> Lastname: Jaber </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary"> Phone Number: 000-0000-000 </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary"> Email : info@example.com </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary"> Gender: Male </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary"> Birthday : 00-00-0000 </ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-button> <ion-icon name="create-outline"></ion-icon> Edit </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-toolbar>
+    <ion-title>
+      Update Password
+    </ion-title>
+  </ion-toolbar>
+
+  <form>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-label position="floating" color="primary">Current Password</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="floating" color="primary">New Password</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="floating" color="primary">Confirm Password</ion-label>
+            <ion-input type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+
+    <ion-grid>
+      <ion-row ion-align-items-center>
+        <ion-col size="12">
+          <ion-button>
+            Save
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
 
 </ion-content>
-
 
