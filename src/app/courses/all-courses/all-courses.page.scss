@@ -1,0 +1,21 @@
+.course {
+
+  ion-img {
+    width: 100%;
+    height: auto;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    --margin-top: 50px;
+    color: var(--ion-color-second-app);
+  }
+
+  ion-button {
+    --color: #fff;
+    font-size: 16px;
+    margin: 15px 0;
+  }
+}
