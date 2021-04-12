@@ -5,13 +5,35 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
+
     <ion-list class="ion-margin-top">
-      <ion-item>All Courses</ion-item>
-      <ion-item>My Courses</ion-item>
-      <ion-item>privacy policy</ion-item>
-      <ion-item>Faq</ion-item>
-      <ion-item>Setting</ion-item>
-      <ion-item>Logout</ion-item>
+
+      <ion-menu-toggle>
+        <ion-item [routerLink]="['/courses/tabs/all-courses']">
+          <ion-icon color="primary" slot="start" name="grid-outline"></ion-icon>
+        All Courses
+      </ion-item>
+      <ion-item [routerLink]="['/courses/tabs/my-courses']">
+        <ion-icon color="primary" slot="start" name="documents-outline"></ion-icon>
+        My Courses
+      </ion-item>
+      <ion-item>
+        <ion-icon color="primary" slot="start" name="document-text-outline"></ion-icon>
+        privacy policy
+      </ion-item>
+      <ion-item>
+        <ion-icon color="primary" slot="start" name="chatbox-ellipses-outline"></ion-icon>
+        Faq
+      </ion-item>
+      <ion-item [routerLink]="['/auth/user-profile']">
+        <ion-icon color="primary" slot="start" name="settings-outline"></ion-icon>
+        Setting
+      </ion-item>
+      <ion-item>
+        <ion-icon color="primary" slot="start" name="log-out-outline"></ion-icon>
+        Logout
+      </ion-item>
+      </ion-menu-toggle>
 
     </ion-list>
 

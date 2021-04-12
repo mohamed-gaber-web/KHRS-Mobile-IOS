@@ -7,17 +7,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class CoursesPage implements OnInit {
 
-  @ViewChild('myAudio') audioFile: ElementRef;
-
 
 constructor() { }
 
 ngOnInit() {}
-
-playAudio() {
-  console.log('ssssss');
-
-  // this.audioFile.play();
-}
 
 }
