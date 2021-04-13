@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+
 @Component({
   selector: 'app-all-courses',
   templateUrl: './all-courses.page.html',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllCoursesPage implements OnInit {
 
-  constructor() { }
+  constructor(private route: Router, private navCtrl: NavController) { }
 
   ngOnInit() {
+  }
+
+  getCourse() {
+    this.navCtrl.navigateBack('/courses/tabs/20');
   }
 
 }

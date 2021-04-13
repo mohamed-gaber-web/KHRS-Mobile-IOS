@@ -1,9 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>course-details</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+
+        <ion-title> The Course Name </ion-title>
+
+        <ion-img class="ion-padding-top ion-padding-bottom" src="../../../assets/images/course-details.png"></ion-img>
+
+            <ion-item class="time-valid" lines="none">
+              <div class="icon-valid">
+                <ion-icon slot="start" name="alarm-outline"></ion-icon>
+              </div>
+              <ion-label color="primary"> <strong> Valid For: </strong> 30 Day </ion-label>
+            </ion-item>
+
+        <div class="video-inro">
+          <!-- <video width="100%" height="230" controls>
+            <source src="https://www.youtube.com/watch?v=LHxsRIxwTrQ" type="video/mp4">
+          </video> -->
+          <iframe width="100%" height="230" src="https://www.youtube.com/embed/LHxsRIxwTrQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <ion-button (click)="applyCourse()"> Apply </ion-button>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

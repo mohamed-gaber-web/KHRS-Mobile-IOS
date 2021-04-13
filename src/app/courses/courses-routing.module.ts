@@ -34,9 +34,13 @@ const routes: Routes = [
       loadChildren: () => import('./my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
     },
     {
+      path: 'apply-course',
+      loadChildren: () => import('./apply-course/apply-course.module').then( m => m.ApplyCoursePageModule)
+    },
+    {
       path: ':courseId',
       loadChildren: () => import('./course-details/course-details.module').then( m => m.CourseDetailsPageModule)
-    }
+    },
     ]
   },
 
@@ -44,7 +48,9 @@ const routes: Routes = [
     path: '',
     redirectTo: 'courses/tabs/all-courses',
     pathMatch: 'full'
-  }
+  },
+
+
 
 
 ];
