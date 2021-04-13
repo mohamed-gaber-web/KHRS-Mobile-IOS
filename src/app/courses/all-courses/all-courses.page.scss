@@ -1,4 +1,49 @@
+.img-course-intro {
+  margin-bottom: 30px;
+}
+
+.icon-sound {
+  background-color: #A7F781;
+  border: 1px solid #fff;
+  width: 53px;
+  height: 53px;
+  border-radius: 50%;
+  line-height: 75px;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+  bottom: -20px;
+
+  ion-img {
+    position: relative;
+  }
+
+  ion-icon {
+    font-size: 35px;
+    color: var(--ion-color-second-app)!important;
+  }
+}
+
+
 .course {
+
+  .icon-sound-course {
+    background-color: #A7F781;
+    border: 1px solid #fff;
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    line-height: 75px;
+    text-align: center;
+
+    ion-icon {
+      font-size: 35px;
+      color: var(--ion-color-second-app)!important;
+    }
+
+  }
 
   ion-img {
     width: 100%;
@@ -17,5 +62,12 @@
     --color: #fff;
     font-size: 16px;
     margin: 15px 0;
+    width: 50%;
+
+    ion-icon {
+      --color: #fff;
+      font-size: 22px;
+      padding-right: 7px;
+    }
   }
 }
