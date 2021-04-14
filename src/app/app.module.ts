@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 
+import { SwiperModule } from 'swiper/angular';
+
+
 
 
 @NgModule({
@@ -18,7 +21,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    SwiperModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

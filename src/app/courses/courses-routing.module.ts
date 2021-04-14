@@ -38,9 +38,18 @@ const routes: Routes = [
       loadChildren: () => import('./apply-course/apply-course.module').then( m => m.ApplyCoursePageModule)
     },
     {
+      path: 'choose-course-material',
+      loadChildren: () => import('./choose-course-material/choose-course-material.module').then( m => m.ChooseCourseMaterialPageModule)
+    },
+    {
+      path: 'course-material',
+      loadChildren: () => import('./course-material/course-material.module').then( m => m.CourseMaterialPageModule)
+    },
+    {
       path: ':courseId',
       loadChildren: () => import('./course-details/course-details.module').then( m => m.CourseDetailsPageModule)
-    },
+    }
+
     ]
   },
 
@@ -49,7 +58,6 @@ const routes: Routes = [
     redirectTo: 'courses/tabs/all-courses',
     pathMatch: 'full'
   },
-
 
 
 

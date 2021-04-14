@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>course material</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid class="img-course-intro">
+    <ion-row>
+      <ion-col size="12" >
+        <ion-img src="../../../assets/images/img-intro.png"></ion-img>
+        <div class="icon-sound">
+          <ion-icon name="play"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-slides #slides pager="true" [options]="slideOpts">
+
+    <ion-slide class="course__material ion-margin-top">
+      <ion-grid>
+        <ion-row class="ion-padding">
+          <ion-col size="6">
+            <ion-img src="../../../assets/images/course-material.png"></ion-img>
+          </ion-col>
+          <ion-col size="6">
+            <ion-img src="../../../assets/images/course-material-2.png"></ion-img>
+          </ion-col>
+
+          <p>
+            <ion-text color="primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim mattis eget mattis id pulvinar tortor. Tempus semper tortor auctor urna. Integer amet venenatis, ac varius vel imperdiet. Bibendum imperdiet  </ion-text>
+          </p>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide class="course__material ion-margin-top">
+      <ion-grid>
+        <ion-row class="ion-padding">
+          <ion-col size="6">
+            <ion-img src="../../../assets/images/course-material.png"></ion-img>
+          </ion-col>
+          <ion-col size="6">
+            <ion-img src="../../../assets/images/course-material-2.png"></ion-img>
+          </ion-col>
+
+          <p>
+            <ion-text color="primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim mattis eget mattis id pulvinar tortor. Tempus semper tortor auctor urna. Integer amet venenatis, ac varius vel imperdiet. Bibendum imperdiet  </ion-text>
+          </p>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide class="course__material ion-margin-top">
+      <ion-grid>
+        <ion-row class="ion-padding">
+          <ion-col size="6">
+            <ion-img src="../../../assets/images/course-material.png"></ion-img>
+          </ion-col>
+          <ion-col size="6">
+            <ion-img src="../../../assets/images/course-material-2.png"></ion-img>
+          </ion-col>
+
+          <p>
+            <ion-text color="primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim mattis eget mattis id pulvinar tortor. Tempus semper tortor auctor urna. Integer amet venenatis, ac varius vel imperdiet. Bibendum imperdiet  </ion-text>
+          </p>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+
+  </ion-slides>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+
+      <ion-col size="4" offset="2">
+        <ion-button (click)="slidePrev()"> prev </ion-button>
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-button
+          (click)="slideNext()"
+          > next </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

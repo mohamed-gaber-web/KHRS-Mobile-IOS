@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-apply-course',
   templateUrl: './apply-course.page.html',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplyCoursePage implements OnInit {
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit() {
+  }
+
+  getCourseMaterial() {
+    this.route.navigateByUrl('/courses/tabs/choose-course-material')
   }
 
 }
