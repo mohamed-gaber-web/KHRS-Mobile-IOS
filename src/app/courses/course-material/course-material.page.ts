@@ -12,7 +12,7 @@ export class CourseMaterialPage implements OnInit {
 
 
   slideOpts = {
-    initialSlide: 3,
+    initialSlide: 0,
     speed: 400,
     slidesPerView: 1,
     scrollbar: true
