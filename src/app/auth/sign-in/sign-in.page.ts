@@ -13,8 +13,8 @@ export class SignInPage implements OnInit {
   ngOnInit() {
   }
 
-  // goToUpdatedUser() {
-  //   this.route.navigateByUrl('/tabs/user-profile')
-  // }
+  goToUpdatedUser() {
+    this.route.navigateByUrl('/courses/tabs/all-courses')
+  }
 
 }

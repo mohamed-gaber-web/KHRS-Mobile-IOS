@@ -11,9 +11,6 @@ import { SharedModule } from './shared/shared.module';
 
 import { SwiperModule } from 'swiper/angular';
 
-
-
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,8 +21,12 @@ import { SwiperModule } from 'swiper/angular';
     SharedModule,
     SwiperModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+
+
+export class AppModule {
+
+}

@@ -2,6 +2,35 @@
 @import '~swiper/swiper-bundle';
 
 
+/* header Top */
+ion-icon {font-size: 35px;}
+
+ion-header ion-img {
+  width: 35px;
+  height: auto;
+  margin-top: 10px;
+}
+
+
+.img-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-avatar {
+    width: 50px;
+    margin-top: 10px;
+    height: auto;
+  }
+
+  ion-label {
+    font-size: 15px;
+    padding-left: 10px;
+  }
+}
+
+
+
 .img-course-intro {
   margin-bottom: 30px;
 }

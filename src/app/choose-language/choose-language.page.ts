@@ -57,11 +57,11 @@ export class ChooseLanguagePage implements OnInit {
   }
 
   goToIntroPage() {
-    this.isLoading = true;
+    // this.isLoading = true;
     setTimeout(() => {
       this.isLoading = false
       this.route.navigate(['/intro']);
-    }, 4000)
+    }, 1000)
   }
 
 }
