@@ -1,0 +1,55 @@
+<ion-header class="course">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button> </ion-back-button>
+    </ion-buttons>
+
+    <ion-menu-button slot="start"></ion-menu-button>
+
+
+    <div class="img-profile">
+      <ion-avatar slot="end">
+        <img src="../../../assets/images/image profille (1).png">
+      </ion-avatar>
+      <ion-label>Username</ion-label>
+    </div>
+
+  <ion-img class="ion-margin-end" slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+
+<!-- <ion-toolbar>
+  <ion-title>
+    start training
+  </ion-title>
+</ion-toolbar> -->
+
+<ion-content>
+
+  <ion-grid class="img-course-intro">
+    <ion-row>
+      <ion-col size="10">
+        <ion-img src="../../../assets/images/img-intro.png"></ion-img>
+        <div class="icon-sound">
+          <ion-icon name="play"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid >
+    <h3 class="training-title ion-text-center"> Please Choose </h3>
+    <ion-row class="ion-align-self-center">
+      <ion-col  size="12" *ngFor="let item of chooseTraining">
+        <div class="col-block">
+          <ion-img [src]="item.img"></ion-img>
+          <ion-text><a [routerLink]="item.url"> {{item.name}} </a></ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+

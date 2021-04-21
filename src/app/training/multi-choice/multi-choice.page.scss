@@ -1,0 +1,59 @@
+/* header Top */
+ion-header ion-img {
+  width: 35px;
+  height: auto;
+  margin-top: 10px;
+}
+
+
+.img-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-avatar {
+    width: 50px;
+    margin-top: 10px;
+    height: auto;
+  }
+
+  ion-label {
+    font-size: 15px;
+    padding-left: 10px;
+  }
+}
+
+/* end header top */
+
+ion-toolbar {
+
+  ion-icon {
+    color: var(--ion-color-second-app);
+    font-size: 30px;
+    margin-right: 20px;
+    margin-top: 24px;
+  }
+}
+
+.single-choice {
+
+  ion-text{
+    color: var(--ion-color-second-app);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 30px 0;
+  }
+
+  ion-label{
+    color: var(--ion-color-second-app);
+    font-size: 16px;
+    font-weight: 500;
+    margin: 20px auto;
+  }
+
+  ion-radio {
+    --color: var(--ion-color-second-app);
+  }
+}
+
+
