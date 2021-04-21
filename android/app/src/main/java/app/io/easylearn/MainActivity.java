@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package app.io.easylearn;
 
 import android.os.Bundle;
 

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { IonTabs } from '@ionic/angular';
 
 @Component({
   selector: 'app-courses',
@@ -7,9 +8,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class CoursesPage implements OnInit {
 
+  @ViewChild('myTabs') tabs: IonTabs;
+  activeTabName
 
 constructor() { }
 
 ngOnInit() {}
+
+
 
 }

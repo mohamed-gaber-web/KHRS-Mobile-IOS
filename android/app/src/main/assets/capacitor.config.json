@@ -1,12 +1,13 @@
 {
-  "appId": "easy-learn",
-  "appName": "app-mobile",
+  "appId": "app.io.easylearn",
+  "appName": "easy-learn",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 0
+      "launchShowDuration": 0,
+      "showSpinner": true
     }
   },
   "cordova": {}
