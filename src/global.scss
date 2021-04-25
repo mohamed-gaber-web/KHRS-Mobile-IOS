@@ -81,3 +81,22 @@ ion-button {
   text-transform: capitalize;
 }
 
+
+ion-toast {
+
+  // ion-success {
+  //   --background : #A7F781;
+  // }
+
+  // ion-error {
+  //   --background : red;
+  // }
+
+
+  --color: var(--ion-color-second-app);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  --height: 50px;
+  border-radius: 10px;
+}

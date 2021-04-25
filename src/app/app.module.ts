@@ -11,6 +11,9 @@ import { SharedModule } from './shared/shared.module';
 
 import { SwiperModule } from 'swiper/angular';
 
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,10 +22,11 @@ import { SwiperModule } from 'swiper/angular';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    SwiperModule
+    SwiperModule,
+
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, NativeAudio],
   bootstrap: [AppComponent],
 })
 
