@@ -8,12 +8,16 @@ import { PuzzleImagePageRoutingModule } from './puzzle-image-routing.module';
 
 import { PuzzleImagePage } from './puzzle-image.page';
 
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PuzzleImagePageRoutingModule
+    PuzzleImagePageRoutingModule,
+    DragDropModule
   ],
   declarations: [PuzzleImagePage]
 })

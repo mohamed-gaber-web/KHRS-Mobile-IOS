@@ -1,3 +1,14 @@
+.ext-icon-vlume {
+  text-align: center;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  position: relative;
+  top: 12px;
+}
+
+
 .img-course-intro {
   margin-bottom: 30px;
 
@@ -20,13 +31,8 @@
     margin: auto;
     bottom: -20px;
 
-    ion-img {
-      position: relative;
-    }
-
-    ion-icon {
-      font-size: 35px;
-      color: var(--ion-color-second-app)!important;
+    .img-volume {
+      @extend .ext-icon-vlume
     }
   }
 
@@ -46,9 +52,8 @@
     line-height: 75px;
     text-align: center;
 
-    ion-icon {
-      font-size: 35px;
-      color: var(--ion-color-second-app)!important;
+    .img-volume {
+      @extend .ext-icon-vlume
     }
 
   }

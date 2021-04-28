@@ -28,22 +28,33 @@
 
 <ion-content>
   <form>
-    <ion-list class="single-choice">
-
+    <ion-list class="multi-choice">
       <div class="sound-lang">
         <div class="sound">
-          <div class="sound-bg"> <ion-icon name="play"></ion-icon> </div>
+          <div class="sound-bg">
+            <div class="img-volume">
+              <ion-img
+              class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+            </ion-img>
+            </div>
+          </div>
           <img src="../../../assets/icon/da.png" alt="" />
         </div>
 
         <div class="sound">
-          <div class="sound-bg"> <ion-icon name="play"></ion-icon> </div>
+          <div class="sound-bg">
+            <div class="img-volume">
+              <ion-img
+              class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+            </ion-img>
+            </div>
+          </div>
           <img src="../../../assets/icon/tu.png" alt="" />
         </div>
       </div>
-
       <ion-radio-group>
         <ion-list-header>
+
           <ion-text>
             Lorem ipsum dolor sit amet, consectetur ?
           </ion-text>
@@ -51,25 +62,27 @@
 
         <ion-item>
           <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="0"></ion-radio>
+          <ion-radio value="cord"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="1"></ion-radio>
+          <ion-radio value="duesenberg"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="2"></ion-radio>
+          <ion-radio value="duesenberg"></ion-radio>
         </ion-item>
 
       </ion-radio-group>
+
       <ion-grid>
         <ion-row class="ion-padding">
           <ion-button (click)="check()"> Check </ion-button>
         </ion-row>
       </ion-grid>
+
     </ion-list>
   </form>
 </ion-content>

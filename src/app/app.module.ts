@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { SwiperModule } from 'swiper/angular';
 
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
     AppRoutingModule,
     SharedModule,
     SwiperModule,
+    BrowserAnimationsModule,
 
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],

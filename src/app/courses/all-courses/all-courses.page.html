@@ -11,7 +11,11 @@
     <ion-col size="10">
       <ion-img src="../../../assets/images/img-intro.png"></ion-img>
       <div class="icon-sound">
-        <ion-icon name="play"></ion-icon>
+        <div class="img-volume">
+          <ion-img
+          class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+        </ion-img>
+        </div>
       </div>
     </ion-col>
   </ion-row>
@@ -27,7 +31,11 @@
           <h3 class="padding-top"  color="primary"> the title of course </h3>
           <ion-item>
             <div class="icon-sound-course">
-              <ion-icon name="play"></ion-icon>
+              <div class="img-volume">
+                <ion-img
+                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+              </ion-img>
+              </div>
             </div>
             <ion-button (click)="getCourse()"  fill="outline" slot="end">
               <ion-icon name="eye"></ion-icon>

@@ -1,3 +1,13 @@
+.ext-icon-vlume {
+  text-align: center;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  position: relative;
+  top: 12px;
+}
+
 /* header Top */
 ion-header ion-img {
   width: 35px;
@@ -35,7 +45,7 @@ ion-toolbar {
   }
 }
 
-.single-choice {
+.multi-choice {
 
   ion-text{
     color: var(--ion-color-second-app);
@@ -63,30 +73,27 @@ ion-toolbar {
     padding: 0 20px;
 
     .sound {
-
       border: 2px solid var(--ion-color-second-app);
       border-radius:10px;
-      padding: 15px;
+      padding: 10px;
 
       .sound-bg {
         display: inline-block;
         width: 50px;
         height: 50px;
-        line-height: 50px;
         text-align: center;
         background-color: #E6E7E8;
         border-radius: 50px;
-        padding: 8px 0 0 2px;
-        margin-right: 10px;
+        margin-right: 5px;
 
-        ion-icon {
-          color: var(--ion-color-second-app);
-          font-size: 35px;
+        .img-volume {
+          @extend .ext-icon-vlume;
         }
       }
     }
 
   }
+
 
 }
 

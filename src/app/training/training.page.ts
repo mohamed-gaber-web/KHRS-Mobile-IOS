@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+
+
 @Component({
   selector: 'app-training',
   templateUrl: './training.page.html',
@@ -10,7 +12,8 @@ export class TrainingPage implements OnInit {
   chooseTraining = [
     {
       img: '../../assets/icon/puzzle.png',
-      name: 'Puzzle'
+      name: 'Puzzle',
+      url: '/training/puzzle-image'
     },
     {
       img: '../../assets/icon/puzzle.png',
@@ -26,7 +29,6 @@ export class TrainingPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

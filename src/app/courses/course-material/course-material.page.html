@@ -32,8 +32,12 @@
       <ion-col size="12" >
         <ion-img src="../../../assets/images/img-intro.png"></ion-img>
         <div class="icon-sound">
-          <ion-icon name="play"></ion-icon>
-        </div>
+          <div class="img-volume">
+            <ion-img
+            class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+          </ion-img>
+          </div>
+         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -96,7 +100,7 @@
   </ion-slides>
 
   <ion-grid>
-    <ion-row class="ion-align-items-center">
+    <ion-row class="ion-align-items-center slide-button">
 
       <ion-col size="4" offset="2">
         <ion-button (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
