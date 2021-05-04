@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
 import { SwiperModule } from 'swiper/angular';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppInterceptor } from './app-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,10 +21,13 @@ import { SwiperModule } from 'swiper/angular';
     IonicModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    SwiperModule
+    SwiperModule,
+    HttpClientModule
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true } // AppInterceptor
+  ],
   bootstrap: [AppComponent],
 })
 

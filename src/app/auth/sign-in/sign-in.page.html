@@ -18,7 +18,7 @@
 
       <p> Forget Password ? </p>
 
-      <ion-button (click)="goToUpdatedUser()">
+      <ion-button (click)="onLoginFormSubmit(loginForm.value)" [disabled]="isLoading || !loginForm.valid">
         Sign In
       </ion-button>
     </form>
