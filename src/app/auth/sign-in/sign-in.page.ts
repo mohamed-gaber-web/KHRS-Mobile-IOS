@@ -45,6 +45,8 @@ export class SignInPage implements OnInit {
     public auth: AuthService) { }
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/courses/tabs/all-courses';
+
     this.loginCredentials = new loginCredentials();
     this.buildLoginForm();
   }
