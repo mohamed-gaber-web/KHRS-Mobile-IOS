@@ -1,4 +1,4 @@
-export const baseUrl = 'https://api.emzady.com';
+export const baseUrl = 'https://khrs-api.sdex.online';
 
 //Account
-export const login = `${baseUrl}/api/Account/Login`;
+export const loginAPI = `${baseUrl}/api/Account/Login`;

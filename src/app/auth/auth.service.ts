@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {loginCredentials} from "src/app/shared/models/loginCredentials";
 import { StorageService } from "src/app/shared/services/storage.service";
-import { baseUrl } from "src/app/api.constants";
+import { baseUrl, loginAPI } from "src/app/api.constants";
 
 
 
@@ -21,7 +21,7 @@ import { baseUrl } from "src/app/api.constants";
   }
 
   signInUser(user: loginCredentials) {
-    return this.http.post(`${baseUrl}`, user);
+    return this.http.post(`${loginAPI}`, user);
   }
 
   getUser() {
