@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -36,25 +41,26 @@ export class SignInPage implements OnInit {
   };
 
   constructor(
-    public formBuilder: FormBuilder, 
-    public router:Router, 
+    public formBuilder: FormBuilder,
+    public router: Router,
     public toastController: ToastController,
     public route: ActivatedRoute,
     public storageService: StorageService,
     // public translate: TranslateService,
-    public auth: AuthService) { }
+    public auth: AuthService
+  ) {}
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/courses/tabs/all-courses';
+    this.returnUrl =
+      this.route.snapshot.queryParams.returnUrl || '/courses/tabs/all-courses';
 
     this.loginCredentials = new loginCredentials();
     this.buildLoginForm();
   }
 
   goToUpdatedUser() {
-    this.router.navigateByUrl('/courses/tabs/all-courses')
+    this.router.navigateByUrl('/courses/tabs/all-courses');
   }
-
 
   buildLoginForm() {
     this.loginForm = this.formBuilder.group({
@@ -66,12 +72,14 @@ export class SignInPage implements OnInit {
 
   validateLoginForm(isSubmitting = false) {
     for (const field of Object.keys(this.loginFormErrors)) {
-      this.loginForm[field] = '';
+      this.loginFormErrors[field] = '';
 
       const input = this.loginForm.get(field) as FormControl;
       if (input.invalid && (input.dirty || isSubmitting)) {
         for (const error of Object.keys(input.errors)) {
-          this.loginForm[field] = this.loginValidationMessages[field][error];
+          this.loginFormErrors[field] = this.loginValidationMessages[field][
+            error
+          ];
         }
       }
     }
@@ -84,26 +92,24 @@ export class SignInPage implements OnInit {
       Object.assign(this.loginCredentials, this.loginForm.value);
       this.auth.signInUser(this.loginCredentials).subscribe(
         async (response) => {
-          
-          if(response['success'] === true) {
-            
+          if (response['success'] === true) {
             this.storageService.setAccessToken(response['result']);
             this.storageService.setExpiresIn(
               new Date(response['.expires']).getTime() / 1000 // .expires
             );
             // this.signInService.IsLoggedIn();
-           var toast = await this.toastController.create({
-             message: "You signed in successfully!",
-             duration: 2000,
-             color:"success"
-           });
-           toast.present();
-           this.router.navigateByUrl(this.returnUrl);
+            var toast = await this.toastController.create({
+              message: 'You signed in successfully!',
+              duration: 2000,
+              color: 'success',
+            });
+            toast.present();
+            this.router.navigateByUrl(this.returnUrl);
           } else {
             var toast = await this.toastController.create({
               message: response['arrayMessage'][0],
               duration: 2000,
-              color:"danger"
+              color: 'danger',
             });
             toast.present();
           }
@@ -111,12 +117,11 @@ export class SignInPage implements OnInit {
         (error) => {
           Object.keys(error).forEach(async (key) => {
             var toast = await this.toastController.create({
-              message:error[key][0],
+              message: error[key][0],
               duration: 2000,
-              color:"danger"
+              color: 'danger',
             });
             toast.present();
-
           });
 
           this.loginForm.reset();
@@ -127,9 +132,7 @@ export class SignInPage implements OnInit {
     }
   }
 
-
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
-
 }

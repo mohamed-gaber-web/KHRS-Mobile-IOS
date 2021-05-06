@@ -11,6 +11,8 @@
           <ion-icon name="person"></ion-icon> Email
         </ion-label>
         <ion-input type="text" formControlName="Email" required></ion-input>
+        <ion-text color="danger" *ngIf="loginFormErrors.Email">{{loginFormErrors.Email}}</ion-text>
+
       </ion-item>
 
       <ion-item #theItem>
@@ -19,6 +21,8 @@
         </ion-label>
         <ion-input type="password" formControlName="Password" required>
         </ion-input>
+        <ion-text color="danger" *ngIf="loginFormErrors.Password">{{loginFormErrors.Password}}</ion-text>
+
       </ion-item>
 
       <p> Forget Password ? </p>
