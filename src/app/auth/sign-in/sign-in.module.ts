@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SignInPageRoutingModule } from './sign-in-routing.module';
 
 import { SignInPage } from './sign-in.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,7 +15,9 @@ import { SignInPage } from './sign-in.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    SignInPageRoutingModule
+    SignInPageRoutingModule,
+    TranslateModule,
+
   ],
   declarations: [SignInPage]
 })

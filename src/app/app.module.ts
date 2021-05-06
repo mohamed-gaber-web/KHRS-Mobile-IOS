@@ -10,9 +10,14 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
 import { SwiperModule } from 'swiper/angular';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptor } from './app-interceptor';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -22,7 +27,14 @@ import { AppInterceptor } from './app-interceptor';
     AppRoutingModule,
     SharedModule,
     SwiperModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+      useFactory: (LanguageLoader),
+      deps: [HttpClient]
+      }
+    })
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
