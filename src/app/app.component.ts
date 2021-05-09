@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateConfigService } from './translate-config.service';
 
 
 @Component({
@@ -8,6 +9,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  constructor() {}
+  constructor(
+    private translateConfigService: TranslateConfigService,
 
+  ) {
+    this.updateAppLanguage();
+
+  }
+
+  systemLanguage:any;
+
+  updateAppLanguage(){
+    if(!localStorage.getItem('lang')){
+      localStorage.setItem('lang', "en");
+      this.systemLanguage = "en";
+    }else{
+     this.systemLanguage = localStorage.getItem('lang');
+    }
+    this.translateConfigService.setLanguage(this.systemLanguage);
+  } 
 }

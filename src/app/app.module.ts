@@ -10,11 +10,14 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 
 import { SwiperModule } from 'swiper/angular';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppInterceptor } from './app-interceptor';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { NativeAudio } from '@ionic-native/native-audio/ngx';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -24,11 +27,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     SharedModule,
     SwiperModule,
-    BrowserAnimationsModule,
-
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+      useFactory: (LanguageLoader),
+      deps: [HttpClient]
+      }
+    })
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, NativeAudio],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true } // AppInterceptor
+  ],
   bootstrap: [AppComponent],
 })
 

@@ -1,29 +1,38 @@
 <ion-content class="background-image" no-scroll>
 
   <div class="sign-in-title">
-    <h3> Sign In </h3>
+    <h3> {{ 'Signin to continue.' | translate }} </h3>
   </div>
 
   <div class="sign-in-form">
-    <form>
+    <ion-grid [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit(loginForm.value)" class="padding"> 
       <ion-item #theItem>
-        <ion-label position="floating"> <ion-icon name="person"></ion-icon> Email </ion-label>
-        <ion-input></ion-input>
+        <ion-label position="floating">
+          <ion-icon name="person"></ion-icon> {{ 'Email' | translate }}
+        </ion-label>
+        <ion-input type="text" formControlName="Email" required></ion-input>
+        <ion-text color="danger" *ngIf="loginFormErrors.Email">{{loginFormErrors.Email}}</ion-text>
+
       </ion-item>
 
       <ion-item #theItem>
-        <ion-label position="floating"> <ion-icon name="lock-closed-sharp"></ion-icon> Password</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-label position="floating">
+          <ion-icon name="lock-closed-sharp"></ion-icon> {{ 'Password' | translate }}
+        </ion-label>
+        <ion-input type="password" formControlName="Password" required>
+        </ion-input>
+        <ion-text color="danger" *ngIf="loginFormErrors.Password">{{loginFormErrors.Password}}</ion-text>
+
       </ion-item>
 
-      <p> Forget Password ? </p>
+      <p>{{ 'Forget Password' | translate }}</p>
 
-      <ion-button (click)="goToUpdatedUser()">
-        Sign In
+      <ion-button (click)="onLoginFormSubmit(loginForm.value)" [disabled]="isLoading || !loginForm.valid">
+        {{ 'Login' | translate }}
       </ion-button>
-    </form>
+    </ion-grid>
   </div>
-  <p class="no-account"> Don’t have an account yet ? <span> <a [routerLink]="['/auth/sign-up']"> Sign up </a> </span> </p>
+  <p class="no-account">{{ 'Don’t have an account yet ?' | translate }} <span> <a [routerLink]="['/auth/sign-up']">{{ 'Signup' | translate }} </a> </span> </p>
 
 
 </ion-content>
