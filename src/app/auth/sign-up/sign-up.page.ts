@@ -12,6 +12,7 @@ import { emailValidator, matchingPasswords } from 'src/theme/app-validators';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastController } from '@ionic/angular';
 
 
 
@@ -74,6 +75,7 @@ export class SignUpPage implements OnInit {
     private auth: AuthService,
     private translate:TranslateService,
     public formBuilder: FormBuilder,
+    public toastController: ToastController,
     public router: Router) {}
 
   ngOnInit() {
@@ -132,15 +134,28 @@ export class SignUpPage implements OnInit {
     this.validateRegisterForm(true);
 
      if (this.registerForm.valid) {
-       this.auth.registerCustomer(values).subscribe((response) => {
-         console.log(response);
-        //  if(response['success']) {
+       this.auth.registerCustomer(values).subscribe(async(response) => {
+         if(response['success']) {
 
-        //  } else {
-        //    response['arrayMessage'].forEach(element => {
-        //   // this.snackBar.open(element, '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
-        //   });
-        // }
+          var toast = await this.toastController.create({
+            message: 'You signed up successfully!',
+            duration: 2000,
+            color: 'success',
+          });
+          toast.present();
+
+          this.router.navigate(['/auth/sign-in'])
+
+         } else {
+           response['arrayMessage'].forEach( async(element) => {
+            var toast = await this.toastController.create({
+              message: 'You signed up error!',
+              duration: 2000,
+              color: 'danger',
+            });
+            toast.present();
+          });
+        }
 
       });
      }
