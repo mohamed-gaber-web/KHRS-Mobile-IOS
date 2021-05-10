@@ -5,7 +5,7 @@
   </div>
 
   <div class="sign-in-form">
-    <ion-grid [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit(loginForm.value)" class="padding"> 
+    <ion-grid [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit(loginForm.value)" class="padding">
       <ion-item #theItem>
         <ion-label position="floating">
           <ion-icon name="person"></ion-icon> {{ 'Email' | translate }}

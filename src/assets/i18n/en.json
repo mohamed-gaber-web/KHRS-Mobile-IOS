@@ -27,5 +27,14 @@
     "Password Updated": "Password Updated",
     "Your password has been updated!": "Your password has been updated!",
     "Password Failed": "Password Failed",
-    "Your password changed to failed!": "Your password changed to failed!"
-} 
+    "Your password changed to failed!": "Your password changed to failed!",
+    "firstNameReq": "Firstname is required",
+    "lastNameReq": "Lastname is required",
+    "emailReq": "Email is required",
+    "phoneReq": "PhoneNumber is required",
+    "genderReq": "Gender is required",
+    "birthdateReq": "Birthdate is required",
+    "passwordReq": " Password is required",
+    "confirmPasswordReq": "Confirm password is required",
+    "invalidEmail": "Email field must be a valid email"
+}

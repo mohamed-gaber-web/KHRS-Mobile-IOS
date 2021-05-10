@@ -27,5 +27,14 @@
     "Password Updated": "تم تحديث كلمة السر",
     "Your password has been updated!": "لقد تم تحديث كلمة السر الخاصة بك!",
     "Password Failed": "فشل كلمة المرور",
-    "Your password changed to failed!": "تم تغيير كلمة المرور الخاصة بك إلى فشل!"
+    "Your password changed to failed!": "تم تغيير كلمة المرور الخاصة بك إلى فشل!",
+    "firstNameReq": "الاسم الاول مطلوب",
+    "lastNameReq": "الاسم التاني مطلوب",
+    "emailReq": "الايميل مطلوب",
+    "phoneReq": "رقم الموبيل مطلوب",
+    "genderReq": "االجنس مطلوب",
+    "birthdateReq": "تاريخ الميلاد مطلوب",
+    "passwordReq": " كلمة المرور مطلوب",
+    "confirmPasswordReq": "تأكيد كلمة المرور مطلوب",
+    "invalidEmail": "يجب ادخال ايميل صحيح"
 }

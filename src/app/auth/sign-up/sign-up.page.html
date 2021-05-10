@@ -5,22 +5,27 @@
   </div>
 
   <div class="form">
-    <form >
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)" novalidate>
     <ion-grid>
       <ion-row>
         <ion-col size="6">
-
           <ion-item>
             <ion-label position="floating">Firstname</ion-label>
-            <ion-input></ion-input>
+            <ion-input type="text" formControlName="FirstName" required></ion-input>
           </ion-item>
+          <ion-text color="danger" class="error ion-padding" *ngIf="registerFormErrors.FirstName">
+            {{registerFormErrors.FirstName }}
+          </ion-text>
         </ion-col>
 
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating">Lastname</ion-label>
-            <ion-input></ion-input>
+            <ion-input type="text" formControlName="LastName" required></ion-input>
           </ion-item>
+          <ion-text color="danger" class="error ion-padding" *ngIf="registerFormErrors.LastName">
+            {{ registerFormErrors.LastName }}
+          </ion-text>
         </ion-col>
 
       </ion-row>
@@ -32,8 +37,11 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating">Phone Number</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" formControlName="PhoneNumber" minlength="11" required></ion-input>
           </ion-item>
+          <ion-text color="danger" *ngIf="registerFormErrors.PhoneNumber">{{ registerFormErrors.PhoneNumber }}
+          </ion-text>
+          <ion-text color="danger" *ngIf="registerForm.controls.PhoneNumber.hasError('minlength')">The phone number must be 12 numbers</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -43,8 +51,9 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating">Email</ion-label>
-            <ion-input type="email"></ion-input>
+            <ion-input type="text" formControlName="email" required></ion-input>
           </ion-item>
+          <ion-text color="danger" *ngIf="registerFormErrors.email"> {{ registerFormErrors.email }}</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -54,8 +63,9 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating"></ion-label>
-            <ion-input type="date"></ion-input>
+            <ion-input type="date" formControllName="Birthdate" required></ion-input>
           </ion-item>
+          <ion-text *ngIf="registerFormErrors.Birthdate"> {{ registerFormErrors.Birthdate }}</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -65,8 +75,10 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating">Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input type="password" formControlName="password" required></ion-input>
           </ion-item>
+          <ion-text *ngIf="registerFormErrors.password">{{ registerFormErrors.password }}</ion-text>
+          <ion-text *ngIf="registerForm.controls.password.hasError('minlength')">{{ 'passMin' | translate }}</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -76,8 +88,10 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating">Confirm Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input formControlName="confirmPassword" type="password" required></ion-input>
           </ion-item>
+          <ion-text color="danger" *ngIf="registerFormErrors.confirmPassword">{{registerFormErrors.confirmPassword }}</ion-text>
+          <ion-text color="danger" *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')">{{ 'notMatch' | translate }}</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -86,7 +100,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-list>
-            <ion-radio-group value="gender">
+            <ion-radio-group formControlName="Gender" value="gender">
               <ion-list-header>
                 <ion-label>Gender</ion-label>
               </ion-list-header>
@@ -95,14 +109,14 @@
                   <ion-col size="6">
                     <ion-item>
                       <ion-label>male</ion-label>
-                      <ion-radio slot="start" value="male"></ion-radio>
+                      <ion-radio slot="start" value="0"></ion-radio>
                     </ion-item>
                   </ion-col>
 
                   <ion-col size="6">
                     <ion-item>
                       <ion-label>Female</ion-label>
-                      <ion-radio slot="start" value="female"></ion-radio>
+                      <ion-radio slot="start" value="1"></ion-radio>
                     </ion-item>
                   </ion-col>
                 </ion-row>
@@ -119,10 +133,8 @@
           <ion-list>
             <ion-item>
               <ion-label>Recommended By</ion-label>
-              <ion-select value="brown" okText="Okay" cancelText="Dismiss">
-                <ion-select-option value="brown">A friend </ion-select-option>
-                <ion-select-option value="blonde">Government</ion-select-option>
-                <ion-select-option value="black">Other</ion-select-option>
+              <ion-select formControlName="recommendedbyId" *ngFor="let recItem of allRecommended" value="brown" okText="Okay" cancelText="Dismiss">
+                <ion-select-option [value]="recItem.id" *ngFor="let item of recItem.recommendedByTranslations"> {{ item.name }} </ion-select-option>
               </ion-select>
             </ion-item>
 
@@ -147,7 +159,10 @@
     <ion-grid>
       <ion-row ion-align-items-center>
         <ion-col size="12">
-          <ion-button>
+          <ion-button
+          [disabled]="!registerForm.valid"
+          (click)="onRegisterFormSubmit(registerForm.value)"
+          >
             Sign Up
           </ion-button>
         </ion-col>
