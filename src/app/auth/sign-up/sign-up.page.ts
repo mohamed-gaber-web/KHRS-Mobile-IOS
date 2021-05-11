@@ -26,6 +26,10 @@ export class SignUpPage implements OnInit {
   registerForm: FormGroup;
   isLoading = false;
   allRecommended: any;
+  gender = [
+    {name: 'male', value: 0},
+    {name: 'female', value: 1}
+  ]
 
   registerFormErrors = {
     FirstName: '',
@@ -135,6 +139,10 @@ export class SignUpPage implements OnInit {
 
      if (this.registerForm.valid) {
        this.auth.registerCustomer(values).subscribe(async(response) => {
+
+        console.log(response);
+
+
          if(response['success']) {
 
           var toast = await this.toastController.create({
