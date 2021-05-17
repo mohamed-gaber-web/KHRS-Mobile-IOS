@@ -1,3 +1,5 @@
+import FileUpload from "src/app/shared/models/fileUpload";
+
 export interface User {
 
   id?: number;
@@ -11,4 +13,6 @@ export interface User {
   confirmPassword?: string;
   Recommended: number,
   languageId: number;
+  acceptTerms: string;
+  file: FileUpload[]
 }

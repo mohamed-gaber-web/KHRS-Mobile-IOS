@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { SignUpPageRoutingModule } from './sign-up-routing.module';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { SignUpPage } from './sign-up.page';
+
+import {NgxMatFileInputModule} from '@angular-material-components/file-input';
+
+import { MatInputModule } from '@angular/material/input';
+
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,7 +22,10 @@ import { SignUpPage } from './sign-up.page';
     FormsModule,
     IonicModule,
     SignUpPageRoutingModule,
-    TranslateModule
+    NgxMatFileInputModule,
+    TranslateModule,
+    MatInputModule,
+
   ],
   declarations: [SignUpPage]
 })

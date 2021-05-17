@@ -9,7 +9,7 @@
     "Create a new account.": "Create a new account.",
     "Username": "Username",
     "Email": "Email",
-    "Signup": "Signup",
+    "Signup": "Sign Up",
     "Or Continue with": "Or Continue with",
     "Facebook": "Facebook",
     "Google": "Google",
@@ -36,5 +36,13 @@
     "birthdateReq": "Birthdate is required",
     "passwordReq": " Password is required",
     "confirmPasswordReq": "Confirm password is required",
-    "invalidEmail": "Email field must be a valid email"
+    "invalidEmail": "Email field must be a valid email",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "phoneNumber": "Phone Number",
+    "imageupload": "Upload Image",
+    "gender": "Gender",
+    "acceptTerms": "I agree terms and conditions",
+    "Recommended": "Recommended By",
+    "signIn": "Sign In"
 }

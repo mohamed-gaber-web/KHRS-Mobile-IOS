@@ -36,5 +36,16 @@
     "birthdateReq": "تاريخ الميلاد مطلوب",
     "passwordReq": " كلمة المرور مطلوب",
     "confirmPasswordReq": "تأكيد كلمة المرور مطلوب",
-    "invalidEmail": "يجب ادخال ايميل صحيح"
+    "invalidEmail": "يجب ادخال ايميل صحيح",
+    "firstname": "الاسم الاول",
+    "lastname": "الاسم الاخير",
+    "phoneNumber": "رقم الموبيل",
+    "imageupload": "رفع صورة",
+    "gender": "الجنس",
+    "acceptTerms": "اوافق على كل الشروط",
+    "Recommended": "",
+    "signUp": "التسجيل",
+    "signIn": "تسجيل الدخول"
+
+
 }

@@ -1,16 +1,16 @@
 <ion-content class="background">
   <div class="top-title">
-    <h3> Sign Up </h3>
+    <h3> {{ 'Signup' | translate }}</h3>
     <!-- <ion-img slot="end" src="../../../assets/images/spray 4.png"> </ion-img> -->
   </div>
 
   <div class="form">
-    <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)" novalidate>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
     <ion-grid>
       <ion-row>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="floating">Firstname</ion-label>
+            <ion-label position="floating">{{ 'firstname' | translate}}</ion-label>
             <ion-input type="text" formControlName="FirstName" required></ion-input>
           </ion-item>
           <ion-text color="danger" class="error ion-padding" *ngIf="registerFormErrors.FirstName">
@@ -20,7 +20,7 @@
 
         <ion-col size="6">
           <ion-item>
-            <ion-label position="floating">Lastname</ion-label>
+            <ion-label position="floating">{{ 'lastname' | translate}}</ion-label>
             <ion-input type="text" formControlName="LastName" required></ion-input>
           </ion-item>
           <ion-text color="danger" class="error ion-padding" *ngIf="registerFormErrors.LastName">
@@ -36,7 +36,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-            <ion-label position="floating">Phone Number</ion-label>
+            <ion-label position="floating"> {{ 'firstname' | translate}} </ion-label>
             <ion-input type="text" formControlName="PhoneNumber" minlength="11" required></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerFormErrors.PhoneNumber">{{ registerFormErrors.PhoneNumber }}
@@ -50,7 +50,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-            <ion-label position="floating">Email</ion-label>
+            <ion-label position="floating">{{ 'Email' | translate }}</ion-label>
             <ion-input type="text" formControlName="email" required></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerFormErrors.email"> {{ registerFormErrors.email }}</ion-text>
@@ -74,7 +74,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-            <ion-label position="floating">Password</ion-label>
+            <ion-label position="floating">{{ 'Password' | translate }}</ion-label>
             <ion-input type="password" formControlName="password" required></ion-input>
           </ion-item>
           <ion-text *ngIf="registerFormErrors.password">{{ registerFormErrors.password }}</ion-text>
@@ -87,7 +87,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-label position="floating">{{ 'Confirm Password' | translate }}</ion-label>
             <ion-input formControlName="confirmPassword" type="password" required></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerFormErrors.confirmPassword">{{registerFormErrors.confirmPassword }}</ion-text>
@@ -102,7 +102,7 @@
           <ion-list>
             <ion-radio-group formControlName="Gender" value="gender">
               <ion-list-header>
-                <ion-label>Gender</ion-label>
+                <ion-label>{{ 'gender' | translate}}</ion-label>
               </ion-list-header>
 
                 <ion-row>
@@ -113,12 +113,6 @@
                     </ion-item>
                   </ion-col>
 
-                  <!-- <ion-col size="6">
-                    <ion-item>
-                      <ion-label>Female</ion-label>
-                      <ion-radio slot="start" value="1"></ion-radio>
-                    </ion-item>
-                  </ion-col> -->
                 </ion-row>
 
             </ion-radio-group>
@@ -132,7 +126,7 @@
         <ion-col size="12">
           <ion-list>
             <ion-item>
-              <ion-label>Recommended By</ion-label>
+              <ion-label>{{ 'Recommended' | translate}}</ion-label>
               <ion-select formControlName="recommendedbyId" *ngFor="let recItem of allRecommended" value="brown" okText="Okay" cancelText="Dismiss">
                 <ion-select-option [value]="recItem.id" *ngFor="let item of recItem.recommendedByTranslations"> {{ item.name }} </ion-select-option>
               </ion-select>
@@ -146,11 +140,29 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12">
+          <ion-item>
+            <ion-label position="">{{ 'imageupload' | translate }}</ion-label>
+            <ion-input
+              type="file"
+              multiple="false"
+              accept="image/*"
+              (change)="uploadImg($event.target.file)"></ion-input>
+
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
           <ion-list>
             <ion-item>
-              <ion-label>I agree terms and conditions</ion-label>
-              <ion-checkbox slot="start"></ion-checkbox>
+              <ion-label>{{ 'acceptTerms' | translate }}</ion-label>
+              <ion-checkbox formControlName="acceptTerms" slot="start" required></ion-checkbox>
             </ion-item>
+            <ion-text *ngIf="registerFormErrors.acceptTerms"> {{ registerFormErrors.acceptTerms }}</ion-text>
+
           </ion-list>
         </ion-col>
       </ion-row>
@@ -163,7 +175,7 @@
           [disabled]="!registerForm.valid"
           (click)="onRegisterFormSubmit(registerForm.value)"
           >
-            Sign Up
+            {{ 'Signup' | translate}}
           </ion-button>
         </ion-col>
       </ion-row>
@@ -174,7 +186,7 @@
         <ion-col size="12">
           <p class="no-account">
             Don’t have an account yet ? <span>
-              <a [routerLink]="['/auth/sign-in']"> Sign In </a>
+              <a [routerLink]="['/auth/sign-in']"> {{ 'signIn' | translate}} </a>
             </span>
           </p>
         </ion-col>

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
+import { HelpersService } from 'src/app/shared/services/helpers.service';
 
 
 
@@ -40,7 +41,8 @@ export class SignUpPage implements OnInit {
     Gender: '',
     password: '',
     confirmPassword: '',
-    recommendedbyId: ''
+    recommendedbyId: '',
+    acceptTerms: ''
   };
 
   registerValidationMessages = {
@@ -56,6 +58,7 @@ export class SignUpPage implements OnInit {
     },
     phoneNumber: {
       required: this.translate.instant('phoneReq'),
+      minlength: 'Phone Number is not long enough, minimum of 11 characters',
     },
     gender: {
       required: this.translate.instant('genderReq'),
@@ -72,6 +75,9 @@ export class SignUpPage implements OnInit {
     Birthdate: {
       required: this.translate.instant('birthdateReq'),
     },
+    acceptTerms: {
+      required: this.translate.instant('acceptTermsReq'),
+    }
   };
 
 
@@ -80,7 +86,19 @@ export class SignUpPage implements OnInit {
     private translate:TranslateService,
     public formBuilder: FormBuilder,
     public toastController: ToastController,
-    public router: Router) {}
+    public router: Router,
+    private helpers: HelpersService
+    ) {}
+
+    async uploadImg(files: File[]) {
+      const imgString: any = await this.helpers.toBase64(files[0]);
+      (this.registerForm.get('imageFile') as FormGroup).patchValue({
+        fieldName: 'userRegisterImage',
+        filename: files[0].name,
+        fileExtension: this.helpers.getExtension(files[0].name),
+        fileData: this.helpers.validBase64(imgString),
+      });
+    }
 
   ngOnInit() {
 
@@ -97,21 +115,20 @@ export class SignUpPage implements OnInit {
       'password': ['', Validators.required],
       'confirmPassword': ['', Validators.required],
       'recommendedbyId': [0, Validators.required],
-      'languageId': [1]
+      'acceptTerms': [null, Validators.required],
+      'languageId': [1],
+      imageFile : this.formBuilder.group({
+        fieldName: ['', !Validators.required],
+        filename: ['', !Validators.required],
+        fileExtension: ['', !Validators.required],
+        fileData: ['', !Validators.required],
+      }),
     },{validator: matchingPasswords('password', 'confirmPassword')});
 
     this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
 
   }
 
-  // get errorCtr() {
-  //   return this.registerForm.controls;
-  // }
-
-  // onFocusEvent(event:any){
-  //   alert("Focus")
-  //   this.validateRegisterForm();
-  // }
 
   validateRegisterForm(isSubmitting = false) {
     for (const field of Object.keys(this.registerFormErrors)) {
@@ -132,10 +149,9 @@ export class SignUpPage implements OnInit {
   // ! When resister form valid
   public onRegisterFormSubmit(values):void {
 
-    console.log(this.registerForm.value);
-
-
     this.validateRegisterForm(true);
+
+    console.log(this.registerForm.value);
 
      if (this.registerForm.valid) {
        this.auth.registerCustomer(values).subscribe(async(response) => {
@@ -172,9 +188,11 @@ export class SignUpPage implements OnInit {
  // ! get recomended by list
  getRecommendeBy() {
    this.auth.recommendedBy().subscribe(data => {
-    console.log(data['result']);
     this.allRecommended = data['result'];
    })
  }
+
+
+
 
 }
