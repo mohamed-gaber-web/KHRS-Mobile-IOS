@@ -60,7 +60,7 @@ export class AppInterceptor implements NativeHttpInterceptor {
         if (error.status === 401) {
           this.storageService.removeStorage("access_token");
           this.storageService.removeStorage("user");
-          this.navCtrl.navigateRoot(["/user/sign-in"], {
+          this.navCtrl.navigateRoot(["/auth/sign-in"], {
             queryParams: {
               returnUrl: this.router.routerState.snapshot.url,
             },
@@ -70,7 +70,7 @@ export class AppInterceptor implements NativeHttpInterceptor {
         } else if (error.status === 403) {
           this.storageService.removeStorage("access_token");
           this.storageService.removeStorage("user");
-          this.navCtrl.navigateRoot(["/user/sign-in"], {
+          this.navCtrl.navigateRoot(["/auth/sign-in"], {
             queryParams: {
               returnUrl: this.router.routerState.snapshot.url,
             },

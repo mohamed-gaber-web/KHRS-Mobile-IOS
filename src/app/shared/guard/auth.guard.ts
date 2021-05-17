@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     const isExpired = this.isExpired(this.storageService.getExpiresIn());
 
     if (!tokenExists || isExpired) {
-      this.router.navigate(['/user/sign-in'], {
+      this.router.navigate(['/auth/sign-in'], {
         queryParams: { returnUrl: state.url },
       });
       return false;
