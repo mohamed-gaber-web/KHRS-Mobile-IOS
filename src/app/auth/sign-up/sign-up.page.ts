@@ -91,9 +91,6 @@ export class SignUpPage implements OnInit {
     ) {}
 
     async uploadImg(event) {
-
-      console.log(event);
-
       const imgString: any = await this.helpers.toBase64(event.target.files[0]);
       (this.registerForm.get('imageFile') as FormGroup).patchValue({
         fieldName: 'userRegisterImage',
@@ -153,8 +150,6 @@ export class SignUpPage implements OnInit {
   public onRegisterFormSubmit(values):void {
 
     this.validateRegisterForm(true);
-
-    console.log(this.registerForm.value);
 
      if (this.registerForm.valid) {
        this.auth.registerCustomer(values).subscribe(async(response) => {
