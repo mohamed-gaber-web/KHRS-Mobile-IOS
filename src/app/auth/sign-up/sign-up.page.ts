@@ -90,12 +90,15 @@ export class SignUpPage implements OnInit {
     private helpers: HelpersService
     ) {}
 
-    async uploadImg(files: File[]) {
-      const imgString: any = await this.helpers.toBase64(files[0]);
+    async uploadImg(event) {
+
+      console.log(event);
+
+      const imgString: any = await this.helpers.toBase64(event.target.files[0]);
       (this.registerForm.get('imageFile') as FormGroup).patchValue({
         fieldName: 'userRegisterImage',
-        filename: files[0].name,
-        fileExtension: this.helpers.getExtension(files[0].name),
+        filename: event.target.files[0].name,
+        fileExtension: this.helpers.getExtension(event.target.files[0].name),
         fileData: this.helpers.validBase64(imgString),
       });
     }
@@ -155,12 +158,7 @@ export class SignUpPage implements OnInit {
 
      if (this.registerForm.valid) {
        this.auth.registerCustomer(values).subscribe(async(response) => {
-
-        console.log(response);
-
-
          if(response['success']) {
-
           var toast = await this.toastController.create({
             message: 'You signed up successfully!',
             duration: 2000,
@@ -191,8 +189,5 @@ export class SignUpPage implements OnInit {
     this.allRecommended = data['result'];
    })
  }
-
-
-
 
 }

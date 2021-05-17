@@ -36,7 +36,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-            <ion-label position="floating"> {{ 'firstname' | translate}} </ion-label>
+            <ion-label position="floating"> {{ 'phoneNumber' | translate}} </ion-label>
             <ion-input type="text" formControlName="PhoneNumber" minlength="11" required></ion-input>
           </ion-item>
           <ion-text color="danger" *ngIf="registerFormErrors.PhoneNumber">{{ registerFormErrors.PhoneNumber }}
@@ -146,7 +146,7 @@
               type="file"
               multiple="false"
               accept="image/*"
-              (change)="uploadImg($event.target.file)"></ion-input>
+              (change)="uploadImg($event)"></ion-input>
 
           </ion-item>
         </ion-col>
