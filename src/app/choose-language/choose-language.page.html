@@ -9,17 +9,18 @@
 
     <ion-row>
 
-      <ion-col size-xs="4" size-md="3" *ngFor="let flag of flagsLanguage">
-        <ion-img [src]="flag.imgSrc" class="lang-img"></ion-img>
-        <h3> <ion-text> {{ flag.name }} </ion-text> </h3>
+      <ion-spinner  *ngIf="isLoading"></ion-spinner>
+      <ion-col (click)="getLanguageId(item.id)" size-xs="4" size-md="3" *ngFor="let item of langItems">
+        <ion-img [src]="item.icon" class="lang-img"></ion-img>
+        <h3> <ion-text> {{ item.name }} </ion-text> </h3>
       </ion-col>
 
     </ion-row>
 
   </ion-grid>
   <div class="button-start">
-    <!-- <ion-spinner *ngIf="isLoading"></ion-spinner> -->
-    <ion-button  (click)="goToIntroPage()">
+
+    <ion-button (click)="chooseLanguage()">
       <ion-img src="../../assets/images/logo-hand-2.png"></ion-img>
       START
     </ion-button>

@@ -116,7 +116,7 @@ export class SignUpPage implements OnInit {
       'confirmPassword': ['', Validators.required],
       'recommendedbyId': [0, Validators.required],
       'acceptTerms': [null, Validators.required],
-      'languageId': [1],
+      'languageId': [JSON.parse(localStorage.getItem('languageId'))],
       imageFile : this.formBuilder.group({
         fieldName: ['', !Validators.required],
         filename: ['', !Validators.required],
