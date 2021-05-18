@@ -1,4 +1,4 @@
-.ext-icon-vlume {
+.ext-icon-volume {
   text-align: center;
   margin: auto;
   width: 24px;
@@ -30,7 +30,7 @@
   bottom: -20px;
 
   .img-volume {
-    @extend .ext-icon-vlume
+    @extend .ext-icon-volume;
   }
 
 }
@@ -40,14 +40,22 @@
   .icon-sound-course {
     background-color: #A7F781;
     border: 1px solid #fff;
-    width: 53px;
-    height: 53px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    line-height: 53px;
+    line-height: 55px;
     text-align: center;
+    position: relative;
 
-    .img-volume {
-      @extend .ext-icon-vlume
+    ion-icon {
+      text-align: center;
+      font-size: 35px;
+      color: var(--ion-color-second-app);
+      position: absolute;
+      top: 8px;
+      left: 0;
+      right: 0;
+      margin: auto;
     }
 
   }
