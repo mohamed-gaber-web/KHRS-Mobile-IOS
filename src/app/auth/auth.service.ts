@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import {loginCredentials} from "src/app/shared/models/loginCredentials";
 import { StorageService } from "src/app/shared/services/storage.service";
 import { User } from './sign-up/user.model';
-import { baseUrl, loginAPI, registerAPI, recommendedBy } from "src/app/api.constants";
+import { loginAPI, registerAPI, recommendedBy, userChangePassword } from "src/app/api.constants";
 
 
 
@@ -40,6 +40,10 @@ import { baseUrl, loginAPI, registerAPI, recommendedBy } from "src/app/api.const
   recommendedBy() {
     const params = `?offset=0&limit=10`
     return this.http.get(`${recommendedBy}` + params);
+  }
+
+  updatedPassword(userPassword) {
+    return this.http.put(`${userChangePassword}`, userPassword);
   }
 
 }
