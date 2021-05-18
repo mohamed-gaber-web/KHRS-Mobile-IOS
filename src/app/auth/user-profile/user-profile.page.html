@@ -15,7 +15,7 @@
     </div>
 
 
-  <ion-img slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
+  <ion-img class="ion-margin-end" slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
   </ion-toolbar>
 </ion-header>
 
@@ -30,18 +30,18 @@
     <ion-row>
       <ion-col>
         <ion-card>
-          <ion-list>
+          <ion-list *ngIf="userInfo">
             <ion-item>
-              <ion-label color="primary"> Firstname: Mohamed </ion-label>
+              <ion-label color="primary"> Firstname: {{ userInfo.firstname }} </ion-label>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"> Lastname: Jaber </ion-label>
+              <ion-label color="primary"> Lastname: {{ userInfo.lastname }} </ion-label>
             </ion-item>
             <ion-item>
               <ion-label color="primary"> Phone Number: 000-0000-000 </ion-label>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"> Email : info@example.com </ion-label>
+              <ion-label color="primary"> Email : {{ userInfo.email }} </ion-label>
             </ion-item>
             <ion-item>
               <ion-label color="primary"> Gender: Male </ion-label>

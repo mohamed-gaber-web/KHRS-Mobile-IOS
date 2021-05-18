@@ -25,11 +25,11 @@
         <ion-icon color="primary" slot="start" name="chatbox-ellipses-outline"></ion-icon>
         Faq
       </ion-item>
-      <ion-item [routerLink]="['/auth/user-profile']">
+      <ion-item *ngIf="authService.IsLoggedIn" [routerLink]="['/auth/user-profile']">
         <ion-icon color="primary" slot="start" name="settings-outline"></ion-icon>
         Setting
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="authService.IsLoggedIn" (click)="logout()">
         <ion-icon color="primary" slot="start" name="log-out-outline"></ion-icon>
         Logout
       </ion-item>

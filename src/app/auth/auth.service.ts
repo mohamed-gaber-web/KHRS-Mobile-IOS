@@ -15,7 +15,9 @@ import { baseUrl, loginAPI, registerAPI, recommendedBy } from "src/app/api.const
 
   export class AuthService {
 
-  constructor(private http: HttpClient, private storageService: StorageService ) {}
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService, ) {}
 
   get IsLoggedIn() {
     return this.storageService.existsStorage('user');
