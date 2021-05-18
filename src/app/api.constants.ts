@@ -9,3 +9,6 @@ export const userChangePassword = `${baseUrl}/api/Account/changePasswod`
 
 // get language
 export const getLanguage = `${baseUrl}/api/Language/GetLanguage`
+
+//Courses
+export const getAllCoursesAPI = `${baseUrl}/api/Course/GetCourses`;

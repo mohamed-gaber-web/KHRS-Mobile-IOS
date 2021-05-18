@@ -26,7 +26,6 @@ export class AllCoursesPage implements OnInit {
   ngOnInit() {
     this.offset = 0;
     this.getCourses();
-
   }
 
   getCourse(id:number) {
@@ -60,7 +59,7 @@ export class AllCoursesPage implements OnInit {
               element.audioElement = new AudioElement();
               element.audioElement.status = false;
 
-              
+
             });
             this.courses=res;
           }else{
@@ -88,7 +87,7 @@ export class AllCoursesPage implements OnInit {
         this.getCourses();
         console.log('Done');
         event.target.complete();
-  
+
         // App logic to determine if all data is loaded
         // and disable the infinite scroll
         if (this.courses.length == 1000) {
@@ -99,7 +98,7 @@ export class AllCoursesPage implements OnInit {
       event.target.disabled = true;
 
     }
-   
+
   }
 
   playIntroHTML(course:Course){
@@ -116,7 +115,7 @@ export class AllCoursesPage implements OnInit {
         }else{
           //TODO destroy
         }
-      
+
     });
       var audio = new Audio(`${course.courseTranslations[0].introVoicePath}`);
       course.audioElement.audio = audio;
@@ -126,7 +125,7 @@ export class AllCoursesPage implements OnInit {
       console.log(this.courses);
 
     }else{
-      //stop the the live one 
+      //stop the the live one
       if(course.audioElement.audio != null){
         course.audioElement.audio.pause();
         course.audioElement.status = false;
@@ -141,7 +140,7 @@ export class AllCoursesPage implements OnInit {
   // playIntro(course:Course){
   //   //TODO stop the rest of active audios
   //   this.platform.ready().then(() => {
-      
+
   //   var file = this.media.create(`${course.courseTranslations[0].introVoicePath}`);
   //   // to listen to plugin events:
   //   this.introAudiosNative.push(file);
@@ -155,7 +154,7 @@ export class AllCoursesPage implements OnInit {
   //   // play the file
   //   file.play();
   //   });
-    
+
   // }
 
 }

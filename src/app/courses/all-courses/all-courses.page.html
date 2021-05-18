@@ -31,19 +31,16 @@
           <h3 class="padding-top"  color="primary"> {{course.courseTranslations[0].title}} </h3>
           <ion-item>
             <div class="icon-sound-course">
-<<<<<<< HEAD
               <div class="img-volume">
                 <ion-img
                 class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
               </ion-img>
               </div>
-=======
               <div *ngIf="course.courseTranslations[0].introVoicePath">
                 <ion-icon [name]="!course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course)">
                 </ion-icon>
               </div>
-             
->>>>>>> bf7d2f0a29b741707e1214d2438091d769b1ee17
+
             </div>
             <ion-button (click)="getCourse(course.id)"  fill="outline" slot="end">
               <ion-icon name="eye"></ion-icon>
