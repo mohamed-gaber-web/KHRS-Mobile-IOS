@@ -65,14 +65,19 @@
     </ion-title>
   </ion-toolbar>
 
-  <form>
+  <form [formGroup]="passwordForm" (ngSubmit)="updatedPassword()">
     <ion-grid>
       <ion-row>
         <ion-col size="12">
           <ion-item lines="full">
             <ion-label position="floating" color="primary">Current Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input formControlName='currentPassword' type="password" minlength="6" required></ion-input>
           </ion-item>
+
+          <ion-text color="danger" *ngIf="passwordFormErrors.currentPassword">
+            {{ passwordFormErrors.currentPassword }}
+          </ion-text>
+
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -82,8 +87,11 @@
         <ion-col size="12">
           <ion-item lines="none">
             <ion-label position="floating" color="primary">New Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input formControlName='newPassword' type="password" required></ion-input>
           </ion-item>
+          <ion-text color="danger" *ngIf="passwordFormErrors.newPassword">
+            {{ passwordFormErrors.newPassword }}
+          </ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -93,8 +101,11 @@
         <ion-col size="12">
           <ion-item lines="none">
             <ion-label position="floating" color="primary">Confirm Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input formControlName='confirmPassword' type="password" required></ion-input>
           </ion-item>
+          <ion-text color="danger" *ngIf="passwordFormErrors.confirmPassword">
+            {{ passwordFormErrors.confirmPassword }}
+          </ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
