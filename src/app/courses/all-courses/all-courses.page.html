@@ -20,16 +20,20 @@
 
   <ion-grid>
     <ion-row class="ion-text-center">
-      <ion-col>
+      <ion-col *ngFor="let course of courses">
 
         <ion-card class="course">
-          <ion-img  src="../../../assets/images/image-course.png"></ion-img>
-          <h3 class="padding-top"  color="primary"> the title of course </h3>
+          <ion-img  src="{{course.imagePath}}"></ion-img>
+          <h3 class="padding-top"  color="primary"> {{course.courseTranslations[0].title}} </h3>
           <ion-item>
             <div class="icon-sound-course">
-              <ion-icon name="play"></ion-icon>
+              <div *ngIf="course.courseTranslations[0].introVoicePath">
+                <ion-icon [name]="!course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course)">
+                </ion-icon>
+              </div>
+             
             </div>
-            <ion-button (click)="getCourse()"  fill="outline" slot="end">
+            <ion-button (click)="getCourse(course.id)"  fill="outline" slot="end">
               <ion-icon name="eye"></ion-icon>
               View
             </ion-button>
@@ -39,5 +43,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

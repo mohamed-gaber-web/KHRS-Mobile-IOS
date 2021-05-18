@@ -15,6 +15,7 @@ import { AllCoursesPage } from './all-courses.page';
     IonicModule,
     AllCoursesPageRoutingModule
   ],
-  declarations: [AllCoursesPage]
+  declarations: [AllCoursesPage],
+ 
 })
 export class AllCoursesPageModule {}

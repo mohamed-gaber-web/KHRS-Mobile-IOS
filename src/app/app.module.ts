@@ -14,6 +14,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { AppInterceptor } from './app-interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Media } from '@ionic-native/media/ngx';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -37,8 +38,10 @@ export function LanguageLoader(http: HttpClient) {
     })
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true } // AppInterceptor
+  providers: [
+    Media,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }, // AppInterceptor
   ],
   bootstrap: [AppComponent],
 })
