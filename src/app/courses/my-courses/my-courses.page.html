@@ -26,84 +26,55 @@
     <ion-row class="ion-text-center">
       <ion-col>
 
-        <ion-card class="course">
-          <ion-img  src="../../../assets/images/image-course.png"></ion-img>
-          <h3 class="padding-top"  color="primary"> the title of course </h3>
+        <ion-card *ngFor="let course of myCourses" class="course">
+          <ion-img  src="{{course.course.imagePath}}"></ion-img>
+          <h3 class="padding-top"  color="primary"> {{course.course.courseTranslations[0].title}}</h3>
           <ion-item>
 
-            <div class="icon-sound-course">
-              <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-              </ion-img>
-              </div>
+            <div *ngIf="course.course.courseTranslations[0].introVoicePath">
+              <div class="icon-sound-course">
+                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" [name]="!course.course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course.course)">
+                  </ion-icon>
+                </div>
             </div>
-
-            <ion-button slot="end">
-              <ion-icon name="lock-closed-outline"></ion-icon>
-              Start
-            </ion-button>
-
-          </ion-item>
-        </ion-card>
-
-      </ion-col>
-
-      <ion-col>
-
-        <ion-card class="course">
-          <ion-img  src="../../../assets/images/image-course.png"></ion-img>
-          <h3 class="padding-top"  color="primary"> the title of course </h3>
-          <ion-item>
-            <div class="icon-sound-course">
-              <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-              </ion-img>
-              </div>
+            <div class="start" *ngIf="course.userCourse.status == 5">
+              <ion-button slot="end">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                Start
+              </ion-button>
             </div>
-            <ion-button fill="outline" slot="end"> <ion-icon name="time-outline"></ion-icon> Pending</ion-button>
-          </ion-item>
-        </ion-card>
-
-      </ion-col>
-
-      <ion-col>
-
-        <ion-card class="course">
-          <ion-img  src="../../../assets/images/image-course.png"></ion-img>
-          <h3 class="padding-top"  color="primary"> the title of course </h3>
-          <ion-item>
-            <ion-button class="ion-padding-end">Passed</ion-button>
-            <ion-button> Certificate</ion-button>
-          </ion-item>
-        </ion-card>
-
-      </ion-col>
-
-      <ion-col>
-
-        <ion-card class="course">
-          <ion-img  src="../../../assets/images/image-course.png"></ion-img>
-          <h3 class="padding-top"  color="primary"> the title of course </h3>
-          <ion-item>
-            <div class="icon-sound-course">
-              <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-              </ion-img>
-              </div>
+            <div class="applied" *ngIf="course.userCourse.status == 4">
+              <ion-button fill="outline" slot="end"> <ion-icon name="time-outline"></ion-icon> Pending </ion-button>
             </div>
-            <ion-button fill="outline" slot="end">
-              <ion-icon name="lock-closed-outline"></ion-icon> Expired</ion-button>
+            <div class="passed" *ngIf="course.userCourse.status == 1">
+              <ion-item>
+                <ion-button class="ion-padding-end">Passed</ion-button>
+                <ion-button> Certificate</ion-button>
+              </ion-item>
+            </div>
+            <div class="expired" *ngIf="course.userCourse.status == 2">
+              <ion-button fill="outline" slot="end">
+                <ion-icon name="lock-closed-outline"></ion-icon> Expired</ion-button>
+            </div>
+            <div class="expired" *ngIf="course.userCourse.status == 3">
+              <ion-button fill="outline" slot="end">
+                <ion-icon name="lock-closed-outline"></ion-icon> Failed</ion-button>
+            </div>
           </ion-item>
         </ion-card>
 
       </ion-col>
+
+    
 
     </ion-row>
   </ion-grid>
-
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 
 </ion-content>

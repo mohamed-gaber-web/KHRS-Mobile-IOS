@@ -117,12 +117,16 @@ export class AllCoursesPage implements OnInit {
         }
 
     });
+    if( course.audioElement.audio && course.audioElement.audio.paused){
+      course.audioElement.audio.play();
+    }else{
       var audio = new Audio(`${course.courseTranslations[0].introVoicePath}`);
       course.audioElement.audio = audio;
-      course.audioElement.status = true;
       course.audioElement.audio.load();
       course.audioElement.audio.play();
       console.log(this.courses);
+    }
+    course.audioElement.status = true;
 
     }else{
       //stop the the live one
