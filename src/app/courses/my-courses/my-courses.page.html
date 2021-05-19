@@ -44,7 +44,10 @@
               </ion-button>
             </div>
             <div class="applied" *ngIf="course.userCourse.status == 4">
-              <ion-button fill="outline" slot="end"> <ion-icon name="time-outline"></ion-icon> Pending </ion-button>
+              <ion-button fill="outline" slot="start">
+                <ion-icon name="time-outline"></ion-icon>
+                Pending
+              </ion-button>
             </div>
             <div class="passed" *ngIf="course.userCourse.status == 1">
               <ion-item>
@@ -65,7 +68,7 @@
 
       </ion-col>
 
-    
+
 
     </ion-row>
   </ion-grid>
