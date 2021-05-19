@@ -1,16 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { RedirectService } from './shared/guard/redirect.guard';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  // },
   {
     path: '',
-    redirectTo: '/choose-language',
-    pathMatch: 'full'
+    redirectTo: localStorage.getItem('access_token') ?  '/courses/tabs/all-courses' : '/choose-language',
+    pathMatch: 'full',
   },
   {
     path: 'auth',

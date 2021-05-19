@@ -8,4 +8,5 @@ export class User {
     gender:number;
     languageId:number;
     language:string;
+    imagePath: string;
 }

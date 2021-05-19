@@ -15,51 +15,13 @@ export class ChooseLanguagePage implements OnInit {
   isLoading = false;
   subs: Subscription[] = [];
   langItems: Language[];
+  isSelected: boolean = false;
 
-  // flagsLanguage = [
-  //   {
-  //     name: "العربية",
-  //     imgSrc: "../../assets/icon/العربية.png"
-  //   },
-  //   {
-  //     name: "Tigirinya",
-  //     imgSrc: "../../assets/icon/tin.png"
-  //   },
-  //   {
-  //     name: "Somali",
-  //     imgSrc: "../../assets/icon/somali.png"
-  //   },
-  //   {
-  //     name: "Turkish",
-  //     imgSrc: "../../assets/icon/tur.png"
-  //   },
-  //   {
-  //     name: "urdu",
-  //     imgSrc: "../../assets/icon/urdu.png"
-  //   },
-  //   {
-  //     name: "english",
-  //     imgSrc: "../../assets/icon/english.png"
-  //   },
-  //   {
-  //     name: "Danish",
-  //     imgSrc: "../../assets/icon/danish.png"
-  //   },
-  //   {
-  //     name: "swidish",
-  //     imgSrc: "../../assets/icon/sweed.png"
-  //   },
-  //   {
-  //     name: "Norway",
-  //     imgSrc: "../../assets/icon/norway.png"
-  //   }
-
-  // ];
 
   constructor(public router: Router, private appSerrvice: AppService) { }
 
   ngOnInit() {
-    this.isLoading = true
+    this.isLoading = true;
     this.subs.push(
       this.appSerrvice.getLanguage().subscribe(response => {
         this.isLoading = false;
@@ -73,6 +35,7 @@ export class ChooseLanguagePage implements OnInit {
   }
 
   getLanguageId(id: number) {
+    this.isSelected = !this.isSelected;
     return localStorage.setItem('languageId', JSON.stringify(id));
   }
 

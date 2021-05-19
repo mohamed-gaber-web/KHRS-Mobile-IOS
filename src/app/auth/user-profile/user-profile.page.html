@@ -11,7 +11,7 @@
       <ion-avatar slot="end">
         <img src="../../../assets/images/image profille (1).png">
       </ion-avatar>
-      <ion-label>Username</ion-label>
+      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
 
 
@@ -32,26 +32,26 @@
         <ion-card>
           <ion-list *ngIf="userInfo">
             <ion-item>
-              <ion-label color="primary"> Firstname: {{ userInfo.firstname }} </ion-label>
+              <ion-label color="primary"> Firstname : {{ userInfo.firstname }} </ion-label>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"> Lastname: {{ userInfo.lastname }} </ion-label>
+              <ion-label color="primary"> Lastname : {{ userInfo.lastname }} </ion-label>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"> Phone Number: 000-0000-000 </ion-label>
+              <ion-label color="primary"> Phone Number : {{ userInfo.phoneNumber }} </ion-label>
             </ion-item>
             <ion-item>
               <ion-label color="primary"> Email : {{ userInfo.email }} </ion-label>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"> Gender: Male </ion-label>
+              <ion-label color="primary"> Gender : {{ userInfo.gender }} </ion-label>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"> Birthday : 00-00-0000 </ion-label>
+              <ion-label color="primary"> Birthday : {{ userInfo.birthdate }} </ion-label>
             </ion-item>
 
             <ion-item>
-              <ion-button> <ion-icon name="create-outline"></ion-icon> Edit </ion-button>
+              <ion-button (click)="goToEditUser()"> <ion-icon name="create-outline"></ion-icon> Edit </ion-button>
             </ion-item>
           </ion-list>
         </ion-card>
@@ -106,6 +106,7 @@
           <ion-text color="danger" *ngIf="passwordFormErrors.confirmPassword">
             {{ passwordFormErrors.confirmPassword }}
           </ion-text>
+          <ion-text color="danger" *ngIf="passwordForm.controls.confirmPassword.hasError('mismatchedPasswords')">{{ 'notMatch' | translate }}</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -116,7 +117,7 @@
     <ion-grid>
       <ion-row ion-align-items-center>
         <ion-col size="12">
-          <ion-button>
+          <ion-button (click)="updatedPassword()">
             <ion-icon name="checkmark-outline"></ion-icon>
             Save
           </ion-button>

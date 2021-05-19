@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button> </ion-back-button>
+    </ion-buttons>
+
+    <ion-menu-button slot="start"></ion-menu-button>
+
+
+    <div class="img-profile">
+      <ion-avatar slot="end">
+        <img src="../../../assets/images/image profille (1).png">
+      </ion-avatar>
+      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
+    </div>
+
+
+  <ion-img class="ion-margin-end" slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-toolbar>
+  <ion-title>
+   Update user
+  </ion-title>
+</ion-toolbar>
+
+<ion-content>
+
+  <form [formGroup]="userInfoForm" (ngSubmit)="updatedUserInfo()">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-label position="floating">{{ 'firstname' | translate}}</ion-label>
+            <ion-input  type="text" formControlName="FirstName" required></ion-input>
+          </ion-item>
+          <ion-text color="danger" class="error ion-padding" *ngIf="userInfoFormErrors.FirstName">
+            {{userInfoFormErrors.FirstName }}
+          </ion-text>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="floating">{{ 'lastname' | translate}}</ion-label>
+            <ion-input type="text" formControlName="LastName" required></ion-input>
+          </ion-item>
+          <ion-text color="danger" class="error ion-padding" *ngIf="userInfoFormErrors.LastName">
+            {{ userInfoFormErrors.LastName }}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none">
+            <ion-label position="floating"> {{ 'phoneNumber' | translate}} </ion-label>
+            <ion-input  type="text" formControlName="PhoneNumber" minlength="11" required></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="userInfoFormErrors.PhoneNumber">{{ userInfoFormErrors.PhoneNumber }}
+          </ion-text>
+          <ion-text color="danger" *ngIf="userInfoFormErrors.PhoneNumber">{{ userInfoFormErrors.PhoneNumber }}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'Email' | translate }}</ion-label>
+            <ion-input type="text" formControlName="email" required></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="userInfoFormErrors.email"> {{ userInfoFormErrors.email }}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating"></ion-label>
+            <ion-input  type="date" formControllName="Birthdate" required></ion-input>
+          </ion-item>
+          <ion-text  *ngIf="userInfoFormErrors.Birthdate"> {{ userInfoFormErrors.Birthdate }}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list>
+            <ion-radio-group  formControlName="Gender">
+              <ion-list-header>
+                <ion-label>{{ 'gender' | translate}}</ion-label>
+              </ion-list-header>
+
+                <ion-row>
+                  <ion-col size="6" *ngFor="let genderItem of gender">
+                    <ion-item >
+                      <ion-label>{{ genderItem.name }}</ion-label>
+                      <ion-radio slot="start" [value]="genderItem.value"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+
+                </ion-row>
+
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid>
+      <ion-row ion-align-items-center>
+        <ion-col size="12">
+          <ion-button (click)="updatedUserInfo()">
+            <ion-icon name="checkmark-outline"></ion-icon>
+            Update
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
+</ion-content>

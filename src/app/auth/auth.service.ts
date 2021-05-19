@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import {loginCredentials} from "src/app/shared/models/loginCredentials";
 import { StorageService } from "src/app/shared/services/storage.service";
 import { User } from './sign-up/user.model';
-import { loginAPI, registerAPI, recommendedBy, userChangePassword } from "src/app/api.constants";
+import { loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo } from "src/app/api.constants";
 
 
 
@@ -44,6 +44,10 @@ import { loginAPI, registerAPI, recommendedBy, userChangePassword } from "src/ap
 
   updatedPassword(userPassword) {
     return this.http.put(`${userChangePassword}`, userPassword);
+  }
+
+  updatedUserProfile(userInfo) {
+    return this.http.put(`${updatedUserInfo}`, userInfo);
   }
 
 }

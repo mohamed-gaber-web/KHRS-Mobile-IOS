@@ -92,8 +92,8 @@ export class SignUpPage implements OnInit {
 
     async uploadImg(event) {
       const imgString: any = await this.helpers.toBase64(event.target.files[0]);
-      (this.registerForm.get('imageFile') as FormGroup).patchValue({
-        fieldName: 'userRegisterImage',
+      (this.registerForm.get('file') as FormGroup).patchValue({
+        fieldName: 'image',
         filename: event.target.files[0].name,
         fileExtension: this.helpers.getExtension(event.target.files[0].name),
         fileData: this.helpers.validBase64(imgString),
@@ -117,7 +117,7 @@ export class SignUpPage implements OnInit {
       'recommendedbyId': [0, Validators.required],
       'acceptTerms': [null, Validators.required],
       'languageId': [JSON.parse(localStorage.getItem('languageId'))],
-      imageFile : this.formBuilder.group({
+      file : this.formBuilder.group({
         fieldName: ['', !Validators.required],
         filename: ['', !Validators.required],
         fileExtension: ['', !Validators.required],
