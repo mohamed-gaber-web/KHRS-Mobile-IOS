@@ -20,7 +20,7 @@
   </ion-grid>
   <div class="button-start">
 
-    <ion-button (click)="chooseLanguage()">
+    <ion-button [disabled]='isSelected === false' (click)="chooseLanguage()">
       <ion-img src="../../assets/images/logo-hand-2.png"></ion-img>
       START
     </ion-button>
