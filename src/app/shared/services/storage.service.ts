@@ -65,7 +65,7 @@ export class StorageService {
       return JSON.parse(this.getStorage('lang'));
     }
   }
-  
+
   getStorage(key: string) { // get LocalStorage
     return localStorage.getItem(key);
   }
@@ -123,10 +123,14 @@ export class StorageService {
     }
   }
   getUser(): User {
-    var value = JSON.parse(this.getStorage('user')); // Json.parse convert text or string to javascript object '{}' >> {}
+    let value = JSON.parse(this.getStorage('user')); // Json.parse convert text or string to javascript object '{}' >> {}
     this.user = new User();
     this.user.firstname = value.firstname;
     this.user.lastname = value.lastname;
+    this.user.phoneNumber = value.phoneNumber;
+    this.user.gender = value.gender;
+    this.user.birthdate = value.birthdate;
+    this.user.imagePath = value.imagePath;
     // this.user.Role = value.role;
     this.user.email = value.email;
     // this.user.permissions = value.permissions;
@@ -142,13 +146,13 @@ export class StorageService {
       return this.danishFlag;
     }
   }
-  
-  
+
+
   validBase64(value: string): string {
     return value.substr(value.indexOf(',') + 1);
   }
 
-  // handle image base64 
+  // handle image base64
   toBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

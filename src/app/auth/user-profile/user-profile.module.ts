@@ -6,6 +6,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { UserProfilePageRoutingModule } from './user-profile-routing.module';
 
+
+import { TranslateModule } from '@ngx-translate/core';
+
 import { UserProfilePage } from './user-profile.page';
 
 @NgModule({
@@ -15,7 +18,8 @@ import { UserProfilePage } from './user-profile.page';
     IonicModule,
     UserProfilePageRoutingModule,
     TabsPageModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   declarations: [UserProfilePage]
 })

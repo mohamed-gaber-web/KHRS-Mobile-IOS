@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonTabs } from '@ionic/angular';
+import { AuthService } from '../auth/auth.service';
+import { StorageService } from '../shared/services/storage.service';
 
 @Component({
   selector: 'app-courses',
@@ -9,11 +11,15 @@ import { IonTabs } from '@ionic/angular';
 export class CoursesPage implements OnInit {
 
   @ViewChild('myTabs') tabs: IonTabs;
-  activeTabName
+  activeTabName;
+  userInfo: any;
 
-constructor() { }
 
-ngOnInit() {}
+constructor(public storageService: StorageService, public authService: AuthService) { }
+
+ngOnInit() {
+  this.userInfo = this.authService.getUser();
+}
 
 
 

@@ -1,10 +1,13 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators,  } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { matchingPasswords } from 'src/theme/app-validators';
 import { AuthService } from '../auth.service';
+
+import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -16,6 +19,7 @@ export class UserProfilePage implements OnInit {
 
   userInfo: any;
   passwordForm: FormGroup;
+  subs: Subscription[] = [];
 
   passwordFormErrors = {
     currentPassword: '',
@@ -76,8 +80,11 @@ export class UserProfilePage implements OnInit {
       return;
     }
 
-    this.authService.updatedPassword(this.passwordForm.value).subscribe(async (response) => {
-      if (response['success'] === true) {
+    this.subs.push(
+
+      this.authService.updatedPassword(this.passwordForm.value).subscribe(async (response) => {
+
+        if (response['success'] === true) {
         var toast = await this.toastController.create({
           message: 'You password is changed!',
           duration: 2000,
@@ -98,7 +105,16 @@ export class UserProfilePage implements OnInit {
       }
 
     })
+    );
 
+  }
+
+  goToEditUser() {
+    this.router.navigate(['/auth/user-profile/edit-user']);
+  }
+
+  ngOnDestroy() {
+      this.subs.forEach((sub) => sub.unsubscribe());
   }
 
 }

@@ -5,7 +5,8 @@ export const imagesBaseUrl = 'https://khrs-admin.sdex.online';
 export const loginAPI = `${baseUrl}/api/Account/Login`;
 export const registerAPI = `${baseUrl}/api/Account/Register`;
 export const recommendedBy = `${baseUrl}/api/RecommendedBy/GetRecommendedBy`;
-export const userChangePassword = `${baseUrl}/api/Account/changePasswod`
+export const userChangePassword = `${baseUrl}/api/Account/changePasswod`;
+export const updatedUserInfo = `${baseUrl}/api/Account/UpdateUser`;
 
 // get language
 export const getLanguage = `${baseUrl}/api/Language/GetLanguage`
