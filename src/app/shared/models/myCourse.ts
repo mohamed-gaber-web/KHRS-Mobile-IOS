@@ -3,5 +3,5 @@ import { userCourse } from "./userCourse";
 
 export class MyCourse{
     course:Course;
-    myCourse:userCourse;
+    userCourse:userCourse;
 }
