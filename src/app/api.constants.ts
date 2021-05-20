@@ -14,3 +14,4 @@ export const getLanguage = `${baseUrl}/api/Language/GetLanguage`
 //Courses
 export const getAllCoursesAPI = `${baseUrl}/api/Course/GetCourses`;
 export const getUsersCoursesAPI = `${baseUrl}/api/UserCourse/GetAll`;
+export const getCourseDetails = `${baseUrl}/api/Course/Details`;

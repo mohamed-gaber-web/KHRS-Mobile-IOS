@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getAllCoursesAPI, getUsersCoursesAPI } from 'src/app/api.constants';
+import { getAllCoursesAPI, getCourseDetails, getUsersCoursesAPI } from 'src/app/api.constants';
 import { Course } from '../models/course';
 import { MyCourse } from '../models/myCourse';
 
@@ -33,5 +33,10 @@ export class CourseService {
     return this.http.get<MyCourse>(
       `${getUsersCoursesAPI}/${courseQuery}` + this.queryParams
     );
+  }
+
+  //get the course details
+  getCoursesDetails(id: number) {
+    return this.http.get(`${getCourseDetails}?id=${id}`);
   }
 }
