@@ -50,7 +50,7 @@ export class AllCoursesPage implements OnInit {
           if(this.courses.length==0){
             res.forEach(element => {
               if(element.imagePath){
-                element.imagePath = `${imagesBaseUrl}${element.imagePath}`;
+                element.imagePath = `${element.imagePath}`;
               }
               if(element.courseTranslations[0].introVoicePath){
                 element.courseTranslations[0].introVoicePath = `${imagesBaseUrl}${element.courseTranslations[0].introVoicePath}`;
