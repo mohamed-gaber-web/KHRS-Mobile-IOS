@@ -44,5 +44,6 @@
     "gender": "Gender",
     "acceptTerms": "I agree terms and conditions",
     "Recommended": "Recommended By",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "fromDate": "From date is required"
 }

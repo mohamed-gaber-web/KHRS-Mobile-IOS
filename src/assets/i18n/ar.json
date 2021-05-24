@@ -45,7 +45,8 @@
     "acceptTerms": "اوافق على كل الشروط",
     "Recommended": "",
     "signUp": "التسجيل",
-    "signIn": "تسجيل الدخول"
+    "signIn": "تسجيل الدخول",
+    "fromDate": "التاريخ مطلوب"
 
 
 }

@@ -1,6 +1,5 @@
 <ion-content>
 
-
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
   <ion-grid *ngIf="courseDetails">
@@ -8,30 +7,31 @@
       <ion-col>
 
         <ion-title>
-          {{ courseDetails.courseTranslations[0].title }}
+          {{ courseDetails.courseTranslations[0]?.title }}
         </ion-title>
 
         <ion-img
-          class="ion-padding-top ion-padding-bottom"
-          [src]="courseDetails.imagePath">
+          [src]="courseDetails?.imagePath">
         </ion-img>
 
-            <ion-item class="time-valid" lines="none">
-              <div class="icon-valid">
-                <ion-icon slot="start" name="alarm-outline"></ion-icon>
-              </div>
-              <ion-label color="primary"> <strong> Valid For: </strong> {{ courseDetails.duration }} Day </ion-label>
-            </ion-item>
+        <ion-item class="time-valid" lines="none">
+          <div class="icon-valid">
+            <ion-icon slot="start" name="alarm-outline"></ion-icon>
+          </div>
+          <ion-label color="primary"> <strong> Valid For: </strong> {{ courseDetails.duration }} Day </ion-label>
+        </ion-item>
 
         <div class="video-inro">
           <iframe width="100%" height="230" src="https://www.youtube.com/embed/LHxsRIxwTrQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-        <ion-button *ngIf="courseDetails.statusName === null"> Apply </ion-button>
-        <ion-button  *ngIf="courseDetails.statusName === '5' "> Course in progress </ion-button>
+        <ion-button (click)="sendData($event, courseDetails.id)" *ngIf="courseDetails.statusName === null"> Apply </ion-button>
+
+        <ion-text class="statusMsg" *ngIf="courseDetails.statusName !== null"> {{ courseDetails.statusName }} </ion-text>
+        <!-- <ion-button  *ngIf="courseDetails.statusName === '5' "> Course in progress </ion-button>
         <ion-button colors="danger" *ngIf="courseDetails.statusName === '3' "> Course in faild </ion-button>
         <ion-button *ngIf="courseDetails.statusName === '2' "> Expired Without TakingExam  </ion-button>
-        <ion-button *ngIf="courseDetails.statusName === '4' "> Applied And Waiting For Approval  </ion-button>
+        <ion-button *ngIf="courseDetails.statusName === '4' "> Applied And Waiting For Approval  </ion-button> -->
 
 
       </ion-col>

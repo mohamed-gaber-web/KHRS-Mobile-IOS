@@ -15,20 +15,25 @@ import { AudioElement } from 'src/app/shared/models/audioObject';
   styleUrls: ['./all-courses.page.scss'],
 })
 export class AllCoursesPage implements OnInit {
-  private offset:number;
-  private totalLength:number;
+  private offset: number;
+  private totalLength: number;
   sub: Subscription[] = [];
   public courses: Array<Course> = [];
   isLoading = false;
 
-  constructor(private route: Router, private navCtrl: NavController,private courseService:CourseService,private platform:Platform) { }
+  constructor(
+    private route: Router,
+    private navCtrl: NavController,
+    private courseService: CourseService,
+    private platform: Platform
+  ) {}
 
   ngOnInit() {
     this.offset = 0;
     this.getCourses();
   }
 
-  getCourse(id:number) {
+  getCourse(id: number) {
     this.navCtrl.navigateBack(`/courses/tabs/${id}`);
   }
 
@@ -37,37 +42,36 @@ export class AllCoursesPage implements OnInit {
 
     this.sub.push(
       this.courseService
-        .getAllCourses("",this.offset)
+        .getAllCourses('', this.offset)
         .pipe(
           map((response) => {
             Object.entries(response);
             this.isLoading = false;
-            this.totalLength = response["length"];
-            return response["result"];
+            this.totalLength = response['length'];
+            return response['result'];
           })
         )
         .subscribe((res) => {
-          if(this.courses.length==0){
-            res.forEach(element => {
-              if(element.imagePath){
+          if (this.courses.length == 0) {
+            res.forEach((element) => {
+
+              if (element.imagePath) {
                 element.imagePath = `${element.imagePath}`;
               }
-              if(element.courseTranslations[0].introVoicePath){
+              if (element.courseTranslations[0]?.introVoicePath) {
                 element.courseTranslations[0].introVoicePath = `${imagesBaseUrl}${element.courseTranslations[0].introVoicePath}`;
-
               }
+
               element.audioElement = new AudioElement();
               element.audioElement.status = false;
-
-
             });
-            this.courses=res;
-          }else{
-            res.forEach(element => {
-              if(element.imagePath){
+            this.courses = res;
+          } else {
+            res.forEach((element) => {
+              if (element.imagePath) {
                 element.imagePath = `${imagesBaseUrl}${element.imagePath}`;
               }
-              if(element.courseTranslations[0].introVoicePath){
+              if (element.courseTranslations[0].introVoicePath) {
                 element.courseTranslations[0].introVoicePath = `${imagesBaseUrl}${element.courseTranslations[0].introVoicePath}`;
               }
               element.audioElement = new AudioElement();
@@ -79,10 +83,9 @@ export class AllCoursesPage implements OnInit {
           this.offset++;
         })
     );
-
   }
   loadData(event) {
-    if(this.courses.length < this.totalLength){
+    if (this.courses.length < this.totalLength) {
       setTimeout(() => {
         this.getCourses();
         console.log('Done');
@@ -94,51 +97,46 @@ export class AllCoursesPage implements OnInit {
           event.target.disabled = true;
         }
       }, 500);
-    }else{
+    } else {
       event.target.disabled = true;
-
     }
-
   }
 
-  playIntroHTML(course:Course){
-   console.log(this.courses);
+  playIntroHTML(course: Course) {
+    console.log(this.courses);
     // this.nativeAudio.preloadSimple(`intro${course.id}`, `${course.courseTranslations[0].introVoicePath}`).then(onSuccess, onError);
     // this.nativeAudio.play(`intro${course.id}`).then(onSuccess, onError);
-    if(course.audioElement.status == false){
+    if (course.audioElement.status == false) {
       //stop all
-      this.courses.forEach((element:Course,index) => {
-        if(element.audioElement.audio != null){
+      this.courses.forEach((element: Course, index) => {
+        if (element.audioElement.audio != null) {
           element.audioElement.audio.pause();
           element.audioElement.status = false;
           //TODO destroy
-        }else{
+        } else {
           //TODO destroy
         }
-
-    });
-    if( course.audioElement.audio && course.audioElement.audio.paused){
-      course.audioElement.audio.play();
-    }else{
-      var audio = new Audio(`${course.courseTranslations[0].introVoicePath}`);
-      course.audioElement.audio = audio;
-      course.audioElement.audio.load();
-      course.audioElement.audio.play();
-      console.log(this.courses);
-    }
-    course.audioElement.status = true;
-
-    }else{
+      });
+      if (course.audioElement.audio && course.audioElement.audio.paused) {
+        course.audioElement.audio.play();
+      } else {
+        var audio = new Audio(`${course.courseTranslations[0].introVoicePath}`);
+        course.audioElement.audio = audio;
+        course.audioElement.audio.load();
+        course.audioElement.audio.play();
+        console.log(this.courses);
+      }
+      course.audioElement.status = true;
+    } else {
       //stop the the live one
-      if(course.audioElement.audio != null){
+      if (course.audioElement.audio != null) {
         course.audioElement.audio.pause();
         course.audioElement.status = false;
         //TODO destroy
-      }else{
+      } else {
         //TODO destroy
       }
     }
-
   }
 
   // playIntro(course:Course){
@@ -160,12 +158,10 @@ export class AllCoursesPage implements OnInit {
   //   });
 
   // }
-
 }
 function onSuccess() {
   throw new Error('Function not implemented.');
 }
 function onError() {
-  alert("error")
+  alert('error');
 }
-

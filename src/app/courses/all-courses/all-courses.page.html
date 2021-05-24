@@ -28,14 +28,15 @@
 
         <ion-card *ngFor="let course of courses" class="course">
           <ion-img  src="{{course.imagePath}}"></ion-img>
-          <h3 class="padding-top"  color="primary"> {{course.courseTranslations[0].title}} </h3>
+          <h3 class="padding-top"  color="primary"> {{course.courseTranslations[0]?.title}} </h3>
           <ion-item>
-            <div *ngIf="course.courseTranslations[0].introVoicePath">
-              <div class="icon-sound-course">
-                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course)">
-                  </ion-icon>
-                </div>
-            </div>
+              <div *ngIf="course.courseTranslations[0]?.introVoicePath">
+                <div class="icon-sound-course">
+                    <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course)">
+                    </ion-icon>
+                  </div>
+              </div>
+
             <ion-button (click)="getCourse(course.id)"  fill="outline" slot="end">
               <ion-icon name="eye"></ion-icon>
               View

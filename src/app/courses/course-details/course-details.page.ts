@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CourseService } from 'src/app/shared/services/courses.service';
 
+import { NavController } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-course-details',
   templateUrl: './course-details.page.html',
@@ -19,7 +22,8 @@ export class CourseDetailsPage implements OnInit {
   constructor(
     private router: Router,
     private courseService: CourseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navCtrl: NavController
     ) { }
 
   ngOnInit() {
@@ -31,17 +35,20 @@ export class CourseDetailsPage implements OnInit {
             this.courseService.getCoursesDetails(+params.get('courseId')))
           ).subscribe(response => {
             this.isLoading = false;
-            console.log(response)
             this.courseDetails = response['result'];
       })
     );
   }
 
+  // ** send id to apply course page
+  sendData(event, id) {
+    this.router.navigate(['courses/tabs/apply-course', {id}])
+  }
 
-   ngOnDestroy(): void {
-    this.subs.forEach((element) => {
-      element.unsubscribe();
-    })
-   }
+  ngOnDestroy(): void {
+  this.subs.forEach((element) => {
+    element.unsubscribe();
+  })
+  }
 
 }
