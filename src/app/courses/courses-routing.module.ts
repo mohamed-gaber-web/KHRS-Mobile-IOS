@@ -55,7 +55,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'course-material',
+    path: 'course-material/:courseId',
     loadChildren: () => import('./course-material/course-material.module').then( m => m.CourseMaterialPageModule)
   }
 

@@ -1,7 +1,9 @@
 <ion-header class="course">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button> </ion-back-button>
+      <ion-back-button>
+        <ion-back-button defaultHref="/courses"> </ion-back-button>
+      </ion-back-button>
     </ion-buttons>
 
     <ion-menu-button slot="start"></ion-menu-button>
@@ -11,7 +13,7 @@
       <ion-avatar slot="end">
         <img src="../../../assets/images/image profille (1).png">
       </ion-avatar>
-      <ion-label>Username</ion-label>
+      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
 
 
@@ -19,18 +21,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-header>
-  <ion-toolbar>
-    <ion-title>course material</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
 <ion-content>
 
-  <ion-grid class="img-course-intro">
+  <!-- <ion-grid class="img-course-intro">
     <ion-row>
-      <ion-col size="12" >
-        <ion-img src="../../../assets/images/img-intro.png"></ion-img>
+      <ion-col size="12" *ngIf="courseMaterial">
+        <ion-img  [src]="courseMaterial.imagePath"></ion-img>
         <div class="icon-sound">
           <div class="img-volume">
             <ion-img
@@ -40,58 +38,21 @@
          </div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
+
 
 
   <ion-slides #slides pager="true" [options]="slideOpts">
 
-    <ion-slide class="course__material ion-margin-top">
+    <ion-slide *ngFor="let course of courseMaterial" class="course__material ion-margin-top">
       <ion-grid>
         <ion-row class="ion-padding">
-          <ion-col size="6">
-            <ion-img src="../../../assets/images/course-material.png"></ion-img>
+          <ion-col size="12">
+            <ion-img class="ion-padding-bottom" [src]="course.imagePath"></ion-img>
+            <p>
+              <ion-text color="primary"> {{ course.materialTranslations[0].description }} </ion-text>
+            </p>
           </ion-col>
-          <ion-col size="6">
-            <ion-img src="../../../assets/images/course-material-2.png"></ion-img>
-          </ion-col>
-
-          <p>
-            <ion-text color="primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim mattis eget mattis id pulvinar tortor. Tempus semper tortor auctor urna. Integer amet venenatis, ac varius vel imperdiet. Bibendum imperdiet  </ion-text>
-          </p>
-        </ion-row>
-      </ion-grid>
-    </ion-slide>
-
-    <ion-slide class="course__material ion-margin-top">
-      <ion-grid>
-        <ion-row class="ion-padding">
-          <ion-col size="6">
-            <ion-img src="../../../assets/images/course-material.png"></ion-img>
-          </ion-col>
-          <ion-col size="6">
-            <ion-img src="../../../assets/images/course-material-2.png"></ion-img>
-          </ion-col>
-
-          <p>
-            <ion-text color="primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim mattis eget mattis id pulvinar tortor. Tempus semper tortor auctor urna. Integer amet venenatis, ac varius vel imperdiet. Bibendum imperdiet  </ion-text>
-          </p>
-        </ion-row>
-      </ion-grid>
-    </ion-slide>
-
-    <ion-slide class="course__material ion-margin-top">
-      <ion-grid>
-        <ion-row class="ion-padding">
-          <ion-col size="6">
-            <ion-img src="../../../assets/images/course-material.png"></ion-img>
-          </ion-col>
-          <ion-col size="6">
-            <ion-img src="../../../assets/images/course-material-2.png"></ion-img>
-          </ion-col>
-
-          <p>
-            <ion-text color="primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim mattis eget mattis id pulvinar tortor. Tempus semper tortor auctor urna. Integer amet venenatis, ac varius vel imperdiet. Bibendum imperdiet  </ion-text>
-          </p>
         </ion-row>
       </ion-grid>
     </ion-slide>
@@ -102,11 +63,11 @@
   <ion-grid>
     <ion-row class="ion-align-items-center slide-button">
 
-      <ion-col size="4" offset="2">
+      <ion-col size="6" >
         <ion-button (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
       </ion-col>
 
-      <ion-col size="4">
+      <ion-col size="6">
         <ion-button
           (click)="slideNext()"
           >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>

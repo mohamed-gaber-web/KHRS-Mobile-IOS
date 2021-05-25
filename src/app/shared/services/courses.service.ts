@@ -4,7 +4,9 @@ import {
   getAllCoursesAPI,
   getCourseDetails,
   getUsersCoursesAPI,
-  createApplyCourse, courseMaterials } from 'src/app/api.constants';
+  createApplyCourse,
+  courseMaterials,
+  getUserCourseDetails } from 'src/app/api.constants';
 import { Course } from '../models/course';
 import { MyCourse } from '../models/myCourse';
 
@@ -42,6 +44,11 @@ export class CourseService {
   // ** get the course details
   getCoursesDetails(id: number) {
     return this.http.get(`${getCourseDetails}?id=${id}`);
+  }
+
+  // ** get user course details
+  getUserCoursesDetails(courseId: number) {
+    return this.http.get(`${getUserCourseDetails}?id=${courseId}`);
   }
 
   // ** create course apply

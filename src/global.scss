@@ -79,6 +79,8 @@ ion-button {
   --box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.16);
   margin: 30px 0;
   text-transform: capitalize;
+  min-width: 150px;
+  max-width: 100%;
 }
 
 

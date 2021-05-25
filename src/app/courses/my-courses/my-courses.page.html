@@ -40,7 +40,8 @@
                 </div>
             </div>
             <div class="start" *ngIf="course.userCourse.status == 5">
-              <ion-button slot="end" (click)="goToChooseCourseMaterial(course.course.id)">
+              <ion-button slot="end"
+              (click)="goToChooseCourseMaterial(course.course.id, course.userCourse.courseId)">
                 <ion-icon name="eye-outline"></ion-icon>
                 Start
               </ion-button>

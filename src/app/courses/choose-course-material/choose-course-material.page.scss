@@ -1,7 +1,9 @@
 ion-title {
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 600;
+  font-size: 20px;
   text-transform: capitalize;
+  margin: 30px 0;
+
 }
 
 .course-date ion-item {
@@ -9,21 +11,21 @@ ion-title {
 }
 
 ion-item {
-  margin: 30px 0 40px 0;
+  margin: 20px 0;
 }
 
 .icon-valid {
   width: 30px;
   height: 30px;
-  line-height: 39px;
+  line-height: 37px;
   background-color: var(--ion-color-second-app);
   text-align: center;
   border-radius: 50%;
   margin-right: 10px;
 
   ion-icon {
-    color: #fff;
-    font-size: 21px;
+    color: #A7F781;
+    font-size: 18px;
   }
 
 }
@@ -43,3 +45,15 @@ ion-label {
   }
 }
 
+ion-spinner{
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+video {
+  padding: 0!important;
+  margin-top: 10px;
+}

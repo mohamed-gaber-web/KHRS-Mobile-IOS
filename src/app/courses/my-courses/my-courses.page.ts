@@ -48,6 +48,8 @@ export class MyCoursesPage implements OnInit {
           })
         )
         .subscribe((res) => {
+          console.log(res);
+
           if (this.myCourses.length == 0) {
             res.forEach((element:MyCourse) => {
 
@@ -140,7 +142,7 @@ export class MyCoursesPage implements OnInit {
   }
 
   // ** go to choose course material
-  goToChooseCourseMaterial(courseId: number) {
-    this.route.navigate(['courses/tabs/choose-course-material', { courseId }]);
+  goToChooseCourseMaterial(courseId: number, userId) {
+    this.route.navigate(['courses/tabs/choose-course-material', { courseId, userId }]);
   }
 }

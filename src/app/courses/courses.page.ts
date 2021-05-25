@@ -1,3 +1,4 @@
+import { User } from './../shared/models/user';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IonTabs } from '@ionic/angular';
 import { AuthService } from '../auth/auth.service';
