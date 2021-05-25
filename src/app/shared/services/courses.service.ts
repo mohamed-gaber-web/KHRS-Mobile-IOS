@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getAllCoursesAPI, getCourseDetails, getUsersCoursesAPI, createApplyCourse } from 'src/app/api.constants';
+import {
+  getAllCoursesAPI,
+  getCourseDetails,
+  getUsersCoursesAPI,
+  createApplyCourse, courseMaterials } from 'src/app/api.constants';
 import { Course } from '../models/course';
 import { MyCourse } from '../models/myCourse';
 
@@ -15,7 +19,7 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  //get all courses in the system
+  // ** get all courses in the system
   getAllCourses(courseQuery: string, offset?: number) {
     if (offset != null) {
       this.queryParams = `?Offset=${offset}&Limit=${this.limit}`;
@@ -25,7 +29,7 @@ export class CourseService {
     );
   }
 
-  //get the subscribed courses of the user
+  // ** get the subscribed courses of the user
   getUserCourses(courseQuery: string, offset?: number) {
     if (offset != null) {
       this.queryParams = `?Offset=${offset}&Limit=${this.limit}`;
@@ -35,13 +39,18 @@ export class CourseService {
     );
   }
 
-  // get the course details
+  // ** get the course details
   getCoursesDetails(id: number) {
     return this.http.get(`${getCourseDetails}?id=${id}`);
   }
 
-  // create course apply
+  // ** create course apply
   createCourseApply(from: Date) {
     return this.http.post(`${createApplyCourse}` , from);
+  }
+
+  // ** get course material
+  getCourseMaterial(courseId: number, offset: number, limit: number) {
+    return this.http.get(`${courseMaterials}?Offset=${offset}&Limit=${limit}&courseId=${courseId}`);
   }
 }

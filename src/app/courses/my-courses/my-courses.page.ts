@@ -50,11 +50,12 @@ export class MyCoursesPage implements OnInit {
         .subscribe((res) => {
           if (this.myCourses.length == 0) {
             res.forEach((element:MyCourse) => {
+
               if (element.course.imagePath) {
-                element.course.imagePath = `${imagesBaseUrl}${element.course.imagePath}`;
+                element.course.imagePath = `${element.course.imagePath}`;
               }
-              if (element.course.courseTranslations[0].introVoicePath) {
-                element.course.courseTranslations[0].introVoicePath = `${imagesBaseUrl}${element.course.courseTranslations[0].introVoicePath}`;
+              if (element.course.courseTranslations[0]?.introVoicePath) {
+                element.course.courseTranslations[0].introVoicePath = `${element.course.courseTranslations[0].introVoicePath}`;
               }
               element.course.audioElement = new AudioElement();
               element.course.audioElement.status = false;
@@ -66,7 +67,7 @@ export class MyCoursesPage implements OnInit {
                 element.imagePath = `${imagesBaseUrl}${element.imagePath}`;
               }
               if (element.courseTranslations[0].introVoicePath) {
-                element.courseTranslations[0].introVoicePath = `${imagesBaseUrl}${element.courseTranslations[0].introVoicePath}`;
+                element.courseTranslations[0].introVoicePath = `${element.courseTranslations[0].introVoicePath}`;
               }
               element.audioElement = new AudioElement();
               element.audioElement.status = false;
@@ -136,5 +137,10 @@ export class MyCoursesPage implements OnInit {
       }
     }
 
+  }
+
+  // ** go to choose course material
+  goToChooseCourseMaterial(courseId: number) {
+    this.route.navigate(['courses/tabs/choose-course-material', { courseId }]);
   }
 }

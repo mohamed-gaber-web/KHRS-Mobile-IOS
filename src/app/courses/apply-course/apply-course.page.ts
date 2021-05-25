@@ -52,7 +52,6 @@ export class ApplyCoursePage implements OnInit {
     // ** Get id From Details course page
     this.id = JSON.parse(this.route.snapshot.paramMap.get("id"));
     this.courseService.getCoursesDetails(this.id).subscribe(response => {
-      console.log(response['result']);
       this.courseDetails = response['result'];
     })
 
