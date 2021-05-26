@@ -9,13 +9,16 @@
 
     <div class="img-profile">
       <ion-avatar slot="end">
-        <img src="../../../assets/images/image profille (1).png">
+        <img *ngIf="userInfo" [src]="userInfo.imagePath">
+        <img *ngIf="userInfo === '' || userInfo.imagePath === null"
+        src="../../../assets/images/image profille (1).png">
       </ion-avatar>
       <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
 
-
-  <ion-img class="ion-margin-end" slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
+    <ion-avatar class="ion-margin-end"  slot="end">
+      <img class="img-langauge" [src]="userInfo.languageIcon">
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 

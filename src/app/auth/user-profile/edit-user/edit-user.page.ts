@@ -66,19 +66,9 @@ export class EditUserPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userInfo = this.authService.getUser();
 
-    this.userInfoForm = this.formBuilder.group({
-      'FirstName': [this.userInfo.firstname, Validators.compose([Validators.required])],
-      'LastName': [this.userInfo.lastname, Validators.compose([Validators.required])],
-      'email': [this.userInfo.email, Validators.compose([Validators.required, emailValidator])],
-      'PhoneNumber': [this.userInfo.phoneNumber, Validators.compose([Validators.minLength(11), Validators.required])],
-      'Birthdate': [new Date(), Validators.compose([Validators.required])],
-      'Gender': [this.userInfo.gender , Validators.required],
-    });
-
+    this.getUserData();
     this.userInfoForm.valueChanges.subscribe((data) => this.validateChangePasswordForm());
-
   }
 
   validateChangePasswordForm(isSubmitting = false) {
@@ -108,7 +98,15 @@ export class EditUserPage implements OnInit {
 
         console.log(response);
 
+
         if (response['success'] === true) {
+
+
+        // ** set localstorage [ token ]
+        this.storageService.setAccessToken( response['result']);
+
+        this.getUserData()
+
         var toast = await this.toastController.create({
           message: 'Update User Successful!',
           duration: 2000,
@@ -135,6 +133,19 @@ export class EditUserPage implements OnInit {
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  getUserData() {
+    this.userInfo = this.authService.getUser();
+
+    this.userInfoForm = this.formBuilder.group({
+      'FirstName': [this.userInfo.firstname, Validators.compose([Validators.required])],
+      'LastName': [this.userInfo.lastname, Validators.compose([Validators.required])],
+      'email': [this.userInfo.email, Validators.compose([Validators.required, emailValidator])],
+      'PhoneNumber': [this.userInfo.phoneNumber, Validators.compose([Validators.minLength(11), Validators.required])],
+      'Birthdate': [new Date(), Validators.compose([Validators.required])],
+      'Gender': [this.userInfo.gender , Validators.required],
+    });
   }
 
 

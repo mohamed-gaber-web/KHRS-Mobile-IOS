@@ -9,4 +9,5 @@ export class User {
     languageId:number;
     language:string;
     imagePath: string;
+    languageIcon: string;
 }
