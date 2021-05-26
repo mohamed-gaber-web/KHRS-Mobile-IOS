@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { IonSlides } from '@ionic/angular';
 
 
 @Component({
@@ -20,8 +21,10 @@ export class CourseMaterialPage implements OnInit {
   isLoading = false;
   courseMaterial: any;
   userInfo: any;
+  disablePrevBtn = true;
+  disableNextBtn = false;
 
-  @ViewChild('slides') slides;
+  @ViewChild('slides') slides: IonSlides;
 
 
   slideOpts = {
@@ -40,6 +43,7 @@ export class CourseMaterialPage implements OnInit {
 
   ngOnInit() {
 
+    // ** user info
     this.userInfo = this.authService.getUser();
 
     this.isLoading = true;
@@ -50,7 +54,9 @@ export class CourseMaterialPage implements OnInit {
           ).subscribe(response => {
             this.isLoading = false;
             this.courseMaterial = response['result'];
-            console.log(this.courseMaterial);
+            // console.log(this.courseMaterial);
+            // console.log(this.slides.ionSlideNextStart)
+
       })
     );
 
@@ -70,6 +76,16 @@ export class CourseMaterialPage implements OnInit {
     this.subs.forEach((element) => {
       element.unsubscribe();
     })
+    }
+
+    doCheck() {
+      let prom1 = this.slides.isBeginning();
+      let prom2 = this.slides.isEnd();
+
+      Promise.all([prom1, prom2]).then((data) => {
+        data[0] ? this.disablePrevBtn = true : this.disablePrevBtn = false;
+        data[1] ? this.disableNextBtn = true : this.disableNextBtn = false;
+      });
     }
 
 }

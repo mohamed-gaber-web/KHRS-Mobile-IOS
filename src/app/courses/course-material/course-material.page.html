@@ -46,7 +46,7 @@
 
 
 
-  <ion-slides #slides pager="true" [options]="slideOpts">
+  <ion-slides (ionSlideWillChange)="doCheck()" #slides pager="true" [options]="slideOpts">
 
     <ion-slide *ngFor="let course of courseMaterial" class="course__material ion-margin-top">
       <ion-grid>
@@ -68,11 +68,12 @@
     <ion-row class="ion-align-items-center slide-button">
 
       <ion-col size="6" >
-        <ion-button (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
+        <ion-button *ngIf="!disablePrevBtn" (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
       </ion-col>
 
-      <ion-col size="6">
+      <ion-col  size="6">
         <ion-button
+        *ngIf="!disableNextBtn"
           (click)="slideNext()"
           >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
       </ion-col>
