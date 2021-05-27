@@ -66,7 +66,7 @@ export class MyCoursesPage implements OnInit {
           } else {
             res.forEach((element) => {
               if (element.imagePath) {
-                element.imagePath = `${imagesBaseUrl}${element.imagePath}`;
+                element.imagePath = `${element.imagePath}`;
               }
               if (element.courseTranslations[0].introVoicePath) {
                 element.courseTranslations[0].introVoicePath = `${element.courseTranslations[0].introVoicePath}`;
@@ -103,6 +103,7 @@ export class MyCoursesPage implements OnInit {
   }
 
   playIntroHTML(course:Course){
+    console.log(course);
     // this.nativeAudio.preloadSimple(`intro${course.id}`, `${course.courseTranslations[0].introVoicePath}`).then(onSuccess, onError);
     // this.nativeAudio.play(`intro${course.id}`).then(onSuccess, onError);
     if(course.audioElement.status == false){
@@ -117,7 +118,7 @@ export class MyCoursesPage implements OnInit {
         }
 
     });
-    if(course.audioElement.audio.paused){
+    if(course.audioElement.audio && course.audioElement.audio.paused){
       course.audioElement.audio.play();
     }else{
       var audio = new Audio(`${course.courseTranslations[0].introVoicePath}`);
