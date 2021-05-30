@@ -19,5 +19,9 @@ export const createApplyCourse = `${baseUrl}/api/UserCourse/Create`;
 export const getUserCourseDetails = `${baseUrl}/api/UserCourse/Details`;
 export const courseMaterials = `${baseUrl}/api/Course/CourseMaterial`;
 
+// exercise
+export const getExercise = `${baseUrl}/api/Exercise/Get`;
+export const checkAnswerSingleChoise = `${baseUrl}/api/Exercise/SingleChoice/Answer`;
+
 
 

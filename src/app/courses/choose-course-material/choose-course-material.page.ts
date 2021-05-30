@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { userCourse } from 'src/app/shared/models/userCourse';
@@ -20,7 +20,11 @@ export class ChooseCourseMaterialPage implements OnInit {
   validCourse;
   isLoading: boolean = false;
 
-  constructor(private courseService: CourseService, private route: ActivatedRoute) { }
+  constructor(
+    private courseService: CourseService,
+    private route: ActivatedRoute,
+    private router: Router
+    ) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -46,6 +50,11 @@ export class ChooseCourseMaterialPage implements OnInit {
       })
     );
 
+  }
+
+  // ** Send course id to exercise page
+  sendIdToExercisePage() {
+    this.router.navigate(['/exercise', {courseId: this.courseId}])
   }
 
   ngOnDestroy() {

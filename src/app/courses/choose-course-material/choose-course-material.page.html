@@ -56,7 +56,7 @@
         <div class="btn" *ngIf="CourseDetails">
           <ion-button   [routerLink]="['/courses/course-material',
           CourseDetails.courseTranslations[0].courseId]" routerDirection="root"> Material </ion-button>
-          <ion-button routerLink="/training"> Exercise </ion-button>
+          <ion-button (click)="sendIdToExercisePage()"> Exercise </ion-button>
           <ion-button disabled> <ion-icon name="lock-closed-outline"></ion-icon> Final Test </ion-button>
         </div>
 

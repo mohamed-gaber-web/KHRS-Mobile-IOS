@@ -1,21 +1,23 @@
 <ion-header class="course">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button> </ion-back-button>
+      <ion-back-button defaultHref="/exercise"> </ion-back-button>
     </ion-buttons>
 
     <ion-menu-button slot="start"></ion-menu-button>
 
-
     <div class="img-profile">
       <ion-avatar slot="end">
-        <img src="../../../assets/images/image profille (1).png">
+        <img *ngIf="userInfo" [src]="userInfo.imagePath">
+        <img *ngIf="userInfo === '' || userInfo.imagePath === null"
+        src="../../../assets/images/image profille (1).png">
       </ion-avatar>
-      <ion-label>Username</ion-label>
+      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
 
-  <ion-img class="ion-margin-end" slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
-  </ion-toolbar>
+    <ion-avatar class="ion-margin-end"  slot="end">
+      <img class="img-langauge" [src]="userInfo.languageIcon">
+    </ion-avatar>  </ion-toolbar>
 </ion-header>
 
 
@@ -27,59 +29,92 @@
 </ion-toolbar>
 
 <ion-content>
-  <form>
-    <ion-list class="single-choice">
-      <div class="sound-lang">
-        <div class="sound">
-          <div class="sound-bg">
-            <div class="img-volume">
-              <ion-img
-              class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-            </ion-img>
+
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
+
+  <form [formGroup]="singleForm">
+    <ion-slides [pager]="false" #slides [options]="slideOpts">
+    <ion-slide *ngFor="let singleItem of exerciseItems">
+<ion-grid>
+      <ion-list class="single-choice">
+        <div class="sound-lang">
+          <div class="sound">
+            <div class="sound-bg">
+              <div class="img-volume">
+                <ion-img
+                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+              </ion-img>
+              </div>
             </div>
+            <img src="../../../assets/icon/da.png" alt="" />
           </div>
-          <img src="../../../assets/icon/da.png" alt="" />
+
+          <!-- <div class="sound">
+            <div class="sound-bg">
+              <div class="img-volume">
+                <ion-img
+                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+              </ion-img>
+              </div>
+            </div>
+            <img src="../../../assets/icon/tu.png" alt="" />
+          </div> -->
         </div>
 
-        <div class="sound">
-          <div class="sound-bg">
-            <div class="img-volume">
-              <ion-img
-              class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-            </ion-img>
-            </div>
-          </div>
-          <img src="../../../assets/icon/tu.png" alt="" />
-        </div>
-      </div>
-      <ion-radio-group>
-        <ion-list-header>
+        <ion-radio-group  formControlName="answer">
 
-          <ion-text>
-            Lorem ipsum dolor sit amet, consectetur ?
-          </ion-text>
-        </ion-list-header>
+          <ion-list-header>
+            <ion-text> {{ singleItem.question }} </ion-text>
+          </ion-list-header>
 
-        <ion-item>
-          <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="cord"></ion-radio>
-        </ion-item>
+          <ion-item>
+            <ion-label>Yes</ion-label>
+            <ion-radio [value]="true"></ion-radio>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="duesenberg"></ion-radio>
-        </ion-item>
+          <ion-item>
+            <ion-label>No</ion-label>
+            <ion-radio [value]="false"></ion-radio>
+          </ion-item>
 
-      </ion-radio-group>
+        </ion-radio-group>
 
-      <ion-grid>
-        <ion-row class="ion-padding">
-          <ion-button (click)="check()"> Check </ion-button>
-        </ion-row>
-      </ion-grid>
+        <ion-grid>
 
-    </ion-list>
-  </form>
+          <ion-row class="ion-padding">
+
+            <ion-col size="12">
+              <ion-button
+              [disabled]="singleForm.invalid"
+              (click)="checkSingleAnswer(singleItem.id,singleForm.value)">
+              Check
+              </ion-button>
+            </ion-col>
+
+          <ion-col size="12">
+            <ion-button
+            [ngClass]="{'hideButtonNext': currentIndex === lengthQuestion-1 || singleForm.invalid }"
+            (click)="slideNext()">
+              Next
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+
+          </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </ion-list>
+    </ion-grid>
+
+    </ion-slide>
+  </ion-slides>
+</form>
+
+<!-- <div class="no-data" *ngIf="lengthQuestion <= 0"> <h1> No Found Question </h1> </div> -->
+
+
 </ion-content>
 
 

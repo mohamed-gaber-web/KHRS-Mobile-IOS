@@ -27,7 +27,7 @@ const routes: Routes = [
     loadChildren: () => import('./courses/courses.module').then( m => m.CoursesPageModule)
   },
   {
-    path: 'training',
+    path: 'exercise',
     loadChildren: () => import('./training/training.module').then( m => m.TrainingPageModule)
   },
 

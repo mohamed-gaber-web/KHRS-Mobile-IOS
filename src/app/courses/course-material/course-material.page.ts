@@ -62,12 +62,12 @@ export class CourseMaterialPage implements OnInit {
 
   }
 
-  //Move to Next slide
+  // ** Move to Next slide
   slideNext() {
     this.slides.slideNext()
   }
 
-  //Move to previous slide
+  // ** Move to previous slide
   slidePrev() {
     this.slides.slidePrev();
   }

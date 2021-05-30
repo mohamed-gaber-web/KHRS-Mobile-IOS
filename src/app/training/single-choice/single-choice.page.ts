@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonSlides } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
+import { ExerciseService } from 'src/app/shared/services/exercise.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 
+import { AudioElement } from 'src/app/shared/models/audioObject';
 
 
 @Component({
@@ -14,37 +21,182 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 export class SingleChoicePage implements OnInit {
 
   audio = new Audio('../../../assets/iphone_ding.mp3' );
-  checkQuestion = true;
+  subs: Subscription[] = [];
+  userInfo: any;
+  exerciseItems: ExerciseItem[];
+  exerciseType: number;
+  courseId: number;
+  singleForm: FormGroup;
+  lengthQuestion: number;
+  offset: number = 0;
+  currentIndex: number = 0;
+  questionSelected: boolean = false;
+  resultQuestion: any;
+  isLoading: boolean = false;
+  limit: number = 1;
+  resultAnswer: boolean = null
+
+  @ViewChild('slides') slides: IonSlides;
+
+
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    slidesPerView: 1,
+    scrollbar: true,
+  };
+
+
+  singleFormErrors = {
+    answer: '',
+  };
+
+  singleValidationMessages = {
+    answer: {
+      required: 'Password field is required',
+    },
+  };
+
 
   constructor(
     public toastController: ToastController,
-    private nativeAudio: NativeAudio
+    private storageService: StorageService,
+    private exerciseService: ExerciseService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private router: Router
     ) { }
 
   ngOnInit() {
+
+    // ** get info user from localstorage
+    this.userInfo = this.storageService.getUser();
+
+    this.courseId = +this.route.snapshot.paramMap.get('courseId');
+    this.exerciseType = +this.route.snapshot.paramMap.get('exerciseId');
+
+    //**  Single Form run
+    this.buildSingleForm();
+
+    // ** Get Question Data
+    this.getQuestion();
+
   }
 
-  async check() {
-    if(this.checkQuestion === true) {
-      this.audio.play()
-      const toast = await this.toastController.create({
-        message: 'Yes this Question is Nice !!',
-        duration: 3000,
-        cssClass:'ion-success',
-        color: 'success'
-      });
-      toast.present();
-    }
+  // ** Get Question Data
+  getQuestion() {
+    this.isLoading = true;
+    this.subs.push(
+      this.exerciseService
+        .getCourseExercise(this.exerciseType, this.courseId, this.currentIndex, this.limit)
+        .subscribe(response => {
+        this.isLoading = false;
+          this.exerciseItems = response['result'];
+          this.lengthQuestion = response['length'];
+        })
+    );
+}
 
-    if(this.checkQuestion === false) {
-      const toast = await this.toastController.create({
-        message: 'No this Question is Mistake',
-        duration: 3000,
-        cssClass:'ion-error',
-        color: 'danger',
-      });
-      toast.present();
+  async checkSingleAnswer(id, ...answer) {
+    this.validateSingleForm(true);
+    this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
+      .subscribe(async(response) => {
+        this.resultQuestion = response['success'];
+
+        this.resultAnswer = response['success'];
+        if(this.resultAnswer === true) {
+          // message and voice success
+          this.successMessage();
+
+        } else if(this.resultAnswer === false) {
+          // message and voice error
+          this.errorMessage();
+        }
+
+        }
+
+    )
+
+  }
+
+
+  // ** Validate Form Input
+  validateSingleForm(isSubmitting = false) {
+    for (const field of Object.keys(this.singleFormErrors)) {
+      this.singleFormErrors[field] = '';
+
+      const input = this.singleForm.get(field) as FormControl;
+      if (input.invalid && (input.dirty || isSubmitting)) {
+        for (const error of Object.keys(input.errors)) {
+          this.singleFormErrors[field] = this.singleValidationMessages[field][
+            error
+          ];
+        }
+      }
     }
+  }
+
+  // ** Build Single Choice Form
+  buildSingleForm() {
+
+    this.singleForm = this.fb.group({
+      answer: [null , Validators.compose([Validators.required])],
+    })
+
+    this.singleForm.valueChanges.subscribe((data) => this.validateSingleForm());
+  }
+
+  // ** Get Current Index
+  getCurrentIndex(){
+    this.slides.getActiveIndex().then(current => {
+      this.currentIndex = current;
+    })
+  }
+
+ // ** Move to Next slide
+ slideNext() {
+    this.currentIndex += 1;
+    this.isLoading = true;
+    this.singleForm.reset();
+    this.getQuestion();
+    this.slides.slideNext();
+}
+
+  async successMessage() {
+    this.audio.play()
+    const toast = await this.toastController.create({
+      message: 'The answer is correct',
+      duration: 3000,
+      cssClass:'ion-success',
+      color: 'success'
+    });
+    toast.present();
+  }
+
+  async errorMessage() {
+    this.audio.play()
+    const toast = await this.toastController.create({
+      message: 'The answer is wrong',
+      duration: 3000,
+      cssClass:'ion-error',
+      color: 'danger',
+    });
+    toast.present();
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => {
+      sub.unsubscribe();
+    })
   }
 
 }
+
+
+/**
+ * [*] => don't show next button before answer on first quetion
+ * [*] => if is question is last question hide next button
+ * [] => if person answer not correct hide button check
+ * [] => get sound
+ * [*] fix rest form
+ */
