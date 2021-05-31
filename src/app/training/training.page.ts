@@ -58,7 +58,7 @@ export class TrainingPage implements OnInit {
   }
 
   goToCatExercise(url, exerciseId, courseId) {
-    this.router.navigate([url, {exerciseId, courseId,replaceUrl:true}]);
+    this.router.navigate([url, {exerciseId, courseId}]);
     // this.navController.navigateRoot(url + ';' + exerciseId + ';' + exerciseId );
     // if(courseId === null || courseId === undefined || courseId === '') {
     //   this.errorMessage('please choose course ');

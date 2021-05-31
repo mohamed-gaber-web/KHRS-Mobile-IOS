@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ToastController, IonSlides } from '@ionic/angular';
+import { ToastController, IonSlides, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
@@ -61,6 +61,7 @@ export class SingleChoicePage implements OnInit {
     private exerciseService: ExerciseService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    public navController: NavController,
     private router: Router
     ) { }
 
@@ -145,7 +146,7 @@ export class SingleChoicePage implements OnInit {
           if(this.currentIndex === this.lengthQuestion) {
             this.successMessage('Thanks for resolving questions');
             setTimeout(() => {
-              this.router.navigate(['/exercise', {exerciseId: this.exerciseType, courseId: this.courseId}]);
+              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
             }, 100)
           }
 
