@@ -11,8 +11,8 @@
 
     <div class="img-profile">
       <ion-avatar slot="end">
-        <img *ngIf="userInfo" [src]="userInfo.imagePath">
-        <img *ngIf="userInfo === '' || userInfo.imagePath === null"
+        <img *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+        <img *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
         src="../../../assets/images/image profille (1).png">
       </ion-avatar>
       <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>

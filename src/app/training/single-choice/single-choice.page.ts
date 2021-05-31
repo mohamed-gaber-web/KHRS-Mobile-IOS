@@ -70,6 +70,7 @@ export class SingleChoicePage implements OnInit {
 
     // ** get info user from localstorage
     this.userInfo = this.storageService.getUser();
+    console.log(this.userInfo);
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
     this.exerciseType = +this.route.snapshot.paramMap.get('exerciseId');
 
