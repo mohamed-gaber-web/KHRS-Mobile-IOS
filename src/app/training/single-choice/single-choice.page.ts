@@ -156,6 +156,11 @@ export class SingleChoicePage implements OnInit {
           // message and voice success
           this.currentIndex += 1;
           this.successMessage('the answer is correct');
+          if(this.exerciseItems[0].audioElement){
+            this.exerciseItems[0].audioElement.audio.pause();
+            this.exerciseItems[0].audioElement.audio = null;
+
+          }
           this.isLoading = true;
           this.singleForm.reset();
           this.getQuestion();
