@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 
-import { checkAnswerSingleChoise, getExercise } from './../../api.constants';
+import {
+  checkAnswerSingleChoise,
+  getExercise,
+  getMultiChoiceAnswer, checkAnswerMultipleChoice }
+from './../../api.constants';
 
 
 
@@ -33,4 +37,18 @@ export class ExerciseService {
     }
     return this.http.post(`${checkAnswerSingleChoise}`, data);
   }
+
+  checkAnswerMultiChoise(multiChoiceQuestionId: number, multiChoiceAnswerId: number) {
+    let data = {
+      multiChoiceQuestionId,
+      multiChoiceAnswerId
+    }
+    return this.http.post(`${checkAnswerMultipleChoice}`, data);
+  }
+
+  // getMutliChoiceAnswer(offset: number, limit: number, multiChoiceId: number) {
+  //   const params = `?Offset=${offset}&Limit=${limit}&multiChoiceId=${multiChoiceId}`
+  //   return this.http.get(`${getMultiChoiceAnswer}` + params);
+  // }
+
 }

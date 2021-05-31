@@ -45,15 +45,19 @@
   </ion-grid>
 
   <ion-grid>
-    <h3 class="training-title ion-text-center"> Please Choose </h3>
+    <h3 class="training-title ion-text-center"> Please Choose Exercise </h3>
     <ion-row
-    (click)="goToCatExercise(item.url, item.exerciseId, item.courseId)"
-    *ngFor="let item of chooseTraining" class="ion-align-self-center">
-      <ion-col  size="12" >
+
+     class="ion-align-self-center">
+      <ion-col
+        *ngFor="let item of chooseTraining" size="6"
+        (click)="goToCatExercise(item.url, item.exerciseId, item.courseId)">
+
         <div class="col-block">
           <ion-img [src]="item.img"></ion-img>
           <ion-text><a> {{item.name}} </a></ion-text>
         </div>
+
       </ion-col>
     </ion-row>
   </ion-grid>
