@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { StorageService } from '../shared/services/storage.service';
+
+import { NavController } from '@ionic/angular';
+
 
 
 
@@ -13,6 +17,7 @@ export class TrainingPage implements OnInit {
 
   userInfo: any;
   courseId: number;
+  audio = new Audio('../../../assets/iphone_ding.mp3' );
 
   chooseTraining = [
     {
@@ -42,7 +47,10 @@ export class TrainingPage implements OnInit {
   constructor(
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public toastController: ToastController,
+    public navController: NavController
+
     ) { }
 
   ngOnInit() {
@@ -51,6 +59,22 @@ export class TrainingPage implements OnInit {
 
   goToCatExercise(url, exerciseId, courseId) {
     this.router.navigate([url, {exerciseId, courseId}]);
+    // this.navController.navigateRoot(url + ';' + exerciseId + ';' + exerciseId );
+    // if(courseId === null || courseId === undefined || courseId === '') {
+    //   this.errorMessage('please choose course ');
+    //   this.router.navigate(['/courses/tabs/my-courses']);
+    // }
+  }
+
+  async errorMessage(msg: string) {
+    this.audio.play();
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 4000,
+      cssClass:'ion-error',
+      color: 'danger',
+    });
+    toast.present();
   }
 
 }

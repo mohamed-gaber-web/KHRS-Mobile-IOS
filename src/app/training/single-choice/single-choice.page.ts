@@ -4,13 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastController, IonSlides } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
-
-import { AudioElement } from 'src/app/shared/models/audioObject';
 
 
 @Component({
@@ -71,7 +68,6 @@ export class SingleChoicePage implements OnInit {
 
     // ** get info user from localstorage
     this.userInfo = this.storageService.getUser();
-
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
     this.exerciseType = +this.route.snapshot.paramMap.get('exerciseId');
 
@@ -96,37 +92,6 @@ export class SingleChoicePage implements OnInit {
         })
     );
 }
-
-  // async checkSingleAnswer(id, ...answer) {
-  //   this.validateSingleForm(true);
-  //   this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
-  //     .subscribe(async(response) => {
-
-  //       console.log('checked');
-
-
-  //       this.resultQuestion = response['success'];
-
-  //       this.resultAnswer = response['success'];
-  //       if(this.resultAnswer === true) {
-
-  //         // message and voice success
-  //         this.successMessage();
-  //         this.questionSelected = true;
-
-  //       } else if(this.resultAnswer === false) {
-
-  //         // message and voice error
-  //         this.errorMessage();
-  //         this.questionSelected = false;
-  //       }
-
-  //       }
-
-  //   )
-
-  // }
-
 
   // ** Validate Form Input
   validateSingleForm(isSubmitting = false) {
@@ -155,20 +120,15 @@ export class SingleChoicePage implements OnInit {
   }
 
   // ** Get Current Index
-  getCurrentIndex(){
-    this.slides.getActiveIndex().then(current => {
-      this.currentIndex = current;
-    })
+  getCurrentIndex () {
+    this.slides.getActiveIndex().then(current => this.currentIndex = current);
   }
 
  // ** Move to Next slide
  slideNext(id, ...answer) {
-
-    // this.currentIndex += 1;
-
     this.validateSingleForm(true);
-
-    this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
+    this.subs.push(
+      this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
       .subscribe(async(response) => {
 
         this.resultAnswer = response['success'];
@@ -180,26 +140,23 @@ export class SingleChoicePage implements OnInit {
           this.isLoading = true;
           this.singleForm.reset();
           this.getQuestion();
-          this.questionSelected = true;
           this.slides.slideNext();
 
-          if(this.currentIndex === this.lengthQuestion-1) {
-            console.log('enter in this line')
+          if(this.currentIndex === this.lengthQuestion) {
             this.successMessage('Thanks for resolving questions');
-            this.router.navigate(['/exercise'])
+            setTimeout(() => {
+              this.router.navigate(['/exercise', {exerciseId: this.exerciseType, courseId: this.courseId}]);
+            }, 100)
           }
-
 
         } else if(this.resultAnswer === false) {
           // message and voice error
-          this.errorMessage();
-          this.questionSelected = false;
+          this.errorMessage('The answer is wrong and please choose correct answer');
         }
 
-
         }
-
     )
+    );
 }
 
   async successMessage(msg: string) {
@@ -213,10 +170,10 @@ export class SingleChoicePage implements OnInit {
     toast.present();
   }
 
-  async errorMessage() {
+  async errorMessage(msg: string) {
     this.audio.play()
     const toast = await this.toastController.create({
-      message: 'The answer is wrong and please choose correct answer',
+      message: msg,
       duration: 3000,
       cssClass:'ion-error',
       color: 'danger',
@@ -236,10 +193,10 @@ export class SingleChoicePage implements OnInit {
 /**
  * [*] => don't show next button before answer on first quetion
  * [*] => if is question is last question hide next button
- * [] => if person answer not correct hide button check
+ * [*] => if person answer not correct hide button check
  * [] => get sound
  * [*] fix rest form
  * [*] fix typo in choise to be choice
  * [*] add current and total number of questions
- * [] remove check and replace its logic with next and the aswer must be correct to move to the next question
+ * [*] remove check and replace its logic with next and the aswer must be correct to move to the next question
  */
