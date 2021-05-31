@@ -38,13 +38,12 @@
     <ion-slide *ngFor="let singleItem of exerciseItems">
     <ion-grid>
       <ion-list class="single-choice">
-        <div class="sound-lang">
+        <div class="sound-lang" *ngIf="singleItem.singleChoiceTranslations[0]?.voicePath">
           <div class="sound">
             <div class="sound-bg">
               <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-              </ion-img>
+                <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!singleItem.audioElement.status? 'play' : 'stop'" (click)="playAudio()">
+                </ion-icon>
               </div>
             </div>
             <img src="../../../assets/icon/da.png" alt="" />

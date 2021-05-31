@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ToastController, IonSlides, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AudioElement } from 'src/app/shared/models/audioObject';
 
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
@@ -90,10 +91,27 @@ export class SingleChoicePage implements OnInit {
         this.isLoading = false;
           this.exerciseItems = response['result'];
           this.lengthQuestion = response['length'];
+          if(this.exerciseItems[0].singleChoiceTranslations[0].voicePath != null && this.exerciseItems[0].singleChoiceTranslations[0].voicePath != "" ){
+            this.exerciseItems[0].audioElement = new AudioElement();
+            this.exerciseItems[0].audioElement.status = false;
+            var audio = new Audio(`${this.exerciseItems[0].singleChoiceTranslations[0].voicePath}`);
+            this.exerciseItems[0].audioElement.audio = audio;
+            this.exerciseItems[0].audioElement.audio.load();
+
+          }
         })
     );
 }
 
+  playAudio(){
+    if(this.exerciseItems[0].audioElement.status == false){
+      this.exerciseItems[0].audioElement.audio.play();
+      this.exerciseItems[0].audioElement.status = true;
+    }else{
+      this.exerciseItems[0].audioElement.audio.pause();
+      this.exerciseItems[0].audioElement.status = false;
+    }
+  }
   // ** Validate Form Input
   validateSingleForm(isSubmitting = false) {
     for (const field of Object.keys(this.singleFormErrors)) {
