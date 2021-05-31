@@ -22,8 +22,9 @@
 
 
 <ion-toolbar>
-  <ion-title>
+  <ion-title slot="start">
     single choice
+    <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
   </ion-title>
   <ion-icon slot="end"  name="help-circle-outline"></ion-icon>
 </ion-toolbar>
@@ -35,7 +36,7 @@
   <form [formGroup]="singleForm">
     <ion-slides [pager]="false" #slides [options]="slideOpts">
     <ion-slide *ngFor="let singleItem of exerciseItems">
-<ion-grid>
+    <ion-grid>
       <ion-list class="single-choice">
         <div class="sound-lang">
           <div class="sound">
@@ -61,7 +62,7 @@
           </div> -->
         </div>
 
-        <ion-radio-group  formControlName="answer">
+        <ion-radio-group formControlName="answer">
 
           <ion-list-header>
             <ion-text> {{ singleItem.question }} </ion-text>
@@ -83,21 +84,22 @@
 
           <ion-row class="ion-padding">
 
-            <ion-col size="12">
+            <!-- <ion-col size="12">
               <ion-button
               [disabled]="singleForm.invalid"
               (click)="checkSingleAnswer(singleItem.id,singleForm.value)">
               Check
               </ion-button>
-            </ion-col>
+            </ion-col> -->
 
           <ion-col size="12">
             <ion-button
-            [ngClass]="{'hideButtonNext': currentIndex === lengthQuestion-1 || singleForm.invalid }"
-            (click)="slideNext()">
+            [ngClass]="{'hideButtonNext': singleForm.invalid }"
+            (click)="slideNext(singleItem.id,singleForm.value)">
               Next
             <ion-icon name="chevron-forward-outline"></ion-icon>
           </ion-button>
+
 
           </ion-col>
 
@@ -118,3 +120,4 @@
 </ion-content>
 
 
+<!-- [ngClass]="{'hideButtonNext': currentIndex === lengthQuestion-1 || singleForm.invalid }" -->

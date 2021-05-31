@@ -97,27 +97,35 @@ export class SingleChoicePage implements OnInit {
     );
 }
 
-  async checkSingleAnswer(id, ...answer) {
-    this.validateSingleForm(true);
-    this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
-      .subscribe(async(response) => {
-        this.resultQuestion = response['success'];
+  // async checkSingleAnswer(id, ...answer) {
+  //   this.validateSingleForm(true);
+  //   this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
+  //     .subscribe(async(response) => {
 
-        this.resultAnswer = response['success'];
-        if(this.resultAnswer === true) {
-          // message and voice success
-          this.successMessage();
+  //       console.log('checked');
 
-        } else if(this.resultAnswer === false) {
-          // message and voice error
-          this.errorMessage();
-        }
 
-        }
+  //       this.resultQuestion = response['success'];
 
-    )
+  //       this.resultAnswer = response['success'];
+  //       if(this.resultAnswer === true) {
 
-  }
+  //         // message and voice success
+  //         this.successMessage();
+  //         this.questionSelected = true;
+
+  //       } else if(this.resultAnswer === false) {
+
+  //         // message and voice error
+  //         this.errorMessage();
+  //         this.questionSelected = false;
+  //       }
+
+  //       }
+
+  //   )
+
+  // }
 
 
   // ** Validate Form Input
@@ -154,18 +162,50 @@ export class SingleChoicePage implements OnInit {
   }
 
  // ** Move to Next slide
- slideNext() {
-    this.currentIndex += 1;
-    this.isLoading = true;
-    this.singleForm.reset();
-    this.getQuestion();
-    this.slides.slideNext();
+ slideNext(id, ...answer) {
+
+    // this.currentIndex += 1;
+
+    this.validateSingleForm(true);
+
+    this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
+      .subscribe(async(response) => {
+
+        this.resultAnswer = response['success'];
+        if(this.resultAnswer === true) {
+
+          // message and voice success
+          this.currentIndex += 1;
+          this.successMessage('the answer is correct');
+          this.isLoading = true;
+          this.singleForm.reset();
+          this.getQuestion();
+          this.questionSelected = true;
+          this.slides.slideNext();
+
+          if(this.currentIndex === this.lengthQuestion-1) {
+            console.log('enter in this line')
+            this.successMessage('Thanks for resolving questions');
+            this.router.navigate(['/exercise'])
+          }
+
+
+        } else if(this.resultAnswer === false) {
+          // message and voice error
+          this.errorMessage();
+          this.questionSelected = false;
+        }
+
+
+        }
+
+    )
 }
 
-  async successMessage() {
+  async successMessage(msg: string) {
     this.audio.play()
     const toast = await this.toastController.create({
-      message: 'The answer is correct',
+      message: msg,
       duration: 3000,
       cssClass:'ion-success',
       color: 'success'
@@ -176,7 +216,7 @@ export class SingleChoicePage implements OnInit {
   async errorMessage() {
     this.audio.play()
     const toast = await this.toastController.create({
-      message: 'The answer is wrong',
+      message: 'The answer is wrong and please choose correct answer',
       duration: 3000,
       cssClass:'ion-error',
       color: 'danger',
@@ -199,4 +239,7 @@ export class SingleChoicePage implements OnInit {
  * [] => if person answer not correct hide button check
  * [] => get sound
  * [*] fix rest form
+ * [*] fix typo in choise to be choice
+ * [*] add current and total number of questions
+ * [] remove check and replace its logic with next and the aswer must be correct to move to the next question
  */

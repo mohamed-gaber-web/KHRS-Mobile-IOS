@@ -24,14 +24,14 @@ export class TrainingPage implements OnInit {
     },
     {
       img: '../../assets/icon/notepad.png',
-      name: 'Single Choise',
+      name: 'Single Choice',
       url: '/exercise/single-choice',
       exerciseId: 1,
       courseId: JSON.parse(this.route.snapshot.paramMap.get('courseId'))
     },
     {
       img: '../../assets/icon/checklist.png',
-      name: 'Multi Choise',
+      name: 'Multi Choice',
       url: '/exercise/multi-choice',
       exerciseId: 2,
       courseId: JSON.parse(this.route.snapshot.paramMap.get('courseId'))
