@@ -32,7 +32,7 @@ export class SingleChoicePage implements OnInit {
   resultQuestion: any;
   isLoading: boolean = false;
   limit: number = 1;
-  resultAnswer: boolean = null
+  resultAnswer: boolean = null;
 
   @ViewChild('slides') slides: IonSlides;
 

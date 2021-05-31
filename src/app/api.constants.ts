@@ -22,6 +22,8 @@ export const courseMaterials = `${baseUrl}/api/Course/CourseMaterial`;
 // exercise
 export const getExercise = `${baseUrl}/api/Exercise/Get`;
 export const checkAnswerSingleChoise = `${baseUrl}/api/Exercise/SingleChoice/Answer`;
+export const getMultiChoiceAnswer = `${baseUrl}/api/MultiChoiceAnswer/GetAll`;
+export const checkAnswerMultipleChoice = `${baseUrl}/api/Exercise/MultiChoice/Answer`;
 
 
 

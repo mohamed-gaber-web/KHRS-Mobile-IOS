@@ -22,9 +22,9 @@ ion-header ion-img {
   align-items: center;
 
   ion-avatar {
-    width: 50px;
-    margin-top: 10px;
-    height: auto;
+    width: 60px;
+    margin: 5px 0;
+    height: 60px;
   }
 
   ion-label {
@@ -97,4 +97,28 @@ ion-toolbar {
 
 }
 
+.img-langauge {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 13px;
+  top: 14px;
+  border: 1px solid #ccc;
+}
+
+.hideButtonNext {
+  display: none;
+}
+
+.showButtonNext {
+  display: block;
+}
+
+.total-result {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--ion-color-second-app);
+  text-align: center;
+  margin-left: 50px;
+}
 

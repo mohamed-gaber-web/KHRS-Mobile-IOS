@@ -1,21 +1,23 @@
 <ion-header class="course">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button> </ion-back-button>
+      <ion-back-button defaultHref="/exercise"> </ion-back-button>
     </ion-buttons>
 
     <ion-menu-button slot="start"></ion-menu-button>
 
-
     <div class="img-profile">
       <ion-avatar slot="end">
-        <img src="../../../assets/images/image profille (1).png">
+        <img *ngIf="userInfo" [src]="userInfo.imagePath">
+        <img *ngIf="userInfo === '' || userInfo.imagePath === null"
+        src="../../../assets/images/image profille (1).png">
       </ion-avatar>
-      <ion-label>Username</ion-label>
+      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
 
-  <ion-img class="ion-margin-end" slot="end" src="../../../assets/images/lang-choose (3).png"></ion-img>
-  </ion-toolbar>
+    <ion-avatar class="ion-margin-end"  slot="end">
+      <img class="img-langauge" [src]="userInfo.languageIcon">
+    </ion-avatar>  </ion-toolbar>
 </ion-header>
 
 
@@ -27,7 +29,15 @@
 </ion-toolbar>
 
 <ion-content>
-  <form>
+
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
+
+<form *ngIf="exerciseItems" [formGroup]="multiForm">
+
+  <ion-slides [pager]="false" #slides [options]="slideOpts">
+  <ion-slide >
+
+  <ion-grid>
     <ion-list class="multi-choice">
       <div class="sound-lang">
         <div class="sound">
@@ -41,7 +51,7 @@
           <img src="../../../assets/icon/da.png" alt="" />
         </div>
 
-        <div class="sound">
+        <!-- <div class="sound">
           <div class="sound-bg">
             <div class="img-volume">
               <ion-img
@@ -50,41 +60,45 @@
             </div>
           </div>
           <img src="../../../assets/icon/tu.png" alt="" />
-        </div>
+        </div> -->
       </div>
-      <ion-radio-group>
-        <ion-list-header>
 
-          <ion-text>
-            Lorem ipsum dolor sit amet, consectetur ?
-          </ion-text>
-        </ion-list-header>
+      <ion-list-header>
 
-        <ion-item>
-          <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="cord"></ion-radio>
-        </ion-item>
+        <ion-text>
+          {{ exerciseItems[0].question }}
+        </ion-text>
 
-        <ion-item>
-          <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="duesenberg"></ion-radio>
-        </ion-item>
+      </ion-list-header>
 
-        <ion-item>
-          <ion-label>Lorem ipsum dolor</ion-label>
-          <ion-radio value="duesenberg"></ion-radio>
+      <ion-radio-group formControlName="answer">
+
+        <ion-item *ngFor="let item of resultAnswerItems">
+          <ion-label>{{ item.answer }}</ion-label>
+          <ion-radio [value]="item.id"></ion-radio>
         </ion-item>
 
       </ion-radio-group>
 
       <ion-grid>
         <ion-row class="ion-padding">
-          <ion-button (click)="check()"> Check </ion-button>
+          <ion-col size="12">
+            <ion-button
+            [ngClass]="{'hideButtonNext': multiForm.invalid }"
+            (click)="slideNext(exerciseItems[0].id, multiForm.value.answer)">
+              Next
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
         </ion-row>
+
       </ion-grid>
 
     </ion-list>
-  </form>
+  </ion-grid>
+</ion-slide>
+</ion-slides>
+</form>
 </ion-content>
 
 
