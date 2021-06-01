@@ -65,17 +65,15 @@
         <ion-item>
           <ion-label>{{ item.answer }}</ion-label>
           <ion-radio [value]="item.id"></ion-radio>
-
-
-        <div class="sound" *ngIf="exerciseItems[0].multiChoiceTranslations[0]?.voicePath">
-          <div class="sound-bg">
-              <div class="img-volume">
-              <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!exerciseItems[0].audioElement.status? 'play' : 'stop'" (click)="playAudio(exerciseItems[0].audioElement,1)">
-              </ion-icon>
+            <div class="sound" *ngIf="exerciseItems[0].multiChoiceTranslations[0]?.voicePath">
+              <div class="sound-bg">
+                  <div class="img-volume">
+                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!exerciseItems[0].audioElement.status? 'play' : 'stop'" (click)="playAudio(exerciseItems[0].audioElement,1)">
+                  </ion-icon>
+                  </div>
               </div>
-          </div>
-          <img class="langauge-img" [src]="userInfo.languageIcon" alt="" />
-        </div>
+              <img class="langauge-img" [src]="userInfo.languageIcon" alt="" />
+            </div>
       </ion-item>
 
     </div>
