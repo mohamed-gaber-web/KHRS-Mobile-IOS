@@ -81,10 +81,10 @@
               <ion-radio [value]="item.id"></ion-radio>
             </ion-col>
             <ion-col size="2" offset="4">
-              <div class="sound" *ngIf="item.multiChoiceAnswerTranslations[0].audioElement">
+              <div class="sound" *ngIf="item.audioElement.audio">
                 <div class="sound-bg">
                   <div class="img-volume">
-                    <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item.multiChoiceAnswerTranslations[0].audioElement.status? 'play' : 'stop'" (click)="playAudio(item)">
+                    <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item.audioElement.status? 'play' : 'stop'" (click)="playAudio(item,2)">
                     </ion-icon>
                   </div>
                 </div>

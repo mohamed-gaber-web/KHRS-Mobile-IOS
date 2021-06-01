@@ -225,10 +225,10 @@ export class MultiChoicePage implements OnInit {
   }
 
   stopAllAudios() {
-    
     this.stopQuestionVoice();
     this.stopAnswerVoices();
   }
+
   stopAnswerVoices(){
     this.resultAnswerItems[0].multiChoiceAnswerTranslations.forEach(
       (element) => {
@@ -241,6 +241,7 @@ export class MultiChoicePage implements OnInit {
       }
     );
   }
+
   stopQuestionVoice(){
     //Stoping Voice of question
     if (this.exerciseItems[0].audioElement) {
