@@ -226,7 +226,7 @@ export class MultiChoicePage implements OnInit {
   }
 
   stopAllAudios() {
-    
+
     this.stopQuestionVoice();
     this.stopAnswerVoices();
   }
@@ -254,7 +254,7 @@ export class MultiChoicePage implements OnInit {
         }
       );
     }
-    
+
   }
   stopQuestionVoice(){
     //Stoping Voice of question
