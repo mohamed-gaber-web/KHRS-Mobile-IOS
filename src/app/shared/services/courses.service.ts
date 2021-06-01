@@ -48,7 +48,7 @@ export class CourseService {
 
   // ** get user course details
   getUserCoursesDetails(courseId: number) {
-    return this.http.get(`${getUserCourseDetails}?id=${courseId}`);
+    return this.http.get(`${getUserCourseDetails}?courseId=${courseId}`);
   }
 
   // ** create course apply

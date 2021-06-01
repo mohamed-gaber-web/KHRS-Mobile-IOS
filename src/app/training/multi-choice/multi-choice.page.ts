@@ -104,13 +104,13 @@ export class MultiChoicePage implements OnInit {
             this.exerciseItems[0].audioElement.audio.load();
           }
           this.lengthQuestion = questionAndAnswerItems['length'];
-          this.resultAnswerItems[0].multiChoiceAnswerTranslations.forEach(
+          this.resultAnswerItems.forEach(
             (element) => {
               element.audioElement = new AudioElement();
               element.audioElement.status = false;
-              if (element.voicePath != null || element.voicePath != '') {
+              if (element.multiChoiceAnswerTranslations[0].voicePath != null && element.multiChoiceAnswerTranslations[0].voicePath != '') {
                 element.audioElement.id = element.id;
-                element.audioElement.audio = new Audio(`${element.voicePath}`);
+                element.audioElement.audio = new Audio(`${element.multiChoiceAnswerTranslations[0].voicePath}`);
                 element.audioElement.audio.load();
               } else {
                 element.audioElement.audio = null;
@@ -211,35 +211,50 @@ export class MultiChoicePage implements OnInit {
       }
     } else {
       this.stopQuestionVoice();
-      var audioElement = answer.multiChoiceAnswerTranslations[0].audioElement;
+      this.stopAnswerVoices(answer);
+      var audioElement = answer.audioElement;
       if (audioElement) {
         if (audioElement.status == false) {
           audioElement.audio.play();
-          answer.multiChoiceAnswerTranslations[0].audioElement.status = true;
+          answer.audioElement.status = true;
         } else {
           audioElement.audio.pause();
-          answer.multiChoiceAnswerTranslations[0].audioElement.status = false;
+          answer.audioElement.status = false;
         }
       }
     }
   }
 
   stopAllAudios() {
+
     this.stopQuestionVoice();
     this.stopAnswerVoices();
   }
-
-  stopAnswerVoices(){
-    this.resultAnswerItems[0].multiChoiceAnswerTranslations.forEach(
-      (element) => {
-        if (element.audioElement) {
-          if (element.audioElement.status == true) {
-            element.audioElement.audio.pause();
-            element.audioElement.status = false;
+  stopAnswerVoices(answer?:any){
+    if(answer){
+      this.resultAnswerItems.filter(c=>c.id != answer.id).forEach(
+        (element) => {
+          if (element.audioElement) {
+            if (element.audioElement.status == true) {
+              element.audioElement.audio.pause();
+              element.audioElement.status = false;
+            }
           }
         }
-      }
-    );
+      );
+    }else{
+      this.resultAnswerItems.forEach(
+        (element) => {
+          if (element.audioElement) {
+            if (element.audioElement.status == true) {
+              element.audioElement.audio.pause();
+              element.audioElement.status = false;
+            }
+          }
+        }
+      );
+    }
+
   }
 
   stopQuestionVoice(){
