@@ -62,14 +62,14 @@
 
       <ion-radio-group formControlName="answer">
         <div class="answer" *ngFor="let item of resultAnswerItems">
-        <ion-item>
+        <ion-item (click)="playAudio(item,2)">
           <ion-label>{{ item.answer }}</ion-label>
           <ion-radio [value]="item.id"></ion-radio>
-            <div class="sound" *ngIf="exerciseItems[0].multiChoiceTranslations[0]?.voicePath">
-              <div class="sound-bg">
+          <div class="sound" *ngIf="item.audioElement.audio">
+            <div class="sound-bg">
                   <div class="img-volume">
-                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!exerciseItems[0].audioElement.status? 'play' : 'stop'" (click)="playAudio(exerciseItems[0].audioElement,1)">
-                  </ion-icon>
+                    <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item.audioElement.status? 'play' : 'stop'" >
+                    </ion-icon>
                   </div>
               </div>
               <img class="langauge-img" [src]="userInfo.languageIcon" alt="" />

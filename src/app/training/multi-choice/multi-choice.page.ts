@@ -196,6 +196,7 @@ export class MultiChoicePage implements OnInit {
   }
 
   playAudio(answer: any, type: number) {
+    console.log("asdasd")
     // playing question sound
     if (type == 1) {
       //stoping answer voices
