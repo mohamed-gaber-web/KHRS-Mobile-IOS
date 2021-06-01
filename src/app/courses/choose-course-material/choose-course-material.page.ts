@@ -28,11 +28,10 @@ export class ChooseCourseMaterialPage implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.userId = JSON.parse(this.route.snapshot.paramMap.get('userId'));
     this.courseId = JSON.parse(this.route.snapshot.paramMap.get('courseId'));
 
     this.subs.push(
-      this.courseService.getUserCoursesDetails(this.userId)
+      this.courseService.getUserCoursesDetails(this.courseId)
       .subscribe(response => {
         this.isLoading = false;
         this.userCourseDetails = response['result'].userCourse;
