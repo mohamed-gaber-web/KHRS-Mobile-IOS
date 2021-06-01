@@ -1,8 +1,14 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides, NavController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AudioElement } from 'src/app/shared/models/audioObject';
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -13,8 +19,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
   styleUrls: ['./multi-choice.page.scss'],
 })
 export class MultiChoicePage implements OnInit {
-
-  audio = new Audio('../../../assets/iphone_ding.mp3' );
+  audio = new Audio('../../../assets/iphone_ding.mp3');
   checkQuestion = true;
   userInfo: any;
   isLoading: boolean = false;
@@ -44,7 +49,6 @@ export class MultiChoicePage implements OnInit {
     scrollbar: true,
   };
 
-
   constructor(
     public toastController: ToastController,
     private storageService: StorageService,
@@ -53,7 +57,7 @@ export class MultiChoicePage implements OnInit {
     private fb: FormBuilder,
     public navController: NavController,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
@@ -73,18 +77,47 @@ export class MultiChoicePage implements OnInit {
   getQuestionAndAnswerMultiChoice() {
     this.isLoading = true;
     this.subs.push(
-
       this.exerciseService
-        .getCourseExercise(this.exerciseType, this.courseId, this.currentIndex, this.limit)
-        .subscribe(questionAndAnswerItems => {
-          console.log(questionAndAnswerItems);
-
+        .getCourseExercise(
+          this.exerciseType,
+          this.courseId,
+          this.currentIndex,
+          this.limit
+        )
+        .subscribe((questionAndAnswerItems) => {
           this.isLoading = false;
           this.exerciseItems = questionAndAnswerItems['result'];
-          this.exerciseItems.map(answerItems => {
+          this.exerciseItems.map((answerItems) => {
             this.resultAnswerItems = answerItems['multiChoiceAnswers'];
-          })
+          });
+          if (
+            this.exerciseItems[0].multiChoiceTranslations[0].voicePath !=
+              null &&
+            this.exerciseItems[0].multiChoiceTranslations[0].voicePath != ''
+          ) {
+            this.exerciseItems[0].audioElement = new AudioElement();
+            this.exerciseItems[0].audioElement.status = false;
+            var audio = new Audio(
+              `${this.exerciseItems[0].multiChoiceTranslations[0].voicePath}`
+            );
+            this.exerciseItems[0].audioElement.audio = audio;
+            this.exerciseItems[0].audioElement.audio.load();
+          }
           this.lengthQuestion = questionAndAnswerItems['length'];
+          this.resultAnswerItems[0].multiChoiceAnswerTranslations.forEach(
+            (element) => {
+              element.audioElement = new AudioElement();
+              element.audioElement.status = false;
+              if (element.voicePath != null || element.voicePath != '') {
+                element.audioElement.id = element.id;
+                element.audioElement.audio = new Audio(`${element.voicePath}`);
+                element.audioElement.audio.load();
+              } else {
+                element.audioElement.audio = null;
+              }
+            }
+          );
+          console.log(this.resultAnswerItems);
         })
     );
   }
@@ -92,76 +125,132 @@ export class MultiChoicePage implements OnInit {
   // ** Build Single Choice Form
   buildMultiForm() {
     this.multiForm = this.fb.group({
-      answer: [null , Validators.compose([Validators.required])],
-  })
+      answer: [null, Validators.compose([Validators.required])],
+    });
   }
 
   // ** Get Current Index
-  getCurrentIndex () {
-    this.slides.getActiveIndex().then(current => this.currentIndex = current);
+  getCurrentIndex() {
+    this.slides
+      .getActiveIndex()
+      .then((current) => (this.currentIndex = current));
   }
- // ** Move to Next slide
- slideNext(questionId, answerId) {
-  this.subs.push(
-    this.exerciseService.checkAnswerMultiChoise(questionId, answerId)
-    .subscribe(async(response) => {
-      console.log(response);
+  // ** Move to Next slide
+  slideNext(questionId, answerId) {
+    this.subs.push(
+      this.exerciseService
+        .checkAnswerMultiChoise(questionId, answerId)
+        .subscribe(async (response) => {
+          console.log(response);
 
-      this.resultAnswer = response['success'];
-      if(this.resultAnswer === true) {
+          this.resultAnswer = response['success'];
+          if (this.resultAnswer === true) {
+            // ** message and voice success
+            this.currentIndex += 1;
+            this.successMessage('the answer is correct');
+            this.isLoading = true;
+            this.stopAllAudios();
+            this.multiForm.reset();
+            this.getQuestionAndAnswerMultiChoice();
+            this.slides.slideNext();
 
-        // ** message and voice success
-        this.currentIndex += 1;
-        this.successMessage('the answer is correct');
-        this.isLoading = true;
-        this.multiForm.reset();
-        this.getQuestionAndAnswerMultiChoice();
-        this.slides.slideNext();
+            if (this.currentIndex === this.lengthQuestion) {
+              this.successMessage('Thanks for resolving questions');
+              setTimeout(() => {
+                this.navController.navigateRoot([
+                  '/exercise',
+                  { courseId: this.courseId },
+                ]);
+              }, 100);
+            }
+          } else if (this.resultAnswer === false) {
+            // ** message and voice error
+            this.errorMessage(
+              'The answer is wrong and please choose correct answer'
+            );
+          }
+        })
+    );
+  }
 
-        if(this.currentIndex === this.lengthQuestion) {
-          this.successMessage('Thanks for resolving questions');
-          setTimeout(() => {
-            this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
-          }, 100)
+  async successMessage(msg: string) {
+    this.audio.play();
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      cssClass: 'ion-success',
+      color: 'success',
+    });
+    toast.present();
+  }
+
+  async errorMessage(msg: string) {
+    this.audio.play();
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      cssClass: 'ion-error',
+      color: 'danger',
+    });
+    toast.present();
+  }
+
+  playAudio(answer: any, type: number) {
+    // playing question sound
+    if (type == 1) {
+      //stoping answer voices
+      this.stopAnswerVoices();
+      if (this.exerciseItems[0].audioElement) {
+        if (this.exerciseItems[0].audioElement.status == false) {
+          this.exerciseItems[0].audioElement.audio.play();
+          this.exerciseItems[0].audioElement.status = true;
+        } else {
+          this.exerciseItems[0].audioElement.audio.pause();
+          this.exerciseItems[0].audioElement.status = false;
         }
-
-      } else if(this.resultAnswer === false) {
-
-        // ** message and voice error
-        this.errorMessage('The answer is wrong and please choose correct answer');
       }
-
+    } else {
+      this.stopQuestionVoice();
+      var audioElement = answer.multiChoiceAnswerTranslations[0].audioElement;
+      if (audioElement) {
+        if (audioElement.status == false) {
+          audioElement.audio.play();
+          answer.multiChoiceAnswerTranslations[0].audioElement.status = true;
+        } else {
+          audioElement.audio.pause();
+          answer.multiChoiceAnswerTranslations[0].audioElement.status = false;
+        }
       }
-  )
-  );
-}
+    }
+  }
 
-async successMessage(msg: string) {
-  this.audio.play()
-  const toast = await this.toastController.create({
-    message: msg,
-    duration: 3000,
-    cssClass:'ion-success',
-    color: 'success'
-  });
-  toast.present();
-}
-
-async errorMessage(msg: string) {
-  this.audio.play()
-  const toast = await this.toastController.create({
-    message: msg,
-    duration: 3000,
-    cssClass:'ion-error',
-    color: 'danger',
-  });
-  toast.present();
-}
-
-ngOnDestroy() {
-  this.subs.forEach(sub => {
-    sub.unsubscribe();
-  })
-}
-
+  stopAllAudios() {
+    
+    this.stopQuestionVoice();
+    this.stopAnswerVoices();
+  }
+  stopAnswerVoices(){
+    this.resultAnswerItems[0].multiChoiceAnswerTranslations.forEach(
+      (element) => {
+        if (element.audioElement) {
+          if (element.audioElement.status == true) {
+            element.audioElement.audio.pause();
+            element.audioElement.status = false;
+          }
+        }
+      }
+    );
+  }
+  stopQuestionVoice(){
+    //Stoping Voice of question
+    if (this.exerciseItems[0].audioElement) {
+      this.exerciseItems[0].audioElement.audio.pause();
+      this.exerciseItems[0].audioElement.status = false;
+    }
+  }
+  ngOnDestroy() {
+    this.subs.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
 }

@@ -7,6 +7,10 @@ export interface ExerciseItem {
   singleChoiceTranslations:[{
     id?:number;
     voicePath:string;
-  }]
+  }];
+  multiChoiceTranslations:[{
+    id?:number;
+    voicePath:string;
+  }];
   audioElement:AudioElement;
 }
