@@ -28,9 +28,9 @@ export class TrainingPage implements OnInit {
       courseId: JSON.parse(this.route.snapshot.paramMap.get('courseId'))
     },
     {
-      img: '../../assets/icon/puzzle.png',
+      img: '../../assets/icon/abc-block.png',
       name: 'Puzzle Text',
-      url: '/exercise/puzzle-image',
+      url: '/exercise/puzzle-text',
       exerciseId: 4,
       courseId: JSON.parse(this.route.snapshot.paramMap.get('courseId'))
     },
