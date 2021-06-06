@@ -24,14 +24,14 @@ export class TrainingPage implements OnInit {
       img: '../../assets/icon/puzzle.png',
       name: 'Puzzle Image',
       url: '/exercise/puzzle-image',
-      exerciseId: 3,
+      exerciseId: 4,
       courseId: JSON.parse(this.route.snapshot.paramMap.get('courseId'))
     },
     {
       img: '../../assets/icon/abc-block.png',
       name: 'Puzzle Text',
       url: '/exercise/puzzle-text',
-      exerciseId: 4,
+      exerciseId: 3,
       courseId: JSON.parse(this.route.snapshot.paramMap.get('courseId'))
     },
     {

@@ -140,8 +140,6 @@ export class MultiChoicePage implements OnInit {
       this.exerciseService
         .checkAnswerMultiChoise(questionId, answerId)
         .subscribe(async (response) => {
-          console.log(response);
-
           this.resultAnswer = response['success'];
           if (this.resultAnswer === true) {
             // ** message and voice success
