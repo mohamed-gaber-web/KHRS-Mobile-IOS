@@ -26,7 +26,7 @@
     single choice
     <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
   </ion-title>
-  <ion-icon slot="end"  name="help-circle-outline"></ion-icon>
+  <ion-icon slot="end" (click)="presentModal()"  name="help-circle-outline"></ion-icon>
 </ion-toolbar>
 
 <ion-content>

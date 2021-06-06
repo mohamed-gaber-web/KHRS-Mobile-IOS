@@ -9,6 +9,8 @@ import { AudioElement } from 'src/app/shared/models/audioObject';
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { ModalController } from '@ionic/angular';
+import { HelpModalComponent } from '../help-modal/help-modal.component';
 
 
 @Component({
@@ -63,7 +65,8 @@ export class SingleChoicePage implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     public navController: NavController,
-    private router: Router
+    private router: Router,
+    public modalController: ModalController
     ) { }
 
   ngOnInit() {
@@ -204,6 +207,17 @@ export class SingleChoicePage implements OnInit {
       color: 'danger',
     });
     toast.present();
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: HelpModalComponent,
+      componentProps: {
+        "modalLink": "asdasd",
+        "modalTitle": "Single Choice Tutorial"
+      }
+    });
+    return await modal.present();
   }
 
   ngOnDestroy() {

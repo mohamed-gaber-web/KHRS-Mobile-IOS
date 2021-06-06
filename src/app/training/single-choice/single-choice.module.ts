@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SingleChoicePageRoutingModule } from './single-choice-routing.module';
 
 import { SingleChoicePage } from './single-choice.page';
+import { HelpModalModule } from '../help-modal/help-modal.module';
 
 
 
@@ -16,9 +17,10 @@ import { SingleChoicePage } from './single-choice.page';
     FormsModule,
     IonicModule,
     SingleChoicePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HelpModalModule
 
   ],
-  declarations: [SingleChoicePage]
+  declarations: [SingleChoicePage],
 })
 export class SingleChoicePageModule {}
