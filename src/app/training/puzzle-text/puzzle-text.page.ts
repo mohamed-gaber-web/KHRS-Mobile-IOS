@@ -1,3 +1,4 @@
+import { PuzzleTextTranslations } from './../../shared/models/puzzleTextTranslations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides, NavController, ToastController } from '@ionic/angular';
@@ -20,7 +21,11 @@ export class PuzzleTextPage implements OnInit {
   courseId: number;
   exerciseType: number;
   questionAndAnswerItems: PuzzleText[];
-  resultQestionItems: any;
+  questions:PuzzleTextTranslations[];
+  questionsArray:any[]=[];
+
+  answers:PuzzleTextTranslations[];
+
   resultAnswerItems: any;
   subs: Subscription[] = [];
   isLoading: boolean = false;
@@ -78,7 +83,30 @@ export class PuzzleTextPage implements OnInit {
       .subscribe(response => {
         this.isLoading = false;
         this.questionAndAnswerItems = response['result'];
-        console.log(this.questionAndAnswerItems);
+        //Questions
+       for (let index = 0; index < this.questionAndAnswerItems.length; index++) {
+         let arr = [];
+         let qpz : PuzzleText;
+         qpz.id = this.questionAndAnswerItems[index].id;
+         qpz.text = this.questionAndAnswerItems[index].text;
+         qpz.voicePath = this.questionAndAnswerItems[index].voicePath;
+         arr.push(qpz);
+         this.questionsArray.push(arr);
+         console.log(qpz);
+       }
+
+       //Answers
+       for (let index = 0; index < this.questionAndAnswerItems.length; index++) {
+        let arr = [];
+        let apz : PuzzleTextTranslations;
+        apz.id = this.questionAndAnswerItems[index].puzzleTextTranslations[0].id;
+        apz.text = this.questionAndAnswerItems[index].puzzleTextTranslations[0].text;
+        apz.voicePath = this.questionAndAnswerItems[index].puzzleTextTranslations[0].voicePath;
+        arr.push(apz);
+        this.questionsArray.push(arr);
+        console.log(apz);
+      }
+
       })
     );
   }
@@ -92,12 +120,11 @@ export class PuzzleTextPage implements OnInit {
 
   // ** Drop Function
   drop(event: CdkDragDrop<any>) {
+    console.log(event.container.data);
+      console.log(event.previousContainer.data);
     if (event.previousContainer === event.container) {
       console.log("true");
     }
-    console.log( event.container.data);
-    console.log( event.previousContainer.data);
-
   if (event.previousContainer === event.container) {
       console.log('move');
       moveItemInArray(
@@ -108,14 +135,15 @@ export class PuzzleTextPage implements OnInit {
       // console.log(event.container.data, event.previousIndex, event.currentIndex);
     }
     else {
+      console.log(event.container.data);
+      console.log(event.previousContainer.data);
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-      console.log(event.container.data);
-      console.log(event.previousContainer.data);
+
     }
 
 

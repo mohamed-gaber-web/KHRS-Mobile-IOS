@@ -43,7 +43,7 @@
         <ion-col size="12"
           cdkDropList
           class="example-box"
-          *ngFor="let item of questionAndAnswerItems"
+          *ngFor="let item of resultQestionItems"
           [cdkDropListData]="item"
           cdkDropListSortingDisabled
           cdkDropListOrientation="horizontal"
@@ -61,9 +61,10 @@
           </div>
 
           <ion-text
+           *ngFor="let item2 of item"
             color="primary"
             [cdkDragDisabled]="true" cdkDrag>
-            {{ item.text }}
+            {{ item2.text }}
           </ion-text>
 
         </ion-col>

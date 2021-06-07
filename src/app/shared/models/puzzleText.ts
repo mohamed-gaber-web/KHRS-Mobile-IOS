@@ -10,6 +10,7 @@ export interface PuzzleText {
     languageName: string;
     languageId: number;
     puzzleTextId: number;
+    voicePath: string;
   }];
 
 }
