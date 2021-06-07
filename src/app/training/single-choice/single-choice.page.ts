@@ -103,18 +103,50 @@ export class SingleChoicePage implements OnInit {
             this.exerciseItems[0].audioElement.audio.load();
 
           }
+          if(this.exerciseItems[0].voiceDanishPath != null && this.exerciseItems[0].voiceDanishPath != "" ){
+            this.exerciseItems[0].audioElementDanish = new AudioElement();
+            this.exerciseItems[0].audioElementDanish.status = false;
+            var audio = new Audio(`${this.exerciseItems[0].voiceDanishPath}`);
+            this.exerciseItems[0].audioElementDanish.audio = audio;
+            this.exerciseItems[0].audioElementDanish.audio.load();
+
+          }
         })
     );
 }
 
-  playAudio(){
-    if(this.exerciseItems[0].audioElement.status == false){
-      this.exerciseItems[0].audioElement.audio.play();
-      this.exerciseItems[0].audioElement.status = true;
+  playAudio(type?:string,item?:any){
+
+    
+    if(type == "native"){
+      if(item.audioElementDanish?.status == true){
+        item.audioElementDanish.audio.pause();
+        item.audioElementDanish.status = false
+      }
+      if(item.audioElement.status == false){
+        item.audioElement.audio.play();
+        item.audioElement.status = true;
+        console.log(item.audioElement.status)
+
+      }else{
+        console.log("native pause")
+        item.audioElement.audio.pause();
+        item.audioElement.status = false;
+      }
     }else{
-      this.exerciseItems[0].audioElement.audio.pause();
-      this.exerciseItems[0].audioElement.status = false;
+      if(item.audioElementDanish.status == false){
+        if(item.audioElement?.status == true){
+          item.audioElement.audio.pause();
+          item.audioElement.status = false
+        }
+        item.audioElementDanish.audio.play();
+        item.audioElementDanish.status = true;
+      }else{
+        item.audioElementDanish.audio.pause();
+        item.audioElementDanish.status = false;
+      }
     }
+   
   }
   // ** Validate Form Input
   validateSingleForm(isSubmitting = false) {
@@ -163,6 +195,11 @@ export class SingleChoicePage implements OnInit {
           if(this.exerciseItems[0].audioElement){
             this.exerciseItems[0].audioElement.audio.pause();
             this.exerciseItems[0].audioElement.audio = null;
+
+          }
+          if(this.exerciseItems[0].audioElementDanish){
+            this.exerciseItems[0].audioElementDanish.audio.pause();
+            this.exerciseItems[0].audioElementDanish.audio = null;
 
           }
           this.isLoading = true;

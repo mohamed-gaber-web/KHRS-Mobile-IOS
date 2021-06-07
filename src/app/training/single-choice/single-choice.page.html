@@ -38,29 +38,28 @@
     <ion-slide *ngFor="let singleItem of exerciseItems">
     <ion-grid>
       <ion-list class="single-choice">
-        <div *ngIf="singleItem.singleChoiceTranslations[0]?.voicePath">
+        <div *ngIf="singleItem.voiceDanishPath">
           <div class="sound-question">
             <div class="sound-bg">
               <div class="img-volume">
-                <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!singleItem.audioElement.status? 'play' : 'stop'" (click)="playAudio()">
+                <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!singleItem.audioElementDanish.status? 'play' : 'stop'" (click)="playAudio('',singleItem)">
                 </ion-icon>
               </div>
             </div>
             <img src="../../../assets/icon/da.png" alt="" />
           </div>
-
-          <!-- <div class="sound">
+        </div>
+        <div *ngIf="singleItem.singleChoiceTranslations[0]?.voicePath">
+          <div class="sound-question">
             <div class="sound-bg">
               <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-              </ion-img>
+                <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!singleItem.audioElement.status? 'play' : 'stop'" (click)="playAudio('native',singleItem)">
+                </ion-icon>
               </div>
             </div>
-            <img src="../../../assets/icon/tu.png" alt="" />
-          </div> -->
+            <img [src]="userInfo.languageIcon" alt="" />
+          </div>
         </div>
-
         <ion-radio-group formControlName="answer">
 
           <ion-list-header>
