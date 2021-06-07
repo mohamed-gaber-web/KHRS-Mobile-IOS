@@ -20,7 +20,7 @@ export class PuzzleTextPage implements OnInit {
   userInfo: any;
   courseId: number;
   exerciseType: number;
-  questionAndAnswerItems: PuzzleText[];
+  questionAndAnswerItems: any;
   questions:PuzzleTextTranslations[];
   questionsArray:any[]=[];
   answersArray:any[]=[];
@@ -81,30 +81,30 @@ export class PuzzleTextPage implements OnInit {
       this.exerciseService.getCourseExercise
       (this.exerciseType, this.courseId, this.currentIndex, this.limit)
       .subscribe(response => {
+        this.questionAndAnswerItems = response;
         this.isLoading = false;
-        this.questionAndAnswerItems = response['result'];
         //Questions
-       for (let index = 0; index < this.questionAndAnswerItems.length; index++) {
+       for (let index = 0; index < this.questionAndAnswerItems.puzzleText.length; index++) {
          let arr = [];
          let qpz : PuzzleTextTranslations = new PuzzleTextTranslations();
-         qpz.id = this.questionAndAnswerItems[index].id;
-         qpz.text = this.questionAndAnswerItems[index].text;
+         qpz.id = this.questionAndAnswerItems.puzzleText[index].id;
+         qpz.text = this.questionAndAnswerItems.puzzleText[index].text;
          qpz.type = "question";
          qpz.disabled = true;
-         qpz.voicePath = this.questionAndAnswerItems[index].voicePath;
+         qpz.voicePath = this.questionAndAnswerItems.puzzleText[index].voicePath;
          arr.push(qpz);
          this.questionsArray.push(arr);
        }
 
        //Answers
-       for (let index = 0; index < this.questionAndAnswerItems.length; index++) {
+       for (let index = 0; index < this.questionAndAnswerItems.puzzleTextTranslations.length; index++) {
         let arr = [];
         let apz : PuzzleTextTranslations  = new PuzzleTextTranslations();
-        apz.id = this.questionAndAnswerItems[index].puzzleTextTranslations[0].id;
-        apz.text = this.questionAndAnswerItems[index].puzzleTextTranslations[0].text;
+        apz.id = this.questionAndAnswerItems.puzzleTextTranslations[index].id;
+        apz.text = this.questionAndAnswerItems.puzzleTextTranslations[index].text;
         apz.type = "answer";
         apz.disabled = false;
-        apz.voicePath = this.questionAndAnswerItems[index].puzzleTextTranslations[0].voicePath;
+        apz.voicePath = this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath;
         this.answersArray.push(apz);
       }
 
