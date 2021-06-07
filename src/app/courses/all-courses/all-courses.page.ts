@@ -59,7 +59,7 @@ export class AllCoursesPage implements OnInit {
                 element.imagePath = `${element.imagePath}`;
               }
               if (element.courseTranslations[0]?.introVoicePath) {
-                element.courseTranslations[0].introVoicePath = `${imagesBaseUrl}${element.courseTranslations[0].introVoicePath}`;
+                element.courseTranslations[0].introVoicePath = `${element.courseTranslations[0].introVoicePath}`;
               }
 
               element.audioElement = new AudioElement();

@@ -22,7 +22,9 @@
         </ion-item>
 
         <div class="video-inro">
-          <iframe width="100%" height="230" src="https://www.youtube.com/embed/LHxsRIxwTrQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <video *ngIf="courseDetails.courseTranslations[0].introVideoPath" width="100%" height="230" controls>
+            <source [src]="courseDetails.courseTranslations[0].introVideoPath" type="video/mp4">
+          </video>
         </div>
 
         <ion-button (click)="sendData($event, courseDetails.id)" *ngIf="courseDetails.statusName === null"> Apply </ion-button>
