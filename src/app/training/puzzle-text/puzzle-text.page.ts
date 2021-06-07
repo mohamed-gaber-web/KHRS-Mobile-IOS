@@ -23,7 +23,7 @@ export class PuzzleTextPage implements OnInit {
   questionAndAnswerItems: PuzzleText[];
   questions:PuzzleTextTranslations[];
   questionsArray:any[]=[];
-
+  answersArray:any[]=[];
   answers:PuzzleTextTranslations[];
 
   resultAnswerItems: any;
@@ -86,25 +86,26 @@ export class PuzzleTextPage implements OnInit {
         //Questions
        for (let index = 0; index < this.questionAndAnswerItems.length; index++) {
          let arr = [];
-         let qpz : PuzzleText;
+         let qpz : PuzzleTextTranslations = new PuzzleTextTranslations();
          qpz.id = this.questionAndAnswerItems[index].id;
          qpz.text = this.questionAndAnswerItems[index].text;
+         qpz.type = "question";
+         qpz.disabled = true;
          qpz.voicePath = this.questionAndAnswerItems[index].voicePath;
          arr.push(qpz);
          this.questionsArray.push(arr);
-         console.log(qpz);
        }
 
        //Answers
        for (let index = 0; index < this.questionAndAnswerItems.length; index++) {
         let arr = [];
-        let apz : PuzzleTextTranslations;
+        let apz : PuzzleTextTranslations  = new PuzzleTextTranslations();
         apz.id = this.questionAndAnswerItems[index].puzzleTextTranslations[0].id;
         apz.text = this.questionAndAnswerItems[index].puzzleTextTranslations[0].text;
+        apz.type = "answer";
+        apz.disabled = false;
         apz.voicePath = this.questionAndAnswerItems[index].puzzleTextTranslations[0].voicePath;
-        arr.push(apz);
-        this.questionsArray.push(arr);
-        console.log(apz);
+        this.answersArray.push(apz);
       }
 
       })
@@ -120,29 +121,31 @@ export class PuzzleTextPage implements OnInit {
 
   // ** Drop Function
   drop(event: CdkDragDrop<any>) {
-    console.log(event.container.data);
-      console.log(event.previousContainer.data);
+    console.log(this.questionsArray)
+    console.log(this.answersArray)
+
     if (event.previousContainer === event.container) {
       console.log("true");
     }
   if (event.previousContainer === event.container) {
       console.log('move');
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      // moveItemInArray(
+      //   event.container.data,
+      //   event.previousIndex,
+      //   event.currentIndex
+      // );
       // console.log(event.container.data, event.previousIndex, event.currentIndex);
     }
     else {
-      console.log(event.container.data);
-      console.log(event.previousContainer.data);
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      if(event.container.data.length == 1){
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+      }
+     
 
     }
 

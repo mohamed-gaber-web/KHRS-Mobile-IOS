@@ -43,7 +43,7 @@
         <ion-col size="12"
           cdkDropList
           class="example-box"
-          *ngFor="let item of resultQestionItems"
+          *ngFor="let item of questionsArray"
           [cdkDropListData]="item"
           cdkDropListSortingDisabled
           cdkDropListOrientation="horizontal"
@@ -63,7 +63,7 @@
           <ion-text
            *ngFor="let item2 of item"
             color="primary"
-            [cdkDragDisabled]="true" cdkDrag>
+            [cdkDragDisabled]="item2.disabled" cdkDrag>
             {{ item2.text }}
           </ion-text>
 
@@ -73,17 +73,17 @@
     </ion-grid>
 
   <ion-grid class="puzzle-answer">
-    <ion-row *ngFor="let item of questionAndAnswerItems">
+    <ion-row *ngFor="let item of answersArray">
 
         <ion-col color="primary"
         size="12"
         cdkDropList
-        [cdkDropListData]="questionAndAnswerItems"
+        [cdkDropListData]="answersArray"
         (cdkDropListDropped)="drop($event)">
 
         <div class="puzzle-fix">
 
-          <div *ngFor="let answer of item.puzzleTextTranslations" class="title" cdkDrag> {{ answer.text }} </div>
+          <div  class="title" cdkDrag> {{ item.text }} </div>
           <div class="sound">
             <div class="sound-bg">
               <div class="img-volume">

@@ -1,4 +1,4 @@
-export interface PuzzleText {
+export class PuzzleText {
 
   id?: number;
   voicePath: string;
