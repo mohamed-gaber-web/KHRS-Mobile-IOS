@@ -51,8 +51,6 @@
           cdkDropListOrientation="horizontal"
           (cdkDropListDropped)="drop($event)">
 
-
-
           <div  *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
             <div class="sound">
               <div class="sound-bg">
@@ -92,7 +90,7 @@
               <div class="sound-bg">
                 <div class="img-volume">
                   <ion-img
-                  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
+                    class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
                 </ion-img>
                 </div>
               </div>
@@ -105,13 +103,19 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid *ngIf="nextButton">
+  <ion-grid >
     <ion-row class="ion-padding">
       <ion-col size="12">
         <ion-button (click)="slideNext()">
           Next
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>
+        <!-- <mat-paginator
+              [length]="questionsArray.length"
+              [pageSize]="limit"
+              (page)="slideNext($event)"
+              >
+      </mat-paginator> -->
       </ion-col>
     </ion-row>
   </ion-grid>

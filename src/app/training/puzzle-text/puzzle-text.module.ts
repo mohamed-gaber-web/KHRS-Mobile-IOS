@@ -10,6 +10,9 @@ import { PuzzleTextPage } from './puzzle-text.page';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
+import {MatPaginatorModule} from '@angular/material/paginator';
+
+
 
 @NgModule({
   imports: [
@@ -17,7 +20,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     FormsModule,
     IonicModule,
     PuzzleTextPageRoutingModule,
-    DragDropModule
+    DragDropModule,
+    MatPaginatorModule
   ],
   declarations: [PuzzleTextPage]
 })

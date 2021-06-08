@@ -8,6 +8,7 @@ import { PuzzleText } from 'src/app/shared/models/puzzleText';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class PuzzleTextPage implements OnInit {
   resultAnswerItems: any;
   subs: Subscription[] = [];
   isLoading: boolean = false;
-  limit: number = 4;
+  limit: number = 3;
   currentIndex: number = 0;
   audio = new Audio('../../../assets/iphone_ding.mp3' );
 
@@ -165,6 +166,7 @@ export class PuzzleTextPage implements OnInit {
 
   // ** Move to Next slide
   slideNext() {
+    // pageData: PageEvent
   // ** get check
   let arrayPuzzle: any = [];
 
@@ -185,10 +187,13 @@ export class PuzzleTextPage implements OnInit {
     if(isCorrect === true) {
       this.successMessage('Thanks the answer is correct');
       this.currentIndex += 1;
+      // this.currentIndex = pageData.pageIndex + 1;
+      // this.limit = pageData.pageSize;
       this.questionsArray = [];
       this.answersArray = [];
       this.getQuestionAndAnswer();
       this.slides.slideNext();
+
 
     } else if(isCorrect === false) {
       this.errorMessage('The answer is wrong and please choose correct answer');
