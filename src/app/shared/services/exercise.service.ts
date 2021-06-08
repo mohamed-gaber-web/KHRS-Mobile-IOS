@@ -5,8 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import {
   checkAnswerSingleChoise,
   getExercise,
-  getMultiChoiceAnswer, checkAnswerMultipleChoice }
+  getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText }
 from './../../api.constants';
+import { PuzzleWithTextAnswer } from '../models/puzzleWithTextAnswer';
 
 
 
@@ -46,9 +47,8 @@ export class ExerciseService {
     return this.http.post(`${checkAnswerMultipleChoice}`, data);
   }
 
-  // getMutliChoiceAnswer(offset: number, limit: number, multiChoiceId: number) {
-  //   const params = `?Offset=${offset}&Limit=${limit}&multiChoiceId=${multiChoiceId}`
-  //   return this.http.get(`${getMultiChoiceAnswer}` + params);
-  // }
+  checkAnswerPuzzleWithText(puzzleTextAnswer: PuzzleWithTextAnswer[]) {
+    return this.http.post(`${checkAnswerPuzzleText}`, puzzleTextAnswer);
+  }
 
 }

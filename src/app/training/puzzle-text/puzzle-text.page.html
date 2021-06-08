@@ -34,7 +34,9 @@
 <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
 <ion-slides [pager]="false" #slides [options]="slideOpts">
+
 <ion-slide>
+
   <div cdkDropListGroup>
     <ion-grid class="puzzle-text">
 
@@ -49,23 +51,24 @@
           cdkDropListOrientation="horizontal"
           (cdkDropListDropped)="drop($event)">
 
-          <div class="sound">
-            <div class="sound-bg">
-              <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
-              </ion-img>
+
+
+          <div  *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
+            <div class="sound">
+              <div class="sound-bg">
+                <div class="img-volume">
+                  <ion-img
+                  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
+                </ion-img>
+                </div>
               </div>
+              <img src="../../../assets/icon/tu.png" alt="" />
             </div>
-            <img src="../../../assets/icon/tu.png" alt="" />
+
+            <ion-text color="primary"> {{ item2.text }} </ion-text>
           </div>
 
-          <ion-text
-           *ngFor="let item2 of item"
-            color="primary"
-            [cdkDragDisabled]="item2.disabled" cdkDrag>
-            {{ item2.text }}
-          </ion-text>
+
 
         </ion-col>
 
@@ -76,24 +79,25 @@
     <ion-row *ngFor="let item of answersArray">
 
         <ion-col color="primary"
+
         size="12"
         cdkDropList
         [cdkDropListData]="answersArray"
         (cdkDropListDropped)="drop($event)">
 
-        <div class="puzzle-fix">
+        <div class="puzzle-fix" cdkDrag>
 
-          <div  class="title" cdkDrag> {{ item.text }} </div>
-          <div class="sound">
-            <div class="sound-bg">
-              <div class="img-volume">
-                <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
-              </ion-img>
+          <div class="title"> {{ item.text }} </div>
+            <div class="sound">
+              <div class="sound-bg">
+                <div class="img-volume">
+                  <ion-img
+                  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
+                </ion-img>
+                </div>
               </div>
+              <img src="../../../assets/icon/tu.png" alt="" />
             </div>
-            <img src="../../../assets/icon/tu.png" alt="" />
-          </div>
         </div>
 
       </ion-col>
@@ -101,16 +105,15 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid>
+  <ion-grid *ngIf="nextButton">
     <ion-row class="ion-padding">
       <ion-col size="12">
-        <ion-button>
+        <ion-button (click)="slideNext()">
           Next
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
-
   </ion-grid>
 </div>
 

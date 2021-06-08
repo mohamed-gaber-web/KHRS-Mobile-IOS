@@ -54,9 +54,9 @@ ion-toolbar {
 
     border: 2px solid var(--ion-color-second-app);
     border-radius:10px;
-    // margin-bottom: 10px;
+    margin-bottom: 5px;
     text-align: center;
-    width:30%;
+    width:100%;
 
     .sound-bg {
       display: inline-block;
@@ -167,7 +167,7 @@ ion-toolbar {
 }
 
 .example-box {
-  padding: 20px 10px;
+  padding: 10px 10px;
   border-bottom: solid 2px #ccc;
   color: rgba(0, 0, 0, 0.87);
   display: flex;

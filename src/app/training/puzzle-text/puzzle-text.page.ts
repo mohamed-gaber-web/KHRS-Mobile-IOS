@@ -25,6 +25,7 @@ export class PuzzleTextPage implements OnInit {
   questionsArray:any[]=[];
   answersArray:any[]=[];
   answers:PuzzleTextTranslations[];
+  nextButton: boolean = false;
 
   resultAnswerItems: any;
   subs: Subscription[] = [];
@@ -39,7 +40,7 @@ export class PuzzleTextPage implements OnInit {
     initialSlide: 0,
     speed: 400,
     slidesPerView: 1,
-    scrollbar: true,
+    scrollbar: false,
   };
 
   question =  [
@@ -119,23 +120,23 @@ export class PuzzleTextPage implements OnInit {
       .then((current) => (this.currentIndex = current));
   }
 
+
   // ** Drop Function
   drop(event: CdkDragDrop<any>) {
-    console.log(this.questionsArray)
-    console.log(this.answersArray)
 
     if (event.previousContainer === event.container) {
       console.log("true");
     }
-  if (event.previousContainer === event.container) {
-      console.log('move');
-      // moveItemInArray(
-      //   event.container.data,
-      //   event.previousIndex,
-      //   event.currentIndex
-      // );
-      // console.log(event.container.data, event.previousIndex, event.currentIndex);
-    }
+
+    if (event.previousContainer === event.container) {
+        console.log('move');
+        // moveItemInArray(
+        //   event.container.data,
+        //   event.previousIndex,
+        //   event.currentIndex
+        // );
+        // console.log(event.container.data, event.previousIndex, event.currentIndex);
+      }
     else {
       if(event.container.data.length == 1){
         transferArrayItem(
@@ -145,7 +146,42 @@ export class PuzzleTextPage implements OnInit {
           event.currentIndex
         );
       }
-     
+
+      console.log(this.questionsArray);
+
+    }
+
+
+
+    if(event.previousContainer.data.length === 0) {
+
+      // ** get check
+      let arrayPuzzle: any = [];
+
+      this.questionsArray.forEach(values => {
+        arrayPuzzle.push({
+          puzzleWithTextId: values[0].id,
+          keyword: values[0].text,
+          translationKeyword: values[1].text
+        })
+      })
+
+      this.exerciseService.checkAnswerPuzzleWithText
+      (arrayPuzzle)
+      .subscribe(response => {
+        console.log(response);
+        const isCorrect = response['result'].isCorrect;
+
+        if(isCorrect === true) {
+          this.successMessage('Thanks the answer is correct');
+          this.nextButton = true;
+        } else if(isCorrect === false) {
+          this.errorMessage('The answer is wrong and please choose correct answer');
+        }
+      })
+
+      return;
+
 
     }
 
@@ -155,8 +191,10 @@ export class PuzzleTextPage implements OnInit {
   // ** Move to Next slide
   slideNext() {
     this.currentIndex += 1;
+    this.questionsArray = [];
+    this.answersArray = [];
+    this.getQuestionAndAnswer();
     this.slides.slideNext();
-    console.log('next');
 
   }
 
@@ -190,7 +228,7 @@ ngOnDestroy() {
 }
 
 }
-function debuge() {
-  throw new Error('Function not implemented.');
-}
+// function debuge() {
+//   throw new Error('Function not implemented.');
+// }
 
