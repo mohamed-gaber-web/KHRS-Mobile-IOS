@@ -185,8 +185,8 @@ export class PuzzleTextPage implements OnInit {
     if(isCorrect === true) {
       this.successMessage('Thanks the answer is correct');
       this.currentIndex += 1;
-      this.questionAndAnswerItems.puzzleTextTranslations = [];
-      this.questionAndAnswerItems.puzzleText = [];
+      this.questionsArray = [];
+      this.answersArray = [];
       this.getQuestionAndAnswer();
       this.slides.slideNext();
 
