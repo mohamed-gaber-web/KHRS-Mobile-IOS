@@ -10,7 +10,6 @@ import { PuzzleImagePage } from './puzzle-image.page';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
-
 @NgModule({
   imports: [
     CommonModule,
