@@ -26,6 +26,7 @@ export class PuzzleTextPage implements OnInit {
   answersArray:any[]=[];
   answers:PuzzleTextTranslations[];
   nextButton: boolean = false;
+  data: any;
 
   resultAnswerItems: any;
   subs: Subscription[] = [];
@@ -40,20 +41,20 @@ export class PuzzleTextPage implements OnInit {
     initialSlide: 0,
     speed: 400,
     slidesPerView: 1,
-    scrollbar: false,
+    scrollbar: true,
   };
 
-  question =  [
-    [{id: 2, title: 'question 1'}],
-    [{id: 3, title: 'question 2'}],
-    [{id: 4, title: 'question 3'}]
-  ];
+  // question =  [
+  //   [{id: 2, title: 'question 1'}],
+  //   [{id: 3, title: 'question 2'}],
+  //   [{id: 4, title: 'question 3'}]
+  // ];
 
-  answer = [
-    {id: 2, title: 'answer 1'},
-    {id: 3, title: 'answer 2'},
-    {id: 4, title: 'answer 3'}
-  ]
+  // answer = [
+  //   {id: 2, title: 'answer 1'},
+  //   {id: 3, title: 'answer 2'},
+  //   {id: 4, title: 'answer 3'}
+  // ]
 
   constructor(
     private storageService: StorageService,
@@ -82,6 +83,7 @@ export class PuzzleTextPage implements OnInit {
       this.exerciseService.getCourseExercise
       (this.exerciseType, this.courseId, this.currentIndex, this.limit)
       .subscribe(response => {
+        console.log(response);
         this.questionAndAnswerItems = response;
         this.isLoading = false;
         //Questions
@@ -151,50 +153,51 @@ export class PuzzleTextPage implements OnInit {
 
     }
 
-
-
     if(event.previousContainer.data.length === 0) {
-
-      // ** get check
-      let arrayPuzzle: any = [];
-
-      this.questionsArray.forEach(values => {
-        arrayPuzzle.push({
-          puzzleWithTextId: values[0].id,
-          keyword: values[0].text,
-          translationKeyword: values[1].text
-        })
-      })
-
-      this.exerciseService.checkAnswerPuzzleWithText
-      (arrayPuzzle)
-      .subscribe(response => {
-        console.log(response);
-        const isCorrect = response['result'].isCorrect;
-
-        if(isCorrect === true) {
-          this.successMessage('Thanks the answer is correct');
-          this.nextButton = true;
-        } else if(isCorrect === false) {
-          this.errorMessage('The answer is wrong and please choose correct answer');
-        }
-      })
-
-      return;
-
-
+      this.nextButton = true;
+    } else {
+      this.nextButton = false;
     }
+
 
 
   }
 
   // ** Move to Next slide
   slideNext() {
-    this.currentIndex += 1;
-    this.questionsArray = [];
-    this.answersArray = [];
-    this.getQuestionAndAnswer();
-    this.slides.slideNext();
+  // ** get check
+  let arrayPuzzle: any = [];
+
+  this.questionsArray.forEach(values => {
+    arrayPuzzle.push({
+      puzzleWithTextId: values[0].id,
+      keyword: values[0].text,
+      translationKeyword: values[1].text
+    })
+  })
+
+  this.exerciseService.checkAnswerPuzzleWithText
+  (arrayPuzzle)
+  .subscribe(response => {
+    console.log(response);
+    const isCorrect = response['result'].isCorrect;
+
+    if(isCorrect === true) {
+      this.successMessage('Thanks the answer is correct');
+      this.currentIndex += 1;
+      this.questionAndAnswerItems.puzzleTextTranslations = [];
+      this.questionAndAnswerItems.puzzleText = [];
+      this.getQuestionAndAnswer();
+      this.slides.slideNext();
+
+    } else if(isCorrect === false) {
+      this.errorMessage('The answer is wrong and please choose correct answer');
+    }
+  })
+
+
+
+
 
   }
 

@@ -44,10 +44,26 @@ ion-toolbar {
   }
 }
 
+.drag-group {
+  width: 100%;
+}
+
 .puzzle-text{
 
-  ion-col {
+  .block {
     margin-bottom: 10px;
+    padding: 10px 10px;
+    border-bottom: solid 2px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+    border-radius: 10px;
   }
 
   .sound {
@@ -56,7 +72,8 @@ ion-toolbar {
     border-radius:10px;
     margin-bottom: 5px;
     text-align: center;
-    width:100%;
+    padding: 0 20px;
+    max-width: 100%;
 
     .sound-bg {
       display: inline-block;
@@ -114,6 +131,9 @@ ion-toolbar {
       // border: 2px solid var(--ion-color-second-app);
       border-radius:10px;
       padding: 5px;
+      border-radius: 50px;
+      margin-right: 10px;
+      text-align: center;
 
       img {
         position: relative;
@@ -124,9 +144,9 @@ ion-toolbar {
         display: inline-block;
         width: 35px;
         height: 35px;
-        text-align: center;
         border-radius: 50px;
         margin-right: 10px;
+        text-align: center;
 
         .img-volume {
           @extend .ext-icon-vlume;
@@ -149,37 +169,37 @@ ion-toolbar {
 
 /************* DRAG AND DROP *****************/
 
-.example-container {
-  width: 400px;
-  max-width: 100%;
-  margin: 0 25px 25px 0;
-  display: inline-block;
-  vertical-align: top;
-}
+// .example-container {
+//   width: 400px;
+//   max-width: 100%;
+//   margin: 0 25px 25px 0;
+//   display: inline-block;
+//   vertical-align: top;
+// }
 
-.example-list {
-  border: solid 1px #ccc;
-  min-height: 30px;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-  display: block;
-}
+// .example-list {
+//   border: solid 1px #ccc;
+//   min-height: 30px;
+//   background: white;
+//   border-radius: 4px;
+//   overflow: hidden;
+//   display: block;
+// }
 
-.example-box {
-  padding: 10px 10px;
-  border-bottom: solid 2px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
-  border-radius: 10px;
-}
+// .example-box {
+//   padding: 10px 10px;
+//   border-bottom: solid 2px #ccc;
+//   color: rgba(0, 0, 0, 0.87);
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   justify-content: space-between;
+//   box-sizing: border-box;
+//   cursor: move;
+//   background: white;
+//   font-size: 14px;
+//   border-radius: 10px;
+// }
 
 .cdk-drag-preview {
   // box-sizing: border-box;
