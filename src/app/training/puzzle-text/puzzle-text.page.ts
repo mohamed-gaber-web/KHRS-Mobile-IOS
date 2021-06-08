@@ -141,17 +141,34 @@ export class PuzzleTextPage implements OnInit {
         // console.log(event.container.data, event.previousIndex, event.currentIndex);
       }
     else {
+      var prevData=   event.previousContainer.data;
+        var data =   event.container.data;
+        var prevIndex =   event.previousIndex;
+        var currIndex =   event.currentIndex;
       if(event.container.data.length == 1){
         transferArrayItem(
-          event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
+          prevData,
+          data,
+          prevData,
+         currIndex
         );
+      }else{
+
+        transferArrayItem(
+          prevData,
+          data,
+          1,
+          2
+        );
+        transferArrayItem(
+          data,
+          prevData,
+          1,
+          1
+        );
+
+        
       }
-
-      console.log(this.questionsArray);
-
     }
 
     if(event.previousContainer.data.length === 0) {
