@@ -30,21 +30,26 @@
 
 <ion-content>
 
+  <div cdkDropListGroup class="drag-group">
 
   <ion-grid class="puzzle-img">
 
     <ion-row>
 
       <ion-col
-        size="6"
+        size="12"
+        class="example-box"
         cdkDropList
-        [cdkDropListData]=""
+        *ngFor="let item of question"
+        [cdkDropListData]="item"
         cdkDropListSortingDisabled
         cdkDropListOrientation="horizontal"
         (cdkDropListDropped)="drop($event)"
       >
-      <ion-img  [cdkDragDisabled]="" cdkDrag
-        src="../../../assets/images/p1.png"></ion-img>
+      <ion-img *ngFor="let item2 of item"
+        [cdkDragDisabled]="true" cdkDrag
+        [src]="item2.imagePath">
+      </ion-img>
       </ion-col>
 
     </ion-row>
@@ -52,17 +57,17 @@
   </ion-grid>
 
   <ion-grid class="puzzle-answer">
-    <ion-row>
+    <ion-row  *ngFor="let item of answer">
 
       <ion-col
-        class="puzzle-block"
         size="12"
         cdkDropList
-        [cdkDropListData]=""
+        [cdkDropListData]="answer"
         (cdkDropListDropped)="drop($event)"
         >
         <div class="puzzle-fix" cdkDrag>
-        <div class="title"> the answer</div>
+
+        <div class="title"> {{ item.title }}</div>
           <div class="sound">
             <div class="sound-bg">
               <div class="img-volume">
@@ -88,6 +93,9 @@
 
     </ion-row>
   </ion-grid>
+  </div>
+
+
 </ion-content>
 
 

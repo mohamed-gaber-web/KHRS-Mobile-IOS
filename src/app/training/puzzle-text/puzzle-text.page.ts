@@ -150,7 +150,7 @@ export class PuzzleTextPage implements OnInit {
         );
       }
 
-      console.log(this.questionsArray);
+      console.log(event.container.data);
 
     }
 
@@ -159,8 +159,6 @@ export class PuzzleTextPage implements OnInit {
     } else {
       this.nextButton = false;
     }
-
-
 
   }
 
