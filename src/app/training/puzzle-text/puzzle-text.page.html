@@ -54,11 +54,12 @@
           cdkDropListOrientation="horizontal"
           (cdkDropListDropped)="drop($event)">
 
-          <div  *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
+          <div *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
             <div class="sound" *ngIf="item2.voicePath">
               <div class="sound-bg">
                 <div class="img-volume">
-                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item2.audioElement.status? 'play' : 'stop'" (click)="playAudio(item2)" >
+                  <ion-icon
+                    class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item2.audioElement.status? 'play' : 'stop'" (click)="playAudio(item2)" >
                   </ion-icon>
                 </div>
               </div>
@@ -77,9 +78,7 @@
 
   <ion-grid class="puzzle-answer">
     <ion-row *ngFor="let item of answersArray">
-
         <ion-col color="primary"
-
         size="12"
         cdkDropList
         [cdkDropListData]="answersArray"
