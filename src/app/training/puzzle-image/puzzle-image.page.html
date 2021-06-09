@@ -46,10 +46,8 @@
         cdkDropListOrientation="horizontal"
         (cdkDropListDropped)="drop($event)"
       >
-      <ion-img *ngFor="let item2 of item"
-        [cdkDragDisabled]="true" cdkDrag
-        [src]="item2.imagePath">
-      </ion-img>
+      <ion-img *ngFor="let item2 of item" [cdkDragDisabled]="true" cdkDrag [src]="item2.imagePath"></ion-img>
+
       </ion-col>
 
     </ion-row>
