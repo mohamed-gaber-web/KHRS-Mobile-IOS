@@ -126,10 +126,7 @@ export class SingleChoicePage implements OnInit {
       if(item.audioElement.status == false){
         item.audioElement.audio.play();
         item.audioElement.status = true;
-        console.log(item.audioElement.status)
-
       }else{
-        console.log("native pause")
         item.audioElement.audio.pause();
         item.audioElement.status = false;
       }

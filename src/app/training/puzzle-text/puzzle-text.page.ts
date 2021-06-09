@@ -9,6 +9,7 @@ import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
+import { AudioElement } from 'src/app/shared/models/audioObject';
 
 
 @Component({
@@ -45,18 +46,6 @@ export class PuzzleTextPage implements OnInit {
     slidesPerView: 1,
     scrollbar: true,
   };
-
-  // question =  [
-  //   [{id: 2, title: 'question 1'}],
-  //   [{id: 3, title: 'question 2'}],
-  //   [{id: 4, title: 'question 3'}]
-  // ];
-
-  // answer = [
-  //   {id: 2, title: 'answer 1'},
-  //   {id: 3, title: 'answer 2'},
-  //   {id: 4, title: 'answer 3'}
-  // ]
 
   constructor(
     private storageService: StorageService,
@@ -98,8 +87,17 @@ export class PuzzleTextPage implements OnInit {
          qpz.id = this.questionAndAnswerItems.puzzleText[index].id;
          qpz.text = this.questionAndAnswerItems.puzzleText[index].text;
          qpz.type = "question";
+         qpz.flag = "../../../assets/icon/da.png";
          qpz.disabled = true;
          qpz.voicePath = this.questionAndAnswerItems.puzzleText[index].voicePath;
+         if(this.questionAndAnswerItems.puzzleText[index].voicePath != null && this.questionAndAnswerItems.puzzleText[index].voicePath != "" ){
+          qpz.audioElement = new AudioElement();
+          qpz.audioElement.status = false;
+          var audio = new Audio(`${qpz.voicePath}`);
+          qpz.audioElement.audio = audio;
+          qpz.audioElement.audio.load();
+
+        }
          arr.push(qpz);
          this.questionsArray.push(arr);
        }
@@ -111,8 +109,17 @@ export class PuzzleTextPage implements OnInit {
         apz.id = this.questionAndAnswerItems.puzzleTextTranslations[index].id;
         apz.text = this.questionAndAnswerItems.puzzleTextTranslations[index].text;
         apz.type = "answer";
+        apz.flag = this.userInfo.languageIcon;
         apz.disabled = false;
         apz.voicePath = this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath;
+        if(this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath != null && this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath != "" ){
+          apz.audioElement = new AudioElement();
+          apz.audioElement.status = false;
+          var audio = new Audio(`${apz.voicePath}`);
+          apz.audioElement.audio = audio;
+          apz.audioElement.audio.load();
+
+        }
         this.answersArray.push(apz);
       }
 
@@ -157,9 +164,6 @@ export class PuzzleTextPage implements OnInit {
          currIndex
         );
       }else{
-        console.log(data[0].type)
-        console.log(data[1].type)
-
         if(data[0].type=="question" && prevData[0].type == "question"){
           transferArrayItem(
             prevData,
@@ -174,9 +178,6 @@ export class PuzzleTextPage implements OnInit {
             1
           );
         }
-
-
-
       }
     }
 
@@ -211,6 +212,7 @@ export class PuzzleTextPage implements OnInit {
 
     if(isCorrect === true) {
       this.successMessage('Thanks the answer is correct');
+      this.stopAllAudios();
       this.currentIndex += 1;
       this.getQuestionAndAnswer();
       this.slides.slideNext();
@@ -256,7 +258,33 @@ export class PuzzleTextPage implements OnInit {
     toast.present();
   }
 
-
+playAudio(item:any){
+  this.stopAllAudios();
+  if(item.audioElement.status == false){
+    item.audioElement.audio.play();
+    item.audioElement.status = true;
+  }else{
+    item.audioElement.audio.pause();
+    item.audioElement.status = false;
+  }
+}
+stopAllAudios(){
+  this.questionsArray.forEach(element => {
+    element.forEach(element2 => {
+      if (element2.audioElement && element2.audioElement.status == true) {
+        element2.audioElement.audio.pause();
+        element2.audioElement.status = false;
+      }
+    });
+    
+  });
+  this.answersArray.forEach(element => {
+    if (element.audioElement && element.audioElement.status == true) {
+      element.audioElement.audio.pause();
+      element.audioElement.status = false;
+    }
+  });
+}
 ngOnDestroy() {
   this.subs.forEach((sub) => {
     sub.unsubscribe();
