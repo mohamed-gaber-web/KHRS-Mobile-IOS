@@ -25,7 +25,10 @@
 <ion-toolbar>
   <ion-title>
     Puzzle With Text
+    <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+
   </ion-title>
+
   <ion-icon slot="end"  name="help-circle-outline"></ion-icon>
 </ion-toolbar>
 
@@ -105,8 +108,8 @@
 
   <ion-grid >
     <ion-row class="ion-padding">
-      <ion-col size="12">
-        <ion-button (click)="slideNext()">
+      <ion-col size="12" [ngClass]="{'hideButtonNext': answersArray.length > 0 }">
+        <ion-button  (click)="slideNext()">
           Next
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>
