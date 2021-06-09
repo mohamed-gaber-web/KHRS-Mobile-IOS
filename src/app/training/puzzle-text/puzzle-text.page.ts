@@ -259,7 +259,7 @@ export class PuzzleTextPage implements OnInit {
   }
 
 playAudio(item:any){
-  this.stopAllAudios();
+  this.stopAllAudios(item);
   if(item.audioElement.status == false){
     item.audioElement.audio.play();
     item.audioElement.status = true;
@@ -268,10 +268,10 @@ playAudio(item:any){
     item.audioElement.status = false;
   }
 }
-stopAllAudios(){
+stopAllAudios(item?:any){
   this.questionsArray.forEach(element => {
     element.forEach(element2 => {
-      if (element2.audioElement && element2.audioElement.status == true) {
+      if (element2.audioElement && element2.audioElement.status == true && element2 != item) {
         element2.audioElement.audio.pause();
         element2.audioElement.status = false;
       }
@@ -279,7 +279,7 @@ stopAllAudios(){
     
   });
   this.answersArray.forEach(element => {
-    if (element.audioElement && element.audioElement.status == true) {
+    if (element.audioElement && element.audioElement.status == true && element != item) {
       element.audioElement.audio.pause();
       element.audioElement.status = false;
     }
