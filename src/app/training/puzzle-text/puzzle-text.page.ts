@@ -28,6 +28,7 @@ export class PuzzleTextPage implements OnInit {
   answers:PuzzleTextTranslations[];
   nextButton: boolean = false;
   data: any;
+  lengthQuestion: number = 0;
 
   resultAnswerItems: any;
   subs: Subscription[] = [];
@@ -80,12 +81,15 @@ export class PuzzleTextPage implements OnInit {
   // ** get question and answer puzzle text
   getQuestionAndAnswer() {
     this.isLoading = true;
+    this.questionsArray =[];
+    this.answersArray=[];
     this.subs.push(
       this.exerciseService.getCourseExercise
       (this.exerciseType, this.courseId, this.currentIndex, this.limit)
       .subscribe(response => {
         console.log(response);
         this.questionAndAnswerItems = response;
+        this.lengthQuestion = response['length'];
         this.isLoading = false;
         //Questions
        for (let index = 0; index < this.questionAndAnswerItems.puzzleText.length; index++) {
@@ -155,7 +159,7 @@ export class PuzzleTextPage implements OnInit {
       }else{
         console.log(data[0].type)
         console.log(data[1].type)
-        
+
         if(data[0].type=="question" && prevData[0].type == "question"){
           transferArrayItem(
             prevData,
@@ -170,9 +174,9 @@ export class PuzzleTextPage implements OnInit {
             1
           );
         }
-        
 
-        
+
+
       }
     }
 
@@ -188,7 +192,6 @@ export class PuzzleTextPage implements OnInit {
 
   // ** Move to Next slide
   slideNext() {
-    // pageData: PageEvent
   // ** get check
   let arrayPuzzle: any = [];
 
@@ -209,12 +212,15 @@ export class PuzzleTextPage implements OnInit {
     if(isCorrect === true) {
       this.successMessage('Thanks the answer is correct');
       this.currentIndex += 1;
-      // this.currentIndex = pageData.pageIndex + 1;
-      // this.limit = pageData.pageSize;
-      this.questionsArray = [];
-      this.answersArray = [];
       this.getQuestionAndAnswer();
       this.slides.slideNext();
+
+      if(this.currentIndex === this.lengthQuestion) {
+        this.successMessage('Thanks for resolving questions');
+        setTimeout(() => {
+          this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+        }, 100)
+      }
 
 
     } else if(isCorrect === false) {

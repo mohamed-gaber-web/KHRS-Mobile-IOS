@@ -291,3 +291,18 @@ ion-toolbar {
 
 /************* DRAG AND DROP *****************/
 
+.hideButtonNext {
+  display: none;
+}
+
+.showButtonNext {
+  display: block;
+}
+
+.total-result {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--ion-color-second-app);
+  text-align: center;
+  margin-left: 50px;
+}
