@@ -32,7 +32,7 @@ export class PuzzleTextPage implements OnInit {
   resultAnswerItems: any;
   subs: Subscription[] = [];
   isLoading: boolean = false;
-  limit: number = 3;
+  limit: number = 1;
   currentIndex: number = 0;
   audio = new Audio('../../../assets/iphone_ding.mp3' );
 
@@ -149,23 +149,28 @@ export class PuzzleTextPage implements OnInit {
         transferArrayItem(
           prevData,
           data,
-          prevData,
+          prevIndex,
          currIndex
         );
       }else{
-
-        transferArrayItem(
-          prevData,
-          data,
-          1,
-          2
-        );
-        transferArrayItem(
-          data,
-          prevData,
-          1,
-          1
-        );
+        console.log(data[0].type)
+        console.log(data[1].type)
+        
+        if(data[0].type=="question" && prevData[0].type == "question"){
+          transferArrayItem(
+            prevData,
+            data,
+            1,
+            2
+          );
+          transferArrayItem(
+            data,
+            prevData,
+            1,
+            1
+          );
+        }
+        
 
         
       }
