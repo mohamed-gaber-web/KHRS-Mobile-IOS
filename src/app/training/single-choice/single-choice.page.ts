@@ -253,7 +253,7 @@ export class SingleChoicePage implements OnInit {
     const modal = await this.modalController.create({
       component: HelpModalComponent,
       componentProps: {
-        "modalLink": "asdasd",
+        "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
         "modalTitle": "Single Choice Tutorial"
       }
     });
