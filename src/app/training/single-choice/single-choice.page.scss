@@ -62,38 +62,7 @@ ion-toolbar {
     --color: var(--ion-color-second-app);
   }
 
-
-  .sound-lang {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0 20px;
-
-    .sound {
-      border: 2px solid var(--ion-color-second-app);
-      border-radius:10px;
-      padding: 10px;
-
-      .sound-bg {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        background-color: #E6E7E8;
-        border-radius: 50px;
-        margin-right: 5px;
-
-        .img-volume {
-          @extend .ext-icon-vlume;
-        }
-      }
-    }
-
-  }
-
-
 }
-
 
 .img-langauge {
   width: 40px;
@@ -120,27 +89,23 @@ ion-toolbar {
   margin-left: 50px;
 }
 
+
+
 .sound-question {
   border: 2px solid var(--ion-color-second-app);
-  border-radius: 50px;
+  padding: 10px;
   display: flex;
   justify-content: space-around;
-  width: 20%;
-  min-width: 27%;
-  max-width: 80%;
-  padding: 7px 0;
-  margin-left: 10px;
-  margin-top: 30px;
+  border-radius: 10px;
 
-  img.langauge-img{
-    width: 30px;
-    height: auto;
-    max-width: 70%;
+  img.img-lang {
+  width: 30px;
+  height: auto;
   }
-
 
   .img-volume {
     @extend .ext-icon-vlume;
   }
 }
+
 

@@ -27,7 +27,7 @@ export class SingleChoicePage implements OnInit {
   exerciseType: number;
   courseId: number;
   singleForm: FormGroup;
-  lengthQuestion: number;
+  lengthQuestion: number = 0;
   offset: number = 0;
   currentIndex: number = 0;
   questionSelected: boolean = false;
@@ -117,7 +117,7 @@ export class SingleChoicePage implements OnInit {
 
   playAudio(type?:string,item?:any){
 
-    
+
     if(type == "native"){
       if(item.audioElementDanish?.status == true){
         item.audioElementDanish.audio.pause();
@@ -146,7 +146,7 @@ export class SingleChoicePage implements OnInit {
         item.audioElementDanish.status = false;
       }
     }
-   
+
   }
   // ** Validate Form Input
   validateSingleForm(isSubmitting = false) {
