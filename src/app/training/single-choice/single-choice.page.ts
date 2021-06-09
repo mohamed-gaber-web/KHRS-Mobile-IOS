@@ -95,6 +95,12 @@ export class SingleChoicePage implements OnInit {
         this.isLoading = false;
           this.exerciseItems = response['result'];
           this.lengthQuestion = response['length'];
+          if(this.lengthQuestion ==0){
+            this.errorMessage("There are no available questions in this exercise");
+            setTimeout(() => {
+              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+            }, 100)
+          }
           if(this.exerciseItems[0].singleChoiceTranslations[0].voicePath != null && this.exerciseItems[0].singleChoiceTranslations[0].voicePath != "" ){
             this.exerciseItems[0].audioElement = new AudioElement();
             this.exerciseItems[0].audioElement.status = false;

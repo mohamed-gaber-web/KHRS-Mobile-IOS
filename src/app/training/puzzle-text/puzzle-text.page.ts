@@ -79,6 +79,12 @@ export class PuzzleTextPage implements OnInit {
         console.log(response);
         this.questionAndAnswerItems = response;
         this.lengthQuestion = response['length'];
+        if(this.lengthQuestion ==0){
+          this.errorMessage("There are no available questions in this exercise");
+          setTimeout(() => {
+            this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+          }, 100)
+        }
         this.isLoading = false;
         //Questions
        for (let index = 0; index < this.questionAndAnswerItems.puzzleText.length; index++) {

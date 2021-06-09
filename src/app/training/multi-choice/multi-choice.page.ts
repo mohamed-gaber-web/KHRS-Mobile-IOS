@@ -104,6 +104,12 @@ export class MultiChoicePage implements OnInit {
             this.exerciseItems[0].audioElement.audio.load();
           }
           this.lengthQuestion = questionAndAnswerItems['length'];
+          if(this.lengthQuestion == 0){
+            this.errorMessage("There are no available questions in this exercise");
+            setTimeout(() => {
+              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+            }, 100)
+          }
           this.resultAnswerItems.forEach(
             (element) => {
               element.audioElement = new AudioElement();
