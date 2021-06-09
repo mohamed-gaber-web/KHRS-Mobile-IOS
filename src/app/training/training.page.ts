@@ -62,6 +62,10 @@ export class TrainingPage implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
+    if(!this.route.snapshot.paramMap.get('courseId')){
+      this.router.navigate(["courses/tabs/my-courses"]);
+
+    }
   }
 
   goToCatExercise(url, exerciseId, courseId) {
