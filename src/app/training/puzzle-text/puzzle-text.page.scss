@@ -118,7 +118,7 @@ ion-toolbar {
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #DADDE1;
-    height: 50px;
+    height: 60px;
 
     .title {
       font-size: 15px;
@@ -128,12 +128,13 @@ ion-toolbar {
 
     .sound {
 
-      // border: 2px solid var(--ion-color-second-app);
+      border: 2px solid var(--ion-color-second-app);
       border-radius:10px;
-      padding: 5px;
-      border-radius: 50px;
-      margin-right: 10px;
+      margin-bottom: 5px;
       text-align: center;
+      padding: 0 15px;
+      max-width: 100%;
+      margin-top: 8px;
 
       img {
         width: 30px;
