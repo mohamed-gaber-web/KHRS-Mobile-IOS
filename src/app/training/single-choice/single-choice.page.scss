@@ -91,7 +91,9 @@ ion-toolbar {
 
 
 
-.sound-question {
+.sound-group {
+
+  .sound-question {
   border: 2px solid var(--ion-color-second-app);
   padding: 10px;
   display: flex;
@@ -99,8 +101,8 @@ ion-toolbar {
   border-radius: 10px;
 
   img.img-lang {
-  width: 30px;
-  height: auto;
+    width: 30px;
+    height: auto;
   }
 
   .img-volume {
@@ -108,4 +110,6 @@ ion-toolbar {
   }
 }
 
+
+}
 
