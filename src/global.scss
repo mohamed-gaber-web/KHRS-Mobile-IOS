@@ -121,3 +121,14 @@ ion-spinner{
   height: 100%;
   display: flex;
 }
+
+
+ion-toolbar {
+
+  ion-icon {
+    color: var(--ion-color-second-app);
+    font-size: 30px;
+    margin-right: 20px;
+    margin-top: 8px!important;
+  }
+}

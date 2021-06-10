@@ -1,15 +1,11 @@
-import { imagesBaseUrl } from 'src/app/api.constants';
-import { PuzzleTextTranslations } from './../../shared/models/puzzleTextTranslations';
+import { PuzzleImageTranslations } from './../../shared/models/puzzleImageTranslation';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonSlides, NavController, ToastController } from '@ionic/angular';
+import { IonSlides, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
-import { PuzzleText } from 'src/app/shared/models/puzzleText';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -23,32 +19,17 @@ export class PuzzleImagePage implements OnInit {
   courseId: number;
   exerciseType: number;
   questionAndAnswerItems: any;
-  questions: PuzzleTextTranslations[];
   questionsArray:any[]=[];
-  answersArray:any[]=[];
-  // answers: PuzzleTextTranslations[];
+  answersArray: any[]=[];
   nextButton: boolean = false;
+  lengthQuestion: number = 0;
 
-
-  resultAnswerItems: any;
   subs: Subscription[] = [];
   isLoading: boolean = false;
-  limit: number = 3;
+  limit: number = 1;
   currentIndex: number = 0;
   audio = new Audio('../../../assets/iphone_ding.mp3' );
 
-
-   question =  [
-    [{id: 2, imagePath: '../../../assets/images/p1.png'}],
-    [{id: 3, imagePath: '../../../assets/images/p2.png'}],
-    [{id: 4, imagePath: '../../../assets/images/p3.png'}]
-  ];
-
-  answer = [
-    {id: 2, title: 'answer 1'},
-    {id: 3, title: 'answer 2'},
-    {id: 4, title: 'answer 3'}
-  ]
 
   @ViewChild('slides') slides: IonSlides;
 
@@ -59,6 +40,7 @@ export class PuzzleImagePage implements OnInit {
     scrollbar: true,
   };
 
+
   constructor(
     private storageService: StorageService,
     private route: ActivatedRoute,
@@ -66,6 +48,7 @@ export class PuzzleImagePage implements OnInit {
     public toastController: ToastController,
     public navController: NavController,
     private exerciseService: ExerciseService,
+    public popoverController: PopoverController
 
   ) { }
 
@@ -76,47 +59,52 @@ export class PuzzleImagePage implements OnInit {
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
     this.exerciseType = +this.route.snapshot.paramMap.get('exerciseId');
 
-    // this.getQuestionAndAnswer();
+    this.getQuestionAndAnswer();
   }
 
   // ** get question and answer puzzle text
-  // getQuestionAndAnswer() {
-  //   this.isLoading = true;
-  //   this.subs.push(
-  //     this.exerciseService.getCourseExercise
-  //     (this.exerciseType, this.courseId, this.currentIndex, this.limit)
-  //     .subscribe(response => {
-  //       console.log(response);
-  //       this.questionAndAnswerItems = response;
-  //       this.isLoading = false;
-  //       //Questions
-  //      for (let index = 0; index < this.questionAndAnswerItems.puzzleText.length; index++) {
-  //        let arr = [];
-  //        let qpz : PuzzleTextTranslations = new PuzzleTextTranslations();
-  //        qpz.id = this.questionAndAnswerItems.puzzleText[index].id;
-  //        qpz.text = this.questionAndAnswerItems.puzzleText[index].text;
-  //        qpz.type = "question";
-  //        qpz.disabled = true;
-  //        qpz.voicePath = this.questionAndAnswerItems.puzzleText[index].voicePath;
-  //        arr.push(qpz);
-  //        this.questionsArray.push(arr);
-  //      }
+  getQuestionAndAnswer() {
+    this.questionsArray = [];
+    this.answersArray = [];
+    this.isLoading = true;
+    this.subs.push(
+      this.exerciseService.getCourseExercise
+      (this.exerciseType, this.courseId, this.currentIndex, this.limit)
+      .subscribe(response => {
+        console.log(response);
+        this.questionAndAnswerItems = response;
+        this.lengthQuestion = response['length'];
+        this.isLoading = false;
 
-  //      //Answers
-  //      for (let index = 0; index < this.questionAndAnswerItems.puzzleTextTranslations.length; index++) {
-  //       let arr = [];
-  //       let apz : PuzzleTextTranslations  = new PuzzleTextTranslations();
-  //       apz.id = this.questionAndAnswerItems.puzzleTextTranslations[index].id;
-  //       apz.text = this.questionAndAnswerItems.puzzleTextTranslations[index].text;
-  //       apz.type = "answer";
-  //       apz.disabled = false;
-  //       apz.voicePath = this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath;
-  //       this.answersArray.push(apz);
-  //     }
+        //Questions
+       for (let index = 0; index < this.questionAndAnswerItems.puzzleImages.length; index++) {
+         let arr = [];
+         let qpz : PuzzleImageTranslations = new PuzzleImageTranslations();
+         qpz.id = this.questionAndAnswerItems.puzzleImages[index].id;
+         qpz.imagePath = this.questionAndAnswerItems.puzzleImages[index].imagePath;
+         qpz.guidId = this.questionAndAnswerItems.puzzleImages[index].guidId;
+         qpz.type = "question";
+         qpz.disabled = true;
+         arr.push(qpz);
+         this.questionsArray.push(arr);
+       }
 
-  //     })
-  //   );
-  // }
+       //Answers
+       for (let index = 0; index < this.questionAndAnswerItems.puzzleImagesTranslation.length; index++) {
+        let arr = [];
+        let apz : PuzzleImageTranslations  = new PuzzleImageTranslations();
+        apz.id = this.questionAndAnswerItems.puzzleImagesTranslation[index].id;
+        apz.keyword = this.questionAndAnswerItems.puzzleImagesTranslation[index].keyword;
+        apz.guidId = this.questionAndAnswerItems.puzzleImagesTranslation[index].guidId;
+        apz.type = "answer";
+        apz.disabled = false;
+        apz.voicePath = this.questionAndAnswerItems.puzzleImagesTranslation[index].voicePath;
+        this.answersArray.push(apz);
+      }
+
+      })
+    );
+  }
 
   // ** Get Current Index
   getCurrentIndex() {
@@ -135,12 +123,12 @@ export class PuzzleImagePage implements OnInit {
 
     if (event.previousContainer === event.container) {
         console.log('move');
-        // moveItemInArray(
-        //   event.container.data,
-        //   event.previousIndex,
-        //   event.currentIndex
-        // );
-        // console.log(event.container.data, event.previousIndex, event.currentIndex);
+        moveItemInArray(
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+        console.log(event.container.data, event.previousIndex, event.currentIndex);
       }
     else {
       if(event.container.data.length == 1){
@@ -151,59 +139,47 @@ export class PuzzleImagePage implements OnInit {
           event.currentIndex
         );
       }
-
-      console.log(event.container.data);
-      console.log(event.previousContainer.data);
-
     }
-
-    // if(event.previousContainer.data.length === 0) {
-    //   this.nextButton = true;
-    // } else {
-    //   this.nextButton = false;
-    // }
-
-
 
   }
 
   // ** Move to Next slide
-  // slideNext() {
-  //   // pageData: PageEvent
-  // // ** get check
-  // let arrayPuzzle: any = [];
+  slideNext() {
+  // ** get check
+  let arrayPuzzle: any = [];
+  this.questionsArray.forEach(values => {
+    arrayPuzzle.push({
+      puzzleWithImageQuestionIds: values[0].id,
+      imageGuid: values[0].guidId,
+      wordIds: values[1].id
+    })
+  })
 
-  // this.questionsArray.forEach(values => {
-  //   arrayPuzzle.push({
-  //     puzzleWithTextId: values[0].id,
-  //     keyword: values[0].text,
-  //     translationKeyword: values[1].text
-  //   })
-  // })
+  /**
+   * {
+   * array: [0, 1, 1, 2],
+   *
+   * }
+   */
 
-  // this.exerciseService.checkAnswerPuzzleWithText
-  // (arrayPuzzle)
-  // .subscribe(response => {
-  //   console.log(response);
-  //   const isCorrect = response['result'].isCorrect;
+  this.exerciseService.checkAnswerPuzzleWithImage
+  (arrayPuzzle)
+  .subscribe(response => {
+    console.log(response);
+    const isCorrect = response['result'].isCorrect;
 
-  //   if(isCorrect === true) {
-  //     this.successMessage('Thanks the answer is correct');
-  //     this.currentIndex += 1;
-  //     // this.currentIndex = pageData.pageIndex + 1;
-  //     // this.limit = pageData.pageSize;
-  //     this.questionsArray = [];
-  //     this.answersArray = [];
-  //     this.getQuestionAndAnswer();
-  //     this.slides.slideNext();
+    if(isCorrect === true) {
+      this.successMessage('Thanks the answer is correct');
+      this.currentIndex += 1;
+      this.getQuestionAndAnswer();
+      this.slides.slideNext();
 
+    } else if(isCorrect === false) {
+      this.errorMessage('The answer is wrong and please choose correct answer');
+    }
+  })
 
-  //   } else if(isCorrect === false) {
-  //     this.errorMessage('The answer is wrong and please choose correct answer');
-  //   }
-  // })
-
-  // }
+  }
 
   async successMessage(msg: string) {
     this.audio.play();
@@ -226,6 +202,20 @@ export class PuzzleImagePage implements OnInit {
     });
     toast.present();
   }
+
+
+  // async presentPopover(ev: any) {
+  //   const popover = await this.popoverController.create({
+  //     component: PopoverComponent,
+  //     cssClass: 'my-custom-class',
+  //     event: ev,
+  //     translucent: true
+  //   });
+  //   await popover.present();
+
+  //   const { role } = await popover.onDidDismiss();
+  //   console.log('onDidDismiss resolved with role', role);
+  // }
 
 
 ngOnDestroy() {

@@ -23,12 +23,20 @@
 
 <ion-toolbar>
   <ion-title>
-    Puzzle
+    Puzzle with image
+    <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+
   </ion-title>
   <ion-icon slot="end"  name="help-circle-outline"></ion-icon>
 </ion-toolbar>
 
 <ion-content>
+
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
+
+  <ion-slides [pager]="false" #slides [options]="slideOpts">
+
+  <ion-slide>
 
   <div cdkDropListGroup class="drag-group">
 
@@ -36,17 +44,63 @@
 
     <ion-row>
 
-      <ion-col
-        size="12"
+      <ion-col size="6"
         class="example-box"
         cdkDropList
-        *ngFor="let item of question"
+        *ngFor="let item of questionsArray"
         [cdkDropListData]="item"
         cdkDropListSortingDisabled
         cdkDropListOrientation="horizontal"
         (cdkDropListDropped)="drop($event)"
       >
-      <ion-img *ngFor="let item2 of item" [cdkDragDisabled]="true" cdkDrag [src]="item2.imagePath"></ion-img>
+      <div *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
+        <ion-img *ngIf="item2.type === 'question' " [src]="item2.imagePath"></ion-img>
+
+        <div class="drag-answer" *ngIf="item2.type === 'answer' ">
+          <ion-grid class="puzzle-answer">
+            <ion-row>
+
+              <ion-col
+                size="12"
+                cdkDropList
+                [cdkDropListData]="answersArray"
+                (cdkDropListDropped)="drop($event)"
+                >
+                <div class="puzzle-fix" cdkDrag>
+
+                <div class="title"> {{ item2.keyword }}</div>
+
+                  <!-- <div  class="sound-popup">
+                    <div class="sound">
+                      <div class="sound-bg">
+                        <div class="img-volume">
+                          <ion-img
+                          class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+                        </ion-img>
+                        </div>
+                      </div>
+                      <img src="../../../assets/icon/tu.png" alt="" />
+                    </div>
+                    <div class="sound">
+                      <div class="sound-bg">
+                        <div class="img-volume">
+                          <ion-img
+                          class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
+                        </ion-img>
+                        </div>
+                      </div>
+                      <img src="../../../assets/icon/da.png" alt="" />
+                    </div>
+                  </div> -->
+
+                </div>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+
+        </div>
+      </div>
 
       </ion-col>
 
@@ -54,18 +108,19 @@
 
   </ion-grid>
 
+
   <ion-grid class="puzzle-answer">
-    <ion-row  *ngFor="let item of answer">
+    <ion-row  *ngFor="let item of answersArray">
 
       <ion-col
         size="12"
         cdkDropList
-        [cdkDropListData]="answer"
+        [cdkDropListData]="answersArray"
         (cdkDropListDropped)="drop($event)"
         >
         <div class="puzzle-fix" cdkDrag>
 
-        <div class="title"> {{ item.title }}</div>
+        <div class="title"> {{ item.keyword }}</div>
           <div class="sound">
             <div class="sound-bg">
               <div class="img-volume">
@@ -91,8 +146,30 @@
 
     </ion-row>
   </ion-grid>
-  </div>
 
+
+  <ion-grid >
+    <ion-row class="ion-padding">
+      <ion-col size="12">
+        <ion-button (click)="slideNext()">
+          Next
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+        <!-- <mat-paginator
+              [length]="questionsArray.length"
+              [pageSize]="limit"
+              (page)="slideNext($event)"
+              >
+      </mat-paginator> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  </div>
+</ion-slide>
+
+</ion-slides>
 
 </ion-content>
 

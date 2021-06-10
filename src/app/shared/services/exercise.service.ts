@@ -1,3 +1,5 @@
+import { PuzzleWithImageAnswers } from './../models/puzzleWithImageAnswers';
+import { PuzzleImageTranslations } from './../models/puzzleImageTranslation';
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
@@ -5,7 +7,10 @@ import { HttpClient } from '@angular/common/http';
 import {
   checkAnswerSingleChoise,
   getExercise,
-  getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText }
+  getMultiChoiceAnswer,
+  checkAnswerMultipleChoice,
+  checkAnswerPuzzleText,
+  checkAnswerPuzzleImage }
 from './../../api.constants';
 import { PuzzleWithTextAnswer } from '../models/puzzleWithTextAnswer';
 
@@ -49,6 +54,11 @@ export class ExerciseService {
 
   checkAnswerPuzzleWithText(puzzleTextAnswer: PuzzleWithTextAnswer[]) {
     return this.http.post(`${checkAnswerPuzzleText}`, puzzleTextAnswer);
+  }
+
+
+  checkAnswerPuzzleWithImage(data: PuzzleWithImageAnswers) {
+    return this.http.post(`${checkAnswerPuzzleImage}`, data);
   }
 
 }
