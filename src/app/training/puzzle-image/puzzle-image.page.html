@@ -67,32 +67,7 @@
                 (cdkDropListDropped)="drop($event)"
                 >
                 <div class="puzzle-fix" cdkDrag>
-
-                <div class="title"> {{ item2.keyword }}</div>
-
-                  <!-- <div  class="sound-popup">
-                    <div class="sound">
-                      <div class="sound-bg">
-                        <div class="img-volume">
-                          <ion-img
-                          class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-                        </ion-img>
-                        </div>
-                      </div>
-                      <img src="../../../assets/icon/tu.png" alt="" />
-                    </div>
-                    <div class="sound">
-                      <div class="sound-bg">
-                        <div class="img-volume">
-                          <ion-img
-                          class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png">
-                        </ion-img>
-                        </div>
-                      </div>
-                      <img src="../../../assets/icon/da.png" alt="" />
-                    </div>
-                  </div> -->
-
+                <div (click)="presentPopover($event)" class="title"> {{ item2.keyword }}</div>
                 </div>
               </ion-col>
 
@@ -151,7 +126,7 @@
   <ion-grid >
     <ion-row class="ion-padding">
       <ion-col size="12">
-        <ion-button (click)="slideNext()">
+        <ion-button *ngIf="nextButton" (click)="slideNext()">
           Next
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>

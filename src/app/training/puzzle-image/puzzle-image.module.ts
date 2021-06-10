@@ -6,9 +6,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { PuzzleImagePageRoutingModule } from './puzzle-image-routing.module';
 
+import { PuzzleSoundComponent } from './puzzle-sound/puzzle-sound.component';
 import { PuzzleImagePage } from './puzzle-image.page';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+
+
 
 @NgModule({
   imports: [
@@ -16,8 +19,13 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     FormsModule,
     IonicModule,
     PuzzleImagePageRoutingModule,
-    DragDropModule
+    DragDropModule,
+
+
   ],
-  declarations: [PuzzleImagePage]
+  declarations: [PuzzleImagePage, PuzzleSoundComponent],
+  exports: [],
+  entryComponents: [PuzzleSoundComponent],
+
 })
 export class PuzzleImagePageModule {}

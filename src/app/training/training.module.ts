@@ -8,12 +8,14 @@ import { TrainingPageRoutingModule } from './training-routing.module';
 
 import { TrainingPage } from './training.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TrainingPageRoutingModule
+    TrainingPageRoutingModule,
+
   ],
   declarations: [TrainingPage]
 })

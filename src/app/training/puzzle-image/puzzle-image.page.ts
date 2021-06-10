@@ -1,3 +1,4 @@
+import { PuzzleSoundComponent } from './puzzle-sound/puzzle-sound.component';
 import { PuzzleImageTranslations } from './../../shared/models/puzzleImageTranslation';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -64,9 +65,9 @@ export class PuzzleImagePage implements OnInit {
 
   // ** get question and answer puzzle text
   getQuestionAndAnswer() {
+    this.isLoading = true;
     this.questionsArray = [];
     this.answersArray = [];
-    this.isLoading = true;
     this.subs.push(
       this.exerciseService.getCourseExercise
       (this.exerciseType, this.courseId, this.currentIndex, this.limit)
@@ -141,6 +142,12 @@ export class PuzzleImagePage implements OnInit {
       }
     }
 
+    if(event.previousContainer.data.length === 0) {
+      this.nextButton = true;
+    } else {
+      this.nextButton = false;
+    }
+
   }
 
   // ** Move to Next slide
@@ -174,6 +181,13 @@ export class PuzzleImagePage implements OnInit {
       this.getQuestionAndAnswer();
       this.slides.slideNext();
 
+      if(this.currentIndex === this.lengthQuestion) {
+        this.successMessage('Thanks for resolving questions');
+        setTimeout(() => {
+          this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+        }, 100)
+      }
+
     } else if(isCorrect === false) {
       this.errorMessage('The answer is wrong and please choose correct answer');
     }
@@ -204,18 +218,18 @@ export class PuzzleImagePage implements OnInit {
   }
 
 
-  // async presentPopover(ev: any) {
-  //   const popover = await this.popoverController.create({
-  //     component: PopoverComponent,
-  //     cssClass: 'my-custom-class',
-  //     event: ev,
-  //     translucent: true
-  //   });
-  //   await popover.present();
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PuzzleSoundComponent,
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
 
-  //   const { role } = await popover.onDidDismiss();
-  //   console.log('onDidDismiss resolved with role', role);
-  // }
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', ev);
+  }
 
 
 ngOnDestroy() {
@@ -225,8 +239,4 @@ ngOnDestroy() {
 }
 
 }
-// function debuge() {
-//   throw new Error('Function not implemented.');
-// }
-
 
