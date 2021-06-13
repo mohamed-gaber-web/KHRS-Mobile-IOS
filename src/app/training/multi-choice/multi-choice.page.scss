@@ -154,3 +154,28 @@
       @extend .ext-icon-vlume;
     }
   }
+  .sound-group {
+
+    .sound-question {
+    border: 2px solid var(--ion-color-second-app);
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10px;
+
+    img.img-lang {
+      width: 30px;
+      height: auto;
+    }
+
+    .img-volume {
+      @extend .ext-icon-vlume;
+    }
+  img.img-lang {
+    width: 30px;
+    height: auto;
+  }
+
+}
+
+}

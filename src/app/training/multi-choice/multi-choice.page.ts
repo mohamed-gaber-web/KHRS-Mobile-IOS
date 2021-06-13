@@ -104,25 +104,41 @@ export class MultiChoicePage implements OnInit {
             this.exerciseItems[0].audioElement.audio.load();
           }
           this.lengthQuestion = questionAndAnswerItems['length'];
-          if(this.lengthQuestion == 0){
-            this.errorMessage("There are no available questions in this exercise");
+          if (this.lengthQuestion == 0) {
+            this.errorMessage(
+              'There are no available questions in this exercise'
+            );
             setTimeout(() => {
-              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
-            }, 100)
+              this.navController.navigateRoot([
+                '/exercise',
+                { courseId: this.courseId },
+              ]);
+            }, 100);
           }
-          this.resultAnswerItems.forEach(
-            (element) => {
-              element.audioElement = new AudioElement();
-              element.audioElement.status = false;
-              if (element.multiChoiceAnswerTranslations[0].voicePath != null && element.multiChoiceAnswerTranslations[0].voicePath != '') {
-                element.audioElement.id = element.id;
-                element.audioElement.audio = new Audio(`${element.multiChoiceAnswerTranslations[0].voicePath}`);
-                element.audioElement.audio.load();
-              } else {
-                element.audioElement.audio = null;
-              }
+          this.resultAnswerItems.forEach((element) => {
+            element.audioElement = new AudioElement();
+            element.audioElement.status = false;
+            if (
+              element.multiChoiceAnswerTranslations[0].voicePath != null &&
+              element.multiChoiceAnswerTranslations[0].voicePath != ''
+            ) {
+              element.audioElement.id = element.id;
+              element.audioElement.audio = new Audio(
+                `${element.multiChoiceAnswerTranslations[0].voicePath}`
+              );
+              element.audioElement.audio.load();
+            } else {
+              element.audioElement.audio = null;
             }
-          );
+            if(this.exerciseItems[0].voiceDanishPath != null && this.exerciseItems[0].voiceDanishPath != "" ){
+              this.exerciseItems[0].audioElementDanish = new AudioElement();
+              this.exerciseItems[0].audioElementDanish.status = false;
+              var audio = new Audio(`${this.exerciseItems[0].voiceDanishPath}`);
+              this.exerciseItems[0].audioElementDanish.audio = audio;
+              this.exerciseItems[0].audioElementDanish.audio.load();
+  
+            }
+          });
         })
     );
   }
@@ -198,18 +214,34 @@ export class MultiChoicePage implements OnInit {
     toast.present();
   }
 
-  playAudio(answer: any, type: number) {
+  playAudio(answer: any, type: number,langType?:string) {
     // playing question sound
     if (type == 1) {
       //stoping answer voices
       this.stopAnswerVoices();
-      if (this.exerciseItems[0].audioElement) {
-        if (this.exerciseItems[0].audioElement.status == false) {
+      if(langType == "native"){
+        if(this.exerciseItems[0].audioElementDanish?.status == true){
+          this.exerciseItems[0].audioElementDanish.audio.pause();
+          this.exerciseItems[0].audioElementDanish.status = false
+        }
+        if(this.exerciseItems[0].audioElement.status == false){
           this.exerciseItems[0].audioElement.audio.play();
           this.exerciseItems[0].audioElement.status = true;
-        } else {
+        }else{
           this.exerciseItems[0].audioElement.audio.pause();
           this.exerciseItems[0].audioElement.status = false;
+        }
+      }else{
+        if(this.exerciseItems[0].audioElementDanish.status == false){
+          if(this.exerciseItems[0].audioElement?.status == true){
+            this.exerciseItems[0].audioElement.audio.pause();
+            this.exerciseItems[0].audioElement.status = false
+          }
+          this.exerciseItems[0].audioElementDanish.audio.play();
+          this.exerciseItems[0].audioElementDanish.status = true;
+        }else{
+          this.exerciseItems[0].audioElementDanish.audio.pause();
+          this.exerciseItems[0].audioElementDanish.status = false;
         }
       }
     } else {
@@ -229,38 +261,34 @@ export class MultiChoicePage implements OnInit {
   }
 
   stopAllAudios() {
-
     this.stopQuestionVoice();
     this.stopAnswerVoices();
   }
-  stopAnswerVoices(answer?:any){
-    if(answer){
-      this.resultAnswerItems.filter(c=>c.id != answer.id).forEach(
-        (element) => {
+  stopAnswerVoices(answer?: any) {
+    if (answer) {
+      this.resultAnswerItems
+        .filter((c) => c.id != answer.id)
+        .forEach((element) => {
           if (element.audioElement) {
             if (element.audioElement.status == true) {
               element.audioElement.audio.pause();
               element.audioElement.status = false;
             }
           }
-        }
-      );
-    }else{
-      this.resultAnswerItems.forEach(
-        (element) => {
-          if (element.audioElement) {
-            if (element.audioElement.status == true) {
-              element.audioElement.audio.pause();
-              element.audioElement.status = false;
-            }
+        });
+    } else {
+      this.resultAnswerItems.forEach((element) => {
+        if (element.audioElement) {
+          if (element.audioElement.status == true) {
+            element.audioElement.audio.pause();
+            element.audioElement.status = false;
           }
         }
-      );
+      });
     }
-
   }
 
-  stopQuestionVoice(){
+  stopQuestionVoice() {
     //Stoping Voice of question
     if (this.exerciseItems[0].audioElement) {
       this.exerciseItems[0].audioElement.audio.pause();
