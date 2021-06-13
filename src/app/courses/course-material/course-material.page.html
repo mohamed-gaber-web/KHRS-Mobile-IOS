@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button>
-        <ion-back-button defaultHref="/courses"> </ion-back-button>
+        <ion-back-button defaultHref="/my-courses"> </ion-back-button>
       </ion-back-button>
     </ion-buttons>
 
@@ -29,10 +29,6 @@
 
 <ion-content>
 
-  
-
-
-
   <ion-slides (ionSlideWillChange)="doCheck()" #slides pager="true" [options]="slideOpts">
 
     <ion-slide *ngFor="let course of courseMaterial" class="course__material ion-margin-top">
@@ -50,7 +46,7 @@
         </ion-row>
         <ion-row class="ion-padding">
           <ion-col size="12">
-            <ion-img class="ion-padding-bottom" [src]="course.imagePath"></ion-img>
+            <ion-img loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
             <p>
               <ion-text color="primary"> {{ course.materialTranslations[0].description }} </ion-text>
             </p>
@@ -79,6 +75,10 @@
   </ion-grid>
 
 </ion-content>
+
+
+
+
 <ion-footer>
   <ion-toolbar *ngIf="activeTrack">
     <ion-row>
