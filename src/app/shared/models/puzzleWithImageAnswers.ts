@@ -1,7 +1,5 @@
 export class PuzzleWithImageAnswers {
-
-    puzzleWithImageQuestionIds: [];
-    imageGuid: [];
-    wordIds: []
-
+    puzzleWithImageQuestionId: number;
+    imageGuid: number;
+    wordId: number;
 }

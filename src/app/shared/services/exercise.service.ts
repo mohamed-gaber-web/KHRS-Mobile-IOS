@@ -57,7 +57,7 @@ export class ExerciseService {
   }
 
 
-  checkAnswerPuzzleWithImage(data: PuzzleWithImageAnswers) {
+  checkAnswerPuzzleWithImage(data: PuzzleWithImageAnswers[]) {
     return this.http.post(`${checkAnswerPuzzleImage}`, data);
   }
 

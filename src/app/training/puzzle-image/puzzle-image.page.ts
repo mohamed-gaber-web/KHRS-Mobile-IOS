@@ -83,7 +83,7 @@ export class PuzzleImagePage implements OnInit {
          let qpz : PuzzleImageTranslations = new PuzzleImageTranslations();
          qpz.id = this.questionAndAnswerItems.puzzleImages[index].id;
          qpz.imagePath = this.questionAndAnswerItems.puzzleImages[index].imagePath;
-         qpz.guidId = this.questionAndAnswerItems.puzzleImages[index].guidId;
+         qpz.guidId = this.questionAndAnswerItems.puzzleImages[index].imageGuidId;
          qpz.type = "question";
          qpz.disabled = true;
          arr.push(qpz);
@@ -96,7 +96,7 @@ export class PuzzleImagePage implements OnInit {
         let apz : PuzzleImageTranslations  = new PuzzleImageTranslations();
         apz.id = this.questionAndAnswerItems.puzzleImagesTranslation[index].id;
         apz.keyword = this.questionAndAnswerItems.puzzleImagesTranslation[index].keyword;
-        apz.guidId = this.questionAndAnswerItems.puzzleImagesTranslation[index].guidId;
+        apz.guidId = this.questionAndAnswerItems.puzzleImagesTranslation[index].imageGuidId;
         apz.type = "answer";
         apz.disabled = false;
         apz.voicePath = this.questionAndAnswerItems.puzzleImagesTranslation[index].voicePath;
@@ -155,19 +155,13 @@ export class PuzzleImagePage implements OnInit {
   // ** get check
   let arrayPuzzle: any = [];
   this.questionsArray.forEach(values => {
+    console.log('values', values)
     arrayPuzzle.push({
-      puzzleWithImageQuestionIds: values[0].id,
+      puzzleWithImageQuestionId: values[0].id,
       imageGuid: values[0].guidId,
-      wordIds: values[1].id
+      wordId: values[1].id
     })
   })
-
-  /**
-   * {
-   * array: [0, 1, 1, 2],
-   *
-   * }
-   */
 
   this.exerciseService.checkAnswerPuzzleWithImage
   (arrayPuzzle)
