@@ -1,9 +1,7 @@
 
   .ext-icon-vlume {
     color: var(--ion-color-second-app);
-    font-size: 30px;
-    position: relative;
-    top: 3px;
+    font-size: 28px;
   }
 
   /* header Top */
@@ -47,22 +45,24 @@
 
     ion-text{
       color: var(--ion-color-second-app);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
+      text-align: center;
+      text-transform: capitalize;
       margin: 20px 0 50px 0;
     }
 
     ion-label{
       color: var(--ion-color-second-app);
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 500;
       margin: 10px 0;
-      max-width: 50%;
+      max-width: 60%;
     }
 
     ion-radio {
       --color: var(--ion-color-second-app);
-      margin: 30px 0;
+      margin: 20px 0;
     }
 
 
@@ -125,11 +125,6 @@
   }
 
 
-  .answer {
-    // display: flex;
-    // justify-content: space-between;
-
-  }
 
   .sound-question {
     border: 2px solid var(--ion-color-second-app);
@@ -142,6 +137,12 @@
     padding: 7px 0;
     margin-left: 10px;
     margin-top: 30px;
+
+    img.danish-flag {
+      width: 30px;
+      height: auto;
+      max-width: 70%;
+    }
 
     img.langauge-img{
       width: 30px;

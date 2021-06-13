@@ -9,7 +9,13 @@
 
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
-  <ion-img *ngIf="CourseDetails" [src]="CourseDetails.imagePath"></ion-img>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-padding-top">
+      <ion-col size="12" size-md="8">
+        <ion-img  *ngIf="CourseDetails" [src]="CourseDetails.imagePath"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-grid>
     <ion-row>
