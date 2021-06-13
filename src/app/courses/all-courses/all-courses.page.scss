@@ -68,21 +68,20 @@
 
   h3 {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: capitalize;
-    --margin-top: 50px;
     color: var(--ion-color-second-app);
   }
 
   ion-button {
     --color: #fff;
-    font-size: 16px;
-    margin: 15px 0;
-    width: 50%;
+    font-size: 14px;
+    margin: 0 0 15px 0;
+    width: 40%;
 
     ion-icon {
       --color: #A7F781!important;
-      font-size: 20px;
+      font-size: 18px;
       padding-right: 7px;
     }
   }

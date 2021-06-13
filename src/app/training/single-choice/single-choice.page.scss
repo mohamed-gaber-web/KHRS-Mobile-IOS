@@ -43,7 +43,6 @@ ion-toolbar {
 }
 
 .single-choice {
-
   ion-text{
     color: var(--ion-color-second-app);
     font-size: 20px;
@@ -61,11 +60,7 @@ ion-toolbar {
   ion-radio {
     --color: var(--ion-color-second-app);
   }
-
-
-
 }
-
 
 .img-langauge {
   width: 40px;
@@ -92,10 +87,6 @@ ion-toolbar {
   margin-left: 50px;
 }
 
-
-
-
-
 .sound-group {
 
     .sound-question {
@@ -113,8 +104,12 @@ ion-toolbar {
     .img-volume {
       @extend .ext-icon-vlume;
     }
+  img.img-lang {
+    width: 30px;
+    height: auto;
   }
 
+}
 
 }
 

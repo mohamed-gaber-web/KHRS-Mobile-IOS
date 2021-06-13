@@ -25,7 +25,10 @@
 <ion-toolbar>
   <ion-title>
     Puzzle With Text
+    <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+
   </ion-title>
+
   <ion-icon slot="end"  name="help-circle-outline"></ion-icon>
 </ion-toolbar>
 
@@ -51,16 +54,16 @@
           cdkDropListOrientation="horizontal"
           (cdkDropListDropped)="drop($event)">
 
-          <div  *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
-            <div class="sound">
+          <div *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
+            <div class="sound" *ngIf="item2.voicePath">
               <div class="sound-bg">
                 <div class="img-volume">
-                  <ion-img
-                  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
-                </ion-img>
+                  <ion-icon
+                    class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item2.audioElement.status? 'play' : 'stop'" (click)="playAudio(item2)" >
+                  </ion-icon>
                 </div>
               </div>
-              <img src="../../../assets/icon/tu.png" alt="" />
+              <img [src]="item2.flag" alt="" />
             </div>
 
             <ion-text color="primary"> {{ item2.text }} </ion-text>
@@ -75,7 +78,6 @@
 
   <ion-grid class="puzzle-answer">
     <ion-row *ngFor="let item of answersArray">
-
         <ion-col color="primary"
         size="12"
         cdkDropList
@@ -85,15 +87,14 @@
         <div class="puzzle-fix" cdkDrag>
 
           <div class="title"> {{ item.text }} </div>
-            <div class="sound">
-              <div class="sound-bg">
+          <div class="sound" *ngIf="item.voicePath">
+            <div class="sound-bg">
                 <div class="img-volume">
-                  <ion-img
-                    class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png">
-                </ion-img>
+                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item.audioElement.status? 'play' : 'stop'" (click)="playAudio(item)" >
+                  </ion-icon>
                 </div>
               </div>
-              <img src="../../../assets/icon/tu.png" alt="" />
+              <img [src]="item.flag" alt="" />
             </div>
         </div>
 
@@ -104,8 +105,8 @@
 
   <ion-grid >
     <ion-row class="ion-padding">
-      <ion-col size="12">
-        <ion-button (click)="slideNext()">
+      <ion-col size="12" [ngClass]="{'hideButtonNext': answersArray.length > 0 }">
+        <ion-button  (click)="slideNext()">
           Next
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>

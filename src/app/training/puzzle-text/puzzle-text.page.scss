@@ -1,10 +1,8 @@
 .ext-icon-vlume {
-  text-align: center;
-  margin: auto;
-  width: 18px;
-  height: 18px;
+  color: var(--ion-color-second-app);
+  font-size: 34px;
   position: relative;
-  top: 9px;
+  top: 4px;
 }
 
 /* header Top */
@@ -51,19 +49,20 @@ ion-toolbar {
 .puzzle-text{
 
   .block {
-    margin-bottom: 10px;
-    padding: 10px 10px;
+    margin-bottom: 14px;
+    padding: 15px;
     border-bottom: solid 2px #ccc;
-    color: rgba(0, 0, 0, 0.87);
+    color: #000000de;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
     cursor: move;
-    background: white;
+    background: #fff;
     font-size: 14px;
     border-radius: 10px;
+    height: 90px;
   }
 
   .sound {
@@ -114,30 +113,32 @@ ion-toolbar {
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #fff;
-    padding: 0 10px;
+    padding: 15px;
     border-radius: 10px;
-    border: 1px solid #DADDE1 ;
+    border: 1px solid #DADDE1;
+    height: 60px;
 
     .title {
       font-size: 15px;
       font-weight: 500;
       color: var(--ion-color-second-app);
-      margin-top: 15px;
     }
 
     .sound {
 
-      // border: 2px solid var(--ion-color-second-app);
+      border: 2px solid var(--ion-color-second-app);
       border-radius:10px;
-      padding: 5px;
-      border-radius: 50px;
-      margin-right: 10px;
+      margin-bottom: 5px;
       text-align: center;
+      padding: 0 15px;
+      max-width: 100%;
+      margin-top: 8px;
 
       img {
-        position: relative;
-        top: -5px;
+        width: 30px;
+        height: auto;
        }
 
       .sound-bg {
@@ -291,3 +292,18 @@ ion-toolbar {
 
 /************* DRAG AND DROP *****************/
 
+.hideButtonNext {
+  display: none;
+}
+
+.showButtonNext {
+  display: block;
+}
+
+.total-result {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--ion-color-second-app);
+  text-align: center;
+  margin-left: 50px;
+}

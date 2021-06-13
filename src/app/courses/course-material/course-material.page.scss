@@ -5,6 +5,7 @@
 /* header Top */
 ion-icon {font-size: 35px;}
 
+
 ion-header ion-img {
   width: 35px;
   height: auto;
@@ -50,15 +51,8 @@ ion-header ion-img {
   border-radius: 50%;
   line-height: 75px;
   text-align: center;
-  position: absolute;
-  right: 0;
-  left: 0;
   margin: auto;
-  bottom: -20px;
-
-  ion-img {
-    position: relative;
-  }
+  // bottom: -20px;
 
   ion-icon {
     font-size: 32px;
@@ -70,12 +64,14 @@ ion-header ion-img {
 
 .course__material {
 
+
+
   p {
     text-align: center;
-    font-size: 17px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 500;
-    line-height: 27px;
+    font-size: 15px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    line-height: 25px;
   }
 
 }
@@ -105,3 +101,11 @@ ion-spinner{
   border: 1px solid #ccc;
 }
 
+ion-img.material-image {
+  border: 2px solid #e8e8e8;
+  width: 250px;
+  min-width: 70%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0 auto 20px auto;
+}

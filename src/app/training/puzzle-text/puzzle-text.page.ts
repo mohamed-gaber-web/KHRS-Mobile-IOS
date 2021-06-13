@@ -9,6 +9,7 @@ import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
+import { AudioElement } from 'src/app/shared/models/audioObject';
 
 
 @Component({
@@ -28,11 +29,12 @@ export class PuzzleTextPage implements OnInit {
   answers:PuzzleTextTranslations[];
   nextButton: boolean = false;
   data: any;
+  lengthQuestion: number = 0;
 
   resultAnswerItems: any;
   subs: Subscription[] = [];
   isLoading: boolean = false;
-  limit: number = 3;
+  limit: number = 1;
   currentIndex: number = 0;
   audio = new Audio('../../../assets/iphone_ding.mp3' );
 
@@ -44,18 +46,6 @@ export class PuzzleTextPage implements OnInit {
     slidesPerView: 1,
     scrollbar: true,
   };
-
-  // question =  [
-  //   [{id: 2, title: 'question 1'}],
-  //   [{id: 3, title: 'question 2'}],
-  //   [{id: 4, title: 'question 3'}]
-  // ];
-
-  // answer = [
-  //   {id: 2, title: 'answer 1'},
-  //   {id: 3, title: 'answer 2'},
-  //   {id: 4, title: 'answer 3'}
-  // ]
 
   constructor(
     private storageService: StorageService,
@@ -80,12 +70,21 @@ export class PuzzleTextPage implements OnInit {
   // ** get question and answer puzzle text
   getQuestionAndAnswer() {
     this.isLoading = true;
+    this.questionsArray =[];
+    this.answersArray=[];
     this.subs.push(
       this.exerciseService.getCourseExercise
       (this.exerciseType, this.courseId, this.currentIndex, this.limit)
       .subscribe(response => {
         console.log(response);
         this.questionAndAnswerItems = response;
+        this.lengthQuestion = response['length'];
+        if(this.lengthQuestion ==0){
+          this.errorMessage("There are no available questions in this exercise");
+          setTimeout(() => {
+            this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+          }, 100)
+        }
         this.isLoading = false;
         //Questions
        for (let index = 0; index < this.questionAndAnswerItems.puzzleText.length; index++) {
@@ -94,8 +93,17 @@ export class PuzzleTextPage implements OnInit {
          qpz.id = this.questionAndAnswerItems.puzzleText[index].id;
          qpz.text = this.questionAndAnswerItems.puzzleText[index].text;
          qpz.type = "question";
+         qpz.flag = "../../../assets/icon/da.png";
          qpz.disabled = true;
          qpz.voicePath = this.questionAndAnswerItems.puzzleText[index].voicePath;
+         if(this.questionAndAnswerItems.puzzleText[index].voicePath != null && this.questionAndAnswerItems.puzzleText[index].voicePath != "" ){
+          qpz.audioElement = new AudioElement();
+          qpz.audioElement.status = false;
+          var audio = new Audio(`${qpz.voicePath}`);
+          qpz.audioElement.audio = audio;
+          qpz.audioElement.audio.load();
+
+        }
          arr.push(qpz);
          this.questionsArray.push(arr);
        }
@@ -107,8 +115,17 @@ export class PuzzleTextPage implements OnInit {
         apz.id = this.questionAndAnswerItems.puzzleTextTranslations[index].id;
         apz.text = this.questionAndAnswerItems.puzzleTextTranslations[index].text;
         apz.type = "answer";
+        apz.flag = this.userInfo.languageIcon;
         apz.disabled = false;
         apz.voicePath = this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath;
+        if(this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath != null && this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath != "" ){
+          apz.audioElement = new AudioElement();
+          apz.audioElement.status = false;
+          var audio = new Audio(`${apz.voicePath}`);
+          apz.audioElement.audio = audio;
+          apz.audioElement.audio.load();
+
+        }
         this.answersArray.push(apz);
       }
 
@@ -141,13 +158,32 @@ export class PuzzleTextPage implements OnInit {
         // console.log(event.container.data, event.previousIndex, event.currentIndex);
       }
     else {
+      var prevData=   event.previousContainer.data;
+        var data =   event.container.data;
+        var prevIndex =   event.previousIndex;
+        var currIndex =   event.currentIndex;
       if(event.container.data.length == 1){
         transferArrayItem(
-          event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
+          prevData,
+          data,
+          prevIndex,
+         currIndex
         );
+      }else{
+        if(data[0].type=="question" && prevData[0].type == "question"){
+          transferArrayItem(
+            prevData,
+            data,
+            1,
+            2
+          );
+          transferArrayItem(
+            data,
+            prevData,
+            1,
+            1
+          );
+        }
       }
 
       console.log(event.container.data);
@@ -164,7 +200,6 @@ export class PuzzleTextPage implements OnInit {
 
   // ** Move to Next slide
   slideNext() {
-    // pageData: PageEvent
   // ** get check
   let arrayPuzzle: any = [];
 
@@ -184,13 +219,17 @@ export class PuzzleTextPage implements OnInit {
 
     if(isCorrect === true) {
       this.successMessage('Thanks the answer is correct');
+      this.stopAllAudios();
       this.currentIndex += 1;
-      // this.currentIndex = pageData.pageIndex + 1;
-      // this.limit = pageData.pageSize;
-      this.questionsArray = [];
-      this.answersArray = [];
       this.getQuestionAndAnswer();
       this.slides.slideNext();
+
+      if(this.currentIndex === this.lengthQuestion) {
+        this.successMessage('Thanks for resolving questions');
+        setTimeout(() => {
+          this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+        }, 100)
+      }
 
 
     } else if(isCorrect === false) {
@@ -226,7 +265,33 @@ export class PuzzleTextPage implements OnInit {
     toast.present();
   }
 
-
+playAudio(item:any){
+  this.stopAllAudios(item);
+  if(item.audioElement.status == false){
+    item.audioElement.audio.play();
+    item.audioElement.status = true;
+  }else{
+    item.audioElement.audio.pause();
+    item.audioElement.status = false;
+  }
+}
+stopAllAudios(item?:any){
+  this.questionsArray.forEach(element => {
+    element.forEach(element2 => {
+      if (element2.audioElement && element2.audioElement.status == true && element2 != item) {
+        element2.audioElement.audio.pause();
+        element2.audioElement.status = false;
+      }
+    });
+    
+  });
+  this.answersArray.forEach(element => {
+    if (element.audioElement && element.audioElement.status == true && element != item) {
+      element.audioElement.audio.pause();
+      element.audioElement.status = false;
+    }
+  });
+}
 ngOnDestroy() {
   this.subs.forEach((sub) => {
     sub.unsubscribe();

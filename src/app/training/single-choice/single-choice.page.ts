@@ -27,7 +27,7 @@ export class SingleChoicePage implements OnInit {
   exerciseType: number;
   courseId: number;
   singleForm: FormGroup;
-  lengthQuestion: number;
+  lengthQuestion: number = 0;
   offset: number = 0;
   currentIndex: number = 0;
   questionSelected: boolean = false;
@@ -95,6 +95,12 @@ export class SingleChoicePage implements OnInit {
         this.isLoading = false;
           this.exerciseItems = response['result'];
           this.lengthQuestion = response['length'];
+          if(this.lengthQuestion ==0){
+            this.errorMessage("There are no available questions in this exercise");
+            setTimeout(() => {
+              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+            }, 100)
+          }
           if(this.exerciseItems[0].singleChoiceTranslations[0].voicePath != null && this.exerciseItems[0].singleChoiceTranslations[0].voicePath != "" ){
             this.exerciseItems[0].audioElement = new AudioElement();
             this.exerciseItems[0].audioElement.status = false;
@@ -117,7 +123,7 @@ export class SingleChoicePage implements OnInit {
 
   playAudio(type?:string,item?:any){
 
-    
+
     if(type == "native"){
       if(item.audioElementDanish?.status == true){
         item.audioElementDanish.audio.pause();
@@ -126,10 +132,7 @@ export class SingleChoicePage implements OnInit {
       if(item.audioElement.status == false){
         item.audioElement.audio.play();
         item.audioElement.status = true;
-        console.log(item.audioElement.status)
-
       }else{
-        console.log("native pause")
         item.audioElement.audio.pause();
         item.audioElement.status = false;
       }
@@ -146,7 +149,7 @@ export class SingleChoicePage implements OnInit {
         item.audioElementDanish.status = false;
       }
     }
-   
+
   }
   // ** Validate Form Input
   validateSingleForm(isSubmitting = false) {
@@ -250,7 +253,7 @@ export class SingleChoicePage implements OnInit {
     const modal = await this.modalController.create({
       component: HelpModalComponent,
       componentProps: {
-        "modalLink": "asdasd",
+        "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
         "modalTitle": "Single Choice Tutorial"
       }
     });
