@@ -36,6 +36,9 @@ export class PuzzleImagePage implements OnInit {
   //howler
   player: Howl = null;
   isPlaying: boolean = false;
+  voicePath: string;
+  voicePathDanish: string;
+  activeTrack: string;
 
   subs: Subscription[] = [];
   isLoading: boolean = false;
@@ -156,12 +159,13 @@ export class PuzzleImagePage implements OnInit {
 
   // ** Drop Function
   drop(event: CdkDragDrop<any>) {
+    if (this.player) {
+      this.player.stop();
+    }
     var prevData=   event.previousContainer.data;
     var data =   event.container.data;
     var prevIndex =   event.previousIndex;
     var currIndex =   event.currentIndex;
-    console.log(prevIndex)
-    console.log(prevData)
 
     if (event.previousContainer === event.container) {
      console.log("true")
@@ -220,6 +224,9 @@ export class PuzzleImagePage implements OnInit {
 
         if (isCorrect === true) {
           this.successMessage('Thanks the answer is correct');
+          if (this.player) {
+            this.player.stop();
+          }
           this.currentIndex += 1;
           this.getQuestionAndAnswer();
           this.slides.slideNext();
@@ -278,9 +285,27 @@ export class PuzzleImagePage implements OnInit {
     await popover.present();
   }
 
+  startAudio(voicePath: string) {
+    if (this.player) {
+      this.player.stop();
+    }
+    this.player = new Howl({
+      html5: true,
+      src: voicePath,
+      onplay: () => {
+        this.activeTrack = voicePath;
+        this.isPlaying = true;
+      },
+      onend: () => {},
+    });
+    this.player.play();
+  }
   ngOnDestroy() {
     this.subs.forEach((sub) => {
       sub.unsubscribe();
     });
+    if (this.player) {
+      this.player.stop();
+    }
   }
 }
