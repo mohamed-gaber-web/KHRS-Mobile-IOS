@@ -1,6 +1,9 @@
 .ext-icon-vlume {
   width: 24px;
   height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 15px 0px;
 }
 
 /* header Top */
@@ -70,9 +73,10 @@ ion-toolbar {
     justify-content: space-between;
     align-items: center;
     background-color: #fff;
-    padding: 5px 0 5px 10px;
+    padding: 5px 10px;
     border-radius: 10px;
     border: 1px dotted #003182a6;
+    height: 50px;
 
     .title {
       font-size: 14px;
@@ -84,7 +88,7 @@ ion-toolbar {
 
     .sound {
       display: flex;
-      border: 2px solid var(--ion-color-second-app);
+      border: 2px dotted var(--ion-color-second-app);
       border-radius:10px;
       padding: 5px 4px;
 

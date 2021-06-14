@@ -53,6 +53,8 @@ export class PuzzleImagePage implements OnInit {
     speed: 400,
     slidesPerView: 1,
     scrollbar: true,
+    loop: false,
+    noSwipingClass: 'swiper-no-swiping',
   };
 
   constructor(
@@ -170,7 +172,7 @@ export class PuzzleImagePage implements OnInit {
     if (event.previousContainer === event.container) {
      console.log("same")
     } else {
-    
+
       if (event.container.data.length == 1) {
         transferArrayItem(
           prevData,
