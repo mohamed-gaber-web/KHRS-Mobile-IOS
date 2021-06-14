@@ -22,7 +22,6 @@ export class EditUserPage implements OnInit {
     {name: 'female', value: 1}
   ];
   userInfo: any;
-  date: string;
 
   userInfoFormErrors = {
     FirstName: '',
@@ -67,36 +66,44 @@ export class EditUserPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.userInfo = this.authService.getUser();
-
-    // this.date = this.userInfo.birthdate
-    this.date = new Date().toISOString().split('T')[0];
-
-    this.getUserData();
-    this.userInfoForm.valueChanges.subscribe((data) => this.validateChangePasswordForm());
+    this.buldingForm();
   }
 
-  validateChangePasswordForm(isSubmitting = false) {
-    for (const field of Object.keys(this.userInfoFormErrors)) {
-      this.userInfoFormErrors[field] = '';
+  buldingForm() {
 
-      const input = this.userInfoForm.get(field) as FormControl;
-      if (input.invalid && (input.dirty || isSubmitting)) {
-        for (const error of Object.keys(input.errors)) {
-          this.userInfoFormErrors[field] = this.userInfodValidationMessages[field][
-            error
-          ];
-        }
-      }
-    }
+    this.userInfoForm = this.formBuilder.group({
+      'FirstName': [this.userInfo.firstname, Validators.compose([Validators.required])],
+      'LastName': [this.userInfo.lastname, Validators.compose([Validators.required])],
+      'email': [this.userInfo.email, Validators.compose([Validators.required, emailValidator])],
+      'PhoneNumber': [this.userInfo.phoneNumber, Validators.compose([Validators.minLength(11), Validators.required])],
+      'Gender': [ this.userInfo.gender,Validators.required],
+      'birthdate': [new Date(), Validators.compose([Validators.required])],
+      'file': null
+    });
+
+    // this.userInfoForm.valueChanges.subscribe((data) => this.validateChangeInfoForm());
   }
+
+  // validateChangeInfoForm(isSubmitting = false) {
+  //   for (const field of Object.keys(this.userInfoFormErrors)) {
+  //     this.userInfoFormErrors[field] = '';
+
+  //     const input = this.userInfoForm.get(field) as FormControl;
+  //     if (input.invalid && (input.dirty || isSubmitting)) {
+  //       for (const error of Object.keys(input.errors)) {
+  //         this.userInfoFormErrors[field] = this.userInfodValidationMessages[field][
+  //           error
+  //         ];
+  //       }
+  //     }
+  //   }
+  // }
 
   updatedUserInfo() {
-    this.validateChangePasswordForm(true)
-    if (this.userInfoForm.invalid) {
-      return;
-    }
+    // if (this.userInfoForm.invalid) {
+    //   return;
+    // }
 
     this.subs.push(
 
@@ -105,32 +112,32 @@ export class EditUserPage implements OnInit {
         console.log(response);
 
 
-      //   if (response['success'] === true) {
+        if (response['success'] === true) {
 
 
-      //   // ** set localstorage [ token ]
-      //   this.storageService.setAccessToken( response['result']);
+        // ** set localstorage [ token ]
+        this.storageService.setAccessToken( response['result']);
 
-      //   this.getUserData()
+        this.buldingForm()
 
-      //   var toast = await this.toastController.create({
-      //     message: 'Update User Successful!',
-      //     duration: 2000,
-      //     color: 'success',
-      //   });
-      //   toast.present();
-      //   this.router.navigate(['/auth/user-profile']);
+        var toast = await this.toastController.create({
+          message: 'Update User Successful!',
+          duration: 2000,
+          color: 'success',
+        });
+        toast.present();
+        this.router.navigate(['/auth/user-profile']);
 
-      // } else {
-      //   var toast = await this.toastController.create({
-      //     message: response['arrayMessage'][0],
-      //     duration: 2000,
-      //     color: 'danger',
-      //   });
-      //   toast.present();
-      //   this.router.navigate(['/auth/user-profile/edit-user']);
+      } else {
+        var toast = await this.toastController.create({
+          message: response['arrayMessage'][0],
+          duration: 2000,
+          color: 'danger',
+        });
+        toast.present();
+        this.router.navigate(['/auth/user-profile/edit-user']);
 
-      // }
+      }
 
     })
     );
@@ -140,18 +147,5 @@ export class EditUserPage implements OnInit {
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
-
-  getUserData() {
-
-    this.userInfoForm = this.formBuilder.group({
-      'FirstName': [this.userInfo.firstname, Validators.compose([Validators.required])],
-      'LastName': [this.userInfo.lastname, Validators.compose([Validators.required])],
-      'email': [this.userInfo.email, Validators.compose([Validators.required, emailValidator])],
-      'PhoneNumber': [this.userInfo.phoneNumber, Validators.compose([Validators.minLength(11), Validators.required])],
-      'birthdate': ['', Validators.compose([Validators.required])],
-      'Gender': [ 0 ,Validators.required],
-    });
-  }
-
 
 }
