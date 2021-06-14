@@ -63,11 +63,11 @@ ion-tab-bar {
 
 ion-title{
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   --color: var(--ion-color-second-app);
   margin: 40px 0 30px 0;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
 }
 
 ion-button {
@@ -150,3 +150,32 @@ ion-icon.close-icon {
 .swiper-pagination-bullet-active {
   background: var(--ion-color-second-app);
 }
+
+
+/************ SOUNDS MULTI AND SINGLE CHOICE QUESTION  ***********/
+
+.ext-icon-vlume {
+  color: var(--ion-color-second-app);
+  font-size: 30px;
+}
+
+.sound-group {
+
+  .sound-question {
+  border: 2px dotted var(--ion-color-second-app);
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 10px;
+
+  img.img-lang {  width: 30px; height: auto;}
+
+  .img-volume {@extend .ext-icon-vlume;}
+
+  img.img-lang {width: 30px; height: auto;}
+
+}
+
+}
+
+/************ SOUNDS MULTI AND SINGLE CHOICE QUESTION  ***********/

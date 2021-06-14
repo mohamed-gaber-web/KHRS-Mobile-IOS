@@ -24,7 +24,7 @@ export class MultiChoicePage implements OnInit {
   userInfo: any;
   isLoading: boolean = false;
   exerciseItems: ExerciseItem[];
-  lengthQuestion: number;
+  lengthQuestion: number = 0;
   limit: number = 1;
   limitAnswer: number = 4;
   offsetAnswer: number = 0;
@@ -136,7 +136,7 @@ export class MultiChoicePage implements OnInit {
               var audio = new Audio(`${this.exerciseItems[0].voiceDanishPath}`);
               this.exerciseItems[0].audioElementDanish.audio = audio;
               this.exerciseItems[0].audioElementDanish.audio.load();
-  
+
             }
           });
         })
