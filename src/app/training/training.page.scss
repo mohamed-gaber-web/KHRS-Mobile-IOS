@@ -1,11 +1,6 @@
 .ext-icon-vlume {
-  text-align: center;
-  margin: auto;
   width: 24px;
   height: 24px;
-  line-height: 24px;
-  position: relative;
-  top: 12px;
 }
 
 
@@ -19,17 +14,16 @@
 
   .icon-sound {
     background-color: #A7F781;
-    border: 1px solid #fff;
-    width: 53px;
-    height: 53px;
+    border: 3px dotted #fff;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    line-height: 75px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    right: 0;
-    left: 0;
     margin: auto;
-    bottom: -20px;
+    inset: 0;
 
     .img-volume {
       @extend .ext-icon-vlume;

@@ -1,5 +1,11 @@
 .background-image{
-  --background: url(../../../assets/images/login-screen-1.png) 0 0/100% 100% no-repeat;
+  --background: url(../../../assets/images/login-screen-1.png) center top no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  max-width: 100%;
+
 }
 
 .sign-in-title h3 {
@@ -61,3 +67,13 @@ p.no-account {
 }
 
 
+@media(min-width: 550px) and (max-width: 2000px) {
+  .background-image{
+    --background: #003182;
+  }
+
+  .sign-in-form ion-button {
+    --background : #fff!important;
+    color: #003182;
+  }
+}

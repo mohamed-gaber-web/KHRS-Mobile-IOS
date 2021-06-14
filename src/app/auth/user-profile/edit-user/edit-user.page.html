@@ -129,7 +129,7 @@
     <ion-grid>
       <ion-row ion-align-items-center>
         <ion-col size="12">
-          <ion-button (click)="updatedUserInfo()">
+          <ion-button [disabled]="!userInfoForm.valid" (click)="updatedUserInfo()">
             <ion-icon name="checkmark-outline"></ion-icon>
             Update
           </ion-button>

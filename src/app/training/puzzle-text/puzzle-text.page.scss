@@ -49,9 +49,9 @@ ion-toolbar {
 .puzzle-text{
 
   .block {
-    margin-bottom: 14px;
-    padding: 15px;
-    border-bottom: solid 2px #ccc;
+    margin-bottom: 11px;
+    padding: 0 9px;
+    border: dotted 2px #3f51b5;
     color: #000000de;
     display: flex;
     flex-direction: row;
@@ -117,7 +117,7 @@ ion-toolbar {
     background-color: #fff;
     padding: 15px;
     border-radius: 10px;
-    border: 1px solid #DADDE1;
+    border: 2px dotted #3f51b5;
     height: 60px;
 
     .title {
@@ -246,6 +246,11 @@ ion-toolbar {
         position: relative;
         top: 9px;
       }
+
+      img {
+        width: 30px;
+        height: auto;
+       }
 
 
 }

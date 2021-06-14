@@ -1,11 +1,8 @@
 .ext-icon-volume {
   text-align: center;
   margin: auto;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  position: relative;
-  top: 12px;
+  width: 30px;
+  height: 30px;
 }
 
 
@@ -18,16 +15,16 @@
 
 .icon-sound {
   background-color: #A7F781;
-  border: 1px solid #fff;
-  width: 53px;
-  height: 53px;
+  border: 3px dotted #fff;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  right: 0;
-  left: 0;
   margin: auto;
-  bottom: -20px;
+  inset: 0;
 
   .img-volume {
     @extend .ext-icon-volume;
@@ -39,23 +36,17 @@
 
   .icon-sound-course {
     background-color: #A7F781;
-    border: 1px solid #fff;
-    width: 55px;
-    height: 55px;
+    border: 3px dotted #fff;
+    width: 53px;
+    height: 53px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
-    line-height: 55px;
-    text-align: center;
-    position: relative;
 
     ion-icon {
-      text-align: center;
       font-size: 35px;
       color: var(--ion-color-second-app);
-      position: absolute;
-      top: 8px;
-      left: 0;
-      right: 0;
-      margin: auto;
     }
 
   }
@@ -77,7 +68,9 @@
     --color: #fff;
     font-size: 14px;
     margin: 0 0 15px 0;
-    width: 40%;
+    max-width: 50%;
+    min-width: 150px;
+
 
     ion-icon {
       --color: #A7F781!important;
