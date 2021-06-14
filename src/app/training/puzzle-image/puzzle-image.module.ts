@@ -10,6 +10,7 @@ import { PuzzleSoundComponent } from './puzzle-sound/puzzle-sound.component';
 import { PuzzleImagePage } from './puzzle-image.page';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { PuzzleSoundModule } from './puzzle-sound/puzzle-sound.module';
 
 
 
@@ -20,10 +21,10 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     IonicModule,
     PuzzleImagePageRoutingModule,
     DragDropModule,
-
+    PuzzleSoundModule
 
   ],
-  declarations: [PuzzleImagePage, PuzzleSoundComponent],
+  declarations: [PuzzleImagePage],
   exports: [],
   entryComponents: [PuzzleSoundComponent],
 

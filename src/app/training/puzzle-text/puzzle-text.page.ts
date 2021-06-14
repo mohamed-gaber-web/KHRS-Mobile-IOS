@@ -143,22 +143,11 @@ export class PuzzleTextPage implements OnInit {
 
   // ** Drop Function
   drop(event: CdkDragDrop<any>) {
-
-    if (event.previousContainer === event.container) {
-      console.log("true");
-    }
-
     if (event.previousContainer === event.container) {
         console.log('move');
-        // moveItemInArray(
-        //   event.container.data,
-        //   event.previousIndex,
-        //   event.currentIndex
-        // );
-        // console.log(event.container.data, event.previousIndex, event.currentIndex);
       }
     else {
-      var prevData=   event.previousContainer.data;
+        var prevData=   event.previousContainer.data;
         var data =   event.container.data;
         var prevIndex =   event.previousIndex;
         var currIndex =   event.currentIndex;
@@ -167,7 +156,7 @@ export class PuzzleTextPage implements OnInit {
           prevData,
           data,
           prevIndex,
-         currIndex
+         1
         );
       }else{
         if(data[0].type=="question" && prevData[0].type == "question"){
@@ -190,7 +179,7 @@ export class PuzzleTextPage implements OnInit {
 
     }
 
-    if(event.previousContainer.data.length === 0) {
+    if(this.answersArray.length === 0) {
       this.nextButton = true;
     } else {
       this.nextButton = false;
