@@ -68,8 +68,8 @@
 
 
   .sound {
-    border: 2px solid var(--ion-color-second-app);
-    border-radius: 50px;
+    border: 2px dotted var(--ion-color-second-app);
+    border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     min-width: 27%;
