@@ -168,7 +168,7 @@ export class PuzzleImagePage implements OnInit {
     var currIndex =   event.currentIndex;
 
     if (event.previousContainer === event.container) {
-     console.log("true")
+     console.log("same")
     } else {
     
       if (event.container.data.length == 1) {
@@ -208,7 +208,7 @@ export class PuzzleImagePage implements OnInit {
     // ** get check
     let arrayPuzzle: any = [];
     this.questionsArray.forEach((values) => {
-      console.log('values', values);
+      // console.log('values', values);
       arrayPuzzle.push({
         puzzleWithImageQuestionId: values[0].id,
         imageGuid: values[0].guidId,
@@ -271,7 +271,6 @@ export class PuzzleImagePage implements OnInit {
   }
 
   async presentPopover(ev: any, item: any) {
-    console.log(item);
     const popover = await this.popoverController.create({
       component: PuzzleSoundComponent,
       componentProps: {
