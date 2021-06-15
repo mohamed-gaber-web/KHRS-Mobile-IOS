@@ -91,8 +91,17 @@ export class PuzzleImagePage implements OnInit {
           this.limit
         )
         .subscribe((response) => {
+          console.log(response)
           this.questionAndAnswerItems = response;
           this.lengthQuestion = response['length'];
+
+          if(this.lengthQuestion ==0){
+            this.errorMessage("There are no available questions in this exercise");
+            setTimeout(() => {
+              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+            }, 100)
+          }
+
           this.isLoading = false;
 
           //Questions
@@ -127,6 +136,8 @@ export class PuzzleImagePage implements OnInit {
             let apz: PuzzleImageTranslations = new PuzzleImageTranslations();
             apz.id =
               this.questionAndAnswerItems.puzzleImagesTranslation[index].id;
+            apz.keywordId =
+            this.questionAndAnswerItems.puzzleImagesTranslation[index].keywordId;
             apz.keyword =
               this.questionAndAnswerItems.puzzleImagesTranslation[
                 index
@@ -210,11 +221,11 @@ export class PuzzleImagePage implements OnInit {
     // ** get check
     let arrayPuzzle: any = [];
     this.questionsArray.forEach((values) => {
-      // console.log('values', values);
+      console.log('values', values);
       arrayPuzzle.push({
         puzzleWithImageQuestionId: values[0].id,
         imageGuid: values[0].guidId,
-        wordId: values[1].id,
+        wordId: values[1].keywordId,
       });
     });
 

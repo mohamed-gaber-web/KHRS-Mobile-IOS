@@ -8,8 +8,8 @@
 
     <div class="img-profile">
       <ion-avatar slot="end">
-        <img *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
-        <img *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
+        <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+        <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
         src="../../../assets/images/image profille (1).png">
       </ion-avatar>
       <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
@@ -54,7 +54,7 @@
         (cdkDropListDropped)="drop($event)"
       >
       <div *ngFor="let item2 of item">
-        <ion-img *ngIf="item2.type === 'question' " [src]="item2.imagePath" cdkDrag [cdkDragDisabled]="true"></ion-img>
+        <ion-img loading="lazy" *ngIf="item2.type === 'question' " [src]="item2.imagePath" cdkDrag [cdkDragDisabled]="true"></ion-img>
 
         <div class="drag-answer" *ngIf="item2.type === 'answer' ">
           <ion-grid class="puzzle-answer">
@@ -97,7 +97,7 @@
             <div class="sound-bg">
               <div class="img-volume">
                 <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png" (click)="startAudio(item.voicePath)">
+                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item.voicePath)">
               </ion-img>
               </div>
             </div>
@@ -107,11 +107,12 @@
             <div class="sound-bg">
               <div class="img-volume">
                 <ion-img
-                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite" src="../../../assets/icon/Vector.png" (click)="startAudio(item.voicePathDanish)">
+                loading="lazy"
+                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item.voicePathDanish)">
               </ion-img>
               </div>
             </div>
-            <img class="danish-flag" src="../../../assets/icon/da.png" alt="" />
+            <img loading="lazy" class="danish-flag" src="../../../assets/icon/da.png" alt="" />
           </div>
         </div>
       </ion-col>
