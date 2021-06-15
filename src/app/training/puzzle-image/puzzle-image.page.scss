@@ -51,10 +51,10 @@ ion-toolbar {
   ion-img.image-question {
     width: 50%;
     height: auto;
-    -webkit-transition: width 0.9s ease-in-out;
-    -moz-transition: width 0.9s ease-in-out;
-    -o-transition: width 0.9s ease-in-out;
-    transition: width 0.9s ease-in-out;
+    -webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
   }
 
   ion-img.image-question:hover {
@@ -162,6 +162,7 @@ ion-toolbar {
   font-size: 14px;
   border-radius: 10px;
   margin: 10px 0;
+  height: 100px;
   // padding: 0;
 }
 
