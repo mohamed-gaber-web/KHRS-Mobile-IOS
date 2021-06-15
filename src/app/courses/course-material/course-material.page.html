@@ -46,7 +46,7 @@
         </ion-row>
         <ion-row class="ion-padding">
           <ion-col size="12" size-md="12">
-            <ion-img loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
+            <ion-img *ngIf="course.imagePath" loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
             <p>
               <ion-text color="primary"> {{ course.materialTranslations[0].description }} </ion-text>
             </p>
