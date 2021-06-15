@@ -43,14 +43,22 @@ ion-toolbar {
   }
 }
 
-.puzzle-img {
 
-  ion-row {
-    justify-content: center;
+  // ion-row {
+  //   justify-content: center;
+  // }
+
+  ion-img.image-question {
+    width: 50%;
+    height: auto;
+    -webkit-transition: width 0.9s ease-in-out;
+    -moz-transition: width 0.9s ease-in-out;
+    -o-transition: width 0.9s ease-in-out;
+    transition: width 0.9s ease-in-out;
   }
 
-  ion-img {
-    width: 80px;
+  ion-img.image-question:hover {
+    width: 100%;
     height: auto;
   }
 
@@ -61,7 +69,7 @@ ion-toolbar {
       margin: auto;
     }
   }
-}
+
 
 .puzzle-answer {
 
