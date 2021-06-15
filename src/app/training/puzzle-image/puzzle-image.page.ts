@@ -1,6 +1,6 @@
 import { PuzzleSoundComponent } from './puzzle-sound/puzzle-sound.component';
 import { PuzzleImageTranslations } from './../../shared/models/puzzleImageTranslation';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonSlides,
@@ -47,6 +47,7 @@ export class PuzzleImagePage implements OnInit {
   audio = new Audio('../../../assets/iphone_ding.mp3');
 
   @ViewChild('slides') slides: IonSlides;
+  @ViewChild('image') image: ElementRef;
 
   slideOpts = {
     initialSlide: 0,
@@ -320,4 +321,9 @@ export class PuzzleImagePage implements OnInit {
       this.player.stop();
     }
   }
+
+  // imageBig() {
+  //   this.image.nativeElement.style.width = '1000px'
+  //   console.log(this.image.nativeElement);
+  // }
 }
