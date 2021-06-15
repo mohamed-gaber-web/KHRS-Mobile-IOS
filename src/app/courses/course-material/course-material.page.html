@@ -48,7 +48,7 @@
           <ion-col size="12" size-md="12">
             <ion-img *ngIf="course.imagePath" loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
             <p>
-              <ion-text color="primary"> {{ course.materialTranslations[0].description }} </ion-text>
+              <ion-text [innerHTML]="course.materialTranslations[0].description" color="primary"> </ion-text>
             </p>
           </ion-col>
         </ion-row>
