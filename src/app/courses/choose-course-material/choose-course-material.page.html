@@ -12,7 +12,7 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-padding-top">
       <ion-col size="12" size-md="8">
-        <ion-img  *ngIf="CourseDetails" [src]="CourseDetails.imagePath"></ion-img>
+        <ion-img loading="lazy" *ngIf="CourseDetails" [src]="CourseDetails.imagePath"></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>

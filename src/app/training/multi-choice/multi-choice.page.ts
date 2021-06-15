@@ -87,6 +87,7 @@ export class MultiChoicePage implements OnInit {
         .subscribe((questionAndAnswerItems) => {
           this.isLoading = false;
           this.exerciseItems = questionAndAnswerItems['result'];
+
           this.exerciseItems.map((answerItems) => {
             this.resultAnswerItems = answerItems['multiChoiceAnswers'];
           });

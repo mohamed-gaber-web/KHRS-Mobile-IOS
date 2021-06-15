@@ -7,6 +7,7 @@ export class PuzzleImageTranslations {
   puzzleId: number;
   voicePath: null;
   voicePathDanish: null;
+  keywordId: number;
   type:string;
   disabled:boolean;
 

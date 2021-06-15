@@ -6,7 +6,7 @@ ion-title {
 
 ion-item {
   color: var(--ion-color-second-app);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   text-transform: capitalize;
 
@@ -14,18 +14,18 @@ ion-item {
 
 .info {
   ion-item {
-    margin: 15px 0;
+    margin: 6px 0;
   }
 
   ion-text {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     padding-left: 10px;
   }
 
   ion-icon {
     color: var(--ion-color-second-app);
-    font-size: 30px;
+    font-size: 25px;
   }
 
 }
