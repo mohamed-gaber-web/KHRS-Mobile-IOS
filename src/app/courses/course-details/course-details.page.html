@@ -22,8 +22,8 @@
         </ion-item>
 
         <div class="video-inro">
-          <video *ngIf="courseDetails.courseTranslations[0].introVideoPath" width="100%" height="230" controls>
-            <source [src]="courseDetails.courseTranslations[0].introVideoPath" type="video/mp4">
+          <video *ngIf="courseDetails.courseTranslations[0]?.introVideoPath" width="100%" height="230" controls>
+            <source [src]="courseDetails.courseTranslations[0]?.introVideoPath" type="video/mp4">
           </video>
         </div>
 
