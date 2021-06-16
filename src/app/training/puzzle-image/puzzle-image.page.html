@@ -112,7 +112,7 @@
 
 
   <ion-grid class="puzzle-answer">
-    <ion-row *ngFor="let item of answersArray">
+    <ion-row >
 
       <ion-col
         size="12"
@@ -120,7 +120,7 @@
         [cdkDropListData]="answersArray"
         (cdkDropListDropped)="drop($event)"
         >
-        <div class="puzzle-fix" cdkDrag>
+        <div class="puzzle-fix"*ngFor="let item of answersArray" cdkDrag>
 
         <div class="title"> {{ item.keyword }}</div>
           <div class="sound" *ngIf="item.voicePath">

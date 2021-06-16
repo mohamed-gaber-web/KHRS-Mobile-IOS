@@ -183,6 +183,8 @@ export class PuzzleImagePage implements OnInit {
 
     if (event.previousContainer === event.container) {
      console.log("same")
+     moveItemInArray(data, prevIndex, this.currentIndex);
+
     } else {
 
       if (event.container.data.length == 1) {
