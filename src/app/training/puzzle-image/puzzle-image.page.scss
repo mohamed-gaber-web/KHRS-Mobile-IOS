@@ -43,25 +43,12 @@ ion-toolbar {
   }
 }
 
-
-  // ion-row {
-  //   justify-content: center;
-  // }
-
   ion-img.image-question {
-    width: 100px;
-    box-sizing: border-box;
-    height: auto;
-    -webkit-transition: width 0.5s ease-in-out;
-    -moz-transition: width 0.5s ease-in-out;
-    -o-transition: width 0.5s ease-in-out;
-    transition: width 0.5s ease-in-out;
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    margin: 0;
   }
-
-  // ion-img.image-question:hover {
-  //   width: 80%;
-  //   height: auto;
-  // }
 
   @media (min-width: 768px) {
     ion-img {
@@ -83,6 +70,7 @@ ion-toolbar {
     align-items: center;
     background-color: #fff;
     padding: 5px 10px;
+    margin: 10px 0;
     border-radius: 10px;
     border: 1px dotted #003182a6;
     height: 50px;
@@ -187,7 +175,6 @@ ion-toolbar {
 // }
 
 .example-box {
-  // padding: 10px 10px;
   border: 2px dotted #003182a6!important;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
@@ -198,13 +185,12 @@ ion-toolbar {
   cursor: move;
   background: white;
   font-size: 16px;
-  border-radius: 10px;
-  margin: 10px 0;
+  border-radius: 0;
+  margin: 5px 0;
   height: auto;
-  // padding: 0;
+  padding: 0;
 
   .sound {
-    max-width: 100%;
     padding: 0 5px 0 10px;
   }
 
@@ -213,7 +199,6 @@ ion-toolbar {
   img.danish-flag {
     width: 24px;
     height: auto;
-    max-width: 70%;
 }
 
 .drag-answer ion-img{
