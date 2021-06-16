@@ -290,6 +290,8 @@ export class PuzzleImagePage implements OnInit {
       componentProps: {
         voicePath: item.voicePath,
         voicePathDanish: item.voicePathDanish,
+        imagePath: item.imagePath,
+
       },
       cssClass: 'my-custom-class',
       event: ev,

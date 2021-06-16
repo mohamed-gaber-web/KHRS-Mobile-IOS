@@ -16,16 +16,21 @@ export class PuzzleSoundComponent implements OnInit {
   voicePathDanish: string;
   activeTrack: string;
   userInfo: any;
+  imagePath: string;
 
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
     public authService: AuthService
-  ) {}
+  ) {
+
+  }
   ngOnInit() {
     this.userInfo = this.authService.getUser();
     this.voicePath = this.navParams.data.voicePath;
     this.voicePathDanish = this.navParams.data.voicePathDanish;
+    this.imagePath = this.navParams.data.imagePath;
+
   }
 
   startAudio(voicePath: string) {
@@ -43,7 +48,7 @@ export class PuzzleSoundComponent implements OnInit {
     });
     this.player.play();
   }
-  
+
 ngOnDestroy() {
   if (this.player) {
     this.player.stop();
