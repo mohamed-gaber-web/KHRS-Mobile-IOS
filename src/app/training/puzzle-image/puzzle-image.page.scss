@@ -49,18 +49,19 @@ ion-toolbar {
   // }
 
   ion-img.image-question {
-    width: 50%;
+    width: 100px;
+    box-sizing: border-box;
     height: auto;
-    -webkit-transition: width 0.9s ease-in-out;
-    -moz-transition: width 0.9s ease-in-out;
-    -o-transition: width 0.9s ease-in-out;
-    transition: width 0.9s ease-in-out;
+    -webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
   }
 
-  ion-img.image-question:hover {
-    width: 100%;
-    height: auto;
-  }
+  // ion-img.image-question:hover {
+  //   width: 80%;
+  //   height: auto;
+  // }
 
   @media (min-width: 768px) {
     ion-img {
@@ -128,140 +129,6 @@ ion-toolbar {
 }
 
 
-
-/************* DRAG AND DROP *****************/
-
-// .example-container {
-//   width: 400px;
-//   max-width: 100%;
-//   margin: 0 25px 25px 0;
-//   display: inline-block;
-//   vertical-align: top;
-// }
-
-// .example-list {
-//   border: solid 1px #ccc;
-//   min-height: 30px;
-//   background: white;
-//   border-radius: 4px;
-//   overflow: hidden;
-//   display: block;
-// }
-
-.example-box {
-  // padding: 10px 10px;
-  border: 2px dotted #003182a6!important;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
-  border-radius: 10px;
-  margin: 10px 0;
-  // padding: 0;
-}
-
-.cdk-drag-preview {
-
-
-  // box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  background-color: white;
-  padding: 10px!important;
-  width: 100%!important;
-  margin: auto;
-  height: auto!important;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ion-color-second-app);
-
-
-  .sound {
-
-    // border: 2px solid var(--ion-color-second-app);
-    // border-radius:10px;
-    max-width: 100%;
-    text-align: right;
-    margin-top: -20px;
-
-  }
-
-    .sound-bg {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      // text-align: center;
-      // border-radius: 50px;
-      margin-right: 10px;
-    }
-
-      .img-volume {
-        text-align: center;
-        margin: auto;
-        width: 18px;
-        height: 18px;
-        position: relative;
-        top: 9px;
-      }
-
-
-}
-
-// .cdk-drop-list-receiving {
-//   background-color:rgba(167, 247, 129, 0.6);
-//   color: var(--ion-color-second-app);
-// }
-
-.cdk-drop-list-dragging{
-  background-color:rgba(167, 247, 129, 0.6);
-  color: var(--ion-color-second-app);
-}
-
-
-.cdk-drag-placeholder {
-  opacity: 0;
-}
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.example-box:last-child {
-  border: none;
-}
-
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.drop-item {
-  border: 2px dotted red;
-  font-size: 20px;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-}
-
-
-// .example-custom-placeholder {
-//   background: #ccc;
-//   border: dotted 3px #999;
-//   min-height: 60px;
-//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-// }
-
-// .cdk-drag  {
-//   background-color: #A7F781;
-//   color: var(--ion-color-second-app);
-// }
-
 .drag-answer {
 
 
@@ -299,6 +166,165 @@ ion-toolbar {
 
 }
 
+
+/************* DRAG AND DROP *****************/
+
+// .example-container {
+//   width: 400px;
+//   max-width: 100%;
+//   margin: 0 25px 25px 0;
+//   display: inline-block;
+//   vertical-align: top;
+// }
+
+// .example-list {
+//   border: solid 1px #ccc;
+//   min-height: 30px;
+//   background: white;
+//   border-radius: 4px;
+//   overflow: hidden;
+//   display: block;
+// }
+
+.example-box {
+  // padding: 10px 10px;
+  border: 2px dotted #003182a6!important;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 10px 0;
+  height: auto;
+  // padding: 0;
+
+  .sound {
+    max-width: 100%;
+    padding: 0 5px 0 10px;
+  }
+
+  .title {margin-right: 5px;}
+
+  img.danish-flag {
+    width: 24px;
+    height: auto;
+    max-width: 70%;
+}
+
+.drag-answer ion-img{
+  width: 20px;
+  height: auto;
+  position: relative;
+  top: -2px;
+}
+}
+
+.cdk-drag-preview {
+
+
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  background-color: white;
+  padding: 10px!important;
+  width: 80%!important;
+  margin: auto;
+  height: auto!important;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ion-color-second-app);
+
+
+
+  .sound-bg {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 10px 20px;
+  }
+
+  .img-volume {
+    text-align: center;
+    margin: auto;
+    width: 18px;
+    height: 18px;
+  }
+
+
+
+  .puzzle-fix {
+    .title{
+      font-weight: 600!important;
+      padding: 0 5px!important;
+    }
+
+    img.danish-flag {
+      width: 24px;
+      height: auto;
+      max-width: 70%;
+}
+
+  }
+
+}
+
+.cdk-drop-list-receiving {
+  background-color:rgba(167, 247, 129, 0.6);
+  color: var(--ion-color-second-app);
+}
+
+.cdk-drop-list-dragging{
+  background-color:rgba(167, 247, 129, 0.6);
+  color: var(--ion-color-second-app);
+}
+
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 120ms cubic-bezier(0, 0, 0.2, 3);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// .drop-item {
+//   border: 200px dotted red;
+//   font-size: 20px;
+//   border-radius: 10px;
+//   width: 100%;
+//   height: 100%;
+// }
+
+
+// .example-custom-placeholder {
+//   background: #ccc;
+//   border: dotted 3px #999;
+//   min-height: 60px;
+//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }
+
+// .cdk-drag  {
+//   background-color: #A7F781;
+//   color: var(--ion-color-second-app);
+// }
+
+
+
 /************* DRAG AND DROP *****************/
 
 .total-result {
@@ -307,4 +333,8 @@ ion-toolbar {
   color: var(--ion-color-second-app);
   text-align: center;
   margin-left: 50px;
+}
+
+.popover-content.sc-ion-popover-md {
+position: static!important;
 }
