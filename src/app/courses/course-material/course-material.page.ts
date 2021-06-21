@@ -53,7 +53,7 @@ export class CourseMaterialPage implements OnInit {
       this.route.paramMap
         .pipe(
           switchMap((params: ParamMap) =>
-            this.courseService.getCourseMaterial(+params.get('courseId'), 0, 30)
+            this.courseService.getCourseMaterial(+params.get('courseId'), 0, 60)
           )
         )
         .subscribe((response) => {
