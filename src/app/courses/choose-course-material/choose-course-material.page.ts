@@ -56,6 +56,11 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.router.navigate(['/exercise', {courseId: this.courseId}])
   }
 
+    // ** Send course id to final test page_event
+    sendIdToFinalTestPage() {
+      this.router.navigate(['/exercise/test-course', {courseId: this.courseId}])
+    }
+
   ngOnDestroy() {
     this.subs.forEach(element => element.unsubscribe())
   }

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Final Test Multi Choice</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="multiForm">
+
+    <ion-grid>
+      <ion-list class="multi-choice">
+        <ion-list-header>
+
+          <ion-text>
+            Qestion Multi Test
+          </ion-text>
+
+        </ion-list-header>
+
+        <ion-radio-group formControlName="answer">
+          <div class="answer">
+          <ion-item>
+            <ion-label>Multi test answer</ion-label>
+            <ion-radio [value]="3"></ion-radio>
+        </ion-item>
+
+      </div>
+    </ion-radio-group>
+
+
+      </ion-list>
+    </ion-grid>
+
+
+<ion-grid>
+  <ion-row class="ion-align-items-center slide-button">
+
+    <ion-col size="6" >
+      <ion-button
+      [disabled]='!multiForm.valid'
+      (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-button
+      [disabled]='!multiForm.valid'
+        (click)="slideNext()"
+        >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+  </form>
+
+</ion-content>
