@@ -10,11 +10,14 @@ import { TestCoursePage } from './test-course.page';
 
 import { SingleTestPage } from './single-test/single-test.page';
 import { MultiTestPage } from './multi-test/multi-test.page';
+import { PuzzleTextTestPage } from './puzzle-text-test/puzzle-text-test.page';
+import { PuzzleImageTestPage } from './puzzle-image-test/puzzle-image-test.page';
+import { FinishedTestPage } from './finished-test/finished-test.page';
 
 
 
-
-
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { CdTimerModule } from 'angular-cd-timer';
 
 
 @NgModule({
@@ -24,8 +27,15 @@ import { MultiTestPage } from './multi-test/multi-test.page';
     IonicModule,
     TestCoursePageRoutingModule,
     ReactiveFormsModule,
+    DragDropModule,
+    CdTimerModule
   ],
-  declarations: [TestCoursePage, SingleTestPage, MultiTestPage],
-  exports: [SingleTestPage]
+  declarations: [
+    TestCoursePage,
+    SingleTestPage,
+    MultiTestPage,
+    PuzzleTextTestPage,
+    PuzzleImageTestPage,
+    FinishedTestPage]
 })
 export class TestCoursePageModule {}

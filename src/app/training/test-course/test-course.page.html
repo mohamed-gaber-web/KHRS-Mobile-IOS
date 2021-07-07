@@ -1,11 +1,5 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <!-- <ion-back-button defaultHref="/exercise"> </ion-back-button> -->
-    </ion-buttons>
-
-    <ion-menu-button slot="start"></ion-menu-button>
-
     <div class="img-profile">
       <ion-avatar slot="end">
         <img *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
@@ -17,12 +11,27 @@
 
     <ion-avatar class="ion-margin-end"  slot="end">
       <img class="img-langauge" [src]="userInfo.languageIcon">
-    </ion-avatar>  </ion-toolbar>
+    </ion-avatar>
+
+  </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
 
-  <app-single-test *ngIf="questionType === 1"></app-single-test>
-  <app-multi-test *ngIf="questionType === 2"></app-multi-test>
+  <cd-timer
+  *ngIf='allTestData'
+  #basicTimer
+    [startTime]="allTestData['duration'] * 60"
+    [countdown]="true"
+    (onComplete)="finishedTimer()"
+    format="hms"></cd-timer>
+    <h1> {{ durationTest }} </h1>
+    <!-- <h1 class="timer-finished" *ngIf="finishedTimer"> {{ message }} </h1> -->
+  <app-single-test (questionData)="getQuestionData($event)" *ngIf="questionType === 1" [pageNumber]='pageNumber'></app-single-test>
+  <app-multi-test (questionData)="getQuestionData($event)" *ngIf="questionType === 2" [pageNumber]='pageNumber'></app-multi-test>
+  <app-puzzle-text-test (questionData)="getQuestionData($event)" *ngIf="questionType === 3" [pageNumber]='pageNumber'></app-puzzle-text-test>
+  <app-puzzle-image-test (questionData)="getQuestionData($event)" *ngIf="questionType === 4" [pageNumber]='pageNumber'></app-puzzle-image-test>
+
 
 </ion-content>

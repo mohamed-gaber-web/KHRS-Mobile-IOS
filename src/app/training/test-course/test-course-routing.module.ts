@@ -15,9 +15,22 @@ const routes: Routes = [
       {
         path: 'multi-test',
         loadChildren: () => import('./multi-test/multi-test.module').then( m => m.MultiTestPageModule)
-      }
+      },
+      {
+        path: 'puzzle-text-test',
+        loadChildren: () => import('./puzzle-text-test/puzzle-text-test.module').then( m => m.PuzzleTextTestPageModule)
+      },
+      {
+        path: 'puzzle-image-test',
+        loadChildren: () => import('./puzzle-image-test/puzzle-image-test.module').then( m => m.PuzzleImageTestPageModule)
+      },
+      {
+        path: 'finished-test',
+        loadChildren: () => import('./finished-test/finished-test.module').then( m => m.FinishedTestPageModule)
+      },
     ]
   },
+
 
 ];
 

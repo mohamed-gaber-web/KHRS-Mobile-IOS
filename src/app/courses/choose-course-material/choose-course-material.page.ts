@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { userCourse } from 'src/app/shared/models/userCourse';
 import { CourseService } from 'src/app/shared/services/courses.service';
+import { TestService } from 'src/app/shared/services/test.service';
 
 @Component({
   selector: 'app-choose-course-material',
@@ -19,11 +20,13 @@ export class ChooseCourseMaterialPage implements OnInit {
   CourseDetails: any;
   validCourse;
   isLoading: boolean = false;
+  testActive: boolean;
 
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private testService: TestService
     ) { }
 
   ngOnInit() {
@@ -64,5 +67,13 @@ export class ChooseCourseMaterialPage implements OnInit {
   ngOnDestroy() {
     this.subs.forEach(element => element.unsubscribe())
   }
+
+  // checkTestAvailable() {
+  //   this.testService.checkUserTest()
+  //   .subscribe(response => {
+  //     this.testActive = response['isActive'];
+  //     console.log(this.testActive);
+  //   })
+  // }
 
 }

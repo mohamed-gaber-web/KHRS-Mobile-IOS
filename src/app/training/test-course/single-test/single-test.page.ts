@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides, NavController, ToastController } from '@ionic/angular';
@@ -13,12 +13,16 @@ import { TestService } from 'src/app/shared/services/test.service';
 export class SingleTestPage implements OnInit {
 
   singleForm: FormGroup;
-  currentIndex: number = 0;
   courseId: number;
   questionType: number;
+  testId: number;
   allTestData: any;
+  lengthItems: number;
+  isLoading: boolean = false;
+  userTestId: number;
 
-  // @Input('singleTestData') singleTestData;
+  @Input('pageNumber') pageNumber;
+  @Output() questionData = new EventEmitter<any>();
 
   disablePrevBtn = true;
   disableNextBtn = false;
@@ -56,11 +60,22 @@ export class SingleTestPage implements OnInit {
 
   // ** get test type
   getTestType() {
+    this.isLoading = true;
     this.singleForm.reset();
-    this.testService.getTestType(this.courseId, this.currentIndex)
+    this.testService.getTestType(this.courseId, this.pageNumber)
     .subscribe(response => {
-      console.log(response);
+      this.isLoading = false;
       this.questionType = response['questionType'];
+      this.testId = response['testId'];
+      this.lengthItems = response['length'];
+      if(this.questionType !== 1) {
+        // parent
+        const obj = {
+          pageNumber: this.pageNumber,
+          questionType: this.questionType
+        }
+        this.questionData.emit(obj)
+      }
       this.allTestData = response;
     })
   }
@@ -85,39 +100,56 @@ export class SingleTestPage implements OnInit {
   // ** Build Single Choice Form
   buildSingleForm() {
     this.singleForm = this.fb.group({
-      answer: [null , Validators.compose([Validators.required])],
+      answer: [true , Validators.compose([Validators.required])],
     })
     this.singleForm.valueChanges.subscribe((data) => this.validateSingleForm());
   }
 
-  // ** Get Current Index
-  getCurrentIndex() {
-    this.slides
-      .getActiveIndex()
-      .then((current) => (this.currentIndex = current));
-  }
-
   // ** Move to Next slide
-  slideNext() {
-    this.currentIndex += 1;
-    this.getTestType();
-    this.slides.slideNext();
+  slideNext(answerId) {
+
+    const singleChoiceData = {
+      singleChoiceAnswerId: answerId,
+      answer: this.singleForm.value.answer
+    }
+
+    if(this.questionType === 1) {
+
+      this.testService.sendAnswerTesting({
+        testId:this.testId,
+        questionType: this.questionType,
+        singleChoiceAnswer: singleChoiceData,
+        multiChoiceAnswer: null,
+        puzzleWithTextAnswers: null, puzzleWithImageAnswers: null})
+        .subscribe(response => {
+          this.userTestId = response['resullt'];
+          console.log(response);
+          this.pageNumber += 1;
+          // ** check last question
+          if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
+            console.log('this is last number');
+            return;
+          }
+          this.getTestType();
+          this.slides.slideNext();
+        })
+    }
+
   }
 
   slidePrev() {
-    this.currentIndex -= 1;
+    this.pageNumber -= 1;
     this.getTestType();
     this.slides.slidePrev();
   }
 
-  // doCheck() {
-  //   let prom1 = this.slides.isBeginning();
-  //   let prom2 = this.slides.isEnd();
+  finishedTest() {
+    this.testService.finishedTest(this.userTestId)
+    .subscribe(response => {
+      this.router.navigate(['/courses/tabs/my-courses']);
+      console.log(response);
 
-  //   Promise.all([prom1, prom2]).then((data) => {
-  //     data[0] ? (this.disablePrevBtn = true) : (this.disablePrevBtn = false);
-  //     data[1] ? (this.disableNextBtn = true) : (this.disableNextBtn = false);
-  //   });
-  // }
+    })
+  }
 
 }

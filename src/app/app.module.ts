@@ -19,6 +19,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 
 
+
+
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }

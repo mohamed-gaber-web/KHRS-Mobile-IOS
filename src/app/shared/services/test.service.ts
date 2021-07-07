@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { PuzzleWithImageAnswers } from './../models/puzzleWithImageAnswers';
-import { PuzzleImageTranslations } from './../models/puzzleImageTranslation';
-
 import { HttpClient } from '@angular/common/http';
 
 import {
   getTextType,
-  checkAnswerSingleChoise,
-  getExercise,
-  getMultiChoiceAnswer,
-  checkAnswerMultipleChoice,
-  checkAnswerPuzzleText,
-  checkAnswerPuzzleImage }
+  finishedTest,
+  getUserActiveTest,
+  sendAnswerTest}
 from './../../api.constants';
-import { PuzzleWithTextAnswer } from '../models/puzzleWithTextAnswer';
+
+import { AnswerTestModel } from '../models/answerTestModel';
 
 
 
@@ -37,29 +32,34 @@ export class TestService {
     return this.http.get(`${getTextType}` + params );
   }
 
-  checkAnswerSingleChoise(singleChoiceAnswerId: number, answer) {
-    let data = {
-      singleChoiceAnswerId,
-      answer
+    /**
+   * Get check user test
+   * return isActive [ boolean ]
+   * return testApi [  ]
+   *
+   */
+  checkUserTest() {
+      return this.http.get(`${getUserActiveTest}`);
+  }
+
+
+    /**
+   * send answer question
+   *
+   */
+  sendAnswerTesting(answerObj: AnswerTestModel) {
+    return this.http.post(`${sendAnswerTest}` , answerObj);
+  }
+
+    /**
+   * send answer question
+   *
+   */
+    finishedTest(userTestId: number) {
+      const params = `?userTestId=${userTestId}`;
+      return this.http.post(`${finishedTest}` + params, {});
     }
-    return this.http.post(`${checkAnswerSingleChoise}`, data);
-  }
-
-  checkAnswerMultiChoise(multiChoiceQuestionId: number, multiChoiceAnswerId: number) {
-    let data = {
-      multiChoiceQuestionId,
-      multiChoiceAnswerId
-    }
-    return this.http.post(`${checkAnswerMultipleChoice}`, data);
-  }
-
-  checkAnswerPuzzleWithText(puzzleTextAnswer: PuzzleWithTextAnswer[]) {
-    return this.http.post(`${checkAnswerPuzzleText}`, puzzleTextAnswer);
-  }
 
 
-  checkAnswerPuzzleWithImage(data: PuzzleWithImageAnswers[]) {
-    return this.http.post(`${checkAnswerPuzzleImage}`, data);
-  }
 
 }

@@ -1,10 +1,11 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Final Test Single Choice</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
   <!-- Single final Test -->
   <form [formGroup]="singleForm">
 
@@ -14,7 +15,7 @@
     <ion-grid>
 
       <ion-list class="single-choice">
-        <ion-radio-group formControlName="answer">
+        <ion-radio-group   formControlName="answer">
 
           <ion-list-header>
             <ion-text *ngIf="allTestData"> {{ allTestData['singleChoice'].question }} </ion-text>
@@ -35,29 +36,60 @@
 
       </ion-list>
     </ion-grid>
+
   </ion-slide>
 </ion-slides>
 
-<ion-grid>
+<!-- <ion-grid *ngIf="allTestData">
   <ion-row class="ion-align-items-center slide-button">
 
     <ion-col size="6" >
       <ion-button
-      [disabled]='!singleForm.valid'
       (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
     </ion-col>
 
     <ion-col size="6">
       <ion-button
-      [disabled]='!singleForm.valid'
-        (click)="slideNext()"
+        (click)="slideNext(allTestData['singleChoice']['singleChoiceTranslations'][0].singleChoiceId)"
         >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
     </ion-col>
   </ion-row>
+</ion-grid> -->
+<ion-grid *ngIf="lengthItems != pageNumber">
+  <ion-row class="ion-align-items-center slide-button">
+
+    <ion-col size="6">
+      <ion-button
+      [disabled]="singleForm.invalid"
+      (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
+    </ion-col>
+
+    <ion-col size="6">
+      <ion-button
+        [disabled]="singleForm.invalid"
+        (click)="slideNext(allTestData['singleChoice']['singleChoiceTranslations'][0].singleChoiceId)"
+        >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+    </ion-col>
+
+    <ion-col size="12" *ngIf="lengthItems === pageNumber">
+      <ion-button
+
+        (click)="finishedTest()"
+        >  Finish <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-grid>
-</form>
 
-
+<ion-grid *ngIf="lengthItems === pageNumber">
+  <ion-row class="ion-align-items-center slide-button">
+    <ion-col size="12">
+      <ion-button
+        (click)="finishedTest()"
+        >  Finish <ion-icon name="chevron-forward-outline"> </ion-icon> </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+  </form>
 
 <!-- Single inal test -->
 

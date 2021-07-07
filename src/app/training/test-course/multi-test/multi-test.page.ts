@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import {
   FormBuilder,
@@ -18,10 +18,15 @@ import { TestService } from 'src/app/shared/services/test.service';
 export class MultiTestPage implements OnInit {
 
   multiForm: FormGroup;
-  currentIndex: number = 0;
   courseId: number;
   questionType: number;
   allTestData: any;
+  testId: number;
+  lengthItems: number;
+  isLoading: boolean = false;
+  userTestId: number;
+  @Input('pageNumber') pageNumber;
+  @Output() questionData = new EventEmitter<any>();
 
   disablePrevBtn = true;
   disableNextBtn = false;
@@ -51,11 +56,22 @@ export class MultiTestPage implements OnInit {
 
   // ** get test type
   getTestType() {
+    this.isLoading = true;
     this.multiForm.reset();
-    this.testService.getTestType(this.courseId, this.currentIndex)
+    this.testService.getTestType(this.courseId, this.pageNumber)
     .subscribe(response => {
-      console.log(response);
+      this.isLoading = false;
       this.questionType = response['questionType'];
+      this.testId = response['testId'];
+      this.lengthItems = response['length'];
+      if(this.questionType !== 2) {
+        // parent
+        const obj = {
+          pageNumber: this.pageNumber,
+          questionType: this.questionType
+        }
+        this.questionData.emit(obj)
+      }
       this.allTestData = response;
     })
   }
@@ -63,28 +79,53 @@ export class MultiTestPage implements OnInit {
   // ** Build Single Choice Form
   buildMultiForm() {
     this.multiForm = this.fb.group({
-      answer: [null, Validators.compose([Validators.required])],
+      answer: [true, Validators.compose([Validators.required])],
     });
   }
 
-   // ** Get Current Index
-   getCurrentIndex() {
-    this.slides
-      .getActiveIndex()
-      .then((current) => (this.currentIndex = current));
-  }
+
 
   // ** Move to Next slide
-  slideNext() {
-    this.currentIndex += 1;
-    this.getTestType();
-    this.slides.slideNext();
+  slideNext(quetionId) {
+
+    const multiChoiceData = {
+      multiChoiceQuestionId: quetionId,
+      multiChoiceAnswerId: this.multiForm.value.answer
+    }
+
+    this.testService.sendAnswerTesting({
+      testId:this.testId,
+      questionType: 2,
+      singleChoiceAnswer: null,
+      multiChoiceAnswer: multiChoiceData,
+      puzzleWithTextAnswers: null,
+      puzzleWithImageAnswers: null})
+      .subscribe(response => {
+        this.userTestId = response['result'].userTestId;
+        console.log(this.userTestId);
+        this.pageNumber += 1;
+        // ** check last question
+        if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
+          console.log('this is last number');
+          return;
+        }
+        this.getTestType();
+        this.slides.slideNext();
+      })
+
   }
 
   slidePrev() {
-    this.currentIndex -= 1;
+    this.pageNumber -= 1;
     this.getTestType();
     this.slides.slidePrev();
+  }
+
+  finishedTest() {
+    this.testService.finishedTest(this.userTestId)
+    .subscribe(response => {
+      this.router.navigate(['/courses/tabs/my-courses']);
+    })
   }
 
 
