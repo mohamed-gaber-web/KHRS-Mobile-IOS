@@ -23,6 +23,7 @@ export class AllCoursesPage implements OnInit {
   public courses: Array<Course> = [];
   isLoading = false;
   userTest: CheckUserTest;
+  courseId;
 
   constructor(
     private route: Router,
@@ -37,8 +38,9 @@ export class AllCoursesPage implements OnInit {
     this.getCourses();
     this.testService.checkUserTest()
     .subscribe(response => {
+      console.log(response)
       if(response['isActive'] === true) {
-        this.route.navigate(['/exercise/test-course'])
+        // this.route.navigate(['/exercise/test-course']);
       }
     })
   }
@@ -62,6 +64,8 @@ export class AllCoursesPage implements OnInit {
           })
         )
         .subscribe((res) => {
+          console.log(res);
+
           if (this.courses.length == 0) {
             res.forEach((element) => {
 
