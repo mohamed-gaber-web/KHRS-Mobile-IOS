@@ -24,12 +24,10 @@ const routes: Routes = [
         path: 'puzzle-image-test',
         loadChildren: () => import('./puzzle-image-test/puzzle-image-test.module').then( m => m.PuzzleImageTestPageModule)
       },
-      {
-        path: 'finished-test',
-        loadChildren: () => import('./finished-test/finished-test.module').then( m => m.FinishedTestPageModule)
-      },
+
     ]
   },
+
 
 
 ];

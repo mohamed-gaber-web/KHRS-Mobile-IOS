@@ -51,31 +51,20 @@ export class TestCoursePage implements OnInit {
       this.questionType = response['questionType'];
       this.allTestData = response;
       // debugger;
-      console.log(this.allTestData);
-
     })
   }
 
 
   getQuestionData(event) {
-    console.log(event);
     this.questionType = event.questionType;
     this.pageNumber = event.pageNumber;
   }
 
   finishedTimer() {
-    console.log('finished timer');
     this.message = 'timer is finished';
     setTimeout(() => {
       this.router.navigate(['/courses/tabs/my-courses'])
     }, 4000)
   }
-
-
-  // ngAfterViewInit(): void {
-  //   // debugger;
-  //   this.cdTimer.startTime = 300 * 60;
-  // }
-
 
 }

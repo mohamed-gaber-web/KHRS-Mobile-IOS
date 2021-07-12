@@ -106,8 +106,7 @@ export class MultiTestPage implements OnInit {
         this.pageNumber += 1;
         // ** check last question
         if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
-          console.log('this is last number');
-          return;
+          this.router.navigate(['/exercise/finished-test', {user: this.userTestId}]);
         }
         this.getTestType();
         this.slides.slideNext();
@@ -121,12 +120,6 @@ export class MultiTestPage implements OnInit {
     this.slides.slidePrev();
   }
 
-  finishedTest() {
-    this.testService.finishedTest(this.userTestId)
-    .subscribe(response => {
-      this.router.navigate(['/courses/tabs/my-courses']);
-    })
-  }
 
 
 }

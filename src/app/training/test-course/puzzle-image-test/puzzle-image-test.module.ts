@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PuzzleImageTestPageRoutingModule } from './puzzle-image-test-routing.module';
+// import { PuzzleImageZoomComponent } from './puzzle-image-zoom/puzzle-image-zoom.component';
 
 
 @NgModule({
@@ -12,8 +12,12 @@ import { PuzzleImageTestPageRoutingModule } from './puzzle-image-test-routing.mo
     CommonModule,
     FormsModule,
     IonicModule,
-    PuzzleImageTestPageRoutingModule
+
+
   ],
-  declarations: []
+
+  declarations: [],
+
+
 })
 export class PuzzleImageTestPageModule {}

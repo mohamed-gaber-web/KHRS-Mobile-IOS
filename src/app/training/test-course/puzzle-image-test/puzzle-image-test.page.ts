@@ -5,9 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { TestService } from 'src/app/shared/services/test.service';
-import { PuzzleSoundComponent } from '../../puzzle-image/puzzle-sound/puzzle-sound.component';
 import { Subscription } from 'rxjs';
 import { PuzzleImageTranslations } from 'src/app/shared/models/puzzleImageTranslation';
+import { PuzzleImageZoomComponent } from './puzzle-image-zoom/puzzle-image-zoom.component';
 
 @Component({
   selector: 'app-puzzle-image-test',
@@ -62,7 +62,6 @@ export class PuzzleImageTestPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
     this.getQuestionAndAnswer();
   }
@@ -204,7 +203,7 @@ slideNext() {
 
   this.testService.sendAnswerTesting(
       {
-        testId:this.testId,
+        testId: this.testId,
         questionType: this.questionType,
         singleChoiceAnswer: null,
         multiChoiceAnswer: null,
@@ -213,12 +212,13 @@ slideNext() {
       }
     )
     .subscribe((response) => {
-      this.userTestId = response['result'];
+      this.userTestId = response['result'].userTestId;
       this.pageNumber += 1;
       // ** check last question
       if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
         console.log('this is last number');
-        return;
+        // this.navController.navigateForward('test-course/finished-test');
+        this.router.navigate(['/exercise/finished-test', {user: this.userTestId}]);
       }
 
       this.getQuestionAndAnswer();
@@ -232,22 +232,11 @@ slidePrev() {
   this.slides.slidePrev();
 }
 
-finishedTest() {
-  this.testService.finishedTest(this.userTestId)
-  .subscribe(response => {
-    this.router.navigate(['/courses/tabs/my-courses']);
-    console.log(response);
-  })
-}
-
-
 // ** when to zoom image
 async presentPopover(ev: any, item: any) {
   const popover = await this.popoverController.create({
-    component: PuzzleSoundComponent,
+    component: PuzzleImageZoomComponent,
     componentProps: {
-      voicePath: item.voicePath,
-      voicePathDanish: item.voicePathDanish,
       imagePath: item.imagePath,
     },
     cssClass: 'my-custom-class',

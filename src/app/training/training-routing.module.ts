@@ -27,7 +27,11 @@ const routes: Routes = [
   {
     path: 'test-course',
     loadChildren: () => import('./test-course/test-course.module').then( m => m.TestCoursePageModule)
-  }
+  },
+  {
+    path: 'finished-test',
+    loadChildren: () => import('./finished-test/finished-test.module').then( m => m.FinishedTestPageModule)
+  },
 
 
 ];

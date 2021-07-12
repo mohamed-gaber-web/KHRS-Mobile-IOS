@@ -12,9 +12,7 @@ import { SingleTestPage } from './single-test/single-test.page';
 import { MultiTestPage } from './multi-test/multi-test.page';
 import { PuzzleTextTestPage } from './puzzle-text-test/puzzle-text-test.page';
 import { PuzzleImageTestPage } from './puzzle-image-test/puzzle-image-test.page';
-import { FinishedTestPage } from './finished-test/finished-test.page';
-
-
+import { PuzzleImageZoomComponent } from './puzzle-image-test/puzzle-image-zoom/puzzle-image-zoom.component';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CdTimerModule } from 'angular-cd-timer';
@@ -28,7 +26,8 @@ import { CdTimerModule } from 'angular-cd-timer';
     TestCoursePageRoutingModule,
     ReactiveFormsModule,
     DragDropModule,
-    CdTimerModule
+    CdTimerModule,
+
   ],
   declarations: [
     TestCoursePage,
@@ -36,6 +35,8 @@ import { CdTimerModule } from 'angular-cd-timer';
     MultiTestPage,
     PuzzleTextTestPage,
     PuzzleImageTestPage,
-    FinishedTestPage]
+    PuzzleImageZoomComponent
+  ],
+  entryComponents: [PuzzleImageZoomComponent]
 })
 export class TestCoursePageModule {}

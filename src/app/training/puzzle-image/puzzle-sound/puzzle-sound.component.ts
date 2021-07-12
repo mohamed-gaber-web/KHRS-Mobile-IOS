@@ -49,9 +49,9 @@ export class PuzzleSoundComponent implements OnInit {
     this.player.play();
   }
 
-ngOnDestroy() {
-  if (this.player) {
-    this.player.stop();
+  ngOnDestroy() {
+    if (this.player) {
+      this.player.stop();
+    }
   }
-}
 }

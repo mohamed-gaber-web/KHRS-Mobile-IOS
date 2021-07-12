@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { FinishedTestPageRoutingModule } from './finished-test-routing.module';
+import { FinishedTestPage } from './finished-test.page';
+
+
 
 @NgModule({
   imports: [
@@ -13,6 +16,6 @@ import { FinishedTestPageRoutingModule } from './finished-test-routing.module';
     IonicModule,
     FinishedTestPageRoutingModule
   ],
-  declarations: []
+  declarations: [FinishedTestPage]
 })
 export class FinishedTestPageModule {}
