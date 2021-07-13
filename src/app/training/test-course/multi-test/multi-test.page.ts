@@ -102,11 +102,17 @@ export class MultiTestPage implements OnInit {
       puzzleWithImageAnswers: null})
       .subscribe(response => {
         this.userTestId = response['result'].userTestId;
-        console.log(this.userTestId);
         this.pageNumber += 1;
         // ** check last question
         if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
-          this.router.navigate(['/exercise/finished-test', {user: this.userTestId}]);
+          console.log('this is last number');
+          localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+          localStorage.setItem('courseId', JSON.stringify(this.courseId))
+          localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
+          // this.navController.navigateForward('test-course/finished-test');
+          // this.router.navigate(['/exercise/finished-test',
+          // {userTestId: this.userTestId, courseId: this.courseId, offset: this.pageNumber}]);
+          return;
         }
         this.getTestType();
         this.slides.slideNext();
@@ -120,6 +126,20 @@ export class MultiTestPage implements OnInit {
     this.slides.slidePrev();
   }
 
+  finishSlidePrev() {
+    this.pageNumber -= 1;
+    // this.getTestType();
+    // this.slides.slidePrev();
+  }
 
+  finishedTest() {
+    this.testService.finishedTest(this.userTestId)
+    .subscribe(response => {
+      localStorage.removeItem('userTestId')
+      localStorage.removeItem('courseId')
+      localStorage.removeItem('pageNumber')
+      this.router.navigate(['/courses/tabs/my-courses']);
+    })
+  }
 
 }

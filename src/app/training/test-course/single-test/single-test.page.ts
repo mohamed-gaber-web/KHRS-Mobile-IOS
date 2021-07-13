@@ -125,7 +125,12 @@ export class SingleTestPage implements OnInit {
           this.pageNumber += 1;
           // ** check last question
           if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
-            this.router.navigate(['/exercise/finished-test', {user: this.userTestId}]);
+            console.log('this is last number');
+            localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+            localStorage.setItem('courseId', JSON.stringify(this.courseId))
+            localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
+            return;
+            // this.router.navigate(['/exercise/finished-test', {userTestId: this.userTestId}]);
           }
           this.getTestType();
           this.slides.slideNext();
@@ -138,6 +143,23 @@ export class SingleTestPage implements OnInit {
     this.pageNumber -= 1;
     this.getTestType();
     this.slides.slidePrev();
+  }
+
+  finishSlidePrev() {
+    this.pageNumber -= 1;
+    // this.getTestType();
+    // this.slides.slidePrev();
+  }
+
+  finishedTest() {
+    this.testService.finishedTest(this.userTestId)
+    .subscribe(response => {
+      localStorage.removeItem('userTestId')
+      localStorage.removeItem('courseId')
+      localStorage.removeItem('pageNumber')
+      this.router.navigate(['/courses/tabs/my-courses']);
+      console.log(response);
+    })
   }
 
 }

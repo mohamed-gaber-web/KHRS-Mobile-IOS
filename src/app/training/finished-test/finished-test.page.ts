@@ -10,11 +10,15 @@ import { TestService } from 'src/app/shared/services/test.service';
 export class FinishedTestPage implements OnInit {
 
   userTestId: any;
+  courseId: any;
+  pageNumber: any;
 
   constructor(private testService: TestService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.userTestId = this.route.snapshot.paramMap.get('user');
+    this.userTestId = this.route.snapshot.paramMap.get('userTestId');
+    this.courseId = this.route.snapshot.paramMap.get('courseId');
+    this.pageNumber = this.route.snapshot.paramMap.get('offset');
 
   }
 
@@ -26,6 +30,14 @@ export class FinishedTestPage implements OnInit {
     })
   }
 
-  prev() {}
+  prev() {
+    this.testService.getTestType(this.courseId, this.pageNumber-1)
+    .subscribe(response => {
+      if(response) {
+        this.router.navigate(['/exercise/test-course', {courseId: this.courseId}]);
+      }
+    })
+  }
+
 
 }

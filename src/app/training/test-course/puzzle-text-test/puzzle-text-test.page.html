@@ -57,20 +57,42 @@
 
     </ion-slide>
     </ion-slides>
+    <app-test-finished *ngIf="lengthItems === pageNumber"></app-test-finished>
 
-    <ion-grid>
+
+    <ion-grid *ngIf="lengthItems !== pageNumber">
       <ion-row class="ion-align-items-center slide-button">
 
         <ion-col size="6">
           <ion-button
+          *ngIf="nextButton"
           (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
         </ion-col>
 
         <ion-col size="6">
           <ion-button
+          *ngIf="nextButton"
             (click)="slideNext()"
-            *ngIf="nextButton"
             >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid style="position: relative; top: -150px;" *ngIf="lengthItems === pageNumber">
+      <ion-row class="ion-align-items-center slide-button">
+
+        <ion-col size="6">
+          <ion-button
+          *ngIf="nextButton"
+          (click)="finishSlidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button
+          *ngIf="nextButton"
+            (click)="finishedTest()"
+            >  Finished <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
         </ion-col>
 
       </ion-row>

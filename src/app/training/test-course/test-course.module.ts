@@ -13,6 +13,8 @@ import { MultiTestPage } from './multi-test/multi-test.page';
 import { PuzzleTextTestPage } from './puzzle-text-test/puzzle-text-test.page';
 import { PuzzleImageTestPage } from './puzzle-image-test/puzzle-image-test.page';
 import { PuzzleImageZoomComponent } from './puzzle-image-test/puzzle-image-zoom/puzzle-image-zoom.component';
+import { TestFinishedPage } from './test-finished/test-finished.page';
+
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CdTimerModule } from 'angular-cd-timer';
@@ -29,14 +31,15 @@ import { CdTimerModule } from 'angular-cd-timer';
     CdTimerModule,
 
   ],
+  entryComponents: [TestFinishedPage],
   declarations: [
     TestCoursePage,
     SingleTestPage,
     MultiTestPage,
     PuzzleTextTestPage,
     PuzzleImageTestPage,
-    PuzzleImageZoomComponent
+    PuzzleImageZoomComponent,
+    TestFinishedPage
   ],
-  entryComponents: [PuzzleImageZoomComponent]
 })
 export class TestCoursePageModule {}

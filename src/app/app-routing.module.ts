@@ -30,6 +30,11 @@ const routes: Routes = [
     path: 'exercise',
     loadChildren: () => import('./training/training.module').then( m => m.TrainingPageModule)
   },
+  {
+    path: 'test-finished',
+    loadChildren: () => import('./training/test-course/test-finished/test-finished.module').then( m => m.TestFinishedPageModule)
+  },
+
 
 
 ];

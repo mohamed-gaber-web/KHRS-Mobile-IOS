@@ -142,7 +142,6 @@ getQuestionAndAnswer() {
   );
 }
 
-
 // ** Drop Function
 drop(event: CdkDragDrop<any>) {
   var prevData=   event.previousContainer.data;
@@ -188,7 +187,6 @@ drop(event: CdkDragDrop<any>) {
   }
 }
 
-
 // ** Move to Next slide
 slideNext() {
   // ** get check
@@ -212,24 +210,34 @@ slideNext() {
       }
     )
     .subscribe((response) => {
+      console.log(response)
       this.userTestId = response['result'].userTestId;
       this.pageNumber += 1;
       // ** check last question
       if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
         console.log('this is last number');
+        localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+        localStorage.setItem('courseId', JSON.stringify(this.courseId))
+        localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
         // this.navController.navigateForward('test-course/finished-test');
-        this.router.navigate(['/exercise/finished-test', {user: this.userTestId}]);
+        // this.router.navigate(['/exercise/finished-test',
+        // {userTestId: this.userTestId, courseId: this.courseId, offset: this.pageNumber}]);
+        return;
       }
-
       this.getQuestionAndAnswer();
       this.slides.slideNext();
     });
 }
 
 slidePrev() {
+
   this.pageNumber -= 1;
   this.getQuestionAndAnswer();
   this.slides.slidePrev();
+}
+
+finishSlidePrev() {
+  this.pageNumber -= 1;
 }
 
 // ** when to zoom image
@@ -244,6 +252,16 @@ async presentPopover(ev: any, item: any) {
     translucent: true,
   });
   await popover.present();
+}
+
+finishedTest() {
+  this.testService.finishedTest(this.userTestId)
+  .subscribe(response => {
+    localStorage.removeItem('userTestId')
+    localStorage.removeItem('courseId')
+    localStorage.removeItem('pageNumber')
+    this.router.navigate(['/courses/tabs/my-courses']);
+  })
 }
 
 ngOnDestroy() {

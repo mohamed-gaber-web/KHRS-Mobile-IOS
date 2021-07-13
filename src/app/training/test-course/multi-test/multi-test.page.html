@@ -10,7 +10,7 @@
 
 <form [formGroup]="multiForm">
 
-  <ion-slides  [pager]="false" #slides [options]="slideOpts">
+  <ion-slides *ngIf="lengthItems != pageNumber"  [pager]="false" #slides [options]="slideOpts">
     <ion-slide>
     <ion-grid *ngIf="allTestData">
       <ion-list class="multi-choice">
@@ -38,7 +38,7 @@
   </ion-slides>
 
 
-<ion-grid>
+<!-- <ion-grid>
   <ion-row class="ion-align-items-center slide-button">
 
     <ion-col size="6">
@@ -54,8 +54,49 @@
         >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
     </ion-col>
   </ion-row>
-</ion-grid>
+</ion-grid> -->
+
+
 
 </form>
+<app-test-finished *ngIf="lengthItems === pageNumber"></app-test-finished>
+
+  <ion-grid *ngIf="lengthItems !== pageNumber">
+    <ion-row class="ion-align-items-center slide-button">
+
+      <ion-col size="6">
+        <ion-button
+        [disabled]="multiForm.invalid"
+        (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button
+        [disabled]="multiForm.invalid"
+          (click)="slideNext(allTestData['multiChoice'].id)"
+          >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid style="position: relative; top: -150px;" *ngIf="lengthItems === pageNumber">
+    <ion-row class="ion-align-items-center slide-button">
+
+      <ion-col size="6">
+        <ion-button
+        (click)="finishSlidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button
+          (click)="finishedTest()"
+          >  Finished <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+
 
 </ion-content>
