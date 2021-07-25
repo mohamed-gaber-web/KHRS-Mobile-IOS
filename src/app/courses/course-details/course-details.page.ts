@@ -7,6 +7,7 @@ import { CourseService } from 'src/app/shared/services/courses.service';
 
 import { NavController } from '@ionic/angular';
 import { TestService } from 'src/app/shared/services/test.service';
+import { Howl } from 'howler';
 
 
 @Component({
@@ -20,6 +21,9 @@ export class CourseDetailsPage implements OnInit {
   subs: Subscription[] = [];
   isLoading = false;
   userTestId: number = JSON.parse(localStorage.getItem('userTestId'));
+  courseId:number;
+  player: Howl = null;
+  isPlaying: boolean = false;
 
   constructor(
     private router: Router,
@@ -50,11 +54,25 @@ export class CourseDetailsPage implements OnInit {
   }
 
   downloadCertificate() {
-    this.testService.getCertificate(this.userTestId).subscribe(response => {
+    this.testService.getCertificate(this.courseDetails.id).subscribe(response => {
       console.log(response)
     })
   }
+  startAudio(voicePath: string) {
+    if (this.player) {
+      this.player.stop();
+    }
+    this.player = new Howl({
+      html5: true,
+      src: voicePath,
+      onplay: () => {
 
+        this.isPlaying = true;
+      },
+      onend: () => {},
+    });
+    this.player.play();
+  }
   ngOnDestroy(): void {
   this.subs.forEach((element) => {
     element.unsubscribe();

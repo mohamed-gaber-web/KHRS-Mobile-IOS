@@ -12,14 +12,14 @@
         </ion-title>
 
 
-        <div class="sound-inro">
+        <div *ngIf="courseDetails.courseTranslations[0]?.introVoicePath" class="sound-inro">
           <div class="img-person">
             <img class="intro-logo" src="../../assets/images/char-person.png" />
           </div>
         <div class="icon-sound">
           <div class="img-volume">
             <ion-img
-            class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3" src="../../../assets/icon/Vector.png">
+            class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3" (click)="startAudio(courseDetails.courseTranslations[0]?.introVoicePath)" src="../../../assets/icon/Vector.png">
           </ion-img>
           </div>
         </div>

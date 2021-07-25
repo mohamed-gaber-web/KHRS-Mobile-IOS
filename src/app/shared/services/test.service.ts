@@ -66,8 +66,8 @@ export class TestService {
      * testId [ number ]
      *
    */
-    getCertificate(testId: number) {
-      const params = `?testId=${testId}`;
+    getCertificate(courseId: number) {
+      const params = `?courseId=${courseId}`;
       return this.http.get(`${getCertificate}` + params );
     }
 
