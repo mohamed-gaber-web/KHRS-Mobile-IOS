@@ -6,7 +6,8 @@ import {
   getTextType,
   finishedTest,
   getUserActiveTest,
-  sendAnswerTest}
+  sendAnswerTest,
+  getCertificate}
 from './../../api.constants';
 
 import { AnswerTestModel } from '../models/answerTestModel';
@@ -60,6 +61,14 @@ export class TestService {
       return this.http.post(`${finishedTest}` + params, {});
     }
 
-
+    /**
+     * Gget Certificate
+     * testId [ number ]
+     *
+   */
+    getCertificate(testId: number) {
+      const params = `?testId=${testId}`;
+      return this.http.get(`${getCertificate}` + params );
+    }
 
 }

@@ -25,6 +25,7 @@ export class FinishedTestPage implements OnInit {
   finishedTest() {
     this.testService.finishedTest(this.userTestId)
     .subscribe(response => {
+      localStorage.setItem('testId', this.userTestId);
       this.router.navigate(['/courses/tabs/my-courses']);
       console.log(response);
     })

@@ -64,13 +64,18 @@
   <ion-grid *ngIf="lengthItems !== pageNumber">
     <ion-row class="ion-align-items-center slide-button">
 
-      <ion-col size="6">
+      <ion-col size="4">
         <ion-button
-        [disabled]="multiForm.invalid"
         (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
       </ion-col>
 
-      <ion-col size="6">
+      <ion-col size="4">
+        <ion-button
+          (click)="ScapeSlidePrev()"
+          >  Escape <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+      </ion-col>
+
+      <ion-col size="4">
         <ion-button
         [disabled]="multiForm.invalid"
           (click)="slideNext(allTestData['multiChoice'].id)"
@@ -91,7 +96,7 @@
       <ion-col size="6">
         <ion-button
           (click)="finishedTest()"
-          >  Finished <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+          >  Submit <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
       </ion-col>
 
     </ion-row>

@@ -29,11 +29,13 @@ export class MyCoursesPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('my courses')
     this.offset = 0;
     this.getUserCourses();
   }
 
   getUserCourses() {
+
     this.isLoading = true;
 
     this.sub.push(
@@ -41,6 +43,8 @@ export class MyCoursesPage implements OnInit {
         .getUserCourses('', this.offset)
         .pipe(
           map((response) => {
+            console.log(response);
+
             Object.entries(response);
             this.isLoading = false;
             this.totalLength = response['length'];
@@ -49,7 +53,6 @@ export class MyCoursesPage implements OnInit {
         )
         .subscribe((res) => {
           console.log(res);
-
           if (this.myCourses.length == 0) {
             res.forEach((element:MyCourse) => {
 
@@ -145,5 +148,16 @@ export class MyCoursesPage implements OnInit {
   // ** go to choose course material
   goToChooseCourseMaterial(courseId: number, userId) {
     this.route.navigate(['courses/tabs/choose-course-material', { courseId, userId }]);
+  }
+
+  ionViewDidEnter() {
+    console.log('my courses with ion view did enter')
+    this.getUserCourses();
+  }
+
+  ngOnDestroy() {
+    this.sub.forEach(e => {
+      e.unsubscribe();
+    })
   }
 }

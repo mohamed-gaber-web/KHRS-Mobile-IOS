@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import {
@@ -25,6 +26,7 @@ export class MultiTestPage implements OnInit {
   lengthItems: number;
   isLoading: boolean = false;
   userTestId: number;
+  sub: Subscription[] = [];
   @Input('pageNumber') pageNumber;
   @Output() questionData = new EventEmitter<any>();
 
@@ -45,7 +47,8 @@ export class MultiTestPage implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     public navController: NavController,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -83,8 +86,6 @@ export class MultiTestPage implements OnInit {
     });
   }
 
-
-
   // ** Move to Next slide
   slideNext(quetionId) {
 
@@ -101,17 +102,15 @@ export class MultiTestPage implements OnInit {
       puzzleWithTextAnswers: null,
       puzzleWithImageAnswers: null})
       .subscribe(response => {
+        console.log(response)
         this.userTestId = response['result'].userTestId;
         this.pageNumber += 1;
+
         // ** check last question
         if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
-          console.log('this is last number');
           localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
           localStorage.setItem('courseId', JSON.stringify(this.courseId))
           localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
-          // this.navController.navigateForward('test-course/finished-test');
-          // this.router.navigate(['/exercise/finished-test',
-          // {userTestId: this.userTestId, courseId: this.courseId, offset: this.pageNumber}]);
           return;
         }
         this.getTestType();
@@ -126,6 +125,19 @@ export class MultiTestPage implements OnInit {
     this.slides.slidePrev();
   }
 
+  ScapeSlidePrev() {
+    this.pageNumber += 1;
+    if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
+      console.log('this is last number');
+      localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+      localStorage.setItem('courseId', JSON.stringify(this.courseId))
+      localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
+      return;
+    }
+    this.getTestType();
+    this.slides.slideNext();
+  }
+
   finishSlidePrev() {
     this.pageNumber -= 1;
     // this.getTestType();
@@ -135,10 +147,16 @@ export class MultiTestPage implements OnInit {
   finishedTest() {
     this.testService.finishedTest(this.userTestId)
     .subscribe(response => {
-      localStorage.removeItem('userTestId')
       localStorage.removeItem('courseId')
       localStorage.removeItem('pageNumber')
-      this.router.navigate(['/courses/tabs/my-courses']);
+      // this.router.navigate(['/courses/tabs/my-courses']);
+      this.navCtrl.navigateForward('/courses/tabs/my-courses')
+    })
+  }
+
+  ngOnDestroy() {
+    this.sub.forEach(e => {
+      e.unsubscribe();
     })
   }
 

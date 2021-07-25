@@ -6,6 +6,9 @@ import { userCourse } from 'src/app/shared/models/userCourse';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { TestService } from 'src/app/shared/services/test.service';
 
+import { AlertController } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-choose-course-material',
   templateUrl: './choose-course-material.page.html',
@@ -21,18 +24,19 @@ export class ChooseCourseMaterialPage implements OnInit {
   validCourse;
   isLoading: boolean = false;
   testActive: boolean;
+  redOffset: any;
 
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router,
-    private testService: TestService
+    public alertController: AlertController
     ) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.courseId = JSON.parse(this.route.snapshot.paramMap.get('courseId'));
-
+    this.redOffset = this.route.snapshot.paramMap.get('testOffset');
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
       .subscribe(response => {
@@ -59,21 +63,38 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.router.navigate(['/exercise', {courseId: this.courseId}])
   }
 
-    // ** Send course id to final test page_event
-    sendIdToFinalTestPage() {
-      this.router.navigate(['/exercise/test-course', {courseId: this.courseId}])
-    }
+  // ** Send course id to final test page_event
+  sendIdToFinalTestPage() {
+   this.presentAlertConfirm();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'sure you want start the test?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'start',
+          handler: () => {
+            this.router.navigate(['/exercise/test-course', {courseId: this.courseId}])
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   ngOnDestroy() {
     this.subs.forEach(element => element.unsubscribe())
   }
-
-  // checkTestAvailable() {
-  //   this.testService.checkUserTest()
-  //   .subscribe(response => {
-  //     this.testActive = response['isActive'];
-  //     console.log(this.testActive);
-  //   })
-  // }
 
 }

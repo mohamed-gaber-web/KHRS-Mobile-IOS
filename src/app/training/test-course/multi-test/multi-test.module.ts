@@ -5,9 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { MultiTestPageRoutingModule } from './multi-test-routing.module';
-import { TestFinishedPage } from './../test-finished/test-finished.page';
 
-TestFinishedPage
+
 
 @NgModule({
   imports: [
@@ -17,6 +16,6 @@ TestFinishedPage
     MultiTestPageRoutingModule,
 
   ],
-  declarations: [TestFinishedPage]
+  declarations: []
 })
 export class MultiTestPageModule {}

@@ -25,6 +25,7 @@ export class AllCoursesPage implements OnInit {
   userTest: CheckUserTest;
   courseId;
 
+
   constructor(
     private route: Router,
     private navCtrl: NavController,
@@ -40,7 +41,10 @@ export class AllCoursesPage implements OnInit {
     .subscribe(response => {
       console.log(response)
       if(response['isActive'] === true) {
-        // this.route.navigate(['/exercise/test-course']);
+        this.route.navigate(['/exercise/test-course',
+        {courseId: response['courseId'], testOffset: response['testApi'].offset, activeCourse: response['isActive']}]);
+      } else {
+        return;
       }
     })
   }
@@ -180,3 +184,5 @@ function onSuccess() {
 function onError() {
   alert('error');
 }
+
+

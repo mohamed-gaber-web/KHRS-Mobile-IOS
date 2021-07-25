@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides, NavController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { TestService } from 'src/app/shared/services/test.service';
 
@@ -20,6 +21,7 @@ export class SingleTestPage implements OnInit {
   lengthItems: number;
   isLoading: boolean = false;
   userTestId: number;
+  subs: Subscription[] = [];
 
   @Input('pageNumber') pageNumber;
   @Output() questionData = new EventEmitter<any>();
@@ -63,6 +65,7 @@ export class SingleTestPage implements OnInit {
     this.singleForm.reset();
     this.testService.getTestType(this.courseId, this.pageNumber)
     .subscribe(response => {
+      console.log(response)
       this.isLoading = false;
       this.questionType = response['questionType'];
       this.testId = response['testId'];
@@ -121,6 +124,7 @@ export class SingleTestPage implements OnInit {
         multiChoiceAnswer: null,
         puzzleWithTextAnswers: null, puzzleWithImageAnswers: null})
         .subscribe(response => {
+          console.log(response)
           this.userTestId = response['result'].userTestId;
           this.pageNumber += 1;
           // ** check last question
@@ -147,18 +151,33 @@ export class SingleTestPage implements OnInit {
 
   finishSlidePrev() {
     this.pageNumber -= 1;
-    // this.getTestType();
-    // this.slides.slidePrev();
+  }
+
+  ScapeSlidePrev() {
+    this.pageNumber += 1;
+    if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
+      console.log('this is last number');
+      localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+      localStorage.setItem('courseId', JSON.stringify(this.courseId))
+      localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
+      return;
+    }
+    this.getTestType();
+    this.slides.slideNext();
   }
 
   finishedTest() {
     this.testService.finishedTest(this.userTestId)
     .subscribe(response => {
-      localStorage.removeItem('userTestId')
       localStorage.removeItem('courseId')
       localStorage.removeItem('pageNumber')
       this.router.navigate(['/courses/tabs/my-courses']);
-      console.log(response);
+    })
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(e => {
+      e.unsubscribe();
     })
   }
 

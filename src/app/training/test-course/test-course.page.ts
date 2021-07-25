@@ -23,6 +23,11 @@ export class TestCoursePage implements OnInit {
   finishedTime: boolean= false;
   message: string = '';
   durationTest: number;
+  updateQuestionType: number;
+  activeTest: boolean;
+  redQuestionType: any;
+  redOffset: number;
+  activeCourse: boolean;
 
   @Output() slideData = new EventEmitter<any>();
   @ViewChild( 'basicTimer', { static: false } ) cdTimer : CdTimerComponent;
@@ -39,19 +44,39 @@ export class TestCoursePage implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
+
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
+    this.redOffset = +JSON.parse(this.route.snapshot.paramMap.get('testOffset'));
+    this.activeCourse = JSON.parse(this.route.snapshot.paramMap.get('activeCourse'));
+
     this.getTestType();
+    // this.updateQuestionType = +JSON.parse(localStorage.getItem('testQuestionType'));
+    // this.activeTest = JSON.parse(localStorage.getItem('activeTest'));
   }
 
   // ** get test type
   getTestType() {
-    this.testService.getTestType(this.courseId, this.pageNumber)
-    .subscribe(response => {
-      console.log('test parent component response', response);
-      this.questionType = response['questionType'];
-      this.allTestData = response;
-      // debugger;
-    })
+
+    if(this.activeCourse == true) {
+      console.log('redirect in this ')
+      this.testService.getTestType(this.courseId, this.redOffset)
+      .subscribe(response => {
+        this.questionType = response['questionType'];
+        this.allTestData = response;
+      })
+    } else {
+
+      this.testService.getTestType(this.courseId, this.pageNumber)
+      .subscribe(response => {
+        console.log('test parent component response', response);
+        this.questionType = response['questionType'];
+        this.allTestData = response;
+        // debugger;
+      })
+
+    }
+
+
   }
 
 

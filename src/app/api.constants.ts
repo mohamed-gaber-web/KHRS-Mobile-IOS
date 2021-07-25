@@ -1,7 +1,7 @@
 // const CORS = 'https://cors-anywhere.herokuapp.com/';
 
-// export const baseUrl = `https://khrs-api.sdex.online`;
-export const baseUrl = `http://sdexegypt-001-site22.itempurl.com`; // test url
+export const baseUrl = `https://khrs-api.sdex.online`;
+// export const baseUrl = `https://khrs-api-test.sdex.online/`; // test url
 export const imagesBaseUrl = 'https://khrs-admin.sdex.online';
 
 //Account
@@ -34,7 +34,8 @@ export const checkAnswerPuzzleImage = `${baseUrl}/api/Exercise/PuzzleWithImage/A
 export const getTextType = `${baseUrl}/api/Test/Get`;
 export const getUserActiveTest = `${baseUrl}/api/Test/GetUserActiveTest`;
 export const sendAnswerTest = `${baseUrl}/api/Test/Answer`;
-export const finishedTest = `${baseUrl}/api/Test/Finished`
+export const finishedTest = `${baseUrl}/api/Test/Finished`;
+export const getCertificate = `${baseUrl}/api/UserTest/GetCertificate`;
 
 
 

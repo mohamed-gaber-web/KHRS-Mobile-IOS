@@ -58,7 +58,8 @@ export class PuzzleImageTestPage implements OnInit {
     public toastController: ToastController,
     public navController: NavController,
     private testService: TestService,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -236,6 +237,19 @@ slidePrev() {
   this.slides.slidePrev();
 }
 
+ScapeSlidePrev() {
+  this.pageNumber += 1;
+  if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
+    console.log('this is last number');
+    localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+    localStorage.setItem('courseId', JSON.stringify(this.courseId))
+    localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
+    return;
+  }
+  this.getQuestionAndAnswer();
+  this.slides.slideNext();
+}
+
 finishSlidePrev() {
   this.pageNumber -= 1;
 }
@@ -257,12 +271,23 @@ async presentPopover(ev: any, item: any) {
 finishedTest() {
   this.testService.finishedTest(this.userTestId)
   .subscribe(response => {
-    localStorage.removeItem('userTestId')
+    console.log(response)
     localStorage.removeItem('courseId')
     localStorage.removeItem('pageNumber')
-    this.router.navigate(['/courses/tabs/my-courses']);
+    // this.router.navigate(['/courses/tabs/my-courses']).then(() => {
+    //   window.location.reload();
+    // });
+    // this.navCtrl.navigateRoot('/courses/tabs/my-courses').then(() => {
+    //   window.location.reload();
+    //    });
+    // this.router.navigateByUrl('/courses/tabs/my-courses', { skipLocationChange: true });
+    // this.navCtrl.navigateRoot('/courses/tabs/my-courses')
+    this.router.navigate(['/courses/tabs/my-courses'])
+
   })
 }
+
+
 
 ngOnDestroy() {
   this.subs.forEach(e => {
