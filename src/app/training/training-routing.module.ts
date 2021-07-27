@@ -23,7 +23,17 @@ const routes: Routes = [
   {
     path: 'puzzle-image',
     loadChildren: () => import('./puzzle-image/puzzle-image.module').then( m => m.PuzzleImagePageModule)
-  }
+  },
+  {
+    path: 'test-course',
+    loadChildren: () => import('./test-course/test-course.module').then( m => m.TestCoursePageModule)
+  },
+  {
+    path: 'finished-test',
+    loadChildren: () => import('./finished-test/finished-test.module').then( m => m.FinishedTestPageModule)
+  },
+
+
 ];
 
 @NgModule({

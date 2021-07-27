@@ -1,3 +1,4 @@
+import { CheckUserTest } from './../../shared/models/chekTestUser';
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -8,6 +9,7 @@ import { imagesBaseUrl } from 'src/app/api.constants';
 import { Course } from 'src/app/shared/models/course';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { AudioElement } from 'src/app/shared/models/audioObject';
+import { TestService } from 'src/app/shared/services/test.service';
 
 @Component({
   selector: 'app-all-courses',
@@ -20,17 +22,31 @@ export class AllCoursesPage implements OnInit {
   sub: Subscription[] = [];
   public courses: Array<Course> = [];
   isLoading = false;
+  userTest: CheckUserTest;
+  courseId;
+
 
   constructor(
     private route: Router,
     private navCtrl: NavController,
     private courseService: CourseService,
-    private platform: Platform
+    private platform: Platform,
+    private testService: TestService
   ) {}
 
   ngOnInit() {
     this.offset = 0;
     this.getCourses();
+    this.testService.checkUserTest()
+    .subscribe(response => {
+      console.log(response)
+      if(response['isActive'] === true) {
+        this.route.navigate(['/exercise/test-course',
+        {courseId: response['courseId'], testOffset: response['testApi'].offset, activeCourse: response['isActive']}]);
+      } else {
+        return;
+      }
+    })
   }
 
   getCourse(id: number) {
@@ -52,6 +68,8 @@ export class AllCoursesPage implements OnInit {
           })
         )
         .subscribe((res) => {
+          console.log(res);
+
           if (this.courses.length == 0) {
             res.forEach((element) => {
 
@@ -84,6 +102,7 @@ export class AllCoursesPage implements OnInit {
         })
     );
   }
+
   loadData(event) {
     if (this.courses.length < this.totalLength) {
       setTimeout(() => {
@@ -165,3 +184,5 @@ function onSuccess() {
 function onError() {
   alert('error');
 }
+
+

@@ -2,6 +2,7 @@
 
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
+
   <ion-grid *ngIf="courseDetails">
     <ion-row>
       <ion-col>
@@ -9,6 +10,20 @@
         <ion-title>
           {{ courseDetails.courseTranslations[0]?.title }}
         </ion-title>
+
+
+        <div *ngIf="courseDetails.courseTranslations[0]?.introVoicePath" class="sound-inro">
+          <div class="img-person">
+            <img class="intro-logo" src="../../assets/images/char-person.png" />
+          </div>
+        <div class="icon-sound">
+          <div class="img-volume">
+            <ion-img
+            class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3" (click)="startAudio(courseDetails.courseTranslations[0]?.introVoicePath)" src="../../../assets/icon/Vector.png">
+          </ion-img>
+          </div>
+        </div>
+      </div>
 
         <ion-img
         loading="lazy"
@@ -30,11 +45,10 @@
 
         <ion-button (click)="sendData($event, courseDetails.id)" *ngIf="courseDetails.statusName === null"> Apply </ion-button>
 
-        <ion-text class="statusMsg" *ngIf="courseDetails.statusName !== null"> {{ courseDetails.statusName }} </ion-text>
-        <!-- <ion-button  *ngIf="courseDetails.statusName === '5' "> Course in progress </ion-button>
-        <ion-button colors="danger" *ngIf="courseDetails.statusName === '3' "> Course in faild </ion-button>
-        <ion-button *ngIf="courseDetails.statusName === '2' "> Expired Without TakingExam  </ion-button>
-        <ion-button *ngIf="courseDetails.statusName === '4' "> Applied And Waiting For Approval  </ion-button> -->
+        <ion-text (click)="downloadCertificate()" class="statusMsg" *ngIf="courseDetails.statusName !== null">
+          {{ courseDetails.statusName }}
+          <ion-icon name="download-outline"></ion-icon>
+        </ion-text>
 
 
       </ion-col>

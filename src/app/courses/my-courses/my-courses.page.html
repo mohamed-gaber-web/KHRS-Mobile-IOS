@@ -5,6 +5,7 @@
 </ion-toolbar>
 
 <ion-content>
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
   <ion-grid class="img-course-intro">
     <ion-row>
@@ -27,7 +28,7 @@
       <ion-col>
 
         <ion-card *ngFor="let course of myCourses" class="course">
-          <ion-img loading="lazy"  src="{{course.course.imagePath}}"></ion-img>
+          <ion-img  src="{{course.course.imagePath}}"></ion-img>
           <h3 class="ion-padding-top"  color="primary">
             {{course.course.courseTranslations[0]?.title}}
           </h3>
@@ -54,8 +55,7 @@
             </div>
             <div class="start" class="passed" *ngIf="course.userCourse.status == 1">
               <ion-item>
-                <ion-button class="ion-padding-end">Passed</ion-button>
-                <ion-button> Certificate</ion-button>
+                <ion-button (click)="downloadCertificate()">Passed & Certificate</ion-button>
               </ion-item>
             </div>
             <div class="start" class="expired" *ngIf="course.userCourse.status == 2">

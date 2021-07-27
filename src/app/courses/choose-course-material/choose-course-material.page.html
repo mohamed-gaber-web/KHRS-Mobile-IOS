@@ -63,7 +63,11 @@
           <ion-button   [routerLink]="['/courses/course-material',
           CourseDetails.courseTranslations[0].courseId]" routerDirection="root"> Material </ion-button>
           <ion-button (click)="sendIdToExercisePage()"> Exercise </ion-button>
-          <ion-button disabled> <ion-icon name="lock-closed-outline"></ion-icon> Final Test </ion-button>
+          <ion-button
+            (click)="sendIdToFinalTestPage()">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              Final Test
+          </ion-button>
         </div>
 
       </ion-col>

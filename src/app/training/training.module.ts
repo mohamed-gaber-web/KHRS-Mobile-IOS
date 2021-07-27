@@ -9,6 +9,7 @@ import { TrainingPageRoutingModule } from './training-routing.module';
 import { TrainingPage } from './training.page';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
