@@ -16,6 +16,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { AppInterceptor } from './app-interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 
@@ -45,6 +46,7 @@ export function LanguageLoader(http: HttpClient) {
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true }, // AppInterceptor
   ],

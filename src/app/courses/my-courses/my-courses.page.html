@@ -55,7 +55,7 @@
             </div>
             <div class="start" class="passed" *ngIf="course.userCourse.status == 1">
               <ion-item>
-                <ion-button (click)="downloadCertificate()">Passed & Certificate</ion-button>
+                <ion-button (click)="downloadCertificate(course.course.id)">Passed & Certificate</ion-button>
               </ion-item>
             </div>
             <div class="start" class="expired" *ngIf="course.userCourse.status == 2">

@@ -9,6 +9,8 @@ import { Course } from 'src/app/shared/models/course';
 import { MyCourse } from 'src/app/shared/models/myCourse';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { TestService } from 'src/app/shared/services/test.service';
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 @Component({
   selector: 'app-my-courses',
@@ -27,6 +29,8 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     private route: Router,
     private courseService: CourseService,
     private testService: TestService,
+    private fileOpener: FileOpener
+
   ) {}
 
   ngOnInit() {
@@ -147,17 +151,28 @@ export class MyCoursesPage implements OnInit, OnDestroy {
   }
 
 
-  downloadCertificate() {
-    this.testService.getCertificate(this.myCourses[0].course.id)
+  downloadCertificate(courseId) {
+    this.testService.getCertificate(courseId)
     .subscribe((response: Blob) => {
-      this.pdfFile = new Blob([response], {type: 'application/pdf'});
+      File.writeFile(
+        File.externalRootDirectory + "/Download",
+        courseId + "Certificate.pdf",
+        new Blob([response]),
+        {
+          replace: true,
+        }
+      );
+      this.fileOpener.open(File.externalRootDirectory + "/Download/" + courseId + "Certificate.pdf", 'application/pdf')
+  .then(() => console.log('File is opened'))
+  .catch(e => console.log('Error opening file', e));
+      // this.pdfFile = new Blob([response], {type: 'application/pdf'});
 
-      var downloadURL = window.URL.createObjectURL(response);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = "Certificate.pdf";
-      link.click();
-    })
+      // var downloadURL = window.URL.createObjectURL(response);
+      // var link = document.createElement('a');
+      // link.href = downloadURL;
+      // link.download = "Certificate.pdf";
+      // link.click();
+    });
   }
 
   ngOnDestroy() {
