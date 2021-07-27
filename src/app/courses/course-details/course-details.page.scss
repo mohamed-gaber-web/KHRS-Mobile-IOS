@@ -45,15 +45,13 @@
 
 .statusMsg {
   background-color: #003182;
-  padding: 18px 0;
-  margin: 30px auto;
+  padding: 12px 0;
   text-align: center;
-  width: 100%;
   font-size: 16px;
   font-weight: 400;
   display: block;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 
@@ -86,4 +84,13 @@ ion-text {
     position: relative;
     top: 5px;
   }
+}
+
+
+.passed {
+  font-size: 20px;
+  color: #003182;
+  font-weight: 600;
+  position: relative;
+  top: 14px;
 }

@@ -53,11 +53,13 @@
                 Pending
               </ion-button>
             </div>
-            <div class="start" class="passed" *ngIf="course.userCourse.status == 1">
-              <ion-item>
-                <ion-button (click)="downloadCertificate(course.course.id)">Passed & Certificate</ion-button>
-              </ion-item>
+            <div *ngIf="course.userCourse.status == 1">
+                <ion-text>Passed</ion-text>
             </div>
+            <div class="certi" *ngIf="course.userCourse.status == 1">
+                <ion-button (click)="downloadCertificate(course.course.id)">Certificate <ion-icon name="download-outline"></ion-icon></ion-button>
+            </div>
+
             <div class="start" class="expired" *ngIf="course.userCourse.status == 2">
               <ion-button fill="outline">
                 <ion-icon name="lock-closed-outline"></ion-icon> Expired</ion-button>

@@ -66,10 +66,10 @@
   ion-button {
     --color: #fff;
     font-size: 15px!important;
-    margin: 10px 0;
+    margin: 10px 0 10px 10px;
     font-weight: 400!important;
     max-width: 100%;
-    min-width: 150px;
+    min-width: 100px;
 
     ion-icon {
       --color: #fff;
@@ -77,4 +77,11 @@
       padding-right: 7px;
     }
   }
+}
+
+
+ion-text {
+  font-weight: 600;
+  color: var(--ion-color-second-app);
+  font-size: 18px;
 }
