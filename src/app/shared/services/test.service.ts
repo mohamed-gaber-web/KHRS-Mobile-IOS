@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import {
   getTextType,
@@ -19,6 +19,7 @@ import { AnswerTestModel } from '../models/answerTestModel';
 })
 export class TestService {
   offset: number = 1;
+  authKey: any;
 
   constructor(private http: HttpClient) {}
 
@@ -62,13 +63,21 @@ export class TestService {
     }
 
     /**
-     * Gget Certificate
-     * testId [ number ]
+     * Get Certificate
+     * courseId [ number ]
      *
    */
     getCertificate(courseId: number) {
+
+      this.authKey = localStorage.getItem('access_token');
+      const httpOptions = {
+        responseType: 'blob' as 'json',
+        headers: new HttpHeaders({
+          'Authorization': this.authKey,
+        })
+      };
       const params = `?courseId=${courseId}`;
-      return this.http.get(`${getCertificate}` + params );
+      return this.http.get(`${getCertificate}` + params, httpOptions);
     }
 
 }

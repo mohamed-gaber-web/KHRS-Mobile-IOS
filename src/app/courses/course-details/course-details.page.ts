@@ -8,6 +8,7 @@ import { CourseService } from 'src/app/shared/services/courses.service';
 import { NavController } from '@ionic/angular';
 import { TestService } from 'src/app/shared/services/test.service';
 import { Howl } from 'howler';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -24,12 +25,12 @@ export class CourseDetailsPage implements OnInit {
   courseId:number;
   player: Howl = null;
   isPlaying: boolean = false;
+  pdfFile: any;
 
   constructor(
     private router: Router,
     private courseService: CourseService,
     private route: ActivatedRoute,
-    private navCtrl: NavController,
     private testService: TestService,
     ) { }
 
@@ -54,10 +55,19 @@ export class CourseDetailsPage implements OnInit {
   }
 
   downloadCertificate() {
-    this.testService.getCertificate(this.courseDetails.id).subscribe(response => {
-      console.log(response)
+    this.testService.getCertificate(this.courseDetails.id)
+    .subscribe((response: Blob) => {
+      this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+      var downloadURL = window.URL.createObjectURL(response);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "Certificate.pdf";
+      link.click();
     })
   }
+
+
   startAudio(voicePath: string) {
     if (this.player) {
       this.player.stop();

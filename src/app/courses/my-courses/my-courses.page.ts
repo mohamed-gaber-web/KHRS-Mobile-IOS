@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -8,43 +8,39 @@ import { AudioElement } from 'src/app/shared/models/audioObject';
 import { Course } from 'src/app/shared/models/course';
 import { MyCourse } from 'src/app/shared/models/myCourse';
 import { CourseService } from 'src/app/shared/services/courses.service';
+import { TestService } from 'src/app/shared/services/test.service';
 
 @Component({
   selector: 'app-my-courses',
   templateUrl: './my-courses.page.html',
   styleUrls: ['./my-courses.page.scss'],
 })
-export class MyCoursesPage implements OnInit {
-  private offset: number;
-  private totalLength: number;
+export class MyCoursesPage implements OnInit, OnDestroy {
+  offset: number = 0;
+  totalLength: number;
   sub: Subscription[] = [];
   public myCourses: Array<MyCourse> = [];
   isLoading = false;
+  pdfFile: any;
 
   constructor(
     private route: Router,
-    private navCtrl: NavController,
     private courseService: CourseService,
-    private platform: Platform
+    private testService: TestService,
   ) {}
 
   ngOnInit() {
-    console.log('my courses')
-    this.offset = 0;
     this.getUserCourses();
   }
 
   getUserCourses() {
-
     this.isLoading = true;
-
     this.sub.push(
       this.courseService
         .getUserCourses('', this.offset)
         .pipe(
           map((response) => {
             console.log(response);
-
             Object.entries(response);
             this.isLoading = false;
             this.totalLength = response['length'];
@@ -52,7 +48,7 @@ export class MyCoursesPage implements OnInit {
           })
         )
         .subscribe((res) => {
-          console.log(res);
+
           if (this.myCourses.length == 0) {
             res.forEach((element:MyCourse) => {
 
@@ -150,9 +146,18 @@ export class MyCoursesPage implements OnInit {
     this.route.navigate(['courses/tabs/choose-course-material', { courseId, userId }]);
   }
 
-  ionViewDidEnter() {
-    console.log('my courses with ion view did enter')
-    this.getUserCourses();
+
+  downloadCertificate() {
+    this.testService.getCertificate(this.myCourses[0].course.id)
+    .subscribe((response: Blob) => {
+      this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+      var downloadURL = window.URL.createObjectURL(response);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = "Certificate.pdf";
+      link.click();
+    })
   }
 
   ngOnDestroy() {
