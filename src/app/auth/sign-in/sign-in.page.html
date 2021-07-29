@@ -27,7 +27,7 @@
 
           </ion-item>
 
-          <p>{{ 'Forget Password' | translate }}</p>
+          <p> <a style="color: #A7F781;" href="/auth/forget-password"> {{ 'Forget Password' | translate }} </a> </p>
 
           <ion-button (click)="onLoginFormSubmit(loginForm.value)" [disabled]="isLoading || !loginForm.valid">
             {{ 'Login' | translate }}

@@ -21,7 +21,11 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfilePageModule)
+  },  {
+    path: 'forget-password',
+    loadChildren: () => import('./forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
   },
+
   // {
   //   path: ':userId',
   //   loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfilePageModule)

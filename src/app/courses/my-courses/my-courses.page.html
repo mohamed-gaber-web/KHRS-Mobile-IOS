@@ -27,6 +27,17 @@
     <ion-row class="ion-text-center">
       <ion-col>
 
+        <!-- IOn Ref -->
+        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content
+            pullingIcon="chevron-down-circle-outline"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+          </ion-refresher-content>
+        </ion-refresher>
+        <!-- Ion Ref -->
+
         <ion-card *ngFor="let course of myCourses" class="course">
           <ion-img  src="{{course.course.imagePath}}"></ion-img>
           <h3 class="ion-padding-top"  color="primary">

@@ -2,7 +2,6 @@
 
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
-
   <ion-grid *ngIf="courseDetails">
     <ion-row>
       <ion-col>
@@ -44,17 +43,21 @@
         </div>
 
         <ion-button (click)="sendData($event, courseDetails.id)" *ngIf="courseDetails.statusName === null"> Apply </ion-button>
+        <ion-button *ngIf="courseDetails.status == 2"> Expired Without Taking The Exam   </ion-button>
+        <ion-button *ngIf="courseDetails.status == 3"> Failed  </ion-button>
+        <ion-button *ngIf="courseDetails.status == 4"> Applied And Waiting For Approval </ion-button>
+        <ion-button *ngIf="courseDetails.status == 5"> In Progress </ion-button>
 
         <ion-grid>
           <ion-row>
             <ion-col size="4">
-              <ion-text class="passed" *ngIf="courseDetails.statusName !== null">
+              <ion-text class="passed" *ngIf="courseDetails.status == 1">
                 Passed
               </ion-text>
             </ion-col>
 
             <ion-col size="8">
-              <ion-text  (click)="downloadCertificate()" class="statusMsg" *ngIf="courseDetails.statusName !== null">
+              <ion-text  (click)="downloadCertificate()" class="statusMsg" *ngIf="courseDetails.status == 1">
                 Certificate
                 <ion-icon name="download-outline"></ion-icon>
               </ion-text>

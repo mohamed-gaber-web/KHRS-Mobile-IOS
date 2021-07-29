@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { IonInfiniteScrollContent, NavController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { imagesBaseUrl } from 'src/app/api.constants';
@@ -173,6 +173,17 @@ export class MyCoursesPage implements OnInit, OnDestroy {
       // link.download = "Certificate.pdf";
       // link.click();
     });
+  }
+
+  // ** Create Refresh whrn scroll down
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.getUserCourses();
+    event.target.complete();
+    // setTimeout(() => {
+    //   console.log('Async operation has ended');
+    //   event.target.complete();
+    // }, 2000);
   }
 
   ngOnDestroy() {

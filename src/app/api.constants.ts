@@ -10,6 +10,7 @@ export const registerAPI = `${baseUrl}/api/Account/Register`;
 export const recommendedBy = `${baseUrl}/api/RecommendedBy/GetRecommendedBy`;
 export const userChangePassword = `${baseUrl}/api/Account/changePasswod`;
 export const updatedUserInfo = `${baseUrl}/api/Account/UpdateUser`;
+export const resetPassword = `${baseUrl}/api/Account/requestResetPassword`;
 
 // get language
 export const getLanguage = `${baseUrl}/api/Language/GetLanguage`

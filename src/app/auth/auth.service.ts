@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import {loginCredentials} from "src/app/shared/models/loginCredentials";
 import { StorageService } from "src/app/shared/services/storage.service";
 import { User } from './sign-up/user.model';
-import { loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo } from "src/app/api.constants";
+import { loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword } from "src/app/api.constants";
 
 
 
@@ -48,6 +48,10 @@ import { loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserIn
 
   updatedUserProfile(userInfo) {
     return this.http.put(`${updatedUserInfo}`, userInfo);
+  }
+
+  resetPassword(email: any, url: string) {
+    return this.http.post(`${resetPassword}`, {email, url})
   }
 
 }
