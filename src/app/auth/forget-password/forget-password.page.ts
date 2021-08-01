@@ -20,8 +20,8 @@ export class ForgetPasswordPage implements OnInit {
 
   forgetPasswordFormErrors = {
     Email: '',
-    Password: '',
-    confirmPassword: ''
+    // Password: '',
+    // confirmPassword: ''
   };
 
   forgetPasswordValidationMessages = {
@@ -29,12 +29,12 @@ export class ForgetPasswordPage implements OnInit {
       required: 'Email field is required',
       invalidEmail: 'Email field must be a valid email',
     },
-    Password: {
-      required: 'Password field is required',
-    },
-    confirmPassword: {
-      required: 'Confirm Password field is required',
-    },
+    // Password: {
+    //   required: 'Password field is required',
+    // },
+    // confirmPassword: {
+    //   required: 'Confirm Password field is required',
+    // },
   };
 
   constructor(public formBuilder: FormBuilder, private authService: AuthService) { }
@@ -46,10 +46,10 @@ export class ForgetPasswordPage implements OnInit {
   buildForgetPasswordForm() {
     this.forgetPasswordForm = this.formBuilder.group({
       Email: ['', Validators.compose([Validators.required, emailValidator])],
-      Password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      // Password: ['', Validators.required],
+      // confirmPassword: ['', Validators.required],
     },
-    {validator: matchingPasswords('Password', 'confirmPassword')}
+    // {validator: matchingPasswords('Password', 'confirmPassword')}
 
     );
 

@@ -29,12 +29,14 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     private route: Router,
     private courseService: CourseService,
     private testService: TestService,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private platform: Platform
 
   ) {}
 
   ngOnInit() {
     this.getUserCourses();
+    console.log(this.platform.platforms());
   }
 
   getUserCourses() {
@@ -152,8 +154,21 @@ export class MyCoursesPage implements OnInit, OnDestroy {
 
 
   downloadCertificate(courseId) {
+
     this.testService.getCertificate(courseId)
     .subscribe((response: Blob) => {
+
+      if(this.platform.is('mobileweb')) {
+
+        this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(response);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Certificate.pdf";
+        link.click();
+      }
+
       File.writeFile(
         File.externalRootDirectory + "/Download",
         courseId + "Certificate.pdf",
@@ -163,8 +178,9 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         }
       );
       this.fileOpener.open(File.externalRootDirectory + "/Download/" + courseId + "Certificate.pdf", 'application/pdf')
-  .then(() => console.log('File is opened'))
-  .catch(e => console.log('Error opening file', e));
+      .then(() => console.log('File is opened'))
+      .catch(e => console.log('Error opening file', e));
+
       // this.pdfFile = new Blob([response], {type: 'application/pdf'});
 
       // var downloadURL = window.URL.createObjectURL(response);
