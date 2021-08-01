@@ -167,19 +167,21 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         link.href = downloadURL;
         link.download = "Certificate.pdf";
         link.click();
+      } else if(this.platform.is('android')) {
+        File.writeFile(
+          File.externalRootDirectory + "/Download",
+          courseId + "Certificate.pdf",
+          new Blob([response]),
+          {
+            replace: true,
+          }
+        );
+        this.fileOpener.open(File.externalRootDirectory + "/Download/" + courseId + "Certificate.pdf", 'application/pdf')
+        .then(() => console.log('File is opened'))
+        .catch(e => console.log('Error opening file', e));
       }
 
-      File.writeFile(
-        File.externalRootDirectory + "/Download",
-        courseId + "Certificate.pdf",
-        new Blob([response]),
-        {
-          replace: true,
-        }
-      );
-      this.fileOpener.open(File.externalRootDirectory + "/Download/" + courseId + "Certificate.pdf", 'application/pdf')
-      .then(() => console.log('File is opened'))
-      .catch(e => console.log('Error opening file', e));
+
 
       // this.pdfFile = new Blob([response], {type: 'application/pdf'});
 
