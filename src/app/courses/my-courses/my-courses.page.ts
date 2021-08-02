@@ -11,6 +11,8 @@ import { CourseService } from 'src/app/shared/services/courses.service';
 import { TestService } from 'src/app/shared/services/test.service';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-my-courses',
@@ -30,7 +32,8 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     private courseService: CourseService,
     private testService: TestService,
     private fileOpener: FileOpener,
-    private platform: Platform
+    private platform: Platform,
+    private loadingController: LoadingController
 
   ) {}
 
@@ -38,6 +41,7 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     this.getUserCourses();
     console.log(this.platform.platforms());
   }
+
 
   getUserCourses() {
     this.isLoading = true;
@@ -154,10 +158,10 @@ export class MyCoursesPage implements OnInit, OnDestroy {
 
 
   downloadCertificate(courseId) {
-
+    this.isLoading = true;
     this.testService.getCertificate(courseId)
     .subscribe((response: Blob) => {
-
+      this.isLoading = false;
       if(this.platform.is('mobileweb')) {
 
         this.pdfFile = new Blob([response], {type: 'application/pdf'});
@@ -179,6 +183,9 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         this.fileOpener.open(File.externalRootDirectory + "/Download/" + courseId + "Certificate.pdf", 'application/pdf')
         .then(() => console.log('File is opened'))
         .catch(e => console.log('Error opening file', e));
+      } else {
+        console.log('not supported plattform');
+
       }
 
 

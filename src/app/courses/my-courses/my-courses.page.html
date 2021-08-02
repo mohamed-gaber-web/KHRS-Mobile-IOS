@@ -67,9 +67,13 @@
             <div *ngIf="course.userCourse.status == 1">
                 <ion-text>Passed</ion-text>
             </div>
+
             <div class="certi" *ngIf="course.userCourse.status == 1">
-                <ion-button (click)="downloadCertificate(course.course.id)">Certificate <ion-icon name="download-outline"></ion-icon></ion-button>
+              <ion-button (click)="downloadCertificate(course.course.id)"> Certificate
+                <ion-icon name="download-outline"></ion-icon>
+                <ion-spinner *ngIf='isLoading' name="circles"></ion-spinner> </ion-button>
             </div>
+
 
             <div class="start" class="expired" *ngIf="course.userCourse.status == 2">
               <ion-button fill="outline">
