@@ -1,16 +1,21 @@
-<ion-content>
+
+<ion-content *ngIf="courseDetails" class="ion-margin-bottom">
 
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
+
+  <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-title>
+            {{ courseDetails.courseTranslations[0]?.title }}
+          </ion-title>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-grid *ngIf="courseDetails">
     <ion-row>
       <ion-col>
-
-        <ion-title>
-          {{ courseDetails.courseTranslations[0]?.title }}
-        </ion-title>
-
-
         <div *ngIf="courseDetails.courseTranslations[0]?.introVoicePath" class="sound-inro">
           <div class="img-person">
             <img class="intro-logo" src="../../assets/images/char-person.png" />
@@ -23,50 +28,64 @@
           </div>
         </div>
       </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-        <ion-img
-        loading="lazy"
-          [src]="courseDetails?.imagePath">
-        </ion-img>
+  <ion-grid *ngIf="courseDetails">
+    <ion-row>
+      <ion-col size="12">
+        <ion-img loading="lazy" [src]="courseDetails?.imagePath"></ion-img>
+      </ion-col>
 
-        <ion-item class="time-valid" lines="none">
-          <div class="icon-valid">
-            <ion-icon slot="start" name="alarm-outline"></ion-icon>
-          </div>
-          <ion-label color="primary"> <strong> Valid For: </strong> {{ courseDetails.duration }} Day </ion-label>
-        </ion-item>
+      <ion-col size="12"  class="ion-margin-top" >
+        <ion-text color="primary" *ngIf="courseDetails.courseTranslations[0]?.description !== null">
+          {{courseDetails.courseTranslations[0]?.description}}
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-        <div class="video-inro">
-          <video *ngIf="courseDetails.courseTranslations[0]?.introVideoPath" width="100%" height="230" controls>
-            <source [src]="courseDetails.courseTranslations[0]?.introVideoPath" type="video/mp4">
-          </video>
+  <ion-grid>
+    <ion-row class="valid">
+      <ion-item class="time-valid" lines="none">
+        <div class="icon-valid">
+          <ion-icon slot="start" name="alarm-outline"></ion-icon>
         </div>
+        <ion-label color="primary"> <strong> Valid For: </strong> {{ courseDetails.duration }} Day </ion-label>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
 
-        <ion-button (click)="sendData($event, courseDetails.id)" *ngIf="courseDetails.statusName === null"> Apply </ion-button>
-        <ion-button *ngIf="courseDetails.status == 2"> Expired Without Taking The Exam   </ion-button>
-        <ion-button *ngIf="courseDetails.status == 3"> Failed  </ion-button>
-        <ion-button *ngIf="courseDetails.status == 4"> Applied And Waiting For Approval </ion-button>
-        <ion-button *ngIf="courseDetails.status == 5"> In Progress </ion-button>
+  <div class="video-inro">
+    <video *ngIf="courseDetails.courseTranslations[0]?.introVideoPath" width="100%" height="200" controls>
+      <source [src]="courseDetails.courseTranslations[0]?.introVideoPath" type="video/mp4">
+    </video>
+  </div>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col size="4">
-              <ion-text class="passed" *ngIf="courseDetails.status == 1">
-                Passed
-              </ion-text>
-            </ion-col>
+  <ion-grid class="ion-margin-top ion-margin-bottom">
+    <ion-row>
+      <ion-button (click)="sendData($event, courseDetails.id)" *ngIf="courseDetails.statusName === null"> Apply </ion-button>
+      <ion-button *ngIf="courseDetails.status == 2"> Expired Without Taking The Exam   </ion-button>
+      <ion-button *ngIf="courseDetails.status == 3"> Failed  </ion-button>
+      <ion-button *ngIf="courseDetails.status == 4"> Applied And Waiting For Approval </ion-button>
+      <ion-button *ngIf="courseDetails.status == 5"> In Progress </ion-button>
+    </ion-row>
+  </ion-grid>
 
-            <ion-col size="8">
-              <ion-text  (click)="downloadCertificate()" class="statusMsg" *ngIf="courseDetails.status == 1">
-                Certificate
-                <ion-icon name="download-outline"></ion-icon>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+  <ion-grid class="ion-margin-top ion-margin-bottom" *ngIf="courseDetails">
+    <ion-row>
+      <ion-col size="3">
+        <ion-text class="passed" *ngIf="courseDetails.status == 1">
+          Passed
+        </ion-text>
+      </ion-col>
 
-
-
+      <ion-col size="9">
+        <ion-text  (click)="downloadCertificate()" class="statusMsg" *ngIf="courseDetails.status == 1">
+          Certificate
+          <ion-icon name="download-outline"></ion-icon>
+        </ion-text>
       </ion-col>
     </ion-row>
   </ion-grid>
