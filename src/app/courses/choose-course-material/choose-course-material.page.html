@@ -11,8 +11,8 @@
         <ion-img loading="lazy" *ngIf="CourseDetails" [src]="CourseDetails.imagePath"></ion-img>
       </ion-col>
 
-      <ion-col class="ion-margin-top" size="12" size-md="8">
-        <ion-text  *ngIf="CourseDetails" color="primary">
+      <ion-col class="desc ion-margin-top" size="12" size-md="8">
+        <ion-text *ngIf="CourseDetails" color="primary">
           {{ CourseDetails.courseTranslations[0].description }}
         </ion-text>
       </ion-col>

@@ -3,6 +3,7 @@
     font-size: 16px;
     text-transform: capitalize;
     text-align: center;
+    margin: 33px 0 10px 0;
   }
 
   ion-item {
@@ -108,4 +109,10 @@ video {
   background-color: #fff;
   border: 1px dotted var(--ion-color-second-app);
   padding: 10px 0 0 0;
+}
+
+.desc {
+  background-color: #fff;
+  padding: 10px 0 10px 10px;
+  border: 2px dotted #003182;
 }

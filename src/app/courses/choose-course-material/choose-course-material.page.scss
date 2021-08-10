@@ -3,7 +3,7 @@ ion-title {
   font-size: 16px;
   text-transform: capitalize;
   text-align: center;
-
+  margin: 33px 0 10px 0;
 }
 
 .course-date ion-item {
@@ -59,3 +59,9 @@ video {
   margin-top: 10px;
 }
 
+
+.desc {
+  background-color: #fff;
+  padding: 10px 0 10px 10px;
+  border: 2px dotted #003182;
+}
