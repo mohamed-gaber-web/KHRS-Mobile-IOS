@@ -40,7 +40,6 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
       .subscribe(response => {
-        console.log('choose cousre material', response)
         this.isLoading = false;
         this.userCourseDetails = response['result'].userCourse;
         let startDate = new Date(this.userCourseDetails['startDate']);
@@ -53,7 +52,7 @@ export class ChooseCourseMaterialPage implements OnInit {
       .subscribe(response => {
         this.isLoading = false;
         this.CourseDetails = response['result'];
-        console.log(this.CourseDetails)
+        console.log('course details', this.CourseDetails)
       })
     );
 
