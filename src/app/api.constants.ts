@@ -38,6 +38,9 @@ export const sendAnswerTest = `${baseUrl}/api/Test/Answer`;
 export const finishedTest = `${baseUrl}/api/Test/Finished`;
 export const getCertificate = `${baseUrl}/api/UserTest/GetCertificate`;
 
+// pages
+export const faqPage = `${baseUrl}/api/Faq/GetFaq`;
+
 
 
 
