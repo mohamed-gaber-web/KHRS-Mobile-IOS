@@ -13,7 +13,7 @@
       <div class="icon-sound">
         <div class="img-volume">
           <ion-img
-          class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3" src="../../../assets/icon/Vector.png">
+            class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3" src="../../../assets/icon/Vector.png">
         </ion-img>
         </div>
       </div>
@@ -24,10 +24,9 @@
 
   <ion-grid>
     <ion-row class="ion-text-center">
-      <ion-col >
-
-        <ion-card *ngFor="let course of courses" class="course">
-          <ion-img loading="lazy" src="{{course.imagePath}}"></ion-img>
+      <ion-col *ngFor="let course of courses" size-sm="12" size-md="6" size-lg="3" size-xl="3">
+        <ion-card  class="course course-desktop">
+          <ion-img class="img-all-course" loading="lazy" src="{{course.imagePath}}"></ion-img>
           <h3 class="padding-top"  color="primary"> {{course.courseTranslations[0]?.title}} </h3>
           <ion-item>
               <div *ngIf="course.courseTranslations[0]?.introVoicePath">
@@ -43,10 +42,10 @@
             </ion-button>
           </ion-item>
         </ion-card>
-
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"

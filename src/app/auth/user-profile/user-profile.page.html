@@ -23,15 +23,15 @@
 </ion-header>
 
 <ion-toolbar>
-  <ion-title>
+  <ion-title class="ion-text-center">
     Update Profile
   </ion-title>
 </ion-toolbar>
 
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-col>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="8" size-lg="6">
         <ion-card>
           <ion-list *ngIf="userInfo">
             <ion-item>
@@ -63,15 +63,15 @@
   </ion-grid>
 
   <ion-toolbar>
-    <ion-title>
+    <ion-title class="ion-text-center">
       Update Password
     </ion-title>
   </ion-toolbar>
 
   <form [formGroup]="passwordForm" (ngSubmit)="updatedPassword()">
     <ion-grid>
-      <ion-row>
-        <ion-col size="12">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-lg="6" size-md="8">
           <ion-item lines="full">
             <ion-label position="floating" color="primary">Current Password</ion-label>
             <ion-input formControlName='currentPassword' type="password" minlength="6" required></ion-input>
@@ -86,8 +86,8 @@
     </ion-grid>
 
     <ion-grid>
-      <ion-row>
-        <ion-col size="12">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-lg="6" size-md="8">
           <ion-item lines="none">
             <ion-label position="floating" color="primary">New Password</ion-label>
             <ion-input formControlName='newPassword' type="password" required></ion-input>
@@ -100,8 +100,8 @@
     </ion-grid>
 
     <ion-grid>
-      <ion-row>
-        <ion-col size="12">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-lg="6" size-md="8">
           <ion-item lines="none">
             <ion-label position="floating" color="primary">Confirm Password</ion-label>
             <ion-input formControlName='confirmPassword' type="password" required></ion-input>
@@ -118,8 +118,8 @@
 
 
     <ion-grid>
-      <ion-row ion-align-items-center>
-        <ion-col size="12">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-lg="6" size-md="8">
           <ion-button (click)="updatedPassword()">
             <ion-icon name="checkmark-outline"></ion-icon>
             Save

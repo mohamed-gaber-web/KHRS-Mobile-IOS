@@ -79,7 +79,6 @@ ion-button {
   height: 50px;
   --box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.16);
   text-transform: capitalize;
-
 }
 
 
@@ -167,6 +166,8 @@ video {
     height: 500px;
   }
 }
+
+
 /************ SOUNDS MULTI AND SINGLE CHOICE QUESTION  ***********/
 
 .ext-icon-vlume {
@@ -207,35 +208,115 @@ video {
   }
 
 
-
-
-/************* Media Query *****************/
-
-@media(max-width: 372px) {
-
-//   .img-profile img{
-//     width: 35px;
-//     height: 35px;
-//     margin: 5px 0;
-//   }
-
-// .img-langauge {
-//   width: 30px;
-//   height: 30px;
-//   position: absolute;
-//   right: 6px;
-//   top: 18px;
-//   border: 1px solid #ccc;
-// }
-
-// .img-profile ion-label {
-//   font-size: 11px;
-// }
-
-}
-
-/************* Media Query *****************/
-
 ion-radio {
   --color-checked: #48b95e;
 }
+
+
+
+
+/************* Media Query Desktop *****************/
+
+@media(max-width: 767px) {
+  .hide-desktop{display: none!important;}
+}
+
+@media(min-width: 768px) {
+  .hide-mobile {display: none!important;}
+}
+
+@media(min-width: 1024px) and (max-width: 2000px) {
+  ion-img.img-all-course {
+    width: 100%;
+    height: 250px!important;
+  }
+
+  ion-title{
+    font-size: 25px;
+    font-weight: 600;
+    --color: var(--ion-color-second-app);
+    margin: 40px 0 30px 0;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .font-title-desktop {font-size: 25px!important;}
+  .font-description-desktop{font-size: 16px!important; line-height: 30px;}
+
+  ion-spinner{
+    margin: auto;
+    text-align: center;
+    width: 10%!important;
+    height: 100%!important;
+    display: flex;
+  }
+
+  .single-choice, .multi-choice, .drag-group {
+    width: 50%!important;
+  }
+
+  .example-box {
+    .drag-answer ion-img{top: -12px!important;}
+  }
+
+  .cdk-drag-preview {
+
+
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    background-color: white;
+    padding: 10px!important;
+    width: 80%!important;
+    margin: auto;
+    height: auto!important;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ion-color-second-app);
+
+
+
+    .sound-bg {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin: 10px 20px;
+    }
+
+    .img-volume {
+      text-align: center;
+      margin: auto;
+      width: 18px;
+      height: 18px;
+    }
+
+
+
+    .puzzle-fix {
+      width: 100%!important;
+      .title{
+        font-weight: 600!important;
+        padding: 0 5px!important;
+      }
+
+      img.danish-flag {
+        width: 24px;
+        height: 24px;
+        max-width: 100%;
+  }
+
+    }
+
+  }
+
+  video {
+    width: 50%;
+    height: 400px;
+    margin: auto;
+  }
+}
+
+/************* Media Query Desktop *****************/
+

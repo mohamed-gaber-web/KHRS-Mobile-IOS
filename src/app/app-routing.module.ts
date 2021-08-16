@@ -33,7 +33,11 @@ const routes: Routes = [
   {
     path: 'test-finished',
     loadChildren: () => import('./training/test-course/test-finished/test-finished.module').then( m => m.TestFinishedPageModule)
+  },  {
+    path: 'faq',
+    loadChildren: () => import('./pages/faq/faq.module').then( m => m.FaqPageModule)
   },
+
 
 
 
