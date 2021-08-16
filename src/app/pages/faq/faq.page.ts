@@ -15,6 +15,7 @@ export class FaqPage implements OnInit {
   offset: number = 0;
   limit: number = 10;
   allFaq: any;
+  isLoading = false;
 
 
   constructor(
@@ -23,9 +24,11 @@ export class FaqPage implements OnInit {
     private appServ: AppService, ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.userInfo = this.authService.getUser();
     this.appServ.getFaqPage(this.offset, this.limit)
     .subscribe(response => {
+      this.isLoading = false;
       console.log(response['result'][0].faqTranslations);
       this.allFaq = response['result'][0].faqTranslations;
     })

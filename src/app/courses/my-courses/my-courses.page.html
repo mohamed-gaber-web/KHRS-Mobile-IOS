@@ -25,7 +25,7 @@
 
   <ion-grid>
     <ion-row class="ion-text-center">
-      <ion-col>
+
 
         <!-- IOn Ref -->
         <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
@@ -38,8 +38,10 @@
         </ion-refresher>
         <!-- Ion Ref -->
 
-        <ion-card *ngFor="let course of myCourses" class="course">
-          <ion-img  src="{{course.course.imagePath}}"></ion-img>
+        <ion-col *ngFor="let course of myCourses" size-sm="12" size-md="6" size-lg="3" size-xl="3">
+
+        <ion-card class="course">
+          <ion-img class="img-all-course" loading="lazy"  src="{{course.course.imagePath}}"></ion-img>
           <h3 class="ion-padding-top"  color="primary">
             {{course.course.courseTranslations[0]?.title}}
           </h3>
