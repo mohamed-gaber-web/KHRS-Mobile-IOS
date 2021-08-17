@@ -29,6 +29,7 @@ export class AllCoursesPage implements OnInit {
   player: Howl = null;
   isPlaying: boolean = false;
   courseAudio:string;
+  getLang: string;
 
   constructor(
     private route: Router,
@@ -40,7 +41,8 @@ export class AllCoursesPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.appService.getVidoes('Courses').subscribe((response) => {
+    this.getLang = localStorage.getItem('languageId');
+    this.appService.getVidoes('Courses', this.getLang).subscribe((response) => {
       this.courseAudio = response['result']?.genericAttributeMediaTranslations[0]?.mediaPath;
     })
     this.offset = 0;

@@ -30,6 +30,7 @@ export class MyCoursesPage implements OnInit, OnDestroy {
   pdfFile: any;
   player: Howl = null;
   isPlaying: boolean = false;
+  getLang = localStorage.getItem('languageId');
   courseAudio:string;
   constructor(
     private route: Router,
@@ -43,7 +44,7 @@ export class MyCoursesPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.appService.getVidoes('Courses').subscribe((response) => {
+    this.appService.getVidoes('Courses', this.getLang).subscribe((response) => {
       this.courseAudio = response['result']?.genericAttributeMediaTranslations[0]?.mediaPath;
     })
     this.getUserCourses();
