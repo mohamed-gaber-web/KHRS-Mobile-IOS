@@ -181,9 +181,6 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         .then(() => console.log('File is opened'))
         .catch(e => console.log('Error opening file', e));
       } else {
-<<<<<<< HEAD
-        // console.log('not supported plattform');
-=======
         this.pdfFile = new Blob([response], {type: 'application/pdf'});
 
         var downloadURL = window.URL.createObjectURL(response);
@@ -191,7 +188,6 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         link.href = downloadURL;
         link.download = "Certificate.pdf";
         link.click();
->>>>>>> af4b55207dc3aa66804f2924a5e24d2279cae629
 
       }
 
