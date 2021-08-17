@@ -75,14 +75,14 @@ export class MyCoursesPage implements OnInit, OnDestroy {
             this.myCourses = res;
           } else {
             res.forEach((element) => {
-              if (element.imagePath) {
-                element.imagePath = `${element.imagePath}`;
+              if (element.course.imagePath) {
+                element.course.imagePath = `${element.course.imagePath}`;
               }
-              if (element.courseTranslations[0].introVoicePath) {
-                element.courseTranslations[0].introVoicePath = `${element.courseTranslations[0].introVoicePath}`;
+              if (element.course.courseTranslations[0]?.introVoicePath) {
+                element.course.courseTranslations[0].introVoicePath = `${element.course.courseTranslations[0].introVoicePath}`;
               }
-              element.audioElement = new AudioElement();
-              element.audioElement.status = false;
+              element.course.audioElement = new AudioElement();
+              element.course.audioElement.status = false;
 
               this.myCourses.push(element);
             });
@@ -209,6 +209,8 @@ export class MyCoursesPage implements OnInit, OnDestroy {
 
   // ** Create Refresh whrn scroll down
   doRefresh(event) {
+    this.offset=0;
+    this.myCourses=[];
     console.log('Begin async operation');
     this.getUserCourses();
     event.target.complete();
@@ -222,5 +224,15 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     this.sub.forEach(e => {
       e.unsubscribe();
     })
+  }
+  ionViewDidLeave():void{
+    this.myCourses.forEach((element) => {
+      if (element.course.audioElement) {
+        if (element.course.audioElement.status == true) {
+          element.course.audioElement.audio.pause();
+          element.course.audioElement.status = false;
+        }
+      }
+    });
   }
 }

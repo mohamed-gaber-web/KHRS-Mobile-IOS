@@ -108,21 +108,35 @@ export class CourseDetailsPage implements OnInit {
 
 
   startAudio(voicePath: string) {
+    if (this.player && this.isPlaying == true) {
+      this.player.stop();
+      this.isPlaying = false;
+    }else{
+      this.player = new Howl({
+        html5: true,
+        src: voicePath,
+        onplay: () => {
+
+          this.isPlaying = true;
+        },
+        onend: () => {
+          this.isPlaying = false;
+        },
+      });
+      this.player.play();
+
+    }
+
+  }
+  ionViewDidLeave():void{
     if (this.player) {
       this.player.stop();
     }
-    this.player = new Howl({
-      html5: true,
-      src: voicePath,
-      onplay: () => {
-
-        this.isPlaying = true;
-      },
-      onend: () => {},
-    });
-    this.player.play();
   }
   ngOnDestroy(): void {
+    if (this.isPlaying) {
+      this.player.stop();
+    }
   this.subs.forEach((element) => {
     element.unsubscribe();
   })
