@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../shared/services/app.service';
 
 @Component({
   selector: 'app-intro',
@@ -6,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-  constructor() { }
 
-  ngOnInit() {  }
+  video: any;
+
+  constructor(private appService: AppService) { }
+
+  ngOnInit() {
+    // this.appService.getVidoes('intro').subscribe((response) => {
+    //   console.log(response);
+    // })
+   }
 
 
 }

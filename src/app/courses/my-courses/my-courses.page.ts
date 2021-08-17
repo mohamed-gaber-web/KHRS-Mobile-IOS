@@ -39,7 +39,6 @@ export class MyCoursesPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUserCourses();
-    console.log(this.platform.platforms());
   }
 
 
@@ -50,7 +49,6 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         .getUserCourses('', this.offset)
         .pipe(
           map((response) => {
-            console.log(response);
             Object.entries(response);
             this.isLoading = false;
             this.totalLength = response['length'];
@@ -95,7 +93,6 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     if(this.myCourses.length < this.totalLength){
       setTimeout(() => {
         this.getUserCourses();
-        console.log('Done');
         event.target.complete();
 
         // App logic to determine if all data is loaded
@@ -112,7 +109,6 @@ export class MyCoursesPage implements OnInit, OnDestroy {
   }
 
   playIntroHTML(course:Course){
-    console.log(course);
     // this.nativeAudio.preloadSimple(`intro${course.id}`, `${course.courseTranslations[0].introVoicePath}`).then(onSuccess, onError);
     // this.nativeAudio.play(`intro${course.id}`).then(onSuccess, onError);
     if(course.audioElement.status == false){
@@ -184,7 +180,7 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         .then(() => console.log('File is opened'))
         .catch(e => console.log('Error opening file', e));
       } else {
-        console.log('not supported plattform');
+        // console.log('not supported plattform');
 
       }
 

@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { getLanguage } from "src/app/api.constants";
 
 import { faqPage } from './../../api.constants';
-
+// getGeneratedVidoes
 
 
 
@@ -25,5 +25,10 @@ import { faqPage } from './../../api.constants';
     const params = `?Offset=${offset}&Limit=${limit}`
     return this.http.get(`${faqPage}` + params );
   }
+
+  // getVidoes (title) {
+  //   const params = `?title=${title}`
+  //   return this.http.get(`${getGeneratedVidoes}` + params );
+  // }
 
 }

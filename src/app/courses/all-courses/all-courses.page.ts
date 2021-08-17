@@ -68,8 +68,6 @@ export class AllCoursesPage implements OnInit {
           })
         )
         .subscribe((res) => {
-          console.log(res);
-
           if (this.courses.length == 0) {
             res.forEach((element) => {
 

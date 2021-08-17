@@ -44,7 +44,7 @@ export class CourseDetailsPage implements OnInit {
         switchMap((params: ParamMap) =>
             this.courseService.getCoursesDetails(+params.get('courseId')))
           ).subscribe(response => {
-            console.log('course details' , response)
+            console.log('course details' , response['result'])
             this.isLoading = false;
             this.courseDetails = response['result'];
       })
@@ -80,7 +80,6 @@ export class CourseDetailsPage implements OnInit {
     });
   }
 
-
   startAudio(voicePath: string) {
     if (this.player) {
       this.player.stop();
@@ -95,7 +94,10 @@ export class CourseDetailsPage implements OnInit {
       onend: () => {},
     });
     this.player.play();
+
+
   }
+
   ngOnDestroy(): void {
   this.subs.forEach((element) => {
     element.unsubscribe();
