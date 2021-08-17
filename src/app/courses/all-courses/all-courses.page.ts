@@ -10,6 +10,8 @@ import { Course } from 'src/app/shared/models/course';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { AudioElement } from 'src/app/shared/models/audioObject';
 import { TestService } from 'src/app/shared/services/test.service';
+import { Howl } from 'howler';
+import { AppService } from 'src/app/shared/services/app.service';
 
 @Component({
   selector: 'app-all-courses',
@@ -24,17 +26,23 @@ export class AllCoursesPage implements OnInit {
   isLoading = false;
   userTest: CheckUserTest;
   courseId;
-
+  player: Howl = null;
+  isPlaying: boolean = false;
+  courseAudio:string;
 
   constructor(
     private route: Router,
     private navCtrl: NavController,
     private courseService: CourseService,
     private platform: Platform,
-    private testService: TestService
+    private testService: TestService,
+    private appService:AppService
   ) {}
 
   ngOnInit() {
+    this.appService.getVidoes('Courses').subscribe((response) => {
+      this.courseAudio = response['result']?.genericAttributeMediaTranslations[0]?.mediaPath;
+    })
     this.offset = 0;
     this.getCourses();
     this.testService.checkUserTest()
@@ -158,7 +166,31 @@ export class AllCoursesPage implements OnInit {
     }
   }
 
+  startAudio(voicePath: string) {
+    if (this.player && this.isPlaying == true) {
+      this.player.stop();
+      this.isPlaying = false;
+    }else{
+      this.player = new Howl({
+        html5: true,
+        src: voicePath,
+        onplay: () => {
+
+          this.isPlaying = true;
+        },
+        onend: () => {
+          this.isPlaying = false;
+        },
+      });
+      this.player.play();
+
+    }
+
+  }
   ionViewDidLeave():void{
+    if (this.player) {
+      this.player.stop();
+    }
     this.courses.forEach((element) => {
       if (element.audioElement) {
         if (element.audioElement.status == true) {
@@ -188,6 +220,7 @@ export class AllCoursesPage implements OnInit {
 
   // }
 }
+
 function onSuccess() {
   throw new Error('Function not implemented.');
 }

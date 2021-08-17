@@ -13,7 +13,8 @@ import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { LoadingController } from '@ionic/angular';
 import { platform } from 'process';
-
+import { Howl } from 'howler';
+import { AppService } from 'src/app/shared/services/app.service';
 
 @Component({
   selector: 'app-my-courses',
@@ -27,18 +28,24 @@ export class MyCoursesPage implements OnInit, OnDestroy {
   public myCourses: Array<MyCourse> = [];
   isLoading = false;
   pdfFile: any;
-
+  player: Howl = null;
+  isPlaying: boolean = false;
+  courseAudio:string;
   constructor(
     private route: Router,
     private courseService: CourseService,
     private testService: TestService,
     private fileOpener: FileOpener,
     private platform: Platform,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private appService:AppService
 
   ) {}
 
   ngOnInit() {
+    this.appService.getVidoes('Courses').subscribe((response) => {
+      this.courseAudio = response['result']?.genericAttributeMediaTranslations[0]?.mediaPath;
+    })
     this.getUserCourses();
   }
 
@@ -216,12 +223,37 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     // }, 2000);
   }
 
+  startAudio(voicePath: string) {
+    if (this.player && this.isPlaying == true) {
+      this.player.stop();
+      this.isPlaying = false;
+    }else{
+      this.player = new Howl({
+        html5: true,
+        src: voicePath,
+        onplay: () => {
+
+          this.isPlaying = true;
+        },
+        onend: () => {
+          this.isPlaying = false;
+        },
+      });
+      this.player.play();
+
+    }
+
+  }
   ngOnDestroy() {
+
     this.sub.forEach(e => {
       e.unsubscribe();
     })
   }
   ionViewDidLeave():void{
+    if (this.player) {
+      this.player.stop();
+    }
     this.myCourses.forEach((element) => {
       if (element.course.audioElement) {
         if (element.course.audioElement.status == true) {

@@ -29,5 +29,8 @@ import { faqPage, getGeneratedVidoes } from './../../api.constants';
     const params = `?title=${title}`
     return this.http.get(`${getGeneratedVidoes}` + params );
   }
-
+  getCourseAudio (title) {
+    const params = `?title=${title}`
+    return this.http.get(`${this.getCourseAudio}` + params );
+  }
 }
