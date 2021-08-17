@@ -3,8 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { getLanguage } from "src/app/api.constants";
 
-import { faqPage } from './../../api.constants';
-// getGeneratedVidoes
+import { faqPage, getGeneratedVidoes } from './../../api.constants';
 
 
 
@@ -26,9 +25,9 @@ import { faqPage } from './../../api.constants';
     return this.http.get(`${faqPage}` + params );
   }
 
-  // getVidoes (title) {
-  //   const params = `?title=${title}`
-  //   return this.http.get(`${getGeneratedVidoes}` + params );
-  // }
+  getVidoes (title) {
+    const params = `?title=${title}`
+    return this.http.get(`${getGeneratedVidoes}` + params );
+  }
 
 }
