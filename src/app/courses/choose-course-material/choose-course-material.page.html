@@ -5,7 +5,27 @@
 
   <ion-grid *ngIf="CourseDetails">
     <ion-row>
-      <ion-title class="font-title-desktop"> {{ CourseDetails.courseTranslations[0].title }} </ion-title>
+      <h2 id="title" class="font-title-desktop ion-text-center"> {{ CourseDetails.courseTranslations[0].title }} </h2>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="CourseDetails">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-md="3">
+        <div *ngIf="CourseDetails.courseTranslations[0]?.introVoicePath" class="sound-inro">
+          <div class="img-person">
+            <img class="intro-logo" src="../../assets/images/char-person.png" />
+          </div>
+        <div class="icon-sound">
+          <div class="img-volume">
+            <ion-img
+            class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3"
+            (click)="startAudio(CourseDetails.courseTranslations[0]?.introVoicePath)" src="../../../assets/icon/Vector.png">
+          </ion-img>
+          </div>
+        </div>
+      </div>
+      </ion-col>
     </ion-row>
   </ion-grid>
 

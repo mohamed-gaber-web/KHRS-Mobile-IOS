@@ -97,4 +97,6 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.subs.forEach(element => element.unsubscribe())
   }
 
+  startAudio(x) {}
+
 }
