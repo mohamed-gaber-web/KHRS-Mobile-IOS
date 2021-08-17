@@ -12,6 +12,7 @@ import { TestService } from 'src/app/shared/services/test.service';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { LoadingController } from '@ionic/angular';
+import { platform } from 'process';
 
 
 @Component({
@@ -72,14 +73,14 @@ export class MyCoursesPage implements OnInit, OnDestroy {
             this.myCourses = res;
           } else {
             res.forEach((element) => {
-              if (element.imagePath) {
-                element.imagePath = `${element.imagePath}`;
+              if (element.course.imagePath) {
+                element.course.imagePath = `${element.course.imagePath}`;
               }
-              if (element.courseTranslations[0].introVoicePath) {
-                element.courseTranslations[0].introVoicePath = `${element.courseTranslations[0].introVoicePath}`;
+              if (element.course.courseTranslations[0]?.introVoicePath) {
+                element.course.courseTranslations[0].introVoicePath = `${element.course.courseTranslations[0].introVoicePath}`;
               }
-              element.audioElement = new AudioElement();
-              element.audioElement.status = false;
+              element.course.audioElement = new AudioElement();
+              element.course.audioElement.status = false;
 
               this.myCourses.push(element);
             });
@@ -180,7 +181,17 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         .then(() => console.log('File is opened'))
         .catch(e => console.log('Error opening file', e));
       } else {
+<<<<<<< HEAD
         // console.log('not supported plattform');
+=======
+        this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(response);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Certificate.pdf";
+        link.click();
+>>>>>>> af4b55207dc3aa66804f2924a5e24d2279cae629
 
       }
 
@@ -198,6 +209,8 @@ export class MyCoursesPage implements OnInit, OnDestroy {
 
   // ** Create Refresh whrn scroll down
   doRefresh(event) {
+    this.offset=0;
+    this.myCourses=[];
     console.log('Begin async operation');
     this.getUserCourses();
     event.target.complete();
@@ -211,5 +224,15 @@ export class MyCoursesPage implements OnInit, OnDestroy {
     this.sub.forEach(e => {
       e.unsubscribe();
     })
+  }
+  ionViewDidLeave():void{
+    this.myCourses.forEach((element) => {
+      if (element.course.audioElement) {
+        if (element.course.audioElement.status == true) {
+          element.course.audioElement.audio.pause();
+          element.course.audioElement.status = false;
+        }
+      }
+    });
   }
 }

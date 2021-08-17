@@ -1,10 +1,11 @@
-  ion-title {
-    font-weight: 600;
-    font-size: 16px;
-    text-transform: capitalize;
-    text-align: center;
-    margin: 33px 0 10px 0;
-  }
+h2#title {
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: capitalize;
+  text-align: center!important;
+  margin: 30px auto;
+  color: #003182;
+}
 
   ion-item {
     margin: 5px 0;

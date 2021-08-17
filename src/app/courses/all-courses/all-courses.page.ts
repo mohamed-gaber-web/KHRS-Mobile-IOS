@@ -119,6 +119,8 @@ export class AllCoursesPage implements OnInit {
     }
   }
 
+
+
   playIntroHTML(course: Course) {
     console.log(this.courses);
     // this.nativeAudio.preloadSimple(`intro${course.id}`, `${course.courseTranslations[0].introVoicePath}`).then(onSuccess, onError);
@@ -156,6 +158,16 @@ export class AllCoursesPage implements OnInit {
     }
   }
 
+  ionViewDidLeave():void{
+    this.courses.forEach((element) => {
+      if (element.audioElement) {
+        if (element.audioElement.status == true) {
+          element.audioElement.audio.pause();
+          element.audioElement.status = false;
+        }
+      }
+    });
+  }
   // playIntro(course:Course){
   //   //TODO stop the rest of active audios
   //   this.platform.ready().then(() => {
@@ -182,5 +194,6 @@ function onSuccess() {
 function onError() {
   alert('error');
 }
+
 
 

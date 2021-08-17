@@ -1,9 +1,10 @@
-ion-title {
+h2#title {
   font-weight: 600;
   font-size: 16px;
   text-transform: capitalize;
-  text-align: center;
-  margin: 33px 0 10px 0;
+  text-align: center!important;
+  margin: 30px auto;
+  color: #003182;
 }
 
 .course-date ion-item {
@@ -64,4 +65,27 @@ video {
   background-color: #fff;
   padding: 10px 0 10px 10px;
   border: 2px dotted #003182;
+}
+
+.sound-inro {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-evenly;
+  position: relative;
+
+  .img-volume {
+    ion-img {
+      max-width: 45px;
+      width: 45px;
+      position: absolute;
+      top: 56px;
+      right: 60px;
+    }
+  }
+
+  img {
+    max-width:80px;
+    height: auto;
+  }
+
 }
