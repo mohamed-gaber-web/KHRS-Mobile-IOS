@@ -25,8 +25,8 @@ import { faqPage, getGeneratedVidoes } from './../../api.constants';
     return this.http.get(`${faqPage}` + params );
   }
 
-  getVidoes (title) {
-    const params = `?title=${title}`
+  getVidoes (title, lang) {
+    const params = `?title=${title}&lang=${lang}`
     return this.http.get(`${getGeneratedVidoes}` + params );
   }
 

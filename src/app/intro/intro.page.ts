@@ -9,15 +9,17 @@ import { AppService } from '../shared/services/app.service';
 export class IntroPage implements OnInit {
 
   introVideo: any;
+  getLang: string;
 
   constructor(private appService: AppService) { }
 
   ngOnInit() {
-    this.appService.getVidoes('Intro').subscribe((response) => {
-      console.log(response['result'].genericAttributeMediaTranslations[0]);
+    this.getLang = localStorage.getItem('languageId');
+    console.log(this.getLang);
+    this.appService.getVidoes('Intro', this.getLang).subscribe((response) => {
+      // console.log(response);
       this.introVideo = response['result'].genericAttributeMediaTranslations[0];
     })
    }
-
 
 }
