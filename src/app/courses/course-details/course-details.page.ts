@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CourseService } from 'src/app/shared/services/courses.service';
 
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { TestService } from 'src/app/shared/services/test.service';
 import { Howl } from 'howler';
 import { HttpHeaders } from '@angular/common/http';
@@ -33,7 +33,9 @@ export class CourseDetailsPage implements OnInit {
     private courseService: CourseService,
     private route: ActivatedRoute,
     private testService: TestService,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private platform: Platform,
+
     ) { }
 
   ngOnInit() {
@@ -59,17 +61,41 @@ export class CourseDetailsPage implements OnInit {
   downloadCertificate() {
     this.testService.getCertificate(this.courseDetails.id)
     .subscribe((response: Blob) => {
-      File.writeFile(
-        File.externalRootDirectory + "/Download",
-        this.courseDetails.id + "Certificate.pdf",
-        new Blob([response]),
-        {
-          replace: true,
-        }
-      );
-      this.fileOpener.open(File.externalRootDirectory + "/Download/" + this.courseDetails.id + "Certificate.pdf", 'application/pdf')
-  .then(() => console.log('File is opened'))
-  .catch(e => console.log('Error opening file', e));
+      this.isLoading = false;
+      if(this.platform.is('mobileweb')) {
+
+        this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(response);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Certificate.pdf";
+        link.click();
+      } else if(this.platform.is('android')) {
+        File.writeFile(
+          File.externalRootDirectory + "/Download",
+          this.courseDetails.id + "Certificate.pdf",
+          new Blob([response]),
+          {
+            replace: true,
+          }
+        );
+        this.fileOpener.open(File.externalRootDirectory + "/Download/" + this.courseDetails.id + "Certificate.pdf", 'application/pdf')
+        .then(() => console.log('File is opened'))
+        .catch(e => console.log('Error opening file', e));
+      } else {
+        this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(response);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Certificate.pdf";
+        link.click();
+
+      }
+
+
+
       // this.pdfFile = new Blob([response], {type: 'application/pdf'});
 
       // var downloadURL = window.URL.createObjectURL(response);

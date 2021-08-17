@@ -12,6 +12,7 @@ import { TestService } from 'src/app/shared/services/test.service';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { LoadingController } from '@ionic/angular';
+import { platform } from 'process';
 
 
 @Component({
@@ -184,7 +185,13 @@ export class MyCoursesPage implements OnInit, OnDestroy {
         .then(() => console.log('File is opened'))
         .catch(e => console.log('Error opening file', e));
       } else {
-        console.log('not supported plattform');
+        this.pdfFile = new Blob([response], {type: 'application/pdf'});
+
+        var downloadURL = window.URL.createObjectURL(response);
+        var link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = "Certificate.pdf";
+        link.click();
 
       }
 
