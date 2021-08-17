@@ -36,7 +36,7 @@ export class ChooseLanguagePage implements OnInit {
 
   getLanguageId(id: number) {
     this.isSelected = !this.isSelected;
-    return localStorage.setItem('languageId', JSON.stringify(id));
+    localStorage.setItem('languageId', JSON.stringify(id));
   }
 
   ngOnDestroy() {
