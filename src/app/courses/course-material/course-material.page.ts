@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IonRange, IonSlides } from '@ionic/angular';
 import { Howl } from 'howler';
+import { AppService } from 'src/app/shared/services/app.service';
 
 @Component({
   selector: 'app-course-material',
@@ -28,6 +29,8 @@ export class CourseMaterialPage implements OnInit {
   activeTrack: string;
   @ViewChild('slides') slides: IonSlides;
   @ViewChild('range', { static: false }) range: IonRange;
+  introVideo: any;
+  getLang;
 
   slideOpts = {
     initialSlide: 0,
@@ -41,7 +44,8 @@ export class CourseMaterialPage implements OnInit {
     private courseService: CourseService,
     private route: ActivatedRoute,
     public storageService: StorageService,
-    public authService: AuthService
+    public authService: AuthService,
+    private appService:AppService
   ) {}
 
   ngOnInit() {
@@ -59,6 +63,8 @@ export class CourseMaterialPage implements OnInit {
         .subscribe((response) => {
           this.isLoading = false;
           this.courseMaterial = response['result'];
+          console.log(this.courseMaterial);
+
           // console.log(this.courseMaterial);
           // console.log(this.slides.ionSlideNextStart)
         })
@@ -117,7 +123,7 @@ export class CourseMaterialPage implements OnInit {
       let duration = this.player.duration();
       this.player.seek(duration * (newValue / 100));
     }
-    
+
   }
   updateProgress() {
     if(this.player){

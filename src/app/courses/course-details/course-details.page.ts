@@ -11,6 +11,7 @@ import { Howl } from 'howler';
 import { HttpHeaders } from '@angular/common/http';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { AppService } from 'src/app/shared/services/app.service';
 
 @Component({
   selector: 'app-course-details',
@@ -28,13 +29,14 @@ export class CourseDetailsPage implements OnInit {
   isPlaying: boolean = false;
   pdfFile: any;
 
+
   constructor(
     private router: Router,
     private courseService: CourseService,
     private route: ActivatedRoute,
     private testService: TestService,
     private fileOpener: FileOpener,
-    private platform: Platform,
+    private platform: Platform
 
     ) { }
 
@@ -49,7 +51,8 @@ export class CourseDetailsPage implements OnInit {
             console.log('course details' , response['result'])
             this.isLoading = false;
             this.courseDetails = response['result'];
-      })
+      }),
+
     );
   }
 

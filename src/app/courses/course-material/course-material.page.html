@@ -29,6 +29,8 @@
 
 <ion-content>
 
+
+
   <ion-slides (ionSlideWillChange)="doCheck()" #slides pager="true" [options]="slideOpts">
 
     <ion-slide *ngFor="let course of courseMaterial" class="course__material ion-margin-top">
@@ -47,6 +49,11 @@
         <ion-row class="ion-padding ion-justify-content-center">
           <ion-col size="12" size-md="8" size-lg="6">
             <ion-img *ngIf="course.imagePath" loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
+            <div class="video-inro">
+              <video *ngIf="course.materialTranslations[0].videoPath" width="100%" height="230" controls>
+                <source [src]='course.materialTranslations[0].videoPath' type="video/mp4">
+              </video>
+            </div>
             <p>
               <ion-text [innerHTML]="course.materialTranslations[0].description" color="primary"> </ion-text>
             </p>
