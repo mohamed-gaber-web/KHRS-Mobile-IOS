@@ -225,6 +225,7 @@ ion-radio {
 
 @media(max-width: 767px) {
   .hide-desktop{display: none!important;}
+  .puzzle-fix {.title {width: 50%;}}
 }
 
 @media(min-width: 768px) {
@@ -264,8 +265,11 @@ ion-radio {
   }
 
   .single-choice, .multi-choice, .drag-group {
-    width: 50%!important;
+    width: 80%!important;
   }
+
+  .puzzle-fix {height: 80px!important; .title {width: 40%;}}
+  .puzzle-answer {margin-top: 0!important;}
 
   .example-box {
     .drag-answer ion-img{top: -12px!important;}

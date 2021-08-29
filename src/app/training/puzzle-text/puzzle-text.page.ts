@@ -1,7 +1,7 @@
 import { PuzzleTextTranslations } from './../../shared/models/puzzleTextTranslations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonSlides, NavController, ToastController } from '@ionic/angular';
+import { IonSlides, ModalController, NavController, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
 import { PuzzleText } from 'src/app/shared/models/puzzleText';
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { AudioElement } from 'src/app/shared/models/audioObject';
+import { HelpModalComponent } from '../help-modal/help-modal.component';
 
 
 @Component({
@@ -45,6 +46,8 @@ export class PuzzleTextPage implements OnInit {
     speed: 400,
     slidesPerView: 1,
     scrollbar: true,
+    onlyExternal: false,
+    noSwipingClass: 'swiper-no-swiping',
   };
 
   constructor(
@@ -54,6 +57,8 @@ export class PuzzleTextPage implements OnInit {
     public toastController: ToastController,
     public navController: NavController,
     private exerciseService: ExerciseService,
+    public modalController: ModalController
+
 
   ) { }
 
@@ -66,6 +71,7 @@ export class PuzzleTextPage implements OnInit {
 
     this.getQuestionAndAnswer();
   }
+
 
   // ** get question and answer puzzle text
   getQuestionAndAnswer() {
@@ -272,7 +278,7 @@ stopAllAudios(item?:any){
         element2.audioElement.status = false;
       }
     });
-    
+
   });
   this.answersArray.forEach(element => {
     if (element.audioElement && element.audioElement.status == true && element != item) {
@@ -281,6 +287,18 @@ stopAllAudios(item?:any){
     }
   });
 }
+
+async presentModal() {
+  const modal = await this.modalController.create({
+    component: HelpModalComponent,
+    componentProps: {
+      "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
+      "modalTitle": "Puzzle Wiith Text Tutorial"
+    }
+  });
+  return await modal.present();
+}
+
 ngOnDestroy() {
   this.subs.forEach((sub) => {
     sub.unsubscribe();

@@ -4,6 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonSlides,
+  ModalController,
   NavController,
   PopoverController,
   ToastController,
@@ -18,6 +19,7 @@ import {
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { Subscription } from 'rxjs';
 import { Howl } from 'howler';
+import { HelpModalComponent } from '../help-modal/help-modal.component';
 
 @Component({
   selector: 'app-puzzle-image',
@@ -65,7 +67,9 @@ export class PuzzleImagePage implements OnInit {
     public toastController: ToastController,
     public navController: NavController,
     private exerciseService: ExerciseService,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    public modalController: ModalController
+
   ) {}
 
   ngOnInit() {
@@ -316,6 +320,17 @@ export class PuzzleImagePage implements OnInit {
     });
     this.player.play();
   }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: HelpModalComponent,
+      componentProps: {
+        "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
+        "modalTitle": "Puzzle Wiith Image Tutorial"
+      }
+    });
+    return await modal.present();
+  }
+
   ngOnDestroy() {
     this.subs.forEach((sub) => {
       sub.unsubscribe();

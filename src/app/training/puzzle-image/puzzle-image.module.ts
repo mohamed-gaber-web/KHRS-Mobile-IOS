@@ -12,9 +12,7 @@ import { PuzzleImagePage } from './puzzle-image.page';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PuzzleSoundModule } from './puzzle-sound/puzzle-sound.module';
 
-
-
-
+import { HelpModalModule } from '../help-modal/help-modal.module';
 
 @NgModule({
   imports: [
@@ -23,7 +21,8 @@ import { PuzzleSoundModule } from './puzzle-sound/puzzle-sound.module';
     IonicModule,
     PuzzleImagePageRoutingModule,
     DragDropModule,
-    PuzzleSoundModule
+    PuzzleSoundModule,
+    HelpModalModule
 
   ],
   declarations: [PuzzleImagePage],

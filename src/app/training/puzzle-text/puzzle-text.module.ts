@@ -11,6 +11,7 @@ import { PuzzleTextPage } from './puzzle-text.page';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { HelpModalModule } from '../help-modal/help-modal.module';
 
 
 
@@ -21,7 +22,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     IonicModule,
     PuzzleTextPageRoutingModule,
     DragDropModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    HelpModalModule
   ],
   declarations: [PuzzleTextPage]
 })
