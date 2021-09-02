@@ -12,6 +12,9 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { ModalController } from '@ionic/angular';
 import { HelpModalComponent } from '../help-modal/help-modal.component';
 
+import { File } from '@ionic-native/file/ngx';
+
+
 
 @Component({
   selector: 'app-single-choice',
@@ -20,8 +23,8 @@ import { HelpModalComponent } from '../help-modal/help-modal.component';
 })
 export class SingleChoicePage implements OnInit {
 
-  audio = new Audio('../../../assets/iphone_ding.mp3' );
   subs: Subscription[] = [];
+  audio;
   userInfo: any;
   exerciseItems: ExerciseItem[];
   exerciseType: number;
@@ -65,8 +68,8 @@ export class SingleChoicePage implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     public navController: NavController,
-    private router: Router,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private file: File
     ) { }
 
   ngOnInit() {
@@ -82,6 +85,8 @@ export class SingleChoicePage implements OnInit {
     // ** Get Question Data
     this.getQuestion();
 
+    this.audio = new Audio('../../../assets/iphone_ding.mp3' );
+
   }
 
   // ** Get Question Data
@@ -94,7 +99,7 @@ export class SingleChoicePage implements OnInit {
         this.isLoading = false;
           this.exerciseItems = response['result'];
           this.lengthQuestion = response['length'];
-          if(this.lengthQuestion ==0){
+          if(this.lengthQuestion == 0){
             this.errorMessage("There are no available questions in this exercise");
             setTimeout(() => {
               this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
@@ -118,7 +123,7 @@ export class SingleChoicePage implements OnInit {
           }
         })
     );
-}
+  }
 
   playAudio(type?:string,item?:any){
 
@@ -150,6 +155,7 @@ export class SingleChoicePage implements OnInit {
     }
 
   }
+
   // ** Validate Form Input
   validateSingleForm(isSubmitting = false) {
     for (const field of Object.keys(this.singleFormErrors)) {
@@ -181,56 +187,56 @@ export class SingleChoicePage implements OnInit {
     this.slides.getActiveIndex().then(current => this.currentIndex = current);
   }
 
- // ** Move to Next slide
- slideNext(id, ...answer) {
-    this.validateSingleForm(true);
-    this.subs.push(
-      this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
-      .subscribe(async(response) => {
+   // ** Move to Next slide
+  slideNext(id, ...answer) {
+      this.validateSingleForm(true);
+      this.subs.push(
+        this.exerciseService.checkAnswerSingleChoise(id, this.singleForm.value.answer)
+        .subscribe(async(response) => {
 
-        this.resultAnswer = response['success'];
-        if(this.resultAnswer === true) {
+          this.resultAnswer = response['success'];
+          if(this.resultAnswer === true) {
 
-          // message and voice success
-          this.currentIndex += 1;
-          this.successMessage('the answer is correct');
-          if(this.exerciseItems[0].audioElement){
-            this.exerciseItems[0].audioElement.audio.pause();
-            this.exerciseItems[0].audioElement.audio = null;
+            // message and voice success
+            this.successMessage('The answer is correct');
+            this.currentIndex += 1;
+            if(this.exerciseItems[0].audioElement){
+              this.exerciseItems[0].audioElement.audio.pause();
+              this.exerciseItems[0].audioElement.audio = null;
+
+            }
+            if(this.exerciseItems[0].audioElementDanish){
+              this.exerciseItems[0].audioElementDanish.audio.pause();
+              this.exerciseItems[0].audioElementDanish.audio = null;
+
+            }
+            this.isLoading = true;
+            this.singleForm.reset();
+            this.getQuestion();
+            this.slides.slideNext();
+
+            if(this.currentIndex === this.lengthQuestion) {
+              this.successMessage('Thanks for resolving questions');
+              setTimeout(() => {
+                this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
+              }, 100)
+            }
+
+          } else if(this.resultAnswer === false) {
+            // message and voice error
+            this.errorMessage('The answer is wrong and please choose correct answer');
+          }
 
           }
-          if(this.exerciseItems[0].audioElementDanish){
-            this.exerciseItems[0].audioElementDanish.audio.pause();
-            this.exerciseItems[0].audioElementDanish.audio = null;
-
-          }
-          this.isLoading = true;
-          this.singleForm.reset();
-          this.getQuestion();
-          this.slides.slideNext();
-
-          if(this.currentIndex === this.lengthQuestion) {
-            this.successMessage('Thanks for resolving questions');
-            setTimeout(() => {
-              this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
-            }, 100)
-          }
-
-        } else if(this.resultAnswer === false) {
-          // message and voice error
-          this.errorMessage('The answer is wrong and please choose correct answer');
-        }
-
-        }
-    )
-    );
-}
+      )
+      );
+  }
 
   async successMessage(msg: string) {
-    this.audio.play()
+    this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
-      duration: 3000,
+      duration: 500,
       cssClass:'ion-success',
       color: 'success'
     });
@@ -241,7 +247,7 @@ export class SingleChoicePage implements OnInit {
     this.audio.play()
     const toast = await this.toastController.create({
       message: msg,
-      duration: 3000,
+      duration: 500,
       cssClass:'ion-error',
       color: 'danger',
     });
