@@ -9,15 +9,11 @@
     "Create a new account.": "Create a new account.",
     "Username": "Username",
     "Email": "Email",
-    "Signup": "Sign Up",
+    "Signup": "Sign up",
     "Or Continue with": "Or Continue with",
     "Facebook": "Facebook",
     "Google": "Google",
-<<<<<<< HEAD
-    "Forget Password": "Forgotten Fassword?",
-=======
-    "Forget Password": "Forgotten password?",
->>>>>>> 6b6e64fde1d7f26c620b797a81e7348a6250dfe8
+    "Forget Password": " Forgot password?",
     "Send": "Send",
     "Verification Code": "Verification Code",
     "Please type the verification code sent to": "Please type the verification code sent to",

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
-import { getLanguage } from "src/app/api.constants";
+import { getLanguage, policyPage } from "src/app/api.constants";
 
 import { faqPage, getGeneratedVidoes } from './../../api.constants';
 
@@ -18,6 +18,11 @@ import { faqPage, getGeneratedVidoes } from './../../api.constants';
   getLanguage() {
     const params = `?offset=0&limit=10`
     return this.http.get(`${getLanguage}` + params);
+  }
+
+  getPolicyPage () {
+    // const params = `?Offset=${offset}&Limit=${limit}`
+    return this.http.get(`${policyPage}`);
   }
 
   getFaqPage (offset, limit) {

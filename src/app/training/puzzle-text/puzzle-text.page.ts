@@ -299,6 +299,12 @@ async presentModal() {
   return await modal.present();
 }
 
+slidePrev() {
+  this.currentIndex -= 1;
+  this.getQuestionAndAnswer();
+  this.slides.slidePrev();
+}
+
 ngOnDestroy() {
   this.subs.forEach((sub) => {
     sub.unsubscribe();

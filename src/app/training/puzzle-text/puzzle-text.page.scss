@@ -311,3 +311,11 @@ ion-toolbar {
   text-align: center;
   margin-left: 50px;
 }
+
+
+@media (min-width: 1200px) {
+  .cdk-drag-preview {
+    width: 30%!important;
+
+  }
+}

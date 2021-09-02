@@ -8,8 +8,7 @@ ion-item {
   color: var(--ion-color-second-app);
   font-size: 16px;
   font-weight: 500;
-  text-transform: capitalize;
-
+  cursor: pointer;
 }
 
 .info {
@@ -21,6 +20,7 @@ ion-item {
     font-size: 14px;
     font-weight: 500;
     padding-left: 10px;
+    text-transform: lowercase;
   }
 
   ion-icon {
@@ -38,6 +38,7 @@ ion-item {
     list-style: none;
     padding: 0;
     margin: 20px 0;
+    cursor: pointer;
 
     li {
       display: inline-block;

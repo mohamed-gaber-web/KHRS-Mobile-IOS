@@ -40,6 +40,7 @@ export const getCertificate = `${baseUrl}/api/UserTest/GetCertificate`;
 
 // pages
 export const faqPage = `${baseUrl}/api/Faq/GetFaq`;
+export const policyPage = `${baseUrl}/api/Policy/GetPolicy`;
 export const getGeneratedVidoes = `${baseUrl}/api/GenericAttributeMedia/GetByGenericAttributeTitle`;
 
 

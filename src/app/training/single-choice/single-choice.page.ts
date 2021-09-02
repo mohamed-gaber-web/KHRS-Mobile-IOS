@@ -259,6 +259,13 @@ export class SingleChoicePage implements OnInit {
     return await modal.present();
   }
 
+  slidePrev() {
+    this.currentIndex -= 1;
+    this.getQuestion();
+    this.slides.slidePrev();
+
+  }
+
   ngOnDestroy() {
     this.subs.forEach(sub => {
       sub.unsubscribe();

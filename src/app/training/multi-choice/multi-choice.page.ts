@@ -296,6 +296,14 @@ export class MultiChoicePage implements OnInit {
       this.exerciseItems[0].audioElement.status = false;
     }
   }
+
+  slidePrev() {
+    this.currentIndex -= 1;
+    this.getQuestionAndAnswerMultiChoice();
+    this.slides.slidePrev();
+
+  }
+
   ngOnDestroy() {
     this.subs.forEach((sub) => {
       sub.unsubscribe();

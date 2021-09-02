@@ -320,6 +320,7 @@ export class PuzzleImagePage implements OnInit {
     });
     this.player.play();
   }
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: HelpModalComponent,
@@ -330,6 +331,13 @@ export class PuzzleImagePage implements OnInit {
     });
     return await modal.present();
   }
+
+  slidePrev() {
+    this.currentIndex -= 1;
+    this.getQuestionAndAnswer();
+    this.slides.slidePrev();
+  }
+
 
   ngOnDestroy() {
     this.subs.forEach((sub) => {

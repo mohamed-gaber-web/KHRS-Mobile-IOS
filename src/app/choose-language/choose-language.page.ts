@@ -16,6 +16,7 @@ export class ChooseLanguagePage implements OnInit {
   subs: Subscription[] = [];
   langItems: Language[];
   isSelected: boolean = false;
+  classname: boolean = false;
 
 
   constructor(public router: Router, private appSerrvice: AppService) { }
@@ -35,6 +36,7 @@ export class ChooseLanguagePage implements OnInit {
   }
 
   getLanguageId(id: number) {
+    console.log(event)
     this.isSelected = !this.isSelected;
     localStorage.setItem('languageId', JSON.stringify(id));
   }

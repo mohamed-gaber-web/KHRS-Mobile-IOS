@@ -11,7 +11,7 @@
 
       <ion-spinner  *ngIf="isLoading"></ion-spinner>
       <ion-col (click)="getLanguageId(item.id)" size-xs="4" size-md="3" *ngFor="let item of langItems">
-        <ion-img [src]="item.icon" class="lang-img"></ion-img>
+        <ion-img  [src]="item.icon" class="lang-img"></ion-img>
         <h3> <ion-text color="primary"> {{ item.name }} </ion-text> </h3>
       </ion-col>
 

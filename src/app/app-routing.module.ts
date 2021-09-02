@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
-import { RedirectService } from './shared/guard/redirect.guard';
 
 const routes: Routes = [
   {
@@ -33,9 +32,14 @@ const routes: Routes = [
   {
     path: 'test-finished',
     loadChildren: () => import('./training/test-course/test-finished/test-finished.module').then( m => m.TestFinishedPageModule)
-  },  {
+  },
+  {
     path: 'faq',
     loadChildren: () => import('./pages/faq/faq.module').then( m => m.FaqPageModule)
+  },
+  {
+    path: 'policy',
+    loadChildren: () => import('./pages/policy/policy.module').then( m => m.PolicyPageModule)
   },
 
 

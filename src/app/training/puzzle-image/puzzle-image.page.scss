@@ -182,7 +182,7 @@ ion-toolbar {
 }
 
 .drag-answer ion-img{
-  width: 20px;
+  width: 50px;
   height: auto;
   position: relative;
   top: -2px;
@@ -190,7 +190,6 @@ ion-toolbar {
 }
 
 .cdk-drag-preview {
-
 
   box-sizing: border-box;
   border-radius: 4px;
@@ -306,4 +305,13 @@ position: static!important;
 
 .drag-group {
   width: 100%;
+}
+
+
+@media (min-width: 1200px) {
+  .cdk-drag-preview {
+    width: 30%!important;
+
+      }
+
 }
