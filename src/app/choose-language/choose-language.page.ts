@@ -16,7 +16,7 @@ export class ChooseLanguagePage implements OnInit {
   subs: Subscription[] = [];
   langItems: Language[];
   isSelected: boolean = false;
-  classname: boolean = false;
+  itemClass: string;
 
 
   constructor(public router: Router, private appSerrvice: AppService) { }
@@ -25,6 +25,7 @@ export class ChooseLanguagePage implements OnInit {
     this.isLoading = true;
     this.subs.push(
       this.appSerrvice.getLanguage().subscribe(response => {
+        console.log(response);
         this.isLoading = false;
         this.langItems = response['result'];
       })
@@ -35,10 +36,10 @@ export class ChooseLanguagePage implements OnInit {
     this.router.navigate(['/intro']);
   }
 
-  getLanguageId(id: number) {
-    console.log(event)
+  getLanguageId(item) {
+    localStorage.setItem('languageId', JSON.stringify(item.id));
+    console.log(item);
     this.isSelected = !this.isSelected;
-    localStorage.setItem('languageId', JSON.stringify(id));
   }
 
   ngOnDestroy() {
