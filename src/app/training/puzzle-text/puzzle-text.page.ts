@@ -53,7 +53,6 @@ export class PuzzleTextPage implements OnInit {
   constructor(
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router,
     public toastController: ToastController,
     public navController: NavController,
     private exerciseService: ExerciseService,
@@ -71,7 +70,6 @@ export class PuzzleTextPage implements OnInit {
 
     this.getQuestionAndAnswer();
   }
-
 
   // ** get question and answer puzzle text
   getQuestionAndAnswer() {
@@ -146,11 +144,10 @@ export class PuzzleTextPage implements OnInit {
       .then((current) => (this.currentIndex = current));
   }
 
-
   // ** Drop Function
   drop(event: CdkDragDrop<any>) {
     if (event.previousContainer === event.container) {
-        console.log('move');
+        // console.log('move');
       }
     else {
         var prevData=   event.previousContainer.data;
@@ -181,7 +178,7 @@ export class PuzzleTextPage implements OnInit {
         }
       }
 
-      console.log(event.container.data);
+      // console.log(event.container.data);
 
     }
 
@@ -209,7 +206,6 @@ export class PuzzleTextPage implements OnInit {
   this.exerciseService.checkAnswerPuzzleWithText
   (arrayPuzzle)
   .subscribe(response => {
-    console.log(response);
     const isCorrect = response['result'].isCorrect;
 
     if(isCorrect === true) {
@@ -232,13 +228,10 @@ export class PuzzleTextPage implements OnInit {
     }
   })
 
-
-
-
-
   }
 
   async successMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
@@ -250,6 +243,7 @@ export class PuzzleTextPage implements OnInit {
   }
 
   async errorMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
@@ -260,7 +254,7 @@ export class PuzzleTextPage implements OnInit {
     toast.present();
   }
 
-playAudio(item:any){
+  playAudio(item:any){
   this.stopAllAudios(item);
   if(item.audioElement.status == false){
     item.audioElement.audio.play();
@@ -269,8 +263,9 @@ playAudio(item:any){
     item.audioElement.audio.pause();
     item.audioElement.status = false;
   }
-}
-stopAllAudios(item?:any){
+  }
+
+  stopAllAudios(item?:any){
   this.questionsArray.forEach(element => {
     element.forEach(element2 => {
       if (element2.audioElement && element2.audioElement.status == true && element2 != item) {
@@ -286,9 +281,9 @@ stopAllAudios(item?:any){
       element.audioElement.status = false;
     }
   });
-}
+  }
 
-async presentModal() {
+  async presentModal() {
   const modal = await this.modalController.create({
     component: HelpModalComponent,
     componentProps: {
@@ -297,19 +292,19 @@ async presentModal() {
     }
   });
   return await modal.present();
-}
+  }
 
-slidePrev() {
+  slidePrev() {
   this.currentIndex -= 1;
   this.getQuestionAndAnswer();
   this.slides.slidePrev();
-}
+  }
 
-ngOnDestroy() {
+  ngOnDestroy() {
   this.subs.forEach((sub) => {
     sub.unsubscribe();
   });
-}
+  }
 
 }
 // function debuge() {

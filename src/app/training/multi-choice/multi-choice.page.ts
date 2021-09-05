@@ -194,6 +194,7 @@ export class MultiChoicePage implements OnInit {
   }
 
   async successMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
@@ -205,6 +206,7 @@ export class MultiChoicePage implements OnInit {
   }
 
   async errorMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
@@ -265,6 +267,7 @@ export class MultiChoicePage implements OnInit {
     this.stopQuestionVoice();
     this.stopAnswerVoices();
   }
+
   stopAnswerVoices(answer?: any) {
     if (answer) {
       this.resultAnswerItems

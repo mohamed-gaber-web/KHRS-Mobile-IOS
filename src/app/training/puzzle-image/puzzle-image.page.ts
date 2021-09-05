@@ -269,6 +269,7 @@ export class PuzzleImagePage implements OnInit {
   }
 
   async successMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
@@ -280,6 +281,7 @@ export class PuzzleImagePage implements OnInit {
   }
 
   async errorMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
