@@ -69,7 +69,7 @@ export class SingleChoicePage implements OnInit {
     private fb: FormBuilder,
     public navController: NavController,
     public modalController: ModalController,
-    private file: File
+    // private file: File
     ) { }
 
   ngOnInit() {
@@ -233,6 +233,7 @@ export class SingleChoicePage implements OnInit {
   }
 
   async successMessage(msg: string) {
+    this.audio.load();
     this.audio.play();
     const toast = await this.toastController.create({
       message: msg,
@@ -244,6 +245,7 @@ export class SingleChoicePage implements OnInit {
   }
 
   async errorMessage(msg: string) {
+    this.audio.load();
     this.audio.play()
     const toast = await this.toastController.create({
       message: msg,
