@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AppService } from '../shared/services/app.service';
 
 @Component({
@@ -10,16 +11,28 @@ export class IntroPage implements OnInit {
 
   introVideo: any;
   getLang: string;
+  subs: Subscription[] = [];
+  @ViewChild('video') videoElement;
 
   constructor(private appService: AppService) { }
 
   ngOnInit() {
     this.getLang = localStorage.getItem('languageId');
     console.log(this.getLang);
-    this.appService.getVidoes('Intro', this.getLang).subscribe((response) => {
-      // console.log(response);
-      this.introVideo = response['result'].genericAttributeMediaTranslations[0];
-    })
+    this.subs.push(
+      this.appService.getVidoes('Intro', this.getLang)
+      .subscribe((response) => {
+        this.introVideo = response['result'].genericAttributeMediaTranslations[0];
+      })
+    )
    }
+
+   ionViewWillLeave() {
+    this.videoElement.nativeElement.pause()
+    //  console.log('page destroyed', this.videoElement.nativeElement.pause());
+    this.subs.forEach(el => {
+      el.unsubscribe();
+    })
+  }
 
 }

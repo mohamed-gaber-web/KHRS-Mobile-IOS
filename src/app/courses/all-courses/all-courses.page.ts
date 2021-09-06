@@ -189,6 +189,7 @@ export class AllCoursesPage implements OnInit {
     }
 
   }
+
   ionViewDidLeave():void{
     if (this.player) {
       this.player.stop();
