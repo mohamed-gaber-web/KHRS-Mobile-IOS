@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,21 +16,23 @@ export class ChooseLanguagePage implements OnInit {
   subs: Subscription[] = [];
   langItems: Language[];
   isSelected: boolean = false;
-  itemClass: string;
+  itemClass: string = '';
+  selected :any;
 
 
-  constructor(public router: Router, private appSerrvice: AppService) { }
+  constructor(public router: Router, private appSerrvice: AppService) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.subs.push(
       this.appSerrvice.getLanguage().subscribe(response => {
-        console.log(response);
         this.isLoading = false;
         this.langItems = response['result'];
       })
     );
   }
+
+
 
   chooseLanguage() {
     this.router.navigate(['/intro']);
@@ -38,9 +40,14 @@ export class ChooseLanguagePage implements OnInit {
 
   getLanguageId(item) {
     localStorage.setItem('languageId', JSON.stringify(item.id));
-    console.log(item);
-    this.isSelected = !this.isSelected;
+    // this.isSelected = !this.isSelected;
+    // console.log('selected elements');
+    this.selected = item;
   }
+
+  isActive(item) {
+    return this.selected === item;
+  };
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());

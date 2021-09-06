@@ -10,17 +10,20 @@
     <ion-row>
 
       <ion-spinner *ngIf="isLoading"></ion-spinner>
-      <ion-col *ngFor="let item of langItems"  size-xs="4" size-md="3">
-        <ion-img (click)="getLanguageId(item)" [ngClass]="isSelected ? 'flag-border' : 'flag-unborder'"  [src]="item.icon" class="lang-img"></ion-img>
+      <ion-col *ngFor="let item of langItems; let i = index"  size-xs="4" size-md="3">
+        <ion-img
+          [ngClass]="{'active': isActive(item)}"
+          (click)="getLanguageId(item)"
+          [src]="item.icon" class="lang-img"></ion-img>
         <h3> <ion-text color="primary"> {{ item.name }} </ion-text> </h3>
       </ion-col>
-
+      <!-- [ngClass]="isSelected ? 'flag-border' : 'flag-unborder'" -->
     </ion-row>
 
   </ion-grid>
   <div class="button-start">
 
-    <ion-button [disabled]='!isSelected' (click)="chooseLanguage()">
+    <ion-button [disabled]='!selected' (click)="chooseLanguage()">
       <ion-img src="../../assets/images/logo-hand-2.png"></ion-img>
       START
     </ion-button>

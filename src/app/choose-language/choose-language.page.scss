@@ -24,11 +24,12 @@ h1.title {
     width: 62px;
     height: 62px;
     margin: auto;
+    cursor: pointer;
   }
 
   h3 {
     text-align: center;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
     margin: 10px 0;
     text-transform: capitalize;
@@ -69,12 +70,13 @@ ion-spinner  {
   margin: auto;
 }
 
-.flag-border {
-  border: 5px solid red;
-}
 
-.flag-unborder {
-  border: none;
+.active{
+  -moz-transform: scale(1.3);
+  -webkit-transform: scale(1.3);
+  -o-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
 }
 
 
