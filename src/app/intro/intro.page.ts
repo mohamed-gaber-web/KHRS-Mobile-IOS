@@ -29,7 +29,6 @@ export class IntroPage implements OnInit {
 
    ionViewWillLeave() {
     this.videoElement.nativeElement.pause()
-    //  console.log('page destroyed', this.videoElement.nativeElement.pause());
     this.subs.forEach(el => {
       el.unsubscribe();
     })
