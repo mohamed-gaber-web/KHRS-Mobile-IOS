@@ -25,19 +25,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
 <ion-content>
 
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
+  <ion-slides (ionSlideWillChange)="doCheck()" #slides pager="false" [options]="slideOpts">
 
-  <ion-slides (ionSlideWillChange)="doCheck()" #slides pager="true" [options]="slideOpts">
-
-    <ion-slide *ngFor="let course of courseMaterial" class="course__material ion-margin-top">
+    <ion-slide *ngFor="let course of courseMaterial" class="course__material">
 
       <ion-grid>
         <ion-row class="ion-justify-content-center">
-          <ion-col size-sm="12" size-lg="6" *ngIf="course.materialTranslations[0].voicePath">
+          <ion-col class="course__sound" size-sm="12" size-lg="6" *ngIf="course.materialTranslations[0].voicePath">
             <div class="icon-sound">
               <div class="img-volume">
                 <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="'play'" (click)="startAudio(course.materialTranslations[0].voicePath)">
@@ -46,26 +45,38 @@
              </div>
           </ion-col>
         </ion-row>
-        <ion-row class="ion-padding ion-justify-content-center">
-          <ion-col size="12" size-md="8" size-lg="8">
-            <ion-img *ngIf="course.imagePath" loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
-            <div class="video-inro">
-              <video *ngIf="course.materialTranslations[0].videoPath" width="100%" height="230" controls>
-                <source [src]='course.materialTranslations[0].videoPath' type="video/mp4">
-              </video>
-            </div>
-            <p>
+
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-md="6" size-lg="6">
+            <div class="course__material-block">
               <ion-text class="material-text" [innerHTML]="course.materialTranslations[0].description" color="primary"> </ion-text>
-            </p>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12" size-lg="6">
+                    <div class="video-inro">
+                      <video *ngIf="course.materialTranslations[0].videoPath" width="100%" height="230" controls>
+                        <source [src]='course.materialTranslations[0].videoPath' type="video/mp4">
+                      </video>
+                    </div>
+                  </ion-col>
+                  <ion-col size="12" size-lg="6">
+                      <ion-img *ngIf="course.imagePath" loading="lazy" class="ion-padding-bottom material-image" [src]="course.imagePath"></ion-img>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-slide>
 
+
+    </ion-slide>
 
   </ion-slides>
 
   <ion-grid>
+
     <ion-row class="ion-justify-content-center slide-button">
 
       <ion-col size="6" size-lg="3">
@@ -73,12 +84,11 @@
       </ion-col>
 
       <ion-col  size="6" size-lg="3">
-        <ion-button
-        *ngIf="!disableNextBtn"
-          (click)="slideNext()"
-          >  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+        <ion-button *ngIf="!disableNextBtn" (click)="slideNext()">  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
       </ion-col>
+
     </ion-row>
+
   </ion-grid>
 
 </ion-content>

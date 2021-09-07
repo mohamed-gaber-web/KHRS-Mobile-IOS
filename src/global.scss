@@ -247,8 +247,6 @@ ion-radio {
     font-size: 18px;
   }
 
-
-
   ion-title{
     font-size: 25px;
     font-weight: 600;
@@ -273,7 +271,7 @@ ion-radio {
     width: 80%!important;
   }
 
-  .puzzle-fix {height: 80px!important; .title {width: 40%;}}
+  .puzzle-fix {height: 80px!important;}
   .puzzle-answer {margin-top: 0!important;}
 
   .example-box {
@@ -339,6 +337,11 @@ ion-radio {
   }
 }
 
+
+@media(min-width: 767px) and (max-width: 2000px) {
+  .puzzle-fix {.title {width: 40%;}}
+
+}
 
 
 /************* Media Query Desktop *****************/

@@ -101,34 +101,30 @@ export class SignUpPage implements OnInit {
     }
 
   ngOnInit() {
+  this.getRecommendeBy()
+  // ! Register Fields
+  this.registerForm = this.formBuilder.group({
+    'FirstName': ['', Validators.compose([Validators.required])],
+    'LastName': ['', Validators.compose([Validators.required])],
+    'email': ['', Validators.compose([Validators.required, emailValidator])],
+    'PhoneNumber': ['', Validators.compose([Validators.minLength(11), Validators.required])],
+    'Birthdate': [new Date(), Validators.compose([Validators.required])],
+    'Gender': [0 , Validators.required],
+    'password': ['', Validators.required],
+    'confirmPassword': ['', Validators.required],
+    'recommendedbyId': [0, Validators.required],
+    'acceptTerms': [null, Validators.required],
+    'languageId': [JSON.parse(localStorage.getItem('languageId'))],
+    file : this.formBuilder.group({
+      fieldName: ['', !Validators.required],
+      filename: ['', !Validators.required],
+      fileExtension: ['', !Validators.required],
+      fileData: ['', !Validators.required],
+    }),
+  },{validator: matchingPasswords('password', 'confirmPassword')});
 
-    this.getRecommendeBy()
-
-    // ! Register Fields
-    this.registerForm = this.formBuilder.group({
-      'FirstName': ['', Validators.compose([Validators.required])],
-      'LastName': ['', Validators.compose([Validators.required])],
-      'email': ['', Validators.compose([Validators.required, emailValidator])],
-      'PhoneNumber': ['', Validators.compose([Validators.minLength(11), Validators.required])],
-      'Birthdate': [new Date(), Validators.compose([Validators.required])],
-      'Gender': [0 , Validators.required],
-      'password': ['', Validators.required],
-      'confirmPassword': ['', Validators.required],
-      'recommendedbyId': [0, Validators.required],
-      'acceptTerms': [null, Validators.required],
-      'languageId': [JSON.parse(localStorage.getItem('languageId'))],
-      file : this.formBuilder.group({
-        fieldName: ['', !Validators.required],
-        filename: ['', !Validators.required],
-        fileExtension: ['', !Validators.required],
-        fileData: ['', !Validators.required],
-      }),
-    },{validator: matchingPasswords('password', 'confirmPassword')});
-
-    this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
-
+  this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
   }
-
 
   validateRegisterForm(isSubmitting = false) {
     for (const field of Object.keys(this.registerFormErrors)) {
@@ -144,7 +140,6 @@ export class SignUpPage implements OnInit {
       }
     }
   }
-
 
   // ! When resister form valid
   public onRegisterFormSubmit(values):void {
@@ -176,7 +171,7 @@ export class SignUpPage implements OnInit {
 
       });
      }
- }
+  }
 
  // ! get recomended by list
  getRecommendeBy() {

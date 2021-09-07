@@ -308,10 +308,9 @@ position: static!important;
 }
 
 
-@media (min-width: 1200px) {
+@media (min-width: 767px) {
   .cdk-drag-preview {
     width: 30%!important;
-
-      }
+    }
 
 }

@@ -107,7 +107,7 @@ export class SignInPage implements OnInit {
             this.router.navigateByUrl(this.returnUrl);
           } else {
             var toast = await this.toastController.create({
-              message: response['arrayMessage'][0],
+              message: 'Username And Password Incorrect',
               duration: 2000,
               color: 'danger',
             });
