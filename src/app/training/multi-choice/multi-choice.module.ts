@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HelpModalModule } from '../help-modal/help-modal.module';
+
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,7 +16,8 @@ import { MultiChoicePage } from './multi-choice.page';
     FormsModule,
     IonicModule,
     MultiChoicePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HelpModalModule
   ],
   declarations: [MultiChoicePage]
 })

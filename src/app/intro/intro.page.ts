@@ -18,7 +18,6 @@ export class IntroPage implements OnInit {
 
   ngOnInit() {
     this.getLang = localStorage.getItem('languageId');
-    console.log(this.getLang);
     this.subs.push(
       this.appService.getVidoes('Intro', this.getLang)
       .subscribe((response) => {

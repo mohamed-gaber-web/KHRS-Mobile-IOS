@@ -1,3 +1,4 @@
+import { HelpModalComponent } from './../help-modal/help-modal.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -6,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonSlides, NavController, ToastController } from '@ionic/angular';
+import { IonSlides, NavController, ToastController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AudioElement } from 'src/app/shared/models/audioObject';
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
@@ -56,7 +57,8 @@ export class MultiChoicePage implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     public navController: NavController,
-    private router: Router
+    private router: Router,
+    public modalController: ModalController,
   ) {}
 
   ngOnInit() {
@@ -305,6 +307,17 @@ export class MultiChoicePage implements OnInit {
     this.getQuestionAndAnswerMultiChoice();
     this.slides.slidePrev();
 
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: HelpModalComponent,
+      componentProps: {
+        "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
+        "modalTitle": "Multi Choice Tutorial"
+      }
+    });
+    return await modal.present();
   }
 
   ngOnDestroy() {

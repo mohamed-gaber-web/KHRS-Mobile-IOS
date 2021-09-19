@@ -62,7 +62,7 @@ ion-tab-bar {
 }
 
 ion-title{
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   --color: var(--ion-color-second-app);
   margin: 40px 0 30px 0;
@@ -149,9 +149,8 @@ ion-icon.close-icon {
 
 
 img.danish-flag {
-  width: 30px;
-  height: auto;
-  max-width: 70%;
+  width: 25px;
+  height: 25px;
 }
 
 
@@ -218,6 +217,14 @@ ion-radio {
   --color-checked: #48b95e;
 }
 
+.total-result {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ion-color-second-app);
+  text-align: center;
+  margin-left: 50px;
+}
+
 
 
 
@@ -225,11 +232,28 @@ ion-radio {
 
 @media(max-width: 767px) {
   .hide-desktop{display: none!important;}
-  .puzzle-fix {.title {width: 50%;}}
+  .puzzle-fix {.title {width: 40%;}}
+
+  .example-box {
+    .puzzle-answer .puzzle-fix .sound {
+      width: 70%;
+    }
+  .puzzle-fix {.title {width: 30%;}}
+  }
+
+    // Test Courses
+  .single-choice ion-text {
+      font-size: 16px!important;
+      margin: 20px 0 ;
+  }
+
+  ion-list-header {padding: 0;}
 }
 
 @media(min-width: 768px) {
   .hide-mobile {display: none!important;}
+
+
 }
 
 @media(min-width: 1024px) and (max-width: 2000px) {
@@ -272,10 +296,18 @@ ion-radio {
   }
 
   .puzzle-fix {height: 80px!important;}
+
   .puzzle-answer {margin-top: 0!important;}
 
   .example-box {
     .drag-answer ion-img{top: -12px!important;}
+
+    .puzzle-fix {height: 80px!important; width: 65vh!important;}
+
+    .img-volume ion-img {
+      position: relative!important;
+      top: 0!important;
+    }
   }
 
   .cdk-drag-preview {
@@ -335,14 +367,44 @@ ion-radio {
     height: 300px;
     margin: auto;
   }
+
+
 }
 
 
 @media(min-width: 767px) and (max-width: 2000px) {
   .puzzle-fix {.title {width: 40%;}}
 
+  .inro-screen {
+
+    img.intro-logo {
+      max-width: 300px!important;
+      height:auto;
+    }
+
+  }
+
 }
 
+@media(min-width: 1024px) and (max-width: 1104px) {
+  .example-box {
+    .puzzle-fix {height: 80px!important; width: 60vh!important;}
+  }
+}
+
+@media(min-width: 1400px) and (max-width: 1500px) {
+  .example-box {
+    .puzzle-fix {height: 80px!important; width: 70vh!important;}
+  }
+}
+
+@media(max-width: 350px) {
+  ion-title{
+    font-size: 15px;
+
+  }
+
+}
 
 /************* Media Query Desktop *****************/
 

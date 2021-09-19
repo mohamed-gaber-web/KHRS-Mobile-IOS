@@ -68,7 +68,10 @@ export class TestCoursePage implements OnInit {
 
       this.testService.getTestType(this.courseId, this.pageNumber)
       .subscribe(response => {
-        console.log('test parent component response', response);
+        if (response['questionType'] == 0) {
+          this.router.navigate(['courses/tabs/my-courses']);
+        }
+
         this.questionType = response['questionType'];
         this.allTestData = response;
         // debugger;

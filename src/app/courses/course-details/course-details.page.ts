@@ -5,13 +5,11 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CourseService } from 'src/app/shared/services/courses.service';
 
-import { NavController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { TestService } from 'src/app/shared/services/test.service';
 import { Howl } from 'howler';
-import { HttpHeaders } from '@angular/common/http';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { AppService } from 'src/app/shared/services/app.service';
 
 @Component({
   selector: 'app-course-details',

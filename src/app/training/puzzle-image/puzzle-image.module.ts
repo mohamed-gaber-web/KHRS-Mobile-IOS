@@ -10,6 +10,9 @@ import { PuzzleSoundComponent } from './puzzle-sound/puzzle-sound.component';
 import { PuzzleImagePage } from './puzzle-image.page';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragScrollModule } from "cdk-drag-scroll";
+
+
 import { PuzzleSoundModule } from './puzzle-sound/puzzle-sound.module';
 
 import { HelpModalModule } from '../help-modal/help-modal.module';
@@ -22,7 +25,8 @@ import { HelpModalModule } from '../help-modal/help-modal.module';
     PuzzleImagePageRoutingModule,
     DragDropModule,
     PuzzleSoundModule,
-    HelpModalModule
+    HelpModalModule,
+    DragScrollModule
 
   ],
   declarations: [PuzzleImagePage],
