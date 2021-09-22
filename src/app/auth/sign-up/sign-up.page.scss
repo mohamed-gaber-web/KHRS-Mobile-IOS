@@ -55,3 +55,17 @@
 
 
 
+.ios .form ion-item ion-label{
+  margin: 0;
+  font-size: 12px;
+}
+
+.ios input.native-input.sc-ion-input-ios {
+  font-size: 12px!important;
+  padding: 0;
+}
+
+.ios ion-text.error {
+  font-size: 11px!important;
+
+}
