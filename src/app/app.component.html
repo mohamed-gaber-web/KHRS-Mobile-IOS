@@ -1,6 +1,6 @@
 <ion-menu side="start" menuId="custom" contentId="main" class="my-custom-menu">
   <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar class="ios-toolbar" color="primary">
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -23,11 +23,11 @@
       </ion-item>
       <ion-item [routerLink]="['/faq']">
         <ion-icon color="primary" slot="start" name="chatbox-ellipses-outline"></ion-icon>
-        Faq
+        FAQS
       </ion-item>
       <ion-item *ngIf="authService.IsLoggedIn" [routerLink]="['/auth/user-profile']">
         <ion-icon color="primary" slot="start" name="settings-outline"></ion-icon>
-        Setting
+        Settings
       </ion-item>
       <ion-item *ngIf="authService.IsLoggedIn" (click)="logout()">
         <ion-icon color="primary" slot="start" name="log-out-outline"></ion-icon>

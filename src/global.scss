@@ -76,9 +76,12 @@ ion-title{
   --color: var(--ion-color-second-app);
   padding: 30px 0;
   text-transform: uppercase;
-  text-align: center;
-  margin: 0;
+  margin: 0 0 0 20px;
+  // text-align: left;
+  // margin-left: 20px!important;
 }
+
+
 
 .ios ion-toolbar.ios-toolbar {
     --background: #edfaf5!important;
@@ -420,6 +423,32 @@ ion-radio {
   }
 
 }
+
+@media(max-width: 380px) {
+  .ios ion-title{
+  font-size: 16px!important;
+  text-align: left!important;
+}
+
+.ios .course h3 {
+
+    font-size: 16px!important;
+    font-weight: 500!important;
+}
+
+.course h3 {
+
+    font-size: 16px!important;
+    font-weight: 500!important;
+}
+}
+
+.ios ion-menu-button {
+  --color: #fff!important;
+  padding: 0 11px;
+}
+
+.ios ion-back-button {font-size: 16px;}
 
 /************* Media Query Desktop *****************/
 
