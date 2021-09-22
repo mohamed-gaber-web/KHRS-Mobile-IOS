@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 
-import { SwiperModule } from 'swiper/angular';
+// import { SwiperModule } from 'swiper/angular';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptor } from './app-interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -30,7 +30,7 @@ export function LanguageLoader(http: HttpClient) {
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    SwiperModule,
+    // SwiperModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
