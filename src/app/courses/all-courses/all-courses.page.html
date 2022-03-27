@@ -1,8 +1,8 @@
-<ion-toolbar class="ios-toolbar">
+<div class="ios-toolbar">
   <ion-title>
-    All Courses
+    All courses
   </ion-title>
-</ion-toolbar>
+</div>
 
 <ion-content>
 
@@ -10,7 +10,7 @@
   <ion-row>
     <ion-col>
       <div class="img-intro">
-        <ion-img loading="lazy" src="../../../assets/images/shutterstock_360072566.jpg"></ion-img>
+        <ion-img loading="lazy" src="../../../assets/images/intro-screen-course.png" alt="image-intro-course"></ion-img>
       </div>
       <div class="icon-sound" (click)="startAudio(courseAudio)">
         <div class="img-volume">
@@ -26,24 +26,18 @@
 
   <ion-grid>
     <ion-row class="ion-text-center">
-      <ion-col *ngFor="let course of courses" size-sm="12" size-md="12" size-lg="4" size-xl="3">
-        <ion-card  class="course course-desktop">
-          <ion-img class="img-all-course" loading="lazy" src="{{course.imagePath}}"></ion-img>
-          <h3 class="padding-top"  color="primary"> {{course.courseTranslations[0]?.title}} </h3>
-          <ion-item>
-              <div *ngIf="course.courseTranslations[0]?.introVoicePath">
-                <div class="icon-sound-course">
-                    <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course)">
-                    </ion-icon>
-                  </div>
+      <ion-col *ngFor="let course of courses" size-xs="12" size-sm="12">
+        <div class="course">
+          <ion-img  (click)="getCourse(course.id)" class="img-all-course" loading="lazy" src="{{course.imagePath}}"></ion-img>
+          <h3  (click)="getCourse(course.id)" class="padding-top"  color="primary"> {{course.courseTranslations[0]?.title}} </h3>
+            <div *ngIf="course.courseTranslations[0]?.introVoicePath">
+              <div class="icon-sound-course">
+                  <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!course.audioElement.status? 'play' : 'stop'" (click)="playIntroHTML(course)">
+                  </ion-icon>
+                </div>
               </div>
+            </div>
 
-            <ion-button (click)="getCourse(course.id)"  fill="outline" slot="end">
-              <ion-icon name="eye"></ion-icon>
-              View
-            </ion-button>
-          </ion-item>
-        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

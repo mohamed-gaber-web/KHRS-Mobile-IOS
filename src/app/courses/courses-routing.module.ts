@@ -27,10 +27,15 @@ const routes: Routes = [
     children: [
     {
       path: 'all-courses',
-      loadChildren: () => import('./all-courses/all-courses.module').then( m => m.AllCoursesPageModule)
+      loadChildren: () => import('./all-courses/all-courses.module').then( m => m.AllCoursesPageModule),
+      data: {title: "All courses"}
     },
     {
       path: 'my-courses',
+      loadChildren: () => import('./my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
+    },
+    {
+      path: 'setting',
       loadChildren: () => import('./my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
     },
     {

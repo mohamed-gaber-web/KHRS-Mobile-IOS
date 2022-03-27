@@ -26,8 +26,10 @@ export class ChooseLanguagePage implements OnInit {
     this.isLoading = true;
     this.subs.push(
       this.appSerrvice.getLanguage().subscribe(response => {
+        console.log(response);
+
         this.isLoading = false;
-        this.langItems = response['result'];
+        this.langItems = response['result'].result;
       })
     );
   }
@@ -35,7 +37,7 @@ export class ChooseLanguagePage implements OnInit {
 
 
   chooseLanguage() {
-    this.router.navigate(['/intro']);
+    this.router.navigate(['/auth/sign-in']);
   }
 
   getLanguageId(item) {

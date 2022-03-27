@@ -9,6 +9,9 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
@@ -32,13 +35,110 @@
 //   height: auto;
 // }
 
+body, * {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+ion-toolbar {
+  --background: transparent !important;
+  border-radius: 0 0 30px 30px !important;
+  padding: 7px 0;
+  -webkit-box-shadow: 2px 4px 15px -6px rgba(0,0,0,0.58);
+  -moz-box-shadow: 2px 4px 15px -6px rgba(0,0,0,0.58);
+  box-shadow: 2px 4px 15px -6px rgba(0,0,0,0.58);
+  z-index: 20000000000 !important;
+}
+
+.background-image{
+  --background: url(./assets/images/login.png) center top no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  max-width: 100%;
+}
+
+.tabs-icons img {
+  width: 25%;
+  margin-bottom: 5px;
+}
+
+
 .top-title h3 {
   font-size: 24px;
   font-weight: bold;
   margin: 30px 0 0 0;
   padding: 0 0 0 20px;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--ion-color-second-app);
+}
+
+.course {
+
+  position: relative;
+  margin: 30px 0;
+  z-index: 0;
+
+  ion-img {
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 20px;
+    max-width: 90%;
+    height: 250px;
+    padding: 0;
+    margin: 0 auto;
+    object-fit: fill;
+    overflow: hidden;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: none;
+    background-color: #fff;
+    padding: 15px 0;
+    border-radius: 20px;
+    color: #000;
+    border: 2px solid #8AFA6F;
+    position: absolute;
+    bottom: -33px;
+    width: 80%;
+    margin: auto;
+    height: auto;
+    left: 0;
+    right: 0;
+  }
+
+  .icon-sound-course {
+    background-color: #A7F781;
+    border: 3px dotted #fff;
+    width: 53px;
+    height: 53px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    z-index: 20000000;
+
+    ion-icon {
+      font-size: 35px;
+      color: var(--ion-color-second-app);
+    }
+
+  }
+
+  ion-button {
+    --color: #fff;
+    max-width: 50%;
+    --background: transparent !important;
+    --box-shadow: none;
+    --color: #003182;
+    height: auto;
+    font-weight: 800;
+  }
 }
 
 .native-input.sc-ion-input-md:-webkit-autofill {
@@ -62,12 +162,12 @@ ion-tab-bar {
 }
 
 ion-title{
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 600;
   --color: var(--ion-color-second-app);
   margin: 40px 0 30px 0;
-  text-transform: uppercase;
-  text-align: left;
+  text-transform: none;
+  text-align: center;
 }
 
 .ios ion-title{
@@ -120,10 +220,8 @@ ion-toast {
 // }
 
 .img-course-intro .img-intro ion-img {
-  max-width: 100%;
-  width: 100%;
+  max-width: 60%;
   height: auto;
-  border-radius: 10px!important;
   margin: auto;
 }
 

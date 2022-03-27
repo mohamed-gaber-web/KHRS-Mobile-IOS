@@ -1,11 +1,19 @@
 h2#title {
   font-weight: 600;
-  font-size: 16px;
-  text-transform: capitalize;
+  font-size: 20px;
   text-align: center!important;
-  margin: 30px auto;
-  color: #003182;
+  margin: 20px auto;
+  color: var(--ion-color-second-app);
 }
+
+  .course-details_img {
+    ion-img {
+      border: 2px solid var(--ion-color-second-app);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+  }
+
 
   ion-item {
     margin: 5px 0;
@@ -51,23 +59,25 @@ h2#title {
   display: block;
   color: #fff;
   border-radius: 10px;
-
 }
-
 
 .sound-inro {
   margin: 10px 0;
   display: flex;
   justify-content: space-evenly;
-  position: relative;
+  align-items: center;
+
+  .img-person {
+    img {
+      width: 80%;
+      height: auto;
+    }
+  }
 
   .img-volume {
     ion-img {
       max-width: 45px;
       width: 45px;
-      position: absolute;
-      top: 56px;
-      right: 60px;
     }
   }
 
@@ -97,35 +107,28 @@ ion-text {
   top: 14px;
 }
 
-
 .valid {
-  border: 1px dotted var(--ion-color-second-app);
-  margin: 20px 0;
+  border: 2px solid #8AFA6F;
+  margin: 20px auto;
   display: flex;
   justify-content: center;
   border-radius: 10px;
+  width: 50%;
 }
 
 video {
-  background-color: #fff;
-  border: 1px dotted var(--ion-color-second-app);
   padding: 10px 0 0 0;
 }
 
-.desc {
-  background-color: #fff;
-  padding: 10px 0 10px 10px;
-  border: 2px dotted #003182;
-}
-
 .course-details-descr {
-  ion-text {
-    font-size: 14px;
-    line-height: 26px;
+  text-align: center;
+ ion-text {
+  text-align: center !important;
+  font-size: 14px;
+  color: var(--ion-color-second-app) !important;
+  line-height: 26px;
+  font-weight: 500;
   }
-  background-color: #fff;
-  padding: 15px;
-  border: 1px dotted #003182;
 }
 
 

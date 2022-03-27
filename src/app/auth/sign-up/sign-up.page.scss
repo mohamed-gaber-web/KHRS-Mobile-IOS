@@ -1,27 +1,53 @@
-.background {
-  --background: url(../../../assets/images/spray 4.png) top right no-repeat;
-  position: relative;
-  top: 30px;
-}
-
-.form {
+.sign-up {
 
   margin: 20px 0;
 
-  ion-item {
-    // --background: #fff;
-    // --border-radius: 50px;
-    --border-color: transparent;
-    margin: 0;
-    --background: #fff;
-    --border-radius: 50px;
-    --padding-top: 0;
-    --padding-bottom: 0;
+  h3 {
+    text-align: left !important;
+    font-size: 22px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #000;
+    padding-left: 10px;
+  }
 
-    ion-label {
-      font-size: 14px;
-      color: var(--ion-color-second-app);
+  .form-group {
+
+    // margin: 30px 0;
+    position: relative;
+
+    label {
+      display: block;
+      padding-bottom: 10px;
+      font-size: 16px;
       font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      height: 50px;
+      border-radius: 30px;
+      border: 1px solid #C4C4C4;
+      padding: 0 10px;
+      color: #000 !important;
+      position: relative;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    input[type="file"]{
+      border: none !important;
+      background-color: #fff;
+      padding-top: 13px;
+    }
+
+    ion-icon.icon-eye {
+      color: #000;
+      font-size: 25px!important;
+      position: absolute;
+      right: 20px;
+      top: 43px;
+      cursor: pointer;
     }
   }
 
@@ -31,9 +57,8 @@
     font-size: 18px !important;
     font-weight: 400;
     width: 100%;
-    height: 45px;
+    height: 50px;
     --box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.16);
-    text-transform: capitalize;
   }
 
   p.no-account {
@@ -43,9 +68,9 @@
     padding-bottom: 20px;
 
     span {
-      color: #A7F781;
+      color: #8AFA6F;
       a {
-        color: var(--ion-color-second-app)!important;
+        color: #8AFA6F !important;
         font-weight: 600;
         text-decoration: none;
       }
@@ -69,7 +94,3 @@
   font-size: 11px!important;
 }
 
-.custom-file-input {
-  font-size: 12px;
-  padding-left: 50px!important;
-}

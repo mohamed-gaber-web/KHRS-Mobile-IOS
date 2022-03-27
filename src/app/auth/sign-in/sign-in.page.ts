@@ -23,6 +23,7 @@ export class SignInPage implements OnInit {
   isLoading: boolean = false;
   returnUrl: string;
   loginCredentials: loginCredentials;
+  showPasswordItem: boolean = false;
   subs: Subscription[] = [];
 
   loginFormErrors = {
@@ -130,6 +131,11 @@ export class SignInPage implements OnInit {
         () => (this.isLoading = false)
       );
     }
+  }
+
+  // * show and hide password
+  showPassword() {
+    this.showPasswordItem = !this.showPasswordItem
   }
 
   ngOnDestroy() {

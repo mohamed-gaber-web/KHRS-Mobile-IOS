@@ -1,4 +1,4 @@
-<ion-header class="course">
+
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/courses/tabs/all-courses"> </ion-back-button>
@@ -6,37 +6,36 @@
 
     <ion-menu-button slot="start"></ion-menu-button>
 
-
-    <div class="img-profile">
+    <div class="img-profile" slot="end" routerLink="user-profile">
       <ion-avatar slot="end">
         <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
         <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
         src="../../../assets/images/image profille (1).png">
       </ion-avatar>
-      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
-
-    <!-- <img  [src]="userInfo.languageIcon" /> -->
-
-    <ion-avatar class="ion-margin-end"  slot="end">
-      <img loading="lazy" class="img-langauge" [src]="userInfo.languageIcon">
-    </ion-avatar>
-
   </ion-toolbar>
-</ion-header>
+
 
 <ion-content>
 
-  <ion-tabs >
+  <ion-tabs class="tabs-icons">
 
-    <ion-tab-bar slot="bottom">
+    <ion-tab-bar style="border-radius: 20px 20px 0 0; padding: 10px 0;" slot="bottom">
       <ion-tab-button tab="all-courses">
-        <ion-icon name="grid-outline"></ion-icon>
+        <!-- <ion-icon name="grid-outline"></ion-icon> -->
+        <img src="../../../assets/images/all-courses-icon.png" alt="all-courses-icon" />
         <ion-label>All Courses</ion-label>
       </ion-tab-button>
 
+      <ion-tab-button tab="setting">
+        <!-- <ion-icon name="documents-outline"></ion-icon> -->
+        <img src="../../../assets/images/seeting.png" alt="all-courses-icon" />
+        <ion-label>Setting</ion-label>
+      </ion-tab-button>
+
       <ion-tab-button tab="my-courses">
-        <ion-icon name="documents-outline"></ion-icon>
+        <!-- <ion-icon name="documents-outline"></ion-icon> -->
+        <img src="../../../assets/images/my-courses-icon.png" alt="all-courses-icon" />
         <ion-label>My Courses</ion-label>
       </ion-tab-button>
 
