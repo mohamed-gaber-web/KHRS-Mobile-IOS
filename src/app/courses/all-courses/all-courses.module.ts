@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { AllCoursesPageRoutingModule } from './all-courses-routing.module';
 
 import { AllCoursesPage } from './all-courses.page';
+import { CategoryComponent } from './category/category.component';
+
+
 
 @NgModule({
   imports: [
@@ -15,7 +18,7 @@ import { AllCoursesPage } from './all-courses.page';
     IonicModule,
     AllCoursesPageRoutingModule
   ],
-  declarations: [AllCoursesPage],
- 
+  declarations: [AllCoursesPage, CategoryComponent],
+
 })
 export class AllCoursesPageModule {}

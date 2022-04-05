@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   getAllCoursesAPI,
@@ -6,7 +6,8 @@ import {
   getUsersCoursesAPI,
   createApplyCourse,
   courseMaterials,
-  getUserCourseDetails } from 'src/app/api.constants';
+  getUserCourseDetails,
+  getCourseCategories} from 'src/app/api.constants';
 import { Course } from '../models/course';
 import { MyCourse } from '../models/myCourse';
 
@@ -59,5 +60,13 @@ export class CourseService {
   // ** get course material
   getCourseMaterial(courseId: number, offset: number, limit: number) {
     return this.http.get(`${courseMaterials}?Offset=${offset}&Limit=${limit}&courseId=${courseId}`);
+  }
+
+    // ** get all categories
+  getCourseCategories(offset: number, limit: number) {
+    const params = new HttpParams()
+      .set('Offset', `${ offset }`)
+      .set('Limit', `${limit}`)
+    return this.http.get(`${getCourseCategories}`, { params })
   }
 }

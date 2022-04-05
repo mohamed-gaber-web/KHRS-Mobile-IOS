@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button> </ion-back-button>
@@ -15,120 +15,62 @@
       </ion-avatar>
       <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
-
-    <ion-avatar class="ion-margin-end"  slot="end">
-      <img class="img-langauge" [src]="userInfo.languageIcon">
-    </ion-avatar>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-toolbar class="ios-toolbar">
-  <ion-title class="ion-text-center">
-    Update Profile
-  </ion-title>
-</ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/courses/tabs/all-courses"> </ion-back-button>
+    </ion-buttons>
+
+    <ion-menu-button slot="start"></ion-menu-button>
+
+    <div class="img-profile" slot="end" routerLink="user-profile">
+      <ion-avatar slot="end">
+        <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+        <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
+        src="../../../assets/images/image profille (1).png">
+      </ion-avatar>
+    </div>
+  </ion-toolbar>
 
 <ion-content>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size-md="8" size-lg="6">
-        <ion-card>
-          <ion-list *ngIf="userInfo">
-            <ion-item>
-              <ion-label color="primary"> Firstname : {{ userInfo.firstname }} </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary"> Lastname : {{ userInfo.lastname }} </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary"> Phone Number : {{ userInfo.phoneNumber }} </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary"> Email : {{ userInfo.email }} </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary"> Gender : {{ userInfo.gender === '0' ? 'male' : 'female' }} </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label color="primary"> Birthday : {{ userInfo.birthdate }} </ion-label>
-            </ion-item>
+  <div *ngIf="userInfo">
 
-            <ion-item>
-              <ion-button class="update-button" (click)="goToEditUser()"> <ion-icon name="create-outline"></ion-icon> Edit </ion-button>
-            </ion-item>
-          </ion-list>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+    <div class="user-profile-item">
+      <ion-avatar>
+        <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+        <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
+        src="../../../assets/images/image profille (1).png">
+      </ion-avatar>
+    </div>
+
+
+    <div class="user-item">
+      <ion-label color="primary"> Firstname : {{ userInfo.firstname }} </ion-label>
+    </div>
+    <div class="user-item">
+      <ion-label color="primary"> Lastname : {{ userInfo.lastname }} </ion-label>
+    </div>
+    <div class="user-item">
+      <ion-label color="primary"> Phone Number : {{ userInfo.phoneNumber }} </ion-label>
+    </div>
+    <div class="user-item">
+      <ion-label color="primary"> Email : {{ userInfo.email }} </ion-label>
+    </div>
+    <div class="user-item">
+      <ion-label color="primary"> Gender : {{ userInfo.gender === '0' ? 'male' : 'female' }} </ion-label>
+    </div>
+    <div class="user-item">
+      <ion-label color="primary"> Birthday : {{ userInfo.birthdate }} </ion-label>
+    </div>
+  </div>
+
+  <ion-grid class="ion-padding">
+    <ion-button class="update-button" (click)="goToEditUser()"> <ion-icon name="create-outline"></ion-icon> Edit </ion-button>
+    <ion-button class="" routerLink="change-password"> <ion-icon name="create-outline"></ion-icon> Change password </ion-button>
   </ion-grid>
-
-  <ion-toolbar>
-    <ion-title class="ion-text-center">
-      Update Password
-    </ion-title>
-  </ion-toolbar>
-
-  <form [formGroup]="passwordForm" (ngSubmit)="updatedPassword()">
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-lg="6" size-md="8">
-          <ion-item lines="full">
-            <ion-label position="floating" color="primary">Current Password</ion-label>
-            <ion-input formControlName='currentPassword' type="password" minlength="6" required></ion-input>
-          </ion-item>
-
-          <ion-text color="danger" *ngIf="passwordFormErrors.currentPassword">
-            {{ passwordFormErrors.currentPassword }}
-          </ion-text>
-
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-lg="6" size-md="8">
-          <ion-item lines="none">
-            <ion-label position="floating" color="primary">New Password</ion-label>
-            <ion-input formControlName='newPassword' type="password" required></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="passwordFormErrors.newPassword">
-            {{ passwordFormErrors.newPassword }}
-          </ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-lg="6" size-md="8">
-          <ion-item lines="none">
-            <ion-label position="floating" color="primary">Confirm Password</ion-label>
-            <ion-input formControlName='confirmPassword' type="password" required></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="passwordFormErrors.confirmPassword">
-            {{ passwordFormErrors.confirmPassword }}
-          </ion-text>
-          <ion-text color="danger" *ngIf="passwordForm.controls.confirmPassword.hasError('mismatchedPasswords')">{{ 'notMatch' | translate }}</ion-text>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-
-
-
-    <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="12" size-lg="6" size-md="8">
-          <ion-button (click)="updatedPassword()">
-            <ion-icon name="checkmark-outline"></ion-icon>
-            Save
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-  </form>
 
 </ion-content>
 

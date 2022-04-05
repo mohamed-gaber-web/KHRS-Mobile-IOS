@@ -1,9 +1,3 @@
-<div class="ios-toolbar">
-  <ion-title>
-    All courses
-  </ion-title>
-</div>
-
 <ion-content>
 
 <ion-grid class="img-course-intro">
@@ -23,10 +17,19 @@
   </ion-row>
 </ion-grid>
 
+<app-category></app-category>
+
+<hr />
 
   <ion-grid>
+    <div class="title ios-toolbar">
+      <h3>
+        <img class="title-icon" src="../../../assets/images/all-course-icon.png" alt="all-courses-icon" />
+        All courses
+      </h3>
+    </div>
     <ion-row class="ion-text-center">
-      <ion-col *ngFor="let course of courses" size-xs="12" size-sm="12">
+      <ion-col *ngFor="let course of courses" size-xs="6" size-sm="12">
         <div class="course">
           <ion-img  (click)="getCourse(course.id)" class="img-all-course" loading="lazy" src="{{course.imagePath}}"></ion-img>
           <h3  (click)="getCourse(course.id)" class="padding-top"  color="primary"> {{course.courseTranslations[0]?.title}} </h3>

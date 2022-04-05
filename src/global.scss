@@ -59,10 +59,13 @@ ion-toolbar {
 }
 
 .tabs-icons img {
-  width: 25%;
+  width: 22%;
   margin-bottom: 5px;
 }
 
+.toolbar-title {
+    overflow: auto !important;
+}
 
 .top-title h3 {
   font-size: 24px;
@@ -71,6 +74,55 @@ ion-toolbar {
   padding: 0 0 0 20px;
   text-transform: none;
   color: var(--ion-color-second-app);
+  text-align: center;
+}
+
+.img-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-avatar {
+    width: 50px;
+    margin: 5px 15px;
+    height: 50px;
+    border: 2px solid #fff;
+  }
+}
+
+.help-icon {
+    font-size: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 50px auto;
+}
+
+.title {
+  text-align: center;
+  h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px 0 0 0;
+    padding: 0 0 0 20px;
+    text-transform: none;
+    color: var(--ion-color-second-app);
+  }
+
+}
+
+  img.title-icon {
+    width: 10%;
+    height: auto;
+    position: relative;
+    top: 10px;
+    overflow: auto !important;
+  }
+.no-data {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  padding-top: 10px;
 }
 
 .course {
@@ -83,48 +135,52 @@ ion-toolbar {
     border: 2px solid var(--ion-color-primary);
     border-radius: 20px;
     max-width: 90%;
-    height: 250px;
+    height: 215px;
     padding: 0;
     margin: 0 auto;
-    object-fit: fill;
+    object-fit: cover;
     overflow: hidden;
   }
 
   h3 {
-    font-size: 18px;
+  font-size: 13px;
     font-weight: 500;
     text-transform: none;
     background-color: #fff;
-    padding: 15px 0;
+    padding: 0;
     border-radius: 20px;
     color: #000;
     border: 2px solid #8AFA6F;
     position: absolute;
-    bottom: -33px;
-    width: 80%;
+    bottom: -20px;
+    width: 85%;
     margin: auto;
-    height: auto;
+    height: 60px;
     left: 0;
     right: 0;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .icon-sound-course {
     background-color: #A7F781;
     border: 3px dotted #fff;
-    width: 53px;
-    height: 53px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     cursor: pointer;
     position: absolute;
-    top: 10px;
-    right: 40px;
+    top: 5px;
+    right: 15px;
     z-index: 20000000;
 
     ion-icon {
-      font-size: 35px;
+      font-size: 25px;
       color: var(--ion-color-second-app);
     }
 
@@ -170,7 +226,7 @@ ion-title{
   text-align: center;
 }
 
-.ios ion-title{
+.ios h3{
   font-size: 20px;
   font-weight: 600;
   --color: var(--ion-color-second-app);
@@ -181,6 +237,13 @@ ion-title{
   // margin-left: 20px!important;
 }
 
+hr {
+    height: 1px;
+    border-width: 0;
+    box-sizing: content-box;
+    border-bottom: 5px solid #062f87;
+    width: 80%;
+}
 
 
 .ios ion-toolbar.ios-toolbar {

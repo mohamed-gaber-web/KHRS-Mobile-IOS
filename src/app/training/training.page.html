@@ -1,24 +1,18 @@
-<ion-header class="course">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="courses/tabs/my-courses"> </ion-back-button>
+      <ion-back-button defaultHref="/courses/tabs/all-courses"> </ion-back-button>
     </ion-buttons>
 
     <ion-menu-button slot="start"></ion-menu-button>
 
-    <div class="img-profile">
+    <div class="img-profile" slot="end" routerLink="user-profile">
       <ion-avatar slot="end">
-        <img *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
-        <img *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
+        <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+        <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
         src="../../../assets/images/image profille (1).png">
       </ion-avatar>
-      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
     </div>
-
-    <ion-avatar class="ion-margin-end"  slot="end">
-      <img class="img-langauge" [src]="userInfo.languageIcon">
-    </ion-avatar>  </ion-toolbar>
-</ion-header>
+  </ion-toolbar>
 
 
 <!-- <ion-toolbar>
@@ -32,7 +26,7 @@
   <ion-grid class="img-course-intro">
     <ion-row>
       <ion-col size="10" size-lg="4">
-        <ion-img src="../../../assets/images/img-intro.png"></ion-img>
+        <ion-img class="img-intro" src="../../../assets/images/img-intro.png"></ion-img>
         <div class="icon-sound">
           <div class="img-volume">
             <ion-img
@@ -45,7 +39,11 @@
   </ion-grid>
 
   <ion-grid>
-    <h3 class="training-title ion-text-center"> Please Choose Exercise </h3>
+    <h3 class="training-title ion-text-center">
+      <img class="exercise-title-icon" src="../../../assets/images/exercise.png" alt="exercise-icon" />
+        Exercise
+    </h3>
+    <h4> Please choose exercise </h4>
     <ion-row
 
      class="ion-align-self-center">

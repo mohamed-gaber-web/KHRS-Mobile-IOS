@@ -1,10 +1,10 @@
 h2#title {
   font-weight: 600;
-  font-size: 16px;
-  text-transform: capitalize;
+  font-size: 20px;
+  text-transform: none;
   text-align: center!important;
-  margin: 30px auto;
-  color: #003182;
+  margin: 20px auto;
+  color: var(--ion-color-second-app);
 }
 
 .course-date ion-item {
@@ -17,31 +17,30 @@ ion-item {
 }
 
 .icon-valid {
-  width: 30px;
-  height: 30px;
-  line-height: 37px;
-  background-color: var(--ion-color-second-app);
-  text-align: center;
-  border-radius: 50%;
-  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 39px;
+    background-color: var(--ion-color-second-app);
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 10px;
 
-  ion-icon {
-    color: #A7F781;
-    font-size: 18px;
+    ion-icon {
+      color: #fff;
+      font-size: 21px;
+    }
+
   }
 
-}
+  ion-label {
+    font-size: 16px;
+    font-weight: 500;
+    --color: var(--ion-color-second-app);
+  }
 
-ion-label {
-  font-size: 16px;
-  font-weight: 500;
-  --color: var(--ion-color-second-app);
-}
 
 .btn {
-
   margin: 20px 0;
-
   ion-button {
     margin: 10px 0;
   }
@@ -60,26 +59,40 @@ video {
   margin-top: 10px;
 }
 
+ion-img.course-details_img {
+  border: 2px solid var(--ion-color-second-app);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+
 
 .desc {
   background-color: #fff;
-  padding: 10px 0 10px 10px;
-  border: 2px dotted #003182;
+  text-align: center;
+  font-size: 14px;
+  padding: 0 10px;
+  font-weight: 500;
+  line-height: 25px;
 }
 
 .sound-inro {
   margin: 10px 0;
   display: flex;
   justify-content: space-evenly;
-  position: relative;
+  align-items: center;
+
+  .img-person {
+    img {
+      width: 80%;
+      height: auto;
+    }
+  }
 
   .img-volume {
     ion-img {
       max-width: 45px;
       width: 45px;
-      position: absolute;
-      top: 56px;
-      right: 60px;
     }
   }
 
@@ -88,4 +101,14 @@ video {
     height: auto;
   }
 
+}
+
+
+.valid {
+  border: 2px solid #8AFA6F;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  width: 60%;
 }

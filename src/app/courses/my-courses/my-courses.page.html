@@ -1,9 +1,8 @@
-<div class="ios-toolbar">
+<!-- <div class="ios-toolbar">
   <ion-title>
     My courses
   </ion-title>
-</div>
-
+</div> -->
 <ion-content>
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
@@ -27,29 +26,26 @@
 
   <ion-grid>
     <ion-row class="ion-text-center">
+      <!-- IOn Ref -->
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="chevron-down-circle-outline"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+      <!-- Ion Ref -->
 
+        <ion-col *ngFor="let course of myCourses" size-xs="6" size-sm="12">
 
-        <!-- IOn Ref -->
-        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-          <ion-refresher-content
-            pullingIcon="chevron-down-circle-outline"
-            pullingText="Pull to refresh"
-            refreshingSpinner="circles"
-            refreshingText="Refreshing...">
-          </ion-refresher-content>
-        </ion-refresher>
-        <!-- Ion Ref -->
-
-        <ion-col *ngFor="let course of myCourses" size-xs="12" size-sm="12">
-
-          <div class="course">
+          <div class="my-course">
               <ion-img class="img-all-course" loading="lazy"  src="{{course.course.imagePath}}"></ion-img>
               <h3 class="ion-padding-top"  color="primary">
                 {{course.course.courseTranslations[0]?.title}}
                 <div *ngIf="course.userCourse.status == 4" class="status"> <b> Pending </b> </div>
                 <div *ngIf="course.userCourse.status == 2" class="status"> <b> Expired </b> </div>
                 <div *ngIf="course.userCourse.status == 3" class="status"> <b> Failed </b> </div>
-                <div *ngIf="course.userCourse.status == 4" class="status"> <b> Pending </b> </div>
                 <div *ngIf="course.userCourse.status == 5">
                   <ion-button
                   (click)="goToChooseCourseMaterial(course.course.id, course.userCourse.courseId)">

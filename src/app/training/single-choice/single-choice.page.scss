@@ -11,36 +11,9 @@ ion-header ion-img {
   height: auto;
   margin-top: 10px;
 }
-
-
-.img-profile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  ion-avatar {
-    width: 60px;
-    margin: 5px 0;
-    height: 60px;
-  }
-
-  ion-label {
-    font-size: 15px;
-    padding-left: 10px;
-  }
-}
-
 /* end header top */
 
-ion-toolbar {
 
-  ion-icon {
-    color: var(--ion-color-second-app);
-    font-size: 30px;
-    margin-right: 20px;
-    margin-top: 24px;
-  }
-}
 
 .single-choice {
   ion-text{
@@ -62,14 +35,6 @@ ion-toolbar {
   }
 }
 
-.img-langauge {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  right: 13px;
-  top: 14px;
-  border: 1px solid #ccc;
-}
 
 .hideButtonNext {
   display: none;

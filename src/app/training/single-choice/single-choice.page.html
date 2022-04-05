@@ -1,33 +1,27 @@
-<ion-header class="course">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/exercise"> </ion-back-button>
-    </ion-buttons>
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/exercise"> </ion-back-button>
+  </ion-buttons>
 
-    <ion-menu-button slot="start"></ion-menu-button>
+  <ion-menu-button slot="start"></ion-menu-button>
 
-    <div class="img-profile">
-      <ion-avatar slot="end">
-        <img *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
-        <img *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
-        src="../../../assets/images/image profille (1).png">
-      </ion-avatar>
-      <ion-label>{{ userInfo.firstname + ' ' +  userInfo.lastname }}</ion-label>
-    </div>
-
-    <ion-avatar class="ion-margin-end"  slot="end">
-      <img class="img-langauge" [src]="userInfo.languageIcon">
-    </ion-avatar>  </ion-toolbar>
-</ion-header>
+  <div class="img-profile" slot="end" routerLink="user-profile">
+    <ion-avatar slot="end">
+      <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+      <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
+      src="../../../assets/images/image profille (1).png">
+    </ion-avatar>
+  </div>
+</ion-toolbar>
 
 
-<ion-toolbar class="ios-toolbar">
-  <ion-title slot="start">
+<div class="ios-toolbar">
+  <ion-title>
     single choice
     <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
   </ion-title>
-  <ion-icon slot="end" (click)="presentModal()"  name="help-circle-outline"></ion-icon>
-</ion-toolbar>
+</div>
+<ion-icon class="help-icon" (click)="presentModal()" name="help-circle-outline"></ion-icon>
 
 <ion-content>
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
