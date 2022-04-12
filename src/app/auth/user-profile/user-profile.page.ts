@@ -20,6 +20,8 @@ export class UserProfilePage implements OnInit {
   userInfo: any;
   passwordForm: FormGroup;
   subs: Subscription[] = [];
+  isLoading: boolean = false;
+  userDataList: any;
 
   passwordFormErrors = {
     currentPassword: '',
@@ -49,6 +51,7 @@ export class UserProfilePage implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.authService.getUser();
+    this.getProfileDataList();
 
     this.passwordForm = this.formBuilder.group({
       'currentPassword': ['', Validators.required],
@@ -111,6 +114,14 @@ export class UserProfilePage implements OnInit {
 
   goToEditUser() {
     this.router.navigate(['/auth/user-profile/edit-user']);
+  }
+
+  getProfileDataList() {
+    this.authService.getProfileDataList()
+    .subscribe(response => {
+      console.log(response);
+      this.userDataList = response['result'];
+    })
   }
 
   ngOnDestroy() {

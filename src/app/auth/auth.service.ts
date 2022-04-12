@@ -1,3 +1,4 @@
+import { getProfileData } from './../api.constants';
 import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
@@ -52,6 +53,10 @@ import { loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserIn
 
   resetPassword(email: any, url: string) {
     return this.http.post(`${resetPassword}`, {email, url})
+  }
+
+  getProfileDataList() {
+    return this.http.get(`${getProfileData}`);
   }
 
 }

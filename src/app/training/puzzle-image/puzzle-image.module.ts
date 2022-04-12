@@ -16,6 +16,7 @@ import { DragScrollModule } from "cdk-drag-scroll";
 import { PuzzleSoundModule } from './puzzle-sound/puzzle-sound.module';
 
 import { HelpModalModule } from '../help-modal/help-modal.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { HelpModalModule } from '../help-modal/help-modal.module';
     DragDropModule,
     PuzzleSoundModule,
     HelpModalModule,
-    DragScrollModule
+    DragScrollModule,
+    SharedModule
 
   ],
   declarations: [PuzzleImagePage],

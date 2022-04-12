@@ -1,3 +1,4 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +19,8 @@ import { HelpModalModule } from '../help-modal/help-modal.module';
     IonicModule,
     SingleChoicePageRoutingModule,
     ReactiveFormsModule,
-    HelpModalModule
+    HelpModalModule,
+    SharedModule
 
   ],
   declarations: [SingleChoicePage],

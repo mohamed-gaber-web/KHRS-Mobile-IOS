@@ -50,28 +50,23 @@ ion-toolbar {
 
   .block {
     margin-bottom: 11px;
-    padding: 0 9px;
-    border: dotted 2px #3f51b5;
-    color: #000000de;
+    // padding: 0 9px;
+    border: solid 2px #8AFA6F;
+    color: #000;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    // align-items: center;
+    // justify-content: space-between;
     box-sizing: border-box;
     cursor: move;
     background: #fff;
     font-size: 14px;
     height: 90px;
+    border-radius: 20px;
+    text-align: left;
   }
 
   .sound {
-
-    border: 2px solid var(--ion-color-second-app);
-    border-radius:10px;
-    margin-bottom: 5px;
-    text-align: center;
-    padding: 0 20px;
-    max-width: 100%;
 
     .sound-bg {
       display: inline-block;
@@ -79,7 +74,7 @@ ion-toolbar {
       height: 30px;
       text-align: center;
       border-radius: 50px;
-      margin-right: 10px;
+      margin-right: 5px;
 
       .img-volume {
         @extend .ext-icon-vlume;
@@ -115,9 +110,10 @@ ion-toolbar {
     align-items: center;
     background-color: #fff;
     padding: 15px;
-    border: 2px dotted #3f51b5;
+    border: 2px solid #3f51b5;
     height: 50px;
     margin: 10px 0;
+    border-radius: 20px;
 
     .title {
       font-size: 15px;
@@ -126,9 +122,6 @@ ion-toolbar {
     }
 
     .sound {
-
-      border: 2px solid var(--ion-color-second-app);
-      border-radius:10px;
       margin-bottom: 5px;
       text-align: center;
       padding: 0 15px;

@@ -1,3 +1,4 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,8 @@ import { MultiChoicePage } from './multi-choice.page';
     IonicModule,
     MultiChoicePageRoutingModule,
     ReactiveFormsModule,
-    HelpModalModule
+    HelpModalModule,
+    SharedModule
   ],
   declarations: [MultiChoicePage]
 })

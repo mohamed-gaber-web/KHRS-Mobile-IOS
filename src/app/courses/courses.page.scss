@@ -52,14 +52,13 @@ ion-button {
 
 }
 
-ion-icon {
-  --color: var(--ion-color-second-app);
-  font-size: 22px;
+p {
+  font-size: 12px!important;
+  color: #fff;
+  font-weight: bold;
 }
 
-
-
-ion-tab-button.tab-selected ion-label {
+ion-tab-button.tab-selected p {
   color: #A7F781!important;
   font-weight: bold;
 }

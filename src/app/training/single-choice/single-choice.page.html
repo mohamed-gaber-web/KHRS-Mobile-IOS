@@ -1,19 +1,4 @@
-<ion-toolbar color="primary">
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/exercise"> </ion-back-button>
-  </ion-buttons>
-
-  <ion-menu-button slot="start"></ion-menu-button>
-
-  <div class="img-profile" slot="end" routerLink="user-profile">
-    <ion-avatar slot="end">
-      <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
-      <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
-      src="../../../assets/images/image profille (1).png">
-    </ion-avatar>
-  </div>
-</ion-toolbar>
-
+<app-top-header></app-top-header>
 
 <div class="ios-toolbar">
   <ion-title>

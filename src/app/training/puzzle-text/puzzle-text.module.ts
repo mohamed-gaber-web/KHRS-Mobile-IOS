@@ -1,3 +1,4 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +24,8 @@ import { HelpModalModule } from '../help-modal/help-modal.module';
     PuzzleTextPageRoutingModule,
     DragDropModule,
     MatPaginatorModule,
-    HelpModalModule
+    HelpModalModule,
+    SharedModule
   ],
   declarations: [PuzzleTextPage]
 })
