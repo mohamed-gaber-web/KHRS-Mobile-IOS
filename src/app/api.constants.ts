@@ -48,5 +48,8 @@ export const faqPage = `${baseUrl}/api/Faq/GetFaq`;
 export const policyPage = `${baseUrl}/api/Policy/GetPolicy`;
 export const getGeneratedVidoes = `${baseUrl}/api/GenericAttributeMedia/GetByGenericAttributeTitle`;
 
-
+// traking page material
+export const start = `${baseUrl}/api/AmDoneToday/Start`;
+export const end = `${baseUrl}/api/AmDoneToday/End`;
+export const getAllByUser = `${baseUrl}/api/AmDoneToday/GetAllByUser`;
 

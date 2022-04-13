@@ -1,3 +1,4 @@
+import { TrackingUserService } from './../../shared/services/tracking-user.service';
 import { User } from './../../shared/models/user';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { IonRange, IonSlides } from '@ionic/angular';
+import { IonRange, IonSlides, ToastController } from '@ionic/angular';
 import { Howl } from 'howler';
 import { AppService } from 'src/app/shared/services/app.service';
 
@@ -31,6 +32,9 @@ export class CourseMaterialPage implements OnInit {
   @ViewChild('range', { static: false }) range: IonRange;
   introVideo: any;
   getLang;
+  offset: number = 0;
+  limit: number = 1;
+  materialCourseLength: number = 0;
 
   slideOpts = {
     initialSlide: 0,
@@ -45,28 +49,38 @@ export class CourseMaterialPage implements OnInit {
     private route: ActivatedRoute,
     public storageService: StorageService,
     public authService: AuthService,
-    private appService:AppService
+    private appService:AppService,
+    private trackingService: TrackingUserService,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
     // ** user info
     this.userInfo = this.authService.getUser();
+    this.getMaterialCourse();
+  }
 
+  // ** Get material courses
+  getMaterialCourse() {
     this.isLoading = true;
     this.subs.push(
       this.route.paramMap
         .pipe(
           switchMap((params: ParamMap) =>
-            this.courseService.getCourseMaterial(+params.get('courseId'), 0, 60)
+            this.courseService.getCourseMaterial(+params.get('courseId'), this.offset, this.limit)
           )
         )
         .subscribe((response) => {
           this.isLoading = false;
+          this.materialCourseLength = response['length'];
+          this.limit = response['limit'];
           this.courseMaterial = response['result'];
-          console.log(this.courseMaterial);
-
-          // console.log(this.courseMaterial);
-          // console.log(this.slides.ionSlideNextStart)
+        },
+          (error) => {
+            console.log('exist error');
+          },
+          () => {
+          this.isLoading = false;
         })
     );
   }
@@ -78,6 +92,8 @@ export class CourseMaterialPage implements OnInit {
       this.player.unload();
       this.player = null;
     }
+    this.offset += 1;
+    this.getMaterialCourse();
     this.slides.slideNext();
   }
 
@@ -88,6 +104,9 @@ export class CourseMaterialPage implements OnInit {
       this.player.unload();
       this.player = null;
     }
+
+    this.offset -= 1;
+    this.getMaterialCourse();
     this.slides.slidePrev();
   }
 
@@ -125,6 +144,7 @@ export class CourseMaterialPage implements OnInit {
     }
 
   }
+
   updateProgress() {
     if(this.player){
     let seek = this.player.seek();
@@ -134,6 +154,33 @@ export class CourseMaterialPage implements OnInit {
     }, 1000);
   }
   }
+
+  // *** Am done today
+  amDoneToday() {
+    const endDate = new Date();
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.trackingService.endTracking({
+        courseId: +params.get('courseId'),
+        limit: 1,
+        offset: this.offset,
+        type: 0,
+        endDate
+      })
+      )).subscribe(async (response) => {
+      console.log('am done today', response);
+        if (response['success'] === true) {
+          const toast = await this.toastController.create({
+            message: `Your stoped in page ${ this.offset }` ,
+            duration: 4000,
+            position: 'top',
+            color: 'success'
+          });
+          toast.present();
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.subs.forEach((element) => {
       element.unsubscribe();

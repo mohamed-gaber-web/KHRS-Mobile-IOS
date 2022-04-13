@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,8 @@ import { CourseMaterialPage } from './course-material.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CourseMaterialPageRoutingModule
+    CourseMaterialPageRoutingModule,
+    SharedModule
   ],
   declarations: [CourseMaterialPage]
 })

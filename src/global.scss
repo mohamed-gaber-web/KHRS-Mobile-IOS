@@ -111,13 +111,11 @@ ion-toolbar {
 
 }
 
-
-
   img.title-icon {
     width: 10%;
     height: auto;
     position: relative;
-    top: 10px;
+    top: -10px;
     overflow: auto !important;
   }
 .no-data {
@@ -243,7 +241,7 @@ hr {
     height: 1px;
     border-width: 0;
     box-sizing: content-box;
-    border-bottom: 5px solid #062f87;
+    border-bottom: 2px solid #062f87;
     width: 80%;
     margin: auto;
 }
