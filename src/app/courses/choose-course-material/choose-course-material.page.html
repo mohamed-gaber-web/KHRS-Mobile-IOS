@@ -101,8 +101,9 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="6">
         <div class="btn" *ngIf="CourseDetails">
-          <ion-button   [routerLink]="['/courses/course-material',
-          CourseDetails.courseTranslations[0].courseId]" routerDirection="root"> Material </ion-button>
+          <ion-button
+          [routerLink]="['/courses/course-material',
+          CourseDetails.courseTranslations[0].courseId]" [queryParams]="{offset: offset}" routerDirection="root"> Material </ion-button>
           <ion-button (click)="sendIdToExercisePage()"> Exercise </ion-button>
           <ion-button
             (click)="sendIdToFinalTestPage()">

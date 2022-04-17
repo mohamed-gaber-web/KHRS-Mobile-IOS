@@ -29,8 +29,7 @@ export class FaqPage implements OnInit {
     this.appServ.getFaqPage(this.offset, this.limit)
     .subscribe(response => {
       this.isLoading = false;
-      console.log(response['result'][0].faqTranslations);
-      this.allFaq = response['result'][0].faqTranslations;
+      this.allFaq = response['result'];
     })
   }
 

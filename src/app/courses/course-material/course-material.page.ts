@@ -44,12 +44,11 @@ export class CourseMaterialPage implements OnInit {
   };
 
   constructor(
-    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
     private route: ActivatedRoute,
     public storageService: StorageService,
     public authService: AuthService,
-    private appService:AppService,
     private trackingService: TrackingUserService,
     private toastController: ToastController
   ) {}
@@ -58,6 +57,11 @@ export class CourseMaterialPage implements OnInit {
     // ** user info
     this.userInfo = this.authService.getUser();
     this.getMaterialCourse();
+    // * get query params [ offset ]
+    this.activatedRoute.queryParams
+    .subscribe(params => {
+      this.offset = +params['offset'] | 0;
+    })
   }
 
   // ** Get material courses
@@ -77,7 +81,7 @@ export class CourseMaterialPage implements OnInit {
           this.courseMaterial = response['result'];
         },
           (error) => {
-            console.log('exist error');
+            // console.log('exist error');
           },
           () => {
           this.isLoading = false;
@@ -157,7 +161,12 @@ export class CourseMaterialPage implements OnInit {
 
   // *** Am done today
   amDoneToday() {
+    if(this.offset === 0) {
+      return;
+    }
+
     const endDate = new Date();
+    this.subs.push(
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.trackingService.endTracking({
@@ -170,6 +179,7 @@ export class CourseMaterialPage implements OnInit {
       )).subscribe(async (response) => {
       console.log('am done today', response);
         if (response['success'] === true) {
+          // localStorage.setItem('courseMaterialOffset', JSON.stringify(this.offset))
           const toast = await this.toastController.create({
             message: `Your stoped in page ${ this.offset }` ,
             duration: 4000,
@@ -179,6 +189,7 @@ export class CourseMaterialPage implements OnInit {
           toast.present();
       }
     })
+    );
   }
 
   ngOnDestroy(): void {

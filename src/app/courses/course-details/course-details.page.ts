@@ -46,7 +46,7 @@ export class CourseDetailsPage implements OnInit {
         switchMap((params: ParamMap) =>
             this.courseService.getCoursesDetails(+params.get('courseId')))
           ).subscribe(response => {
-            console.log('course details' , response['result'])
+            // console.log('course details' , response['result'])
             this.isLoading = false;
             this.courseDetails = response['result'];
       }),

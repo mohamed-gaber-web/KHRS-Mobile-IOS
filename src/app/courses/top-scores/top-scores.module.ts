@@ -5,21 +5,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CoursesPageRoutingModule } from './courses-routing.module';
+import { TopScoresPageRoutingModule } from './top-scores-routing.module';
 
-import { CoursesPage } from './courses.page';
-import { TopScoresPipe } from './top-scores.pipe';
-
-
+import { TopScoresPage } from './top-scores.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CoursesPageRoutingModule,
+    TopScoresPageRoutingModule,
     SharedModule
   ],
-  declarations: [CoursesPage, TopScoresPipe]
+  declarations: [TopScoresPage]
 })
-export class CoursesPageModule {}
+export class TopScoresPageModule {}

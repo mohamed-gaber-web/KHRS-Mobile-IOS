@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { TabsPageModule } from '../../tabs/tabs.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,7 +20,8 @@ import { UserProfilePage } from './user-profile.page';
     UserProfilePageRoutingModule,
     TabsPageModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    SharedModule
   ],
   declarations: [UserProfilePage]
 })

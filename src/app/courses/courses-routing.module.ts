@@ -39,6 +39,10 @@ const routes: Routes = [
       loadChildren: () => import('./my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
     },
     {
+      path: 'top-scores',
+      loadChildren: () => import('./top-scores/top-scores.module').then( m => m.TopScoresPageModule)
+    },
+    {
       path: 'apply-course',
       loadChildren: () => import('./apply-course/apply-course.module').then( m => m.ApplyCoursePageModule)
     },
@@ -62,7 +66,12 @@ const routes: Routes = [
   {
     path: 'course-material/:courseId',
     loadChildren: () => import('./course-material/course-material.module').then( m => m.CourseMaterialPageModule)
+  },
+  {
+    path: 'top-scores',
+    loadChildren: () => import('./top-scores/top-scores.module').then( m => m.TopScoresPageModule)
   }
+
 
 
 ];

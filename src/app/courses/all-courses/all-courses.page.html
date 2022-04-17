@@ -29,7 +29,7 @@
       </h3>
     </div>
     <ion-row class="ion-text-center">
-      <ion-col *ngFor="let course of courses" size-xs="6" size-sm="12">
+      <ion-col *ngFor="let course of courses" size-xs="6" size-sm="6" size-md="6">
         <div class="course">
           <ion-img  (click)="getCourse(course.id)" class="img-all-course" loading="lazy" src="{{course.imagePath}}"></ion-img>
           <h3  (click)="getCourse(course.id)" class="padding-top"  color="primary"> {{course.courseTranslations[0]?.title}} </h3>

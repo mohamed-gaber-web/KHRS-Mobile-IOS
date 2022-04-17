@@ -1,3 +1,4 @@
+import { TrackingUserService } from './../../shared/services/tracking-user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -25,18 +26,21 @@ export class ChooseCourseMaterialPage implements OnInit {
   isLoading: boolean = false;
   testActive: boolean;
   redOffset: any;
+  offset: number = 0;
 
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private trackingService: TrackingUserService
     ) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.courseId = JSON.parse(this.route.snapshot.paramMap.get('courseId'));
     this.redOffset = this.route.snapshot.paramMap.get('testOffset');
+    this.offset = JSON.parse(localStorage.getItem('courseMaterialOffset'));
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
       .subscribe(response => {
@@ -52,9 +56,11 @@ export class ChooseCourseMaterialPage implements OnInit {
       .subscribe(response => {
         this.isLoading = false;
         this.CourseDetails = response['result'];
-        console.log('course details', this.CourseDetails)
+        // console.log('course details', this.CourseDetails)
       })
     );
+
+    this.getUserOffset(this.courseId);
 
   }
 
@@ -91,6 +97,28 @@ export class ChooseCourseMaterialPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  getUserOffset(course_ID:number) {
+
+    this.trackingService.getAllUser(0,10)
+    .subscribe(r =>
+      {
+        // console.log("resssss",r['result']);
+        r['result'].forEach(element => {
+          if (element.courseId===course_ID){
+            this.offset=element.offset
+            // console.log('yes',this.offset)
+          }
+          else if (element.courseId!==course_ID){
+            // console.log("no",this.offset)
+          }
+        })
+      })
+  }
+
+  openCourseDetails(ofst:number){
+    this.router.navigate([`courses/course-material/${this.courseId}`, {ofst}])
   }
 
   ngOnDestroy() {

@@ -13,3 +13,13 @@
     </ion-avatar>
   </div>
 </ion-toolbar>
+  <div class="user-notification">
+    <ion-icon (click)="toggleModal()" name="notifications"> </ion-icon>
+    <span> {{notifiCount}} </span>
+    <div *ngIf="toggle" class="user-noti-card">
+      <div *ngFor="let itemNotifi of listNotifi">
+      <p *ngIf="itemNotifi.type === 0" [routerLink]="['/courses/course-material', itemNotifi.courseId]" [queryParams]="{offset: itemNotifi.offset}"> {{ itemNotifi.courseName }} you stoped in page {{ itemNotifi.offset }} </p>
+      <hr />
+      </div>
+    </div>
+  </div>

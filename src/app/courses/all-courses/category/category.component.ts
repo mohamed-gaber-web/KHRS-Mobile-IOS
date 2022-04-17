@@ -48,8 +48,7 @@ sub: Subscription[] = [];
     this.sub.push(
       this.courseService.getCourseCategories(0, 10)
       .subscribe(response => {
-        console.log('category', response);
-
+        // console.log('category', response);
         this.categories = response['result'];
         this.categoriesCount = response['length']
       })
