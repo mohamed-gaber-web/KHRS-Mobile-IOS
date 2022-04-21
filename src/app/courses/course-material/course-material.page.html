@@ -65,10 +65,16 @@
         <ion-button *ngIf="!disableNextBtn" (click)="slideNext()">  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
       </ion-col>
 
+    </ion-row>
+
+    <ion-row>
       <ion-col>
-        <ion-button *ngIf="offset > 0" (click)="amDoneToday()"> Am done today </ion-button>
+        <ion-button *ngIf="offset > 0" (click)="amDoneToday()"> Pause </ion-button>
       </ion-col>
 
+      <ion-col>
+        <ion-button *ngIf="offset !== 0" (click)="startFromZero()"> Start over </ion-button>
+      </ion-col>
     </ion-row>
 
   </ion-grid>

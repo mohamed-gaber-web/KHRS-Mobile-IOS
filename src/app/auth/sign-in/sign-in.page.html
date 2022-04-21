@@ -34,7 +34,7 @@
           </div>
 
           <p style="text-align: center; font-size: 16px; font-weight: 600;">
-              <a style="color: #000;text-decoration: none" href="/auth/forget-password"> Forgot Password ? </a> </p>
+              <a style="color: #fff;text-decoration: none" href="/auth/forget-password"> Forgot Password ? </a> </p>
 
           <ion-button (click)="onLoginFormSubmit(loginForm.value)" [disabled]="isLoading || !loginForm.valid">
             {{ 'Login' | translate }}
@@ -45,7 +45,7 @@
   </div>
   <p class="no-account">
   By continuing, you agree to accept our
-  Privacy Policy & Terms of Service.<br /><br />
+  <a routerLink="/policy" style="color: #8AFA6F;"> Privacy Policy & Terms of Service. </a><br /><br />
   Don't have an account?<br />
 
   <span> <a [routerLink]="['/auth/sign-up']">{{ 'Signup' | translate }} </a> </span> </p>

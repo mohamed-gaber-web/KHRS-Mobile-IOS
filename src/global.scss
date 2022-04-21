@@ -554,39 +554,12 @@ ion-radio {
 
 }
 
-
-@media(min-width: 767px) and (max-width: 2000px) {
-  .puzzle-fix {.title {width: 40%;}}
-
-  .inro-screen {
-
-    img.intro-logo {
-      max-width: 300px!important;
-      height:auto;
-    }
-
-  }
-
-}
-
-@media(min-width: 1024px) and (max-width: 1104px) {
-  .example-box {
-    .puzzle-fix {height: 80px!important; width: 60vh!important;}
-  }
-}
-
-@media(min-width: 1400px) and (max-width: 1500px) {
-  .example-box {
-    .puzzle-fix {height: 80px!important; width: 70vh!important;}
-  }
-}
+// Media query
 
 @media(max-width: 350px) {
   ion-title{
     font-size: 15px;
-
   }
-
 }
 
 @media(max-width: 380px) {
@@ -623,12 +596,30 @@ ion-radio {
 
 }
 
+@media(min-width: 630px) and (max-width: 1200px) {
+  .course ion-img{height: 300px;}
+  .category .category-item {min-height: 90px !important; width: 100% !important;}
+  .course .icon-sound-course {right: 30px;}
+  .img-course-intro .img-intro ion-img {max-width: 35%;}
+  img.title-icon {width: 7%;}
+  .my-course ion-img {height: 300px !important;}
+  .my-course .icon-sound-course {right: 30px !important}
+  .my-course h3 {font-size: 16px !important; padding: 12px 0 0 0 !important; height: 70px !important;}
+  .my-course ion-button { height:40px !important;}
+}
+
+// media query
+
+// IOS version
+
 .ios ion-menu-button {
   --color: #fff!important;
   padding: 0 11px;
 }
 
 .ios ion-back-button {font-size: 16px;}
+
+// IOS version
 
 /************* Media Query Desktop *****************/
 

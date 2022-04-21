@@ -45,6 +45,7 @@ export class CourseMaterialPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private courseService: CourseService,
     private route: ActivatedRoute,
     public storageService: StorageService,
@@ -190,6 +191,18 @@ export class CourseMaterialPage implements OnInit {
       }
     })
     );
+  }
+
+  startFromZero() {
+    // this.offset = 0;
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { offset: 0 },
+        queryParamsHandling: 'merge'
+      });
+    this.slides.slideTo(0)
   }
 
   ngOnDestroy(): void {
