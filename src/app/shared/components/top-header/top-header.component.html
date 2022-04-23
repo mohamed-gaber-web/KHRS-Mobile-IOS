@@ -6,11 +6,13 @@
   <ion-menu-button slot="start"></ion-menu-button>
 
   <div class="img-profile" slot="end" routerLink="user-profile">
+    <a [routerLink]="['/auth/user-profile']">
     <ion-avatar slot="end">
       <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
       <img loading="lazy" *ngIf="userInfo === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
       src="../../../assets/images/image profille (1).png">
     </ion-avatar>
+    </a>
   </div>
 </ion-toolbar>
   <div class="user-notification">
