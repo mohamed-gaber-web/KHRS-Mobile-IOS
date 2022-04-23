@@ -21,20 +21,11 @@ ion-toolbar {
 }
 
   ion-img.image-question {
-    width: 80px;
+    width: 60px;
     height: auto;
     padding: 0;
     margin: 0;
   }
-
-  @media (min-width: 768px) {
-    // ion-img {
-    //   width: 70%;
-    //   height: auto;
-    //   // margin: auto;
-    // }
-  }
-
 
 .puzzle-answer {
   margin-top: 20px;
@@ -426,8 +417,8 @@ position: static!important;
 
 @media(min-width: 600px) and (max-width: 900px) {
 
-  .example-box .puzzle-fix {width: 600px;}
-  .example-box .puzzle-answer .puzzle-fix .sound {width: 18%;}
+  .example-box .puzzle-fix {width: 260px;}
+  .example-box .puzzle-answer .puzzle-fix .sound {width: 20%;}
 }
 
 
