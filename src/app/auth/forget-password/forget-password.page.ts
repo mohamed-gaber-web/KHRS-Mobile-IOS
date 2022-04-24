@@ -26,8 +26,8 @@ export class ForgetPasswordPage implements OnInit {
 
   forgetPasswordValidationMessages = {
     Email: {
-      required: 'Email field is required',
-      invalidEmail: 'Email field must be a valid email',
+      required: 'Email required',
+      invalidEmail: 'Email must be valid',
     },
     // Password: {
     //   required: 'Password field is required',

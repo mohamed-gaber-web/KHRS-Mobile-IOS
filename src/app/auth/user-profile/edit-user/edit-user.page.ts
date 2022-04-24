@@ -121,7 +121,7 @@ export class EditUserPage implements OnInit {
         this.buldingForm()
 
         var toast = await this.toastController.create({
-          message: 'Update User Successful!',
+          message: 'User profile updated successfully',
           duration: 2000,
           color: 'success',
         });

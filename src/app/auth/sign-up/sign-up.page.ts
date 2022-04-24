@@ -150,7 +150,7 @@ export class SignUpPage implements OnInit {
        this.auth.registerCustomer(values).subscribe(async(response) => {
          if(response['success']) {
           var toast = await this.toastController.create({
-            message: 'You signed up successfully!',
+            message: 'Sign up successful',
             duration: 2000,
             color: 'success',
           });
@@ -161,7 +161,7 @@ export class SignUpPage implements OnInit {
          } else {
            response['arrayMessage'].forEach( async(element) => {
             var toast = await this.toastController.create({
-              message: 'You signed up error!',
+              message: 'Sign up error!',
               duration: 2000,
               color: 'danger',
             });

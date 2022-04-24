@@ -33,11 +33,11 @@ export class SignInPage implements OnInit {
 
   loginValidationMessages = {
     Email: {
-      required: 'Email field is required',
-      invalidEmail: 'Email field must be a valid email',
+      required: 'Email required',
+      invalidEmail: 'Email must be valid',
     },
     Password: {
-      required: 'Password field is required',
+      required: 'Password required',
     },
   };
 
@@ -108,7 +108,7 @@ export class SignInPage implements OnInit {
             this.router.navigateByUrl(this.returnUrl);
           } else {
             var toast = await this.toastController.create({
-              message: 'Username And Password Incorrect',
+              message: 'Username or password incorrect',
               duration: 2000,
               color: 'danger',
             });

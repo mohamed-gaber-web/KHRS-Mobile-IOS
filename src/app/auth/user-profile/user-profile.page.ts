@@ -31,13 +31,13 @@ export class UserProfilePage implements OnInit {
 
   passwordValidationMessages = {
     currentPassword: {
-      required: 'Current password field is required',
+      required: 'Current password required',
     },
     newPassword: {
-      required: 'New password field is required',
+      required: 'New password required',
     },
     confirmPassword: {
-      required: 'Confirm password field is required',
+      required: 'Confirm new password',
     },
   };
 
@@ -89,7 +89,7 @@ export class UserProfilePage implements OnInit {
 
         if (response['success'] === true) {
         var toast = await this.toastController.create({
-          message: 'You password is changed!',
+          message: 'Password updated successfully',
           duration: 2000,
           color: 'success',
         });

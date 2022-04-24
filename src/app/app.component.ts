@@ -40,7 +40,7 @@ export class AppComponent {
   async logout() {
     this.storageService.clearStorage();
     var toast = await this.toastController.create({
-      message: 'You sign out successfully!',
+      message: 'Signed out',
       duration: 2000,
       color: 'success',
     });
