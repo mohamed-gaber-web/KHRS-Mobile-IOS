@@ -49,7 +49,7 @@ export class AllCoursesPage implements OnInit {
     this.getCourses();
     this.testService.checkUserTest()
     .subscribe(response => {
-      console.log(response)
+      // console.log(response);
       if(response['isActive'] === true) {
         this.route.navigate(['/exercise/test-course',
         {courseId: response['courseId'], testOffset: response['testApi'].offset, activeCourse: response['isActive']}]);

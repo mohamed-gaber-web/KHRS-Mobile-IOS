@@ -119,7 +119,7 @@ export class UserProfilePage implements OnInit {
   getProfileDataList() {
     this.authService.getProfileDataList()
     .subscribe(response => {
-      console.log(response);
+      // console.log(response);
       this.userDataList = response['result'];
     })
   }

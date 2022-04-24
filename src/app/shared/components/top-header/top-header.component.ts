@@ -34,7 +34,7 @@ export class TopHeaderComponent implements OnInit {
     this.sub.push(
       this.trackingService.getAllUser(0, 20)
       .subscribe(response => {
-        console.log('getAllUerToday', response);
+        // console.log('getAllUerToday', response);
         this.listNotifi = response['result'];
         this.notifiCount = response['length'];
       })
