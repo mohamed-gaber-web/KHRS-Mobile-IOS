@@ -25,9 +25,9 @@ export class ChooseLanguagePage implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.subs.push(
-      this.appSerrvice.getLanguage().subscribe(response => {
-        console.log(response);
-
+      this.appSerrvice.getLanguage()
+      .subscribe(response => {
+        // console.log(response);
         this.isLoading = false;
         this.langItems = response['result'].result;
       })

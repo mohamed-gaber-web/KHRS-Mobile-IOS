@@ -50,7 +50,7 @@ ion-toolbar {
 }
 
 .background-image{
-  --background: url(./assets/images/login.png) center top no-repeat;
+  background-image: url(./assets/images/login.png) center center no-repeat;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -293,9 +293,10 @@ ion-toast {
 ion-spinner{
   margin: auto;
   text-align: center;
-  width: 50%;
-  height: 100%;
+  width: 30% !important;
+  height: 70% !important;
   display: flex;
+  color: var(--ion-color-second-app);
 }
 
 
@@ -623,12 +624,18 @@ ion-radio {
 
 /************* Media Query Desktop *****************/
 
-// Dark Mode
+/************* Dark Mode *****************/
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* dark mode variables go here */
   }
+
+  .top-title h3 {color: #fff;}
+  ion-back-button{color: #fff;}
+  .privacy-policy ion-text{color: #fff !important;}
+  .course-date ion-label{color: #fff !important}
+  .time-valid ion-label{color: #fff !important}
   .title h3 {
     color: #fff;
   }
@@ -712,6 +719,7 @@ ion-radio {
 
 }
 
+/************* Dark Mode *****************/
 
 /************* Media Query Desktop *****************/
 

@@ -2,12 +2,10 @@
   <div class="choose-language">
     <h1 class="title"> Choose Language </h1>
   </div>
-
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
   <ion-grid class="lang-bg">
 
     <ion-row>
-
-      <ion-spinner *ngIf="isLoading"></ion-spinner>
       <ion-col *ngFor="let item of langItems"  size-xs="4" size-md="3">
         <ion-img
           [ngClass]="{'active': isActive(item)}"
