@@ -47,4 +47,5 @@ export class AppComponent {
     toast.present();
     this.router.navigateByUrl('/auth/sign-in')
   }
+
 }

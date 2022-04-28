@@ -10,8 +10,6 @@
  */
 
 
- @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
@@ -29,11 +27,6 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 /********************** Global Css ********************/
-
-// img, ion-img {
-//   width: 100%;
-//   height: auto;
-// }
 
 body, * {
   font-family: 'Montserrat', sans-serif !important;
@@ -76,7 +69,6 @@ ion-toolbar {
   color: var(--ion-color-second-app);
   text-align: center;
 }
-
 
 .img-profile {
   display: flex;
@@ -127,7 +119,6 @@ ion-toolbar {
 }
 
 .course {
-
   position: relative;
   margin: 30px 0;
   z-index: 0;
@@ -624,100 +615,101 @@ ion-radio {
 
 /************* Media Query Desktop *****************/
 
+/************* Light Mode *****************/
+
+@media (prefers-color-scheme: light) {
+}
+/************* Light Mode *****************/
+
 /************* Dark Mode *****************/
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* dark mode variables go here */
-  }
+// @media (prefers-color-scheme: dark) {
+  // .top-title h3[color-theme="dark"] {color: #fff !important;}
+  // ion-back-button[color-theme="dark"]{color: #fff;}
+  // .privacy-policy ion-text[color-theme="dark"]{color: #fff !important;}
+  // .course-date ion-label[color-theme="dark"]{color: #fff !important}
+  // .time-valid ion-label[color-theme="dark"]{color: #fff !important}
+  // .title h3[color-theme="dark"] {color: #fff;}
 
-  .top-title h3 {color: #fff;}
-  ion-back-button{color: #fff;}
-  .privacy-policy ion-text{color: #fff !important;}
-  .course-date ion-label{color: #fff !important}
-  .time-valid ion-label{color: #fff !important}
-  .title h3 {
-    color: #fff;
-  }
+  // img.title-icon[color-theme="dark"] {
+  //   display: none;
+  // }
 
-  img.title-icon {
-    display: none;
-  }
+  // h2#title[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  h2#title {
-    color: #fff !important;
-  }
+  // .course-details-descr ion-text[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
+  // .info ion-icon[color-theme="dark"] {
+  //     color: #fff !important;
+  // }
+  // ion-item.in-list[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  .course-details-descr ion-text {
-    color: #fff !important;
-  }
-  .info ion-icon {
-      color: #fff !important;
-  }
-  ion-item.in-list {
-    color: #fff !important;
-  }
+  // ion-text.material-p p[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  ion-text.material-p p {
-    color: #fff !important;
-  }
+  // h4[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  h4 {
-    color: #fff !important;
-  }
+  // ion-title[color-theme="dark"] {
+  //   color: #fff;
+  // }
 
-  ion-title {
-    color: #fff;
-  }
+  // .total-result[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  .total-result {
-    color: #fff !important;
-  }
+  // .single-choice ion-text[color-theme="dark"] {
+  //   color: --ion-text-color !important;
+  // }
 
-  .single-choice ion-text {
-    color: #fff !important;
-  }
+  // .single-choice ion-label[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  .single-choice ion-label {
-    color: #fff !important;
-  }
+  // .single-choice ion-radio[color-theme="dark"] {
+  //   color: --ion-text-color !important;
+  // }
 
-  .single-choice ion-radio {
-    --color: #fff !important;
-  }
+  // .multi-choice ion-radio[color-theme="dark"] {
+  //   --color: #fff !important;
+  // }
 
-  .multi-choice ion-radio {
-    --color: #fff !important;
-  }
+  // .multi-choice ion-label[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
+  // .sound-group .sound-question[color-theme="dark"] {
+  //   border: 2px solid #fff !important;
+  // }
 
-  .multi-choice ion-label {
-    color: #fff !important;
-  }
-  .sound-group .sound-question {
-    border: 2px solid #fff !important;
-  }
+  // .ext-icon-vlume[color-theme="dark"], .sound-group .sound-question .img-volume[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  .ext-icon-vlume, .sound-group .sound-question .img-volume {
-    color: #fff !important;
-  }
+  // th[color-theme="dark"] {
+  //   color: #fff !important;
+  // }
 
-  th {
-    color: #fff !important;
-  }
+  // img.exercise-title-icon[color-theme="dark"] {
+  //   display: none;
+  // }
 
-  img.exercise-title-icon {
-    display: none;
-  }
+  // .help-icon[color-theme="dark"] {
+  //   color: #fff;
+  // }
 
-  .help-icon {
-    color: #fff;
-  }
+  // .multi-choice ion-text[color-theme="dark"]{
+  //   color: #fff !important;
+  // }
+  // .course-date ion-label[color-theme="dark"]{color: #fff !important;}
 
-  .multi-choice ion-text{
-    color: #fff !important;
-  }
-
-}
+// }
 
 /************* Dark Mode *****************/
 

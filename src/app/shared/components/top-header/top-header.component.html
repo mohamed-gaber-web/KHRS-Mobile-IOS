@@ -2,6 +2,7 @@
   <ion-buttons slot="start">
     <ion-back-button defaultHref="/"> </ion-back-button>
   </ion-buttons>
+<ion-toggle (ionChange)="onToggleColorTheme($event)" color="primary"></ion-toggle>
 
   <ion-menu-button slot="start"></ion-menu-button>
 
@@ -20,7 +21,7 @@
     <span> {{notifiCount}} </span>
     <div *ngIf="toggle" class="user-noti-card">
       <div *ngFor="let itemNotifi of listNotifi">
-      <p *ngIf="itemNotifi.type === 0" [routerLink]="['/courses/course-material', itemNotifi.courseId]" [queryParams]="{offset: itemNotifi.offset}"> {{ itemNotifi.courseName }} you stoped in page {{ itemNotifi.offset }} </p>
+      <p *ngIf="itemNotifi.type === 0" [routerLink]="['/courses/course-material', itemNotifi.courseId]" [queryParams]="{offset: itemNotifi.offset}"> {{ itemNotifi.courseName }} | Page {{ itemNotifi.offset }} </p>
       </div>
     </div>
   </div>

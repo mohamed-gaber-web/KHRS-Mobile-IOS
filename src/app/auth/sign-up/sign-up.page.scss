@@ -1,3 +1,12 @@
+.background-image{
+  --background: url(../../../assets/images/login.png) center top no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  max-width: 100%;
+}
+
 .sign-up {
 
   margin: 20px 0;
@@ -21,7 +30,7 @@
       padding-bottom: 10px;
       font-size: 16px;
       font-weight: 600;
-      color: #fff;
+      color: #000;
     }
 
     input, select {

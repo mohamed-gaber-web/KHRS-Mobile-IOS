@@ -16,7 +16,7 @@ import { faqPage, getGeneratedVidoes } from './../../api.constants';
   constructor(private http: HttpClient) {}
 
   getLanguage() {
-    const params = `?offset=0&limit=10`
+    const params = `?offset=0&limit=20`
     return this.http.get(`${getLanguage}` + params);
   }
 

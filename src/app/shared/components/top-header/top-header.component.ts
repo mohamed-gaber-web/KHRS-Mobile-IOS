@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 
 import { StorageService } from '../../services/storage.service';
 import { TrackingUserService } from './../../services/tracking-user.service';
@@ -17,11 +17,13 @@ export class TopHeaderComponent implements OnInit {
   toggle: boolean = false;
   listNotifi: any;
   notifiCount: number = 0;
-  sub: Subscription[] = []
+  sub: Subscription[] = [];
+  darkValue: string = 'dark';
 
   constructor(
     private storageService: StorageService,
-    private trackingService: TrackingUserService
+    private trackingService: TrackingUserService,
+    private renderer: Renderer2
     ) { }
 
   ngOnInit() {
@@ -50,5 +52,17 @@ export class TopHeaderComponent implements OnInit {
     this.sub.forEach(el => {
       el.unsubscribe();
     })
+  }
+
+  onToggleColorTheme(event) {
+    if(event.detail.checked) {
+      // document.body.setAttribute('color-theme', 'dark');
+      this.renderer.setAttribute(document.body, 'color-theme', 'dark');
+    } else {
+      // document.body.setAttribute('color-theme', 'light');
+      this.renderer.setAttribute(document.body, 'color-theme', 'light');
+
+
+    }
   }
 }
