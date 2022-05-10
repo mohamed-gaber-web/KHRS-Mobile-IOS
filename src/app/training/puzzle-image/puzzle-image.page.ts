@@ -96,7 +96,7 @@ export class PuzzleImagePage implements OnInit {
           this.limit
         )
         .subscribe((response) => {
-          console.log(response)
+          console.log('puzzle with image', response)
           this.questionAndAnswerItems = response;
           this.lengthQuestion = response['length'];
 

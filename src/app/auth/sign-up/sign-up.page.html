@@ -4,10 +4,10 @@
 
     <h3> Signup </h3>
 
-    <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
-    <ion-grid>
+    <form  [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="flagsToggle['firstnameFlag']">
           <div class="form-group">
             <label >Firstname</label>
             <input type="text" formControlName="FirstName" required />
@@ -17,7 +17,7 @@
           </div>
         </ion-col>
 
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="flagsToggle['lastnameFlag']">
           <div class="form-group">
             <label>Lastname</label>
             <input type="text" formControlName="LastName" required />
@@ -31,9 +31,9 @@
     </ion-grid>
 
 
-    <ion-grid>
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="flagsToggle['phonNumberFlag']">
           <div class="form-group">
             <label> Phone Number </label>
             <input type="text" formControlName="PhoneNumber" minlength="11" required />
@@ -48,9 +48,9 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="flagsToggle['emailFlag']">
           <div class="form-group">
             <label>Email</label>
             <input type="text" formControlName="email" required />
@@ -60,9 +60,9 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="flagsToggle['dateOfBirthFlag']">
           <div class="form-group">
             <label> Birthday </label>
             <input type="date" formControllName="Birthdate" required />
@@ -98,9 +98,9 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="flagsToggle['genderFlag']">
           <div>
             <ion-radio-group formControlName="Gender" value="gender">
               <ion-list-header>
@@ -123,9 +123,9 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="flagsToggle['recommendedByFlag']">
           <div class="form-group">
               <label>{{ 'Recommended' | translate}}</label>
               <select formControlName="recommendedbyId" value="brown" okText="Okay" cancelText="Dismiss">
@@ -138,9 +138,9 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <ion-grid *ngIf="flagsToggle">
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" *ngIf="flagsToggle['uploadImageFlag']">
           <div class="form-group">
             <label>Upload image</label>
             <input
@@ -168,7 +168,7 @@
 
     <ion-grid>
       <ion-row ion-align-items-center>
-        <ion-col size="12">
+        <ion-col size="12" >
           <ion-button
           [disabled]="!registerForm.valid"
           (click)="onRegisterFormSubmit(registerForm.value)"

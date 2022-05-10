@@ -14,8 +14,7 @@ import { AuthService } from '../auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { HelpersService } from 'src/app/shared/services/helpers.service';
-
-
+import { AppService } from 'src/app/shared/services/app.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,6 +26,7 @@ export class SignUpPage implements OnInit {
   registerForm: FormGroup;
   isLoading = false;
   allRecommended: any;
+  flagsToggle;
   gender = [
     {name: 'male', value: 0},
     {name: 'female', value: 1}
@@ -87,7 +87,8 @@ export class SignUpPage implements OnInit {
     public formBuilder: FormBuilder,
     public toastController: ToastController,
     public router: Router,
-    private helpers: HelpersService
+    private helpers: HelpersService,
+    private appService: AppService
     ) {}
 
     async uploadImg(event) {
@@ -101,7 +102,8 @@ export class SignUpPage implements OnInit {
     }
 
   ngOnInit() {
-  this.getRecommendeBy()
+    this.getRecommendeBy()
+    this.getFlagsInputs()
   // ! Register Fields
   this.registerForm = this.formBuilder.group({
     'FirstName': ['', Validators.compose([Validators.required])],
@@ -179,5 +181,14 @@ export class SignUpPage implements OnInit {
     this.allRecommended = data['result'];
    })
  }
+  
+  // ? flags on inputs
+  getFlagsInputs() {
+    this.appService.getLanguage()
+      .subscribe(response => {
+        console.log(response['flagSetting']);
+        this.flagsToggle = response['flagSetting'];
+    })
+  }
 
 }

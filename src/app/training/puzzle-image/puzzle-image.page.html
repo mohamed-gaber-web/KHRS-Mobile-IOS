@@ -22,16 +22,17 @@
       <ion-row class="ion-justify-content-center">
         <ion-col size-xs="12" size-md="6" size-sm="6"  class="scrollable">
           <!-- Question -->
+          
             <div
-            #container2
-            *ngFor="let item of questionsArray"
-              class="example-box elements"
-              cdkDropList
-              dropListScroller
+              #container2
+              *ngFor="let item of questionsArray" 
+                class="example-box elements"
+                cdkDropList
+                dropListScroller
 
-              [cdkDropListData]="item"
-              cdkDropListSortingDisabled
-              (cdkDropListDropped)="drop($event)"
+                [cdkDropListData]="item"
+                cdkDropListSortingDisabled
+                (cdkDropListDropped)="drop($event)"
               >
               <div *ngFor="let item2 of item" >
 
