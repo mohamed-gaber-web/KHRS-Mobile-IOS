@@ -22,7 +22,7 @@ export class SettingPage implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.authService.getUser();
-    console.log(this.authService.getUser());
+    // console.log(this.authService.getUser());
   }
 
     async logout() {

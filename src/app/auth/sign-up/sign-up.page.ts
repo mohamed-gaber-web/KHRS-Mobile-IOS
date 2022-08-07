@@ -42,7 +42,8 @@ export class SignUpPage implements OnInit {
     password: '',
     confirmPassword: '',
     recommendedbyId: '',
-    acceptTerms: ''
+    acceptTerms: '',
+    Nickname: ''
   };
 
   registerValidationMessages = {
@@ -77,6 +78,9 @@ export class SignUpPage implements OnInit {
     },
     acceptTerms: {
       required: this.translate.instant('acceptTermsReq'),
+    },
+    Nickname: {
+      required: 'Nickname is required'
     }
   };
 
@@ -108,6 +112,7 @@ export class SignUpPage implements OnInit {
   this.registerForm = this.formBuilder.group({
     'FirstName': ['', Validators.compose([Validators.required])],
     'LastName': ['', Validators.compose([Validators.required])],
+    'Nickname': ['', Validators.compose([Validators.required])],
     'email': ['', Validators.compose([Validators.required, emailValidator])],
     'PhoneNumber': [null, Validators.compose([Validators.minLength(11), Validators.required])],
     'Birthdate': [null, Validators.compose([Validators.required])],
@@ -146,7 +151,7 @@ export class SignUpPage implements OnInit {
   // ! When resister form valid
   public onRegisterFormSubmit(values):void {
 
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
     this.auth.registerCustomer(values).subscribe(async(response) => {
       //console.log(response);
         if(response['success']) {
@@ -160,7 +165,6 @@ export class SignUpPage implements OnInit {
         }else {
             response['arrayMessage'].forEach( async(element) => {
               //console.log(element);
-              
             var toast = await this.toastController.create({
               message: element,
               duration: 2000,
@@ -171,42 +175,13 @@ export class SignUpPage implements OnInit {
         }
       
     })
-    
-    // this.validateRegisterForm(true);
-
-    //  if (this.registerForm.valid) {
-    //    this.auth.registerCustomer(values).subscribe(async(response) => {
-    //     console.log(response);
-         
-    //     if(response['success']) {
-    //       var toast = await this.toastController.create({
-    //         message: 'Sign up successful',
-    //         duration: 2000,
-    //         color: 'success',
-    //       });
-    //       toast.present();
-
-    //       this.router.navigate(['/auth/sign-in'])
-
-    //      } else {
-    //        response['arrayMessage'].forEach( async(element) => {
-    //         var toast = await this.toastController.create({
-    //           message: 'Sign up error!',
-    //           duration: 2000,
-    //           color: 'danger',
-    //         });
-    //         toast.present();
-    //       });
-    //     }
-
-    //   });
-    //  }
+  
   }
 
  // ! get recomended by list
  getRecommendeBy() {
    this.auth.recommendedBy().subscribe(data => {
-     console.log(data['result']);
+    //  console.log(data['result']);
      
     this.allRecommended = data['result'];
    })
@@ -216,7 +191,7 @@ export class SignUpPage implements OnInit {
   getFlagsInputs() {
     this.appService.getLanguage()
       .subscribe(response => {
-        console.log(response['flagSetting']);
+        // console.log(response['flagSetting']);
         this.flagsToggle = response['flagSetting'];
     })
   }

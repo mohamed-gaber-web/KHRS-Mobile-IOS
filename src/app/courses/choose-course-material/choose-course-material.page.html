@@ -102,21 +102,27 @@
         <ion-col size="8">
           <div *ngIf="CourseDetails">
             <ion-button
+              [disabled]="CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin'"
               [routerLink]="['/courses/course-material',
               CourseDetails.courseTranslations[0].courseId]" [queryParams]="{offset: offset}" routerDirection="root">
                 <img class="img-icon" src="../../../assets/images/material.png" alt="material" />
                 Material
             </ion-button>
-            <ion-button (click)="sendIdToExercisePage()">
+            <ion-button 
+              [disabled]="CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' "
+              (click)="sendIdToExercisePage()">
               <img class="img-icon" src="../../../assets/images/exercise-icon.png" alt="exercise" /> Exercise </ion-button>
-            <ion-button *ngIf="CourseDetails.status !== 1" (click)="sendIdToFinalTestPage()">
+            <ion-button 
+                [disabled]="CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' " *ngIf="CourseDetails.status !== 1" (click)="sendIdToFinalTestPage()">
                 <img class="img-icon" src="../../../assets/images/final-test.png" alt="final test" />
                 Final Test
             </ion-button>
 
             <!-- *ngIf="CourseDetails.status === 1" -->
 
-            <ion-button *ngIf="CourseDetails.status === 1" (click)="toggleModal()">
+            <ion-button 
+                [disabled]="CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin'"  
+                *ngIf="CourseDetails.status === 1" (click)="toggleModal()">
                 <img class="img-icon" src="../../../assets/images/rating.png" alt="rating" />
                 Rating
             </ion-button>

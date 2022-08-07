@@ -26,6 +26,7 @@ export class ChooseCourseMaterialPage implements OnInit {
   offset: number = 0;
   checkCourseData: boolean;
   isOpen: boolean = false;
+  userInfo: any;
 
   constructor(
     private courseService: CourseService,
@@ -38,13 +39,16 @@ export class ChooseCourseMaterialPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.userInfo = JSON.parse(localStorage.getItem('user'));
+    console.log(this.userInfo)
     this.isLoading = true;
     this.courseId = JSON.parse(this.route.snapshot.paramMap.get('courseId'));
     this.redOffset = this.route.snapshot.paramMap.get('testOffset');
     this.offset = JSON.parse(localStorage.getItem('courseMaterialOffset'));
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
-      .subscribe(response => {
+        .subscribe(response => {
+        console.log(response)
         if(response['success'] === false) {
           this.checkCourseData = false;
           this.isLoading = false;
