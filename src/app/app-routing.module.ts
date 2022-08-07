@@ -41,10 +41,14 @@ const routes: Routes = [
     path: 'policy',
     loadChildren: () => import('./pages/policy/policy.module').then( m => m.PolicyPageModule)
   },
-
-
-
-
+  {
+    path: 'contact-us',
+    loadChildren: () => import('./pages/contact-us/contact-us.module').then( m => m.ContactUsPageModule)
+  },
+  {
+    path: 'thanks-rating',
+    loadChildren: () => import('./pages/thanks-rating/thanks-rating.module').then( m => m.ThanksRatingPageModule)
+  },
 ];
 @NgModule({
   imports: [

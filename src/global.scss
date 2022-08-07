@@ -32,6 +32,74 @@ body, * {
   font-family: 'Montserrat', sans-serif !important;
 }
 
+.no-result {
+  text-align: center;
+  margin: 50px 0;
+  img {width: 45%; height: auto;}
+  p {
+    font-size: 22px;
+    margin-top: 30px;
+    color: #000;
+  }
+}
+
+// tabs
+
+.mat-tab-label-container {margin: 10px 0;}
+
+.mat-tab-labels {
+    justify-content: center !important;
+}
+
+.mat-tab-header {
+    border-bottom: none;
+}
+
+.mat-tab-label, .mat-tab-link {
+    color: var(--ion-color-second-app);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #8AFA6F;
+    font-weight: 800;
+}
+.mat-ink-bar {
+    height: 5px !important;
+    border-radius: 10px !important;
+}
+// tabs
+
+ion-menu{
+  --width: 400px;
+}
+
+img.img-tab {
+  width: 30% !important;
+}
+
+ion-menu-button {
+  background-color: #8afa6f66;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  z-index: 2000000000000000000000000000000;
+  // border: 2px solid var(--ion-color-second-app);
+
+  ion-icon {
+    color: #fff;
+    font-size: 30px;
+  }
+}
+
 ion-toolbar {
   --background: transparent !important;
   border-radius: 0 0 30px 30px !important;
@@ -51,8 +119,8 @@ ion-toolbar {
   max-width: 100%;
 }
 
-.tabs-icons img {
-  width: 25%;
+.tabs-naviagte-icons img {
+  width: 40%;
   margin-top: 15px;
 }
 
@@ -218,16 +286,16 @@ ion-title{
   text-align: center;
 }
 
-// .ios h3{
-//   font-size: 20px;
-//   font-weight: 600;
-//   --color: var(--ion-color-second-app);
-//   padding: 30px 0;
-//   text-transform: uppercase;
-//   margin: 0 0 0 20px;
-//   // text-align: left;
-//   // margin-left: 20px!important;
-// }
+.ios h3{
+  font-size: 20px;
+  font-weight: 600;
+  --color: var(--ion-color-second-app);
+  padding: 0;
+  text-transform: uppercase;
+  // margin: 0 0 0 20px;
+  // text-align: left;
+  // margin-left: 20px!important;
+}
 
 hr {
     height: 1px;
@@ -256,16 +324,45 @@ ion-button {
 }
 
 
-ion-toast {
+// ion-toast {
 
-  --color: var(--ion-color-second-app);
-  font-size: 16px;
-  font-weight: 500;
+//   --color: var(--ion-color-second-app);
+//   font-size: 16px;
+//   font-weight: 500;
+//   text-align: center;
+//   --height: 80px;
+//   border-radius: 10px;
+//   text-transform: capitalize;
+// }
+
+
+
+// Animation toast
+ion-toast.success-msg,
+ion-toast.ion-error {
   text-align: center;
-  --height: 80px;
-  border-radius: 10px;
-  text-transform: capitalize;
+  --height: 300px;
+  --background: transparent;
+  --box-shadow: none !important;
 }
+
+ion-toast.success-text {
+    text-align: center;
+  --height: 80px !important;
+  --background-color: #8AFA6F !important;
+  font-size: 22px !important;
+  font-weight: 600;
+}
+
+.toast-message {
+    text-align: center;
+  --height: 80px !important;
+  --background-color: #8AFA6F !important;
+  font-size: 22px !important;
+  font-weight: 600;
+}
+// Animation toast
+
 
 .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: #ffffff;
@@ -276,7 +373,7 @@ ion-toast {
 // }
 
 .img-course-intro .img-intro ion-img {
-  max-width: 60%;
+  max-width: 50%;
   height: auto;
   margin: auto;
 }
@@ -611,8 +708,22 @@ ion-radio {
 
 .ios ion-back-button {font-size: 16px;}
 
+// IOS version
+
+/************* Media Query Desktop *****************/
+
+// IOS version
+
+.ios ion-menu-button {
+  --color: #fff!important;
+  padding: 0 11px;
+}
+
+.ios ion-back-button {font-size: 16px;}
+
 .ios .tabs-icons img {
-  width: 12%;
+  width: 30px;
+  height: auto;
 }
 
 .ios .lang-bg h3 {
@@ -637,109 +748,13 @@ ion-radio {
   padding-top: 25px;
 }
 
-.ios .user-notification{top: 35px !important;}
+.ios .user-notification{top: 22px !important;}
+
+.ios ion-toggle {
+  margin-left: 20px;
+}
 
 // IOS version
-
-/************* Media Query Desktop *****************/
-
-/************* Light Mode *****************/
-
-@media (prefers-color-scheme: light) {
-}
-/************* Light Mode *****************/
-
-/************* Dark Mode *****************/
-
-// @media (prefers-color-scheme: dark) {
-  // .top-title h3[color-theme="dark"] {color: #fff !important;}
-  // ion-back-button[color-theme="dark"]{color: #fff;}
-  // .privacy-policy ion-text[color-theme="dark"]{color: #fff !important;}
-  // .course-date ion-label[color-theme="dark"]{color: #fff !important}
-  // .time-valid ion-label[color-theme="dark"]{color: #fff !important}
-  // .title h3[color-theme="dark"] {color: #fff;}
-
-  // img.title-icon[color-theme="dark"] {
-  //   display: none;
-  // }
-
-  // h2#title[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // .course-details-descr ion-text[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-  // .info ion-icon[color-theme="dark"] {
-  //     color: #fff !important;
-  // }
-  // ion-item.in-list[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // ion-text.material-p p[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // h4[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // ion-title[color-theme="dark"] {
-  //   color: #fff;
-  // }
-
-  // .total-result[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // .single-choice ion-text[color-theme="dark"] {
-  //   color: --ion-text-color !important;
-  // }
-
-  // .single-choice ion-label[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // .single-choice ion-radio[color-theme="dark"] {
-  //   color: --ion-text-color !important;
-  // }
-
-  // .multi-choice ion-radio[color-theme="dark"] {
-  //   --color: #fff !important;
-  // }
-
-  // .multi-choice ion-label[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-  // .sound-group .sound-question[color-theme="dark"] {
-  //   border: 2px solid #fff !important;
-  // }
-
-  // .ext-icon-vlume[color-theme="dark"], .sound-group .sound-question .img-volume[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // th[color-theme="dark"] {
-  //   color: #fff !important;
-  // }
-
-  // img.exercise-title-icon[color-theme="dark"] {
-  //   display: none;
-  // }
-
-  // .help-icon[color-theme="dark"] {
-  //   color: #fff;
-  // }
-
-  // .multi-choice ion-text[color-theme="dark"]{
-  //   color: #fff !important;
-  // }
-  // .course-date ion-label[color-theme="dark"]{color: #fff !important;}
-
-// }
-
-/************* Dark Mode *****************/
 
 /************* Media Query Desktop *****************/
 
@@ -759,6 +774,7 @@ ion-radio {
 
   .top-title h3 {
     font-size: 18px;
+    margin-top: 20px;
   }
 
   .hide-desktop{display: none!important;}
@@ -881,6 +897,14 @@ ion-radio {
   }
 }
 
+
+@media(min-width: 400px) and (max-width: 1024px) {
+  ion-menu{--width: 90%;}
+}
+
+@media(max-width: 399px) {
+  ion-menu{--width: 370px;}
+}
 
 
 

@@ -13,6 +13,7 @@ import { AudioElement } from 'src/app/shared/models/audioObject';
 import { ExerciseItem } from 'src/app/shared/models/exerciseItem';
 import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-multi-choice',
@@ -59,6 +60,7 @@ export class MultiChoicePage implements OnInit {
     public navController: NavController,
     private router: Router,
     public modalController: ModalController,
+    private utilityService: UtilityService,
   ) {}
 
   ngOnInit() {
@@ -108,9 +110,7 @@ export class MultiChoicePage implements OnInit {
           }
           this.lengthQuestion = questionAndAnswerItems['length'];
           if (this.lengthQuestion == 0) {
-            this.errorMessage(
-              'There are no available questions in this exercise'
-            );
+              this.utilityService.successText("There are no available questions in this exercise");
             setTimeout(() => {
               this.navController.navigateRoot([
                 '/exercise',
@@ -168,16 +168,19 @@ export class MultiChoicePage implements OnInit {
           this.resultAnswer = response['success'];
           if (this.resultAnswer === true) {
             // ** message and voice success
-            this.currentIndex += 1;
-            this.successMessage('the answer is correct');
-            this.isLoading = true;
+            this.utilityService.successMessage("<img src='../../../assets/images/22.gif' />");
             this.stopAllAudios();
-            this.multiForm.reset();
-            this.getQuestionAndAnswerMultiChoice();
-            this.slides.slideNext();
+
+            setTimeout(() => {
+              this.isLoading = true;
+              this.multiForm.reset();
+              this.currentIndex += 1;
+              this.getQuestionAndAnswerMultiChoice();
+              this.slides.slideNext();
+            }, 4000)
 
             if (this.currentIndex === this.lengthQuestion) {
-              this.successMessage('Thanks for resolving questions');
+              this.utilityService.successText('Thanks for resolving questions');
               setTimeout(() => {
                 this.navController.navigateRoot([
                   '/exercise',
@@ -187,36 +190,10 @@ export class MultiChoicePage implements OnInit {
             }
           } else if (this.resultAnswer === false) {
             // ** message and voice error
-            this.errorMessage(
-              'The answer is wrong and please choose correct answer'
-            );
+            this.utilityService.errorMessage("<img src='../../../assets/images/wr.gif' />");
           }
         })
     );
-  }
-
-  async successMessage(msg: string) {
-    this.audio.load();
-    this.audio.play();
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 3000,
-      cssClass: 'ion-success',
-      color: 'success',
-    });
-    toast.present();
-  }
-
-  async errorMessage(msg: string) {
-    this.audio.load();
-    this.audio.play();
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 3000,
-      cssClass: 'ion-error',
-      color: 'danger',
-    });
-    toast.present();
   }
 
   playAudio(answer: any, type: number,langType?:string) {

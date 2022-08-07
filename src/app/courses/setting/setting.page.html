@@ -1,0 +1,22 @@
+<ion-content class="setting">
+  <div class="top-title">
+    <h3> Settings</h3>
+  </div>
+
+  <div *ngIf="userInfo">
+    <div routerLink="/auth/user-profile" class="user-profile-item">
+        <img loading="lazy" *ngIf="userInfo.imagePath" [src]="userInfo.imagePath">
+        <img loading="lazy" *ngIf="userInfo.imagePath === '' || userInfo.imagePath === null || userInfo.imagePath === undefined"
+        src="../../../assets//images/img-profile.png" />
+    </div>
+  </div>
+  <button routerLink="/auth/user-profile/edit-user"> Edit Profile </button>
+
+    <ul class="list-group">
+      <li class="list-group-item" routerLink="/policy">Privacy Policy</li>
+      <li class="list-group-item" routerLink="/faq">FAQ</li>
+      <li class="list-group-item" routerLink="/contact-us">Contact us</li>
+      <li class="list-group-item" routerLink="/auth/forget-password">Change Password</li>
+      <li class="list-group-item" *ngIf="authService.IsLoggedIn" (click)="logout()">Logout</li>
+    </ul>
+</ion-content>

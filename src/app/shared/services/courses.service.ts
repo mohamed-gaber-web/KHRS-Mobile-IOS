@@ -7,9 +7,12 @@ import {
   createApplyCourse,
   courseMaterials,
   getUserCourseDetails,
-  getCourseCategories} from 'src/app/api.constants';
+  getCourseCategories,
+  createUserCourseRate,
+  topScores} from 'src/app/api.constants';
 import { Course } from '../models/course';
 import { MyCourse } from '../models/myCourse';
+import { IRating } from '../models/rating.model';
 
 @Injectable({
   providedIn: 'root',
@@ -68,5 +71,15 @@ export class CourseService {
       .set('Offset', `${ offset }`)
       .set('Limit', `${limit}`)
     return this.http.get(`${getCourseCategories}`, { params })
+  }
+
+  // ** rating service
+  createRatingService(rating: IRating) {
+    return this.http.post(`${createUserCourseRate}`, rating)
+  }
+
+  // ** get top scores
+  getTopScores() {
+    return this.http.get(`${topScores}`);
   }
 }

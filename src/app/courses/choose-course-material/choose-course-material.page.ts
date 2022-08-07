@@ -2,13 +2,10 @@ import { TrackingUserService } from './../../shared/services/tracking-user.servi
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { userCourse } from 'src/app/shared/models/userCourse';
 import { CourseService } from 'src/app/shared/services/courses.service';
-import { TestService } from 'src/app/shared/services/test.service';
-
 import { AlertController } from '@ionic/angular';
-
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-choose-course-material',
@@ -27,13 +24,17 @@ export class ChooseCourseMaterialPage implements OnInit {
   testActive: boolean;
   redOffset: any;
   offset: number = 0;
+  checkCourseData: boolean;
+  isOpen: boolean = false;
 
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router,
     public alertController: AlertController,
-    private trackingService: TrackingUserService
+    private trackingService: TrackingUserService,
+    private modalCtrl: ModalController
+
     ) { }
 
   ngOnInit() {
@@ -44,6 +45,11 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
       .subscribe(response => {
+        if(response['success'] === false) {
+          this.checkCourseData = false;
+          this.isLoading = false;
+          return;
+        }
         this.isLoading = false;
         this.userCourseDetails = response['result'].userCourse;
         let startDate = new Date(this.userCourseDetails['startDate']);
@@ -54,9 +60,13 @@ export class ChooseCourseMaterialPage implements OnInit {
 
       this.courseService.getCoursesDetails(this.courseId)
       .subscribe(response => {
+        if(response['success'] === false) {
+          this.checkCourseData = false;
+          return;
+        }
         this.isLoading = false;
         this.CourseDetails = response['result'];
-        // console.log('course details', this.CourseDetails)
+        // console.log(this.CourseDetails.status);
       })
     );
 
@@ -119,6 +129,15 @@ export class ChooseCourseMaterialPage implements OnInit {
 
   openCourseDetails(ofst:number){
     this.router.navigate([`courses/course-material/${this.courseId}`, {ofst}])
+  }
+
+  // ** open course rating component
+  toggleModal() {
+    this.isOpen = true;
+  }
+
+  closeModal() {
+    this.isOpen = false;
   }
 
   ngOnDestroy() {

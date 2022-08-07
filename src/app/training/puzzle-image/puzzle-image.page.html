@@ -87,6 +87,7 @@
         </ion-col>
 
         <ion-col size-xs="12" size-md="6" size-sm="6" class="puzzle-answer" cdkDropList [cdkDropListData]="answersArray" (cdkDropListDropped)="drop($event)">
+          <div class="puzzle_animation-element"></div>
           <!-- Answer -->
             <div class="puzzle-fix" *ngFor="let item of answersArray" cdkDrag>
               <div class="title"> {{ item.keyword }}</div>

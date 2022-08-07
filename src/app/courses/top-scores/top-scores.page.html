@@ -1,10 +1,16 @@
-<!-- <app-top-header></app-top-header> -->
-
-<div class="top-title">
-  <h3> Top scores</h3>
-</div>
-
-
 <ion-content>
-<p> Coming soon </p>
+  <app-top-user-score></app-top-user-score>
+  <mat-tab-group>
+    <mat-tab label="Students">
+      <app-top-score-students [topStudentData]="allTopStudents" [loading]="isLoading"></app-top-score-students>
+    </mat-tab>
+    <mat-tab label="Courses">
+      <app-top-score-courses [topCoursesData]="allTopCourses" [loading]="isLoading"></app-top-score-courses>
+    </mat-tab>
+    <mat-tab label="Exams">
+      <app-top-score-exams [topExamsData]="allTopExams" [loading]="isLoading"></app-top-score-exams>
+    </mat-tab>
+  </mat-tab-group>
+
 </ion-content>
+

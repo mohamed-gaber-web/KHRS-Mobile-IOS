@@ -1,0 +1,19 @@
+  <div class="success-reviews" *ngFor="let reviewItem of allSuccessRating">
+    <div class="user-course-status__left">
+      <img [src]="reviewItem.userImage" loading="lazy" [alt]="reviewItem.courseName" loading="lazy" />
+    </div>
+
+    <div class="user-course-status__center">
+      <h4> {{ reviewItem.username }} </h4>
+      <h3> {{ reviewItem.courseName }} </h3>
+      <p *ngIf="reviewItem.comment !== null">  {{ reviewItem.comment }} </p>
+    </div>
+
+    <div class="user-course-status__right">
+      <div>
+        <ngb-rating style="color: #FFCC26; font-size: 15px;" [(rate)]="reviewItem.rate" [max]="5" [readonly]="true" ></ngb-rating>
+      </div>
+    </div>
+  </div>
+
+

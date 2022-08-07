@@ -27,12 +27,15 @@
     <div class="user-item">
       <ion-label color="primary"> Gender : {{ userInfo.gender === '0' ? 'male' : 'female' }} </ion-label>
     </div>
-    <div class="user-item">
+    <div class="user-item" *ngIf="userInfo.birthdate ">
       <ion-label color="primary"> Birthday : {{ userInfo.birthdate }} </ion-label>
+    </div>
+    <div class="user-item ion-text-center">
+      <ion-label color="primary" routerLink="/auth/user-profile/user-courses-status"> My courses status </ion-label>
     </div>
   </div>
 
-    <ion-grid class="user-data">
+    <!-- <ion-grid class="user-data">
     <ion-row>
       <ion-col>
         <div class="table-responsive">
@@ -62,12 +65,12 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
-  <ion-grid class="ion-padding">
+  <!-- <ion-grid class="ion-padding">
     <ion-button class="update-button" (click)="goToEditUser()"> <ion-icon name="create-outline"></ion-icon> Edit </ion-button>
     <ion-button class="" routerLink="change-password"> <ion-icon name="create-outline"></ion-icon> Change password </ion-button>
-  </ion-grid>
+  </ion-grid> -->
 
 
 

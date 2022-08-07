@@ -4,24 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoursesPage } from './courses.page';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: CoursesPage
-  // },
-  // {
-  //   path: 'all-courses',
-  //   loadChildren: () => import('./all-courses/all-courses.module').then( m => m.AllCoursesPageModule)
-  // },
-  // {
-  //   path: 'my-courses',
-  //   loadChildren: () => import('./my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
-  // },
-  // {
-  //   path: '/:courseId',
-  //   loadChildren: () => import('./course-details/course-details.module').then( m => m.CourseDetailsPageModule)
-  // }
-
-  {
+{
     path: 'tabs',
     component: CoursesPage,
     children: [
@@ -36,7 +19,7 @@ const routes: Routes = [
     },
     {
       path: 'setting',
-      loadChildren: () => import('./my-courses/my-courses.module').then( m => m.MyCoursesPageModule)
+      loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
     },
     {
       path: 'top-scores',
@@ -53,7 +36,8 @@ const routes: Routes = [
     {
       path: ':courseId',
       loadChildren: () => import('./course-details/course-details.module').then( m => m.CourseDetailsPageModule)
-    }
+    },
+
 
     ]
   },
@@ -67,12 +51,6 @@ const routes: Routes = [
     path: 'course-material/:courseId',
     loadChildren: () => import('./course-material/course-material.module').then( m => m.CourseMaterialPageModule)
   },
-  {
-    path: 'top-scores',
-    loadChildren: () => import('./top-scores/top-scores.module').then( m => m.TopScoresPageModule)
-  }
-
-
 
 ];
 

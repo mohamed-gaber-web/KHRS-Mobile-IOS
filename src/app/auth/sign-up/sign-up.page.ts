@@ -109,75 +109,105 @@ export class SignUpPage implements OnInit {
     'FirstName': ['', Validators.compose([Validators.required])],
     'LastName': ['', Validators.compose([Validators.required])],
     'email': ['', Validators.compose([Validators.required, emailValidator])],
-    'PhoneNumber': ['', Validators.compose([Validators.minLength(11), Validators.required])],
-    'Birthdate': [new Date(), Validators.compose([Validators.required])],
-    'Gender': [0 , Validators.required],
+    'PhoneNumber': [null, Validators.compose([Validators.minLength(11), Validators.required])],
+    'Birthdate': [null, Validators.compose([Validators.required])],
+    'Gender': [0],
     'password': ['', Validators.required],
     'confirmPassword': ['', Validators.required],
-    'recommendedbyId': [0, Validators.required],
+    'recommendedbyId': [3, Validators.required],
     'acceptTerms': [null, Validators.required],
     'languageId': [JSON.parse(localStorage.getItem('languageId'))],
     file : this.formBuilder.group({
-      fieldName: ['', !Validators.required],
-      filename: ['', !Validators.required],
-      fileExtension: ['', !Validators.required],
-      fileData: ['', !Validators.required],
+      fieldName: ["", !Validators.required],
+      filename: ["", !Validators.required],
+      fileExtension: ["", !Validators.required],
+      fileData: ["", !Validators.required],
     }),
   },{validator: matchingPasswords('password', 'confirmPassword')});
 
-  this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
+  // this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
   }
 
-  validateRegisterForm(isSubmitting = false) {
-    for (const field of Object.keys(this.registerFormErrors)) {
-      this.registerFormErrors[field] = '';
+  // validateRegisterForm(isSubmitting = false) {
+  //   for (const field of Object.keys(this.registerFormErrors)) {
+  //     this.registerFormErrors[field] = '';
 
-      const input = this.registerForm.get(field) as FormControl;
-      if (input.invalid && (input.dirty || isSubmitting)) {
-        for (const error of Object.keys(input.errors)) {
-          this.registerFormErrors[field] = this.registerValidationMessages[field][
-            error
-          ];
-        }
-      }
-    }
-  }
+  //     const input = this.registerForm.get(field) as FormControl;
+  //     if (input.invalid && (input.dirty || isSubmitting)) {
+  //       for (const error of Object.keys(input.errors)) {
+  //         this.registerFormErrors[field] = this.registerValidationMessages[field][
+  //           error
+  //         ];
+  //       }
+  //     }
+  //   }
+  // }
 
   // ! When resister form valid
   public onRegisterFormSubmit(values):void {
 
-    this.validateRegisterForm(true);
-
-     if (this.registerForm.valid) {
-       this.auth.registerCustomer(values).subscribe(async(response) => {
-         if(response['success']) {
+    console.log(this.registerForm.value);
+    this.auth.registerCustomer(values).subscribe(async(response) => {
+      //console.log(response);
+        if(response['success']) {
           var toast = await this.toastController.create({
             message: 'Sign up successful',
             duration: 2000,
             color: 'success',
           });
           toast.present();
-
           this.router.navigate(['/auth/sign-in'])
-
-         } else {
-           response['arrayMessage'].forEach( async(element) => {
+        }else {
+            response['arrayMessage'].forEach( async(element) => {
+              //console.log(element);
+              
             var toast = await this.toastController.create({
-              message: 'Sign up error!',
+              message: element,
               duration: 2000,
               color: 'danger',
             });
             toast.present();
           });
         }
+      
+    })
+    
+    // this.validateRegisterForm(true);
 
-      });
-     }
+    //  if (this.registerForm.valid) {
+    //    this.auth.registerCustomer(values).subscribe(async(response) => {
+    //     console.log(response);
+         
+    //     if(response['success']) {
+    //       var toast = await this.toastController.create({
+    //         message: 'Sign up successful',
+    //         duration: 2000,
+    //         color: 'success',
+    //       });
+    //       toast.present();
+
+    //       this.router.navigate(['/auth/sign-in'])
+
+    //      } else {
+    //        response['arrayMessage'].forEach( async(element) => {
+    //         var toast = await this.toastController.create({
+    //           message: 'Sign up error!',
+    //           duration: 2000,
+    //           color: 'danger',
+    //         });
+    //         toast.present();
+    //       });
+    //     }
+
+    //   });
+    //  }
   }
 
  // ! get recomended by list
  getRecommendeBy() {
    this.auth.recommendedBy().subscribe(data => {
+     console.log(data['result']);
+     
     this.allRecommended = data['result'];
    })
  }

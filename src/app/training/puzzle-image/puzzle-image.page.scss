@@ -30,6 +30,49 @@ ion-toolbar {
 .puzzle-answer {
   margin-top: 20px;
 
+  position: relative;
+
+    // Animation
+.puzzle_animation-element {
+    position: absolute;
+    top: 11px;
+    left: 3px;
+    transform: translate(0, 0);
+    z-index: 2000;
+    width: 50%;
+    height: 57px;
+    border: 5px dashed #062F87;
+    border-radius: 32px;
+    background-color: #fff;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+    -webkit-animation: selectAnimate 4s ease-in 2 3s forwards;
+    -o-animation: selectAnimate 4s ease-in 2 3s forwards;
+    -moz-animation: selectAnimate 4s ease-in 2 3s forwards;
+    animation: selectAnimate 4s ease-in 2 3s forwards;
+}
+
+@keyframes selectAnimate {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(170px, -255px);
+  }
+  // 50% {
+  //   transform: translate(0, 0);
+  // }
+  100% {
+    transform: translate(170px, -255px);
+    visibility: hidden;
+  }
+}
+
+  // Animation
+
+
   .puzzle-fix {
 
     display: flex;
@@ -115,7 +158,6 @@ ion-toolbar {
       height: auto;
   }
   }
-
 
 }
 
@@ -422,3 +464,17 @@ position: static!important;
 }
 
 
+@media(min-width: 300px) and (max-width: 370px) {
+  @keyframes selectAnimate {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(130px, -270px);
+  }
+  100% {
+    transform: translate(130px, -270px);
+    visibility: hidden;
+  }
+}
+}

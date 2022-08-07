@@ -53,7 +53,7 @@
         <ion-col size="12" *ngIf="flagsToggle['emailFlag']">
           <div class="form-group">
             <label>Email</label>
-            <input type="text" formControlName="email" required />
+            <input type="email" formControlName="email" required />
             <ion-text color="danger" *ngIf="registerFormErrors.email"> {{ registerFormErrors.email }}</ion-text>
           </div>
         </ion-col>
@@ -128,8 +128,8 @@
         <ion-col size="12" *ngIf="flagsToggle['recommendedByFlag']">
           <div class="form-group">
               <label>{{ 'Recommended' | translate}}</label>
-              <select formControlName="recommendedbyId" value="brown" okText="Okay" cancelText="Dismiss">
-                <option *ngFor="let item of allRecommended" [value]="item.id">
+              <select formControlName="recommendedbyId" value="brown" okText="Okay" cancelText="Dismiss" required>
+                <option *ngFor="let item of allRecommended" [ngValue]="item.id">
                   {{ item.recommendedByTranslations[0].description }}
                 </option>
               </select>
@@ -168,12 +168,11 @@
 
     <ion-grid>
       <ion-row ion-align-items-center>
-        <ion-col size="12" >
+        <ion-col size="12">
           <ion-button
-          [disabled]="!registerForm.valid"
           (click)="onRegisterFormSubmit(registerForm.value)"
           >
-            {{ 'Signup' | translate}}
+            Signup
           </ion-button>
         </ion-col>
       </ion-row>

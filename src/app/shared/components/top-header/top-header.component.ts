@@ -3,6 +3,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 
 import { StorageService } from '../../services/storage.service';
 import { TrackingUserService } from './../../services/tracking-user.service';
+import { NavController } from '@ionic/angular';
 
 
 
@@ -19,11 +20,13 @@ export class TopHeaderComponent implements OnInit {
   notifiCount: number = 0;
   sub: Subscription[] = [];
   darkValue: string = 'dark';
+  currentRoute: string = '';
 
   constructor(
     private storageService: StorageService,
     private trackingService: TrackingUserService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private navCtrl: NavController,
     ) { }
 
   ngOnInit() {
@@ -64,5 +67,12 @@ export class TopHeaderComponent implements OnInit {
 
 
     }
+  }
+
+  back() {
+    if(this.currentRoute === '/courses/tabs/all-courses') {
+      return;
+    }
+    this.navCtrl.back();
   }
 }

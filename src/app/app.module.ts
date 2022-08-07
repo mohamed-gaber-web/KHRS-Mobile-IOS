@@ -18,6 +18,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
+import {MatTabsModule} from '@angular/material/tabs';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -29,6 +33,7 @@ export function LanguageLoader(http: HttpClient) {
     IonicModule.forRoot(),
     BrowserAnimationsModule,
     AppRoutingModule,
+    MatTabsModule,
     SharedModule,
     // SwiperModule,
     HttpClientModule,
@@ -38,7 +43,8 @@ export function LanguageLoader(http: HttpClient) {
       useFactory: (LanguageLoader),
       deps: [HttpClient]
       }
-    })
+    }),
+    NgbModule
   ],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

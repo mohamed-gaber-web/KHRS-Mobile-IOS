@@ -20,6 +20,7 @@ import { ExerciseService } from 'src/app/shared/services/exercise.service';
 import { Subscription } from 'rxjs';
 import { Howl } from 'howler';
 import { HelpModalComponent } from '../help-modal/help-modal.component';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-puzzle-image',
@@ -68,7 +69,8 @@ export class PuzzleImagePage implements OnInit {
     public navController: NavController,
     private exerciseService: ExerciseService,
     public popoverController: PopoverController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private utilityService: UtilityService,
 
   ) {}
 
@@ -100,8 +102,8 @@ export class PuzzleImagePage implements OnInit {
           this.questionAndAnswerItems = response;
           this.lengthQuestion = response['length'];
 
-          if(this.lengthQuestion ==0){
-            this.errorMessage("There are no available questions in this exercise");
+          if (this.lengthQuestion == 0) {
+            // this.utilityService.successMessage("There are no available questions in this exercise");
             setTimeout(() => {
               this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
             }, 100)
@@ -243,16 +245,18 @@ export class PuzzleImagePage implements OnInit {
         const isCorrect = response['result'].isCorrect;
 
         if (isCorrect === true) {
-          this.successMessage('Thanks the answer is correct');
+          this.utilityService.successMessage("<img src='../../../assets/images/22.gif' />");
           if (this.player) {
             this.player.stop();
           }
-          this.currentIndex += 1;
-          this.getQuestionAndAnswer();
-          this.slides.slideNext();
+          setTimeout(() => {
+            this.currentIndex += 1;
+            this.getQuestionAndAnswer();
+            this.slides.slideNext();
+          }, 3000)
 
           if (this.currentIndex === this.lengthQuestion) {
-            this.successMessage('Thanks for resolving questions');
+            this.utilityService.successMessage('Thanks for resolving questions');
             setTimeout(() => {
               this.navController.navigateRoot([
                 '/exercise',
@@ -261,35 +265,9 @@ export class PuzzleImagePage implements OnInit {
             }, 100);
           }
         } else if (isCorrect === false) {
-          this.errorMessage(
-            'The answer is wrong and please choose correct answer'
-          );
+          this.utilityService.errorMessage("<img src='../../../assets/images/wr.gif' />");
         }
       });
-  }
-
-  async successMessage(msg: string) {
-    this.audio.load();
-    this.audio.play();
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 3000,
-      cssClass: 'ion-success',
-      color: 'success',
-    });
-    toast.present();
-  }
-
-  async errorMessage(msg: string) {
-    this.audio.load();
-    this.audio.play();
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 3000,
-      cssClass: 'ion-error',
-      color: 'danger',
-    });
-    toast.present();
   }
 
   async presentPopover(ev: any, item: any) {

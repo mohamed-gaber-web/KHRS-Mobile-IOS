@@ -53,3 +53,18 @@ ion-item {
   }
 }
 
+.social {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+
+    li {
+      display: inline-block;
+      width: 15%;
+      padding: 0 4px;
+    }
+  }
+}

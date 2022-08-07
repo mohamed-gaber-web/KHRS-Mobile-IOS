@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { AudioElement } from 'src/app/shared/models/audioObject';
 import { HelpModalComponent } from '../help-modal/help-modal.component';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 
 @Component({
@@ -56,7 +57,8 @@ export class PuzzleTextPage implements OnInit {
     public toastController: ToastController,
     public navController: NavController,
     private exerciseService: ExerciseService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private utilityService: UtilityService,
 
 
   ) { }
@@ -84,7 +86,8 @@ export class PuzzleTextPage implements OnInit {
         this.questionAndAnswerItems = response;
         this.lengthQuestion = response['length'];
         if(this.lengthQuestion ==0){
-          this.errorMessage("There are no available questions in this exercise");
+          // ** error when no question in this course
+          // this.utilityService.errorMessage("There are no available questions in this exercise");
           setTimeout(() => {
             this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
           }, 100)
@@ -209,14 +212,18 @@ export class PuzzleTextPage implements OnInit {
     const isCorrect = response['result'].isCorrect;
 
     if(isCorrect === true) {
-      this.successMessage('Thanks the answer is correct');
+      // ** if answer is success
+      this.utilityService.successMessage("<img src='../../../assets/images/22.gif' />");
       this.stopAllAudios();
-      this.currentIndex += 1;
-      this.getQuestionAndAnswer();
-      this.slides.slideNext();
+      setTimeout(() => {
+        this.currentIndex += 1;
+          this.getQuestionAndAnswer();
+          this.slides.slideNext();
+        }, 3000)
 
       if(this.currentIndex === this.lengthQuestion) {
-        this.successMessage('Thanks for resolving questions');
+        // ** if is question is success
+        this.utilityService.successMessage('Thanks for resolving questions');
         setTimeout(() => {
           this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
         }, 100)
@@ -224,7 +231,8 @@ export class PuzzleTextPage implements OnInit {
 
 
     } else if(isCorrect === false) {
-      this.errorMessage('The answer is wrong and please choose correct answer');
+      // ** if answer is wrong
+      this.utilityService.errorMessage("<img src='../../../assets/images/wr.gif' />");
     }
   })
 

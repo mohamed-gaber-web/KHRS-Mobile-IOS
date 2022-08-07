@@ -15,6 +15,10 @@ const routes: Routes = [
     {
     path: 'change-password',
     loadChildren: () => import('../change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'user-courses-status',
+    loadChildren: () => import('./user-courses-status/user-courses-status.module').then( m => m.UserCoursesStatusPageModule)
   }
 ];
 

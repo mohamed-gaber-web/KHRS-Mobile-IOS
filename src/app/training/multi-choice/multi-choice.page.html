@@ -14,7 +14,12 @@
   <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
 
 <form *ngIf="exerciseItems" [formGroup]="multiForm">
-
+  <!-- Animation Element -->
+  <div class="select-animate">
+    <img src="../../../assets/images/select.png" />
+    </div>
+    <!-- Animation Element -->
+    
   <ion-slides [pager]="false" #slides [options]="slideOpts">
   <ion-slide >
 

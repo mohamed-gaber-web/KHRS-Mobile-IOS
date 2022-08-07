@@ -13,6 +13,7 @@ import { ModalController } from '@ionic/angular';
 import { HelpModalComponent } from '../help-modal/help-modal.component';
 
 import { File } from '@ionic-native/file/ngx';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 
 
@@ -69,6 +70,7 @@ export class SingleChoicePage implements OnInit {
     private fb: FormBuilder,
     public navController: NavController,
     public modalController: ModalController,
+    private utilityService: UtilityService,
     // private file: File
     ) { }
 
@@ -100,7 +102,7 @@ export class SingleChoicePage implements OnInit {
           this.exerciseItems = response['result'];
           this.lengthQuestion = response['length'];
           if(this.lengthQuestion == 0){
-            this.errorMessage("There are no available questions in this exercise");
+            this.utilityService.successText("There are no available questions in this exercise");
             setTimeout(() => {
               this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
             }, 100)
@@ -198,7 +200,7 @@ export class SingleChoicePage implements OnInit {
           if(this.resultAnswer === true) {
 
             // message and voice success
-            this.successMessage('The answer is correct');
+            this.utilityService.successMessage("<img src='../../../assets/images/22.gif' />");
             this.currentIndex += 1;
             if(this.exerciseItems[0].audioElement){
               this.exerciseItems[0].audioElement.audio.pause();
@@ -216,7 +218,7 @@ export class SingleChoicePage implements OnInit {
             this.slides.slideNext();
 
             if(this.currentIndex === this.lengthQuestion) {
-              this.successMessage('Thanks for resolving questions');
+              this.utilityService.successText('Thanks for resolving questions');
               setTimeout(() => {
                 this.navController.navigateRoot(['/exercise', {courseId: this.courseId}]);
               }, 100)
@@ -224,7 +226,7 @@ export class SingleChoicePage implements OnInit {
 
           } else if(this.resultAnswer === false) {
             // message and voice error
-            this.errorMessage('The answer is wrong and please choose correct answer');
+            this.utilityService.errorMessage("<img src='../../../assets/images/wr.gif' />");
           }
 
           }
@@ -242,29 +244,6 @@ export class SingleChoicePage implements OnInit {
       color: 'success'
     });
     toast.present();
-  }
-
-  async errorMessage(msg: string) {
-    this.audio.load();
-    this.audio.play()
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 500,
-      cssClass:'ion-error',
-      color: 'danger',
-    });
-    toast.present();
-  }
-
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: HelpModalComponent,
-      componentProps: {
-        "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
-        "modalTitle": "Single Choice Tutorial"
-      }
-    });
-    return await modal.present();
   }
 
   slidePrev() {

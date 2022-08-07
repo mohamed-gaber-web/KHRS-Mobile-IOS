@@ -1,6 +1,5 @@
 // const CORS = 'https://cors-anywhere.herokuapp.com/';
 
-// export const baseUrl = `https://khrs-api.sdex.online`;
 // export const baseUrl = `https://dev-khrs-api.sdex.online`;
 export const baseUrl = `https://api.e-asylearn.dk`;
 
@@ -53,3 +52,11 @@ export const start = `${baseUrl}/api/AmDoneToday/Start`;
 export const end = `${baseUrl}/api/AmDoneToday/End`;
 export const getAllByUser = `${baseUrl}/api/AmDoneToday/GetAllByUser`;
 
+// rating
+export const createUserCourseRate = `${baseUrl}/api/Rate/Create`;
+
+// suuccess board
+export const successBoard = `${baseUrl}/api/SuccessBoard/GetSuccessBoard`;
+
+// top scores
+export const topScores = `${baseUrl}/api/UserCourse/GetTopScores`;
