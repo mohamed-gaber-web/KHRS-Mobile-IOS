@@ -15,6 +15,7 @@ import {NgxMatFileInputModule} from '@angular-material-components/file-input';
 import { MatInputModule } from '@angular/material/input';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -26,8 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxMatFileInputModule,
     TranslateModule,
     MatInputModule,
-    HttpClientModule
-
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [SignUpPage]
 })

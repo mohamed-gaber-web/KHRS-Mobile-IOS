@@ -1,4 +1,4 @@
-import { getProfileData } from './../api.constants';
+import { getProfileData, termsAndConditions } from './../api.constants';
 import { Injectable } from "@angular/core";
 
 import { HttpClient } from "@angular/common/http";
@@ -57,6 +57,10 @@ import { loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserIn
 
   getProfileDataList() {
     return this.http.get(`${getProfileData}`);
+  }
+
+  getTermsAndCondition() {
+    return this.http.get(`${termsAndConditions}`);
   }
 
 }

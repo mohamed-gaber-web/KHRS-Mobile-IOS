@@ -13,11 +13,30 @@ import { TopHeaderComponent } from './components/top-header/top-header.component
 import { SuccessReviewsComponent } from './components/success-reviews/success-reviews.component';
 import { SuccessVideosComponent } from './components/success-videos/success-videos.component';
 import { SuccessPhotosComponent } from './components/success-photos/success-photos.component';
+import { SanitizeHtmlPipe } from './pipes/sanitizer.pipe';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, HttpClientModule, RouterModule, NgbModule],
-  declarations: [TopHeaderComponent, SuccessPhotosComponent, SuccessVideosComponent, SuccessReviewsComponent, PipeSafeUrlPipe],
-  exports: [TopHeaderComponent, SuccessPhotosComponent, SuccessVideosComponent, SuccessReviewsComponent],
+  imports: [
+    CommonModule,
+    IonicModule,
+    HttpClientModule,
+    RouterModule,
+    NgbModule,
+  ],
+  declarations: [
+    TopHeaderComponent,
+    SuccessPhotosComponent,
+    SuccessVideosComponent,
+    SuccessReviewsComponent,
+    PipeSafeUrlPipe,
+    SanitizeHtmlPipe
+  ],
+  exports: [
+    TopHeaderComponent,
+    SuccessPhotosComponent,
+    SuccessVideosComponent,
+    SuccessReviewsComponent,
+    SanitizeHtmlPipe],
   providers: [],
 })
 

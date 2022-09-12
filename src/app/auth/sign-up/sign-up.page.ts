@@ -1,7 +1,7 @@
-import { recommendedBy } from 'src/app/api.constants';
 import { Component, OnInit } from '@angular/core';
 
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -15,6 +15,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastController } from '@ionic/angular';
 import { HelpersService } from 'src/app/shared/services/helpers.service';
 import { AppService } from 'src/app/shared/services/app.service';
+import { recommendedBy } from 'src/app/api.constants';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -24,66 +28,22 @@ import { AppService } from 'src/app/shared/services/app.service';
 export class SignUpPage implements OnInit {
 
   registerForm: FormGroup;
+  submitted: boolean = false;
   isLoading = false;
   allRecommended: any;
   flagsToggle;
+  termsAndConditionsText: any;
+  closeResult = '';
+  itemClass: string = '';
+  toggleInputs: any;
+  selected: any;
+  languageTitle: string = '';
+  langItems: any;
+  subs: Subscription[] = []
   gender = [
     {name: 'male', value: 0},
     {name: 'female', value: 1}
   ]
-
-  registerFormErrors = {
-    FirstName: '',
-    LastName: '',
-    email: '',
-    PhoneNumber: '',
-    Birthdate: '',
-    Gender: '',
-    password: '',
-    confirmPassword: '',
-    recommendedbyId: '',
-    acceptTerms: '',
-    Nickname: ''
-  };
-
-  registerValidationMessages = {
-    FirstName: {
-      required: this.translate.instant('firstNameReq'),
-    },
-    LastName: {
-      required: this.translate.instant('lastNameReq'),
-    },
-    email: {
-      required: this.translate.instant('emailReq'),
-      invalidEmail: this.translate.instant('invalidEmail'),
-    },
-    phoneNumber: {
-      required: this.translate.instant('phoneReq'),
-      minlength: 'Phone Number is not long enough, minimum of 11 characters',
-    },
-    gender: {
-      required: this.translate.instant('genderReq'),
-    },
-    password: {
-      required: this.translate.instant('passwordReq'),
-    },
-    confirmPassword: {
-      required: this.translate.instant('confirmPasswordReq'),
-    },
-    recommendedbyId: {
-      required: this.translate.instant('firstNameReq'),
-    },
-    Birthdate: {
-      required: this.translate.instant('birthdateReq'),
-    },
-    acceptTerms: {
-      required: this.translate.instant('acceptTermsReq'),
-    },
-    Nickname: {
-      required: 'Nickname is required'
-    }
-  };
-
 
   constructor(
     private auth: AuthService,
@@ -92,108 +52,185 @@ export class SignUpPage implements OnInit {
     public toastController: ToastController,
     public router: Router,
     private helpers: HelpersService,
-    private appService: AppService
+    private appService: AppService,
+    private modalService: NgbModal
+
     ) {}
 
-    async uploadImg(event) {
-      const imgString: any = await this.helpers.toBase64(event.target.files[0]);
-      (this.registerForm.get('file') as FormGroup).patchValue({
-        fieldName: 'image',
-        filename: event.target.files[0].name,
-        fileExtension: this.helpers.getExtension(event.target.files[0].name),
-        fileData: this.helpers.validBase64(imgString),
-      });
-    }
-
-  ngOnInit() {
-    this.getRecommendeBy()
-    this.getFlagsInputs()
-  // ! Register Fields
-  this.registerForm = this.formBuilder.group({
-    'FirstName': ['', Validators.compose([Validators.required])],
-    'LastName': ['', Validators.compose([Validators.required])],
-    'Nickname': ['', Validators.compose([Validators.required])],
-    'email': ['', Validators.compose([Validators.required, emailValidator])],
-    'PhoneNumber': [null, Validators.compose([Validators.minLength(11), Validators.required])],
-    'Birthdate': [null, Validators.compose([Validators.required])],
-    'Gender': [0],
-    'password': ['', Validators.required],
-    'confirmPassword': ['', Validators.required],
-    'recommendedbyId': [3, Validators.required],
-    'acceptTerms': [null, Validators.required],
-    'languageId': [JSON.parse(localStorage.getItem('languageId'))],
-    file : this.formBuilder.group({
-      fieldName: ["", !Validators.required],
-      filename: ["", !Validators.required],
-      fileExtension: ["", !Validators.required],
-      fileData: ["", !Validators.required],
-    }),
-  },{validator: matchingPasswords('password', 'confirmPassword')});
-
-  // this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
+  // ** upload image file
+  async uploadImg(event) {
+    const imgString: any = await this.helpers.toBase64(event.target.files[0]);
+    (this.registerForm.get('file') as FormGroup).patchValue({
+      fieldName: 'image',
+      filename: event.target.files[0].name,
+      fileExtension: this.helpers.getExtension(event.target.files[0].name),
+      fileData: this.helpers.validBase64(imgString),
+    });
   }
 
-  // validateRegisterForm(isSubmitting = false) {
-  //   for (const field of Object.keys(this.registerFormErrors)) {
-  //     this.registerFormErrors[field] = '';
+  ngOnInit() {
+    this.getRecommendeBy();
+    this.getFlagsInputs();
+    // ** invoke function getTermsAndConditionText()
+    this.getTermsAndConditionText();
+    // ** Invoke function getLanguage()
+    this.getLanguage();
 
-  //     const input = this.registerForm.get(field) as FormControl;
-  //     if (input.invalid && (input.dirty || isSubmitting)) {
-  //       for (const error of Object.keys(input.errors)) {
-  //         this.registerFormErrors[field] = this.registerValidationMessages[field][
-  //           error
-  //         ];
-  //       }
-  //     }
-  //   }
-  // }
+    this.createRegisterForm();
+    // console.log(this.registerForm.status);
 
-  // ! When resister form valid
-  public onRegisterFormSubmit(values):void {
+  }
 
-    // console.log(this.registerForm.value);
-    this.auth.registerCustomer(values).subscribe(async(response) => {
-      //console.log(response);
-        if(response['success']) {
-          var toast = await this.toastController.create({
-            message: 'Sign up successful',
-            duration: 2000,
-            color: 'success',
-          });
-          toast.present();
-          this.router.navigate(['/auth/sign-in'])
-        }else {
-            response['arrayMessage'].forEach( async(element) => {
-              //console.log(element);
-            var toast = await this.toastController.create({
-              message: element,
-              duration: 2000,
-              color: 'danger',
-            });
-            toast.present();
-          });
-        }
+  // ** create register form 
+  createRegisterForm() {
+    this.registerForm = this.formBuilder.group({
+      'FirstName': ['', Validators.compose([Validators.required])],
+      'LastName': ['', Validators.compose([Validators.required])],
+      'Nickname': ['', Validators.compose([Validators.required])],
+      'email': ['', Validators.compose([Validators.required, emailValidator])],
+      'PhoneNumber': [null, Validators.compose([Validators.minLength(11)])],
+      'Birthdate': [null],
+      'Gender': [0],
+      'password': ['', Validators.required],
+      'confirmPassword': ['', Validators.required],
+      'recommendedbyId': [3, Validators.required],
+      'acceptTerms': [null],
+      'languageId': [JSON.parse(localStorage.getItem('languageId'))],
+      file : this.formBuilder.group({
+        fieldName: ["", !Validators.required],
+        filename: ["", !Validators.required],
+        fileExtension: ["", !Validators.required],
+        fileData: ["", !Validators.required],
+      }),
+    },{validator: matchingPasswords('password', 'confirmPassword')});
+  }
+
+  // ** create form validation
+  get inputControl(): { [key: string]: AbstractControl } {
+    return this.registerForm.controls;
+  }
+
+
+  // ** When resister form valid
+  onRegisterFormSubmit(values):void {    
+    this.getLanguageAPi(); // ** fix phone and gender in ios app
+    
+    // ** check if lang is not exist in localstorage add lang
+    if(!localStorage.getItem('languageId')) {
+      localStorage.setItem('languageId', this.registerForm.value.languageId);  
+    }
+    
+    this.auth.registerCustomer(values).subscribe(async (response) => {
+      if(response['success']) {
+        var toast = await this.toastController.create({
+          message: 'Sign up successful',
+          duration: 2000,
+          color: 'success',
+        });
+        toast.present();
+        this.router.navigate(['/auth/sign-in'])
+      }else {
+        response['arrayMessage'].forEach( async(element) => {
+        var toast = await this.toastController.create({
+          message: element,
+          duration: 2000,
+          color: 'danger',
+        });
+        toast.present();
+      });
+      }
       
     })
   
   }
 
- // ! get recomended by list
+ // ** get recomended by list
  getRecommendeBy() {
-   this.auth.recommendedBy().subscribe(data => {
-    //  console.log(data['result']);
-     
-    this.allRecommended = data['result'];
-   })
+   this.subs.push(
+     this.auth.recommendedBy()
+       .subscribe(data => { this.allRecommended = data['result']; })
+   );
  }
   
-  // ? flags on inputs
+  // ** make flags inputs
   getFlagsInputs() {
-    this.appService.getLanguage()
-      .subscribe(response => {
-        // console.log(response['flagSetting']);
-        this.flagsToggle = response['flagSetting'];
-    })
+    this.subs.push(
+      this.appService.getLanguage()
+      .subscribe(response => {this.flagsToggle = response['flagSetting'];})
+    );
   }
 
+  // ** get terms and conditions text
+  getTermsAndConditionText() {
+    this.subs.push(
+      this.auth.getTermsAndCondition()
+      .subscribe(response => this.termsAndConditionsText = response['result'])
+    );
+  }
+
+  // ** Get language icons
+  getLanguageId(item: any) {
+    this.registerForm.patchValue({
+      languageId: item.id
+    })
+    localStorage.setItem('languageId', item.id);
+    this.selected = item;
+    this.languageTitle = item.name;
+  }
+
+    // ** Get All Language
+    getLanguage() {
+      this.subs.push(
+        this.appService.getLanguage()
+        .subscribe(response => {
+          this.langItems = response['result'].result;
+        })
+      );
+    }
+    // ** fix phone and gender in ios app
+    getLanguageAPi() {
+      this.appService.getLanguage().subscribe(response => this.toggleInputs = response['flagSetting'])
+    }
+
+  isActive(item) {return this.selected === item;};
+
+  // modal bootstrap
+  openChooseLanguage(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason2(reason)}`;
+    });
+  }
+
+  private getDismissReason2(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  ngOnDestroy(): void { this.subs.forEach(el => el.unsubscribe())}
+  
 }

@@ -60,3 +60,6 @@ export const successBoard = `${baseUrl}/api/SuccessBoard/GetSuccessBoard`;
 
 // top scores
 export const topScores = `${baseUrl}/api/UserCourse/GetTopScores`;
+
+// terms and condition
+export const termsAndConditions = `${baseUrl}/api/TermsAndConditions/GetTermsAndConditions`;

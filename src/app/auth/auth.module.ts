@@ -8,8 +8,6 @@ import { AuthPageRoutingModule } from './auth-routing.module';
 
 import { AuthPage } from './auth.page';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +15,6 @@ import { AuthPage } from './auth.page';
     IonicModule,
     ReactiveFormsModule,
     AuthPageRoutingModule,
-
   ],
   declarations: [AuthPage]
 })
