@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/macmini/Desktop/SDEX WORK/KHRS-IOS/mobile-ionic/src/main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /Users/sdex/Desktop/KHRA MOBILE IOS/KHRS-Mobile-IOS/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -16,7 +16,7 @@ module.exports = __webpack_require__(/*! /Users/macmini/Desktop/SDEX WORK/KHRS-I
 /*!**********************************!*\
   !*** ./src/app/api.constants.ts ***!
   \**********************************/
-/*! exports provided: baseUrl, imagesBaseUrl, loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword, getProfileData, getLanguage, getAllCoursesAPI, getUsersCoursesAPI, getCourseDetails, createApplyCourse, getUserCourseDetails, courseMaterials, getCourseCategories, getExercise, checkAnswerSingleChoise, getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText, checkAnswerPuzzleImage, getTextType, getUserActiveTest, sendAnswerTest, finishedTest, getCertificate, faqPage, policyPage, getGeneratedVidoes, start, end, getAllByUser, createUserCourseRate, successBoard, topScores */
+/*! exports provided: baseUrl, imagesBaseUrl, loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword, getProfileData, getLanguage, getAllCoursesAPI, getUsersCoursesAPI, getCourseDetails, createApplyCourse, getUserCourseDetails, courseMaterials, getCourseCategories, getExercise, checkAnswerSingleChoise, getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText, checkAnswerPuzzleImage, getTextType, getUserActiveTest, sendAnswerTest, finishedTest, getCertificate, faqPage, policyPage, getGeneratedVidoes, start, end, getAllByUser, createUserCourseRate, successBoard, topScores, termsAndConditions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58,6 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUserCourseRate", function() { return createUserCourseRate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "successBoard", function() { return successBoard; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "topScores", function() { return topScores; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "termsAndConditions", function() { return termsAndConditions; });
 // const CORS = 'https://cors-anywhere.herokuapp.com/';
 // export const baseUrl = `https://dev-khrs-api.sdex.online`;
 const baseUrl = `https://api.e-asylearn.dk`;
@@ -108,6 +109,8 @@ const createUserCourseRate = `${baseUrl}/api/Rate/Create`;
 const successBoard = `${baseUrl}/api/SuccessBoard/GetSuccessBoard`;
 // top scores
 const topScores = `${baseUrl}/api/UserCourse/GetTopScores`;
+// terms and condition
+const termsAndConditions = `${baseUrl}/api/TermsAndConditions/GetTermsAndConditions`;
 
 
 /***/ }),
@@ -266,6 +269,41 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "Lbqz":
+/*!************************************************!*\
+  !*** ./src/app/shared/pipes/sanitizer.pipe.ts ***!
+  \************************************************/
+/*! exports provided: SanitizeHtmlPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SanitizeHtmlPipe", function() { return SanitizeHtmlPipe; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "8Y7J");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "cUpR");
+
+
+
+let SanitizeHtmlPipe = class SanitizeHtmlPipe {
+    constructor(_sanitizer) {
+        this._sanitizer = _sanitizer;
+    }
+    transform(value) {
+        return this._sanitizer.bypassSecurityTrustHtml(value);
+    }
+};
+SanitizeHtmlPipe.ctorParameters = () => [
+    { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"] }
+];
+SanitizeHtmlPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({ name: 'sanitizeHtml' })
+], SanitizeHtmlPipe);
+
+
+
+/***/ }),
+
 /***/ "NlNA":
 /*!***************************************!*\
   !*** ./src/app/shared/models/user.ts ***!
@@ -304,6 +342,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_success_reviews_success_reviews_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/success-reviews/success-reviews.component */ "leYu");
 /* harmony import */ var _components_success_videos_success_videos_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/success-videos/success-videos.component */ "WKgd");
 /* harmony import */ var _components_success_photos_success_photos_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/success-photos/success-photos.component */ "n6N9");
+/* harmony import */ var _pipes_sanitizer_pipe__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pipes/sanitizer.pipe */ "Lbqz");
+
 
 
 
@@ -320,9 +360,28 @@ let SharedModule = class SharedModule {
 };
 SharedModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"]],
-        declarations: [_components_top_header_top_header_component__WEBPACK_IMPORTED_MODULE_8__["TopHeaderComponent"], _components_success_photos_success_photos_component__WEBPACK_IMPORTED_MODULE_11__["SuccessPhotosComponent"], _components_success_videos_success_videos_component__WEBPACK_IMPORTED_MODULE_10__["SuccessVideosComponent"], _components_success_reviews_success_reviews_component__WEBPACK_IMPORTED_MODULE_9__["SuccessReviewsComponent"], _pipes_pipe_safe_url_pipe__WEBPACK_IMPORTED_MODULE_6__["PipeSafeUrlPipe"]],
-        exports: [_components_top_header_top_header_component__WEBPACK_IMPORTED_MODULE_8__["TopHeaderComponent"], _components_success_photos_success_photos_component__WEBPACK_IMPORTED_MODULE_11__["SuccessPhotosComponent"], _components_success_videos_success_videos_component__WEBPACK_IMPORTED_MODULE_10__["SuccessVideosComponent"], _components_success_reviews_success_reviews_component__WEBPACK_IMPORTED_MODULE_9__["SuccessReviewsComponent"]],
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"],
+            _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"],
+        ],
+        declarations: [
+            _components_top_header_top_header_component__WEBPACK_IMPORTED_MODULE_8__["TopHeaderComponent"],
+            _components_success_photos_success_photos_component__WEBPACK_IMPORTED_MODULE_11__["SuccessPhotosComponent"],
+            _components_success_videos_success_videos_component__WEBPACK_IMPORTED_MODULE_10__["SuccessVideosComponent"],
+            _components_success_reviews_success_reviews_component__WEBPACK_IMPORTED_MODULE_9__["SuccessReviewsComponent"],
+            _pipes_pipe_safe_url_pipe__WEBPACK_IMPORTED_MODULE_6__["PipeSafeUrlPipe"],
+            _pipes_sanitizer_pipe__WEBPACK_IMPORTED_MODULE_12__["SanitizeHtmlPipe"]
+        ],
+        exports: [
+            _components_top_header_top_header_component__WEBPACK_IMPORTED_MODULE_8__["TopHeaderComponent"],
+            _components_success_photos_success_photos_component__WEBPACK_IMPORTED_MODULE_11__["SuccessPhotosComponent"],
+            _components_success_videos_success_videos_component__WEBPACK_IMPORTED_MODULE_10__["SuccessVideosComponent"],
+            _components_success_reviews_success_reviews_component__WEBPACK_IMPORTED_MODULE_9__["SuccessReviewsComponent"],
+            _pipes_sanitizer_pipe__WEBPACK_IMPORTED_MODULE_12__["SanitizeHtmlPipe"]
+        ],
         providers: [],
     })
 ], SharedModule);
@@ -1415,6 +1474,9 @@ let AuthService = class AuthService {
     }
     getProfileDataList() {
         return this.http.get(`${_api_constants__WEBPACK_IMPORTED_MODULE_1__["getProfileData"]}`);
+    }
+    getTermsAndCondition() {
+        return this.http.get(`${_api_constants__WEBPACK_IMPORTED_MODULE_1__["termsAndConditions"]}`);
     }
 };
 AuthService.ctorParameters = () => [

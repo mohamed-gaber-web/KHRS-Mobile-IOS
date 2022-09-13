@@ -215,11 +215,11 @@ const routes = [
     },
     {
         path: 'puzzle-image',
-        loadChildren: () => Promise.all(/*! import() | puzzle-image-puzzle-image-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~cec1ce6f"), __webpack_require__.e("default~puzzle-image-puzzle-image-module~puzzle-text-puzzle-text-module~test-course-test-course-module"), __webpack_require__.e("common"), __webpack_require__.e("puzzle-image-puzzle-image-module")]).then(__webpack_require__.bind(null, /*! ./puzzle-image/puzzle-image.module */ "PFl2")).then(m => m.PuzzleImagePageModule)
+        loadChildren: () => Promise.all(/*! import() | puzzle-image-puzzle-image-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("default~puzzle-image-puzzle-image-module~puzzle-text-puzzle-text-module~test-course-test-course-module"), __webpack_require__.e("common"), __webpack_require__.e("puzzle-image-puzzle-image-module")]).then(__webpack_require__.bind(null, /*! ./puzzle-image/puzzle-image.module */ "PFl2")).then(m => m.PuzzleImagePageModule)
     },
     {
         path: 'test-course',
-        loadChildren: () => Promise.all(/*! import() | test-course-test-course-module */[__webpack_require__.e("default~puzzle-image-puzzle-image-module~puzzle-text-puzzle-text-module~test-course-test-course-module"), __webpack_require__.e("common"), __webpack_require__.e("test-course-test-course-module")]).then(__webpack_require__.bind(null, /*! ./test-course/test-course.module */ "MrdW")).then(m => m.TestCoursePageModule)
+        loadChildren: () => Promise.all(/*! import() | test-course-test-course-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("default~puzzle-image-puzzle-image-module~puzzle-text-puzzle-text-module~test-course-test-course-module"), __webpack_require__.e("common"), __webpack_require__.e("test-course-test-course-module")]).then(__webpack_require__.bind(null, /*! ./test-course/test-course.module */ "MrdW")).then(m => m.TestCoursePageModule)
     },
     {
         path: 'finished-test',

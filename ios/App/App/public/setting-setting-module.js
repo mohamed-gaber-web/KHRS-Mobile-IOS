@@ -61,7 +61,7 @@ let SettingPage = class SettingPage {
     }
     ngOnInit() {
         this.userInfo = this.authService.getUser();
-        console.log(this.authService.getUser());
+        // console.log(this.authService.getUser());
     }
     logout() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {

@@ -25,12 +25,12 @@ const routes = [
         children: [
             {
                 path: 'all-courses',
-                loadChildren: () => Promise.all(/*! import() | all-courses-all-courses-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~cec1ce6f"), __webpack_require__.e("common"), __webpack_require__.e("all-courses-all-courses-module")]).then(__webpack_require__.bind(null, /*! ./all-courses/all-courses.module */ "u2BO")).then(m => m.AllCoursesPageModule),
+                loadChildren: () => Promise.all(/*! import() | all-courses-all-courses-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("common"), __webpack_require__.e("all-courses-all-courses-module")]).then(__webpack_require__.bind(null, /*! ./all-courses/all-courses.module */ "u2BO")).then(m => m.AllCoursesPageModule),
                 data: { title: "All courses" }
             },
             {
                 path: 'my-courses',
-                loadChildren: () => Promise.all(/*! import() | my-courses-my-courses-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~cec1ce6f"), __webpack_require__.e("default~course-details-course-details-module~my-courses-my-courses-module"), __webpack_require__.e("common"), __webpack_require__.e("my-courses-my-courses-module")]).then(__webpack_require__.bind(null, /*! ./my-courses/my-courses.module */ "ircu")).then(m => m.MyCoursesPageModule)
+                loadChildren: () => Promise.all(/*! import() | my-courses-my-courses-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("default~course-details-course-details-module~my-courses-my-courses-module"), __webpack_require__.e("common"), __webpack_require__.e("my-courses-my-courses-module")]).then(__webpack_require__.bind(null, /*! ./my-courses/my-courses.module */ "ircu")).then(m => m.MyCoursesPageModule)
             },
             {
                 path: 'setting',
@@ -50,7 +50,7 @@ const routes = [
             },
             {
                 path: ':courseId',
-                loadChildren: () => Promise.all(/*! import() | course-details-course-details-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~cec1ce6f"), __webpack_require__.e("default~course-details-course-details-module~my-courses-my-courses-module"), __webpack_require__.e("course-details-course-details-module")]).then(__webpack_require__.bind(null, /*! ./course-details/course-details.module */ "4PMM")).then(m => m.CourseDetailsPageModule)
+                loadChildren: () => Promise.all(/*! import() | course-details-course-details-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("default~course-details-course-details-module~my-courses-my-courses-module"), __webpack_require__.e("course-details-course-details-module")]).then(__webpack_require__.bind(null, /*! ./course-details/course-details.module */ "4PMM")).then(m => m.CourseDetailsPageModule)
             },
         ]
     },
@@ -61,7 +61,7 @@ const routes = [
     },
     {
         path: 'course-material/:courseId',
-        loadChildren: () => Promise.all(/*! import() | course-material-course-material-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~cec1ce6f"), __webpack_require__.e("course-material-course-material-module")]).then(__webpack_require__.bind(null, /*! ./course-material/course-material.module */ "kp8m")).then(m => m.CourseMaterialPageModule)
+        loadChildren: () => Promise.all(/*! import() | course-material-course-material-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("course-material-course-material-module")]).then(__webpack_require__.bind(null, /*! ./course-material/course-material.module */ "kp8m")).then(m => m.CourseMaterialPageModule)
     },
 ];
 let CoursesPageRoutingModule = class CoursesPageRoutingModule {

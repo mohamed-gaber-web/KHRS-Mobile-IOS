@@ -22,6 +22,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
 /* harmony import */ var src_app_shared_services_helpers_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/shared/services/helpers.service */ "TaCb");
 /* harmony import */ var src_app_shared_services_app_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/app/shared/services/app.service */ "BbT4");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "G0yt");
+
 
 
 
@@ -35,7 +37,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SignUpPage = class SignUpPage {
-    constructor(auth, translate, formBuilder, toastController, router, helpers, appService) {
+    constructor(auth, translate, formBuilder, toastController, router, helpers, appService, modalService) {
         this.auth = auth;
         this.translate = translate;
         this.formBuilder = formBuilder;
@@ -43,58 +45,19 @@ let SignUpPage = class SignUpPage {
         this.router = router;
         this.helpers = helpers;
         this.appService = appService;
+        this.modalService = modalService;
+        this.submitted = false;
         this.isLoading = false;
+        this.closeResult = '';
+        this.itemClass = '';
+        this.languageTitle = '';
+        this.subs = [];
         this.gender = [
             { name: 'male', value: 0 },
             { name: 'female', value: 1 }
         ];
-        this.registerFormErrors = {
-            FirstName: '',
-            LastName: '',
-            email: '',
-            PhoneNumber: '',
-            Birthdate: '',
-            Gender: '',
-            password: '',
-            confirmPassword: '',
-            recommendedbyId: '',
-            acceptTerms: ''
-        };
-        this.registerValidationMessages = {
-            FirstName: {
-                required: this.translate.instant('firstNameReq'),
-            },
-            LastName: {
-                required: this.translate.instant('lastNameReq'),
-            },
-            email: {
-                required: this.translate.instant('emailReq'),
-                invalidEmail: this.translate.instant('invalidEmail'),
-            },
-            phoneNumber: {
-                required: this.translate.instant('phoneReq'),
-                minlength: 'Phone Number is not long enough, minimum of 11 characters',
-            },
-            gender: {
-                required: this.translate.instant('genderReq'),
-            },
-            password: {
-                required: this.translate.instant('passwordReq'),
-            },
-            confirmPassword: {
-                required: this.translate.instant('confirmPasswordReq'),
-            },
-            recommendedbyId: {
-                required: this.translate.instant('firstNameReq'),
-            },
-            Birthdate: {
-                required: this.translate.instant('birthdateReq'),
-            },
-            acceptTerms: {
-                required: this.translate.instant('acceptTermsReq'),
-            }
-        };
     }
+    // ** upload image file
     uploadImg(event) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const imgString = yield this.helpers.toBase64(event.target.files[0]);
@@ -109,18 +72,27 @@ let SignUpPage = class SignUpPage {
     ngOnInit() {
         this.getRecommendeBy();
         this.getFlagsInputs();
-        // ! Register Fields
+        // ** invoke function getTermsAndConditionText()
+        this.getTermsAndConditionText();
+        // ** Invoke function getLanguage()
+        this.getLanguage();
+        this.createRegisterForm();
+        // console.log(this.registerForm.status);
+    }
+    // ** create register form 
+    createRegisterForm() {
         this.registerForm = this.formBuilder.group({
             'FirstName': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required])],
             'LastName': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required])],
+            'Nickname': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required])],
             'email': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required, src_theme_app_validators__WEBPACK_IMPORTED_MODULE_5__["emailValidator"]])],
-            'PhoneNumber': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].minLength(11), _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required])],
-            'Birthdate': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required])],
+            'PhoneNumber': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].minLength(11)])],
+            'Birthdate': [null],
             'Gender': [0],
             'password': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             'confirmPassword': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             'recommendedbyId': [3, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
-            'acceptTerms': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
+            'acceptTerms': [null],
             'languageId': [JSON.parse(localStorage.getItem('languageId'))],
             file: this.formBuilder.group({
                 fieldName: ["", !_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
@@ -129,26 +101,19 @@ let SignUpPage = class SignUpPage {
                 fileData: ["", !_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             }),
         }, { validator: Object(src_theme_app_validators__WEBPACK_IMPORTED_MODULE_5__["matchingPasswords"])('password', 'confirmPassword') });
-        // this.registerForm.valueChanges.subscribe((data) => this.validateRegisterForm());
     }
-    // validateRegisterForm(isSubmitting = false) {
-    //   for (const field of Object.keys(this.registerFormErrors)) {
-    //     this.registerFormErrors[field] = '';
-    //     const input = this.registerForm.get(field) as FormControl;
-    //     if (input.invalid && (input.dirty || isSubmitting)) {
-    //       for (const error of Object.keys(input.errors)) {
-    //         this.registerFormErrors[field] = this.registerValidationMessages[field][
-    //           error
-    //         ];
-    //       }
-    //     }
-    //   }
-    // }
-    // ! When resister form valid
+    // ** create form validation
+    get inputControl() {
+        return this.registerForm.controls;
+    }
+    // ** When resister form valid
     onRegisterFormSubmit(values) {
-        console.log(this.registerForm.value);
+        this.getLanguageAPi(); // ** fix phone and gender in ios app
+        // ** check if lang is not exist in localstorage add lang
+        if (!localStorage.getItem('languageId')) {
+            localStorage.setItem('languageId', this.registerForm.value.languageId);
+        }
         this.auth.registerCustomer(values).subscribe((response) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            //console.log(response);
             if (response['success']) {
                 var toast = yield this.toastController.create({
                     message: 'Sign up successful',
@@ -160,7 +125,6 @@ let SignUpPage = class SignUpPage {
             }
             else {
                 response['arrayMessage'].forEach((element) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-                    //console.log(element);
                     var toast = yield this.toastController.create({
                         message: element,
                         duration: 2000,
@@ -170,46 +134,82 @@ let SignUpPage = class SignUpPage {
                 }));
             }
         }));
-        // this.validateRegisterForm(true);
-        //  if (this.registerForm.valid) {
-        //    this.auth.registerCustomer(values).subscribe(async(response) => {
-        //     console.log(response);
-        //     if(response['success']) {
-        //       var toast = await this.toastController.create({
-        //         message: 'Sign up successful',
-        //         duration: 2000,
-        //         color: 'success',
-        //       });
-        //       toast.present();
-        //       this.router.navigate(['/auth/sign-in'])
-        //      } else {
-        //        response['arrayMessage'].forEach( async(element) => {
-        //         var toast = await this.toastController.create({
-        //           message: 'Sign up error!',
-        //           duration: 2000,
-        //           color: 'danger',
-        //         });
-        //         toast.present();
-        //       });
-        //     }
-        //   });
-        //  }
     }
-    // ! get recomended by list
+    // ** get recomended by list
     getRecommendeBy() {
-        this.auth.recommendedBy().subscribe(data => {
-            console.log(data['result']);
-            this.allRecommended = data['result'];
-        });
+        this.subs.push(this.auth.recommendedBy()
+            .subscribe(data => { this.allRecommended = data['result']; }));
     }
-    // ? flags on inputs
+    // ** make flags inputs
     getFlagsInputs() {
-        this.appService.getLanguage()
+        this.subs.push(this.appService.getLanguage()
+            .subscribe(response => { this.flagsToggle = response['flagSetting']; }));
+    }
+    // ** get terms and conditions text
+    getTermsAndConditionText() {
+        this.subs.push(this.auth.getTermsAndCondition()
+            .subscribe(response => this.termsAndConditionsText = response['result']));
+    }
+    // ** Get language icons
+    getLanguageId(item) {
+        this.registerForm.patchValue({
+            languageId: item.id
+        });
+        localStorage.setItem('languageId', item.id);
+        this.selected = item;
+        this.languageTitle = item.name;
+    }
+    // ** Get All Language
+    getLanguage() {
+        this.subs.push(this.appService.getLanguage()
             .subscribe(response => {
-            console.log(response['flagSetting']);
-            this.flagsToggle = response['flagSetting'];
+            this.langItems = response['result'].result;
+        }));
+    }
+    // ** fix phone and gender in ios app
+    getLanguageAPi() {
+        this.appService.getLanguage().subscribe(response => this.toggleInputs = response['flagSetting']);
+    }
+    isActive(item) { return this.selected === item; }
+    ;
+    // modal bootstrap
+    openChooseLanguage(content) {
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason2(reason)}`;
         });
     }
+    getDismissReason2(reason) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["ModalDismissReasons"].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["ModalDismissReasons"].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return `with: ${reason}`;
+        }
+    }
+    open(content) {
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+    getDismissReason(reason) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["ModalDismissReasons"].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["ModalDismissReasons"].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return `with: ${reason}`;
+        }
+    }
+    ngOnDestroy() { this.subs.forEach(el => el.unsubscribe()); }
 };
 SignUpPage.ctorParameters = () => [
     { type: _auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"] },
@@ -218,7 +218,8 @@ SignUpPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__["ToastController"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"] },
     { type: src_app_shared_services_helpers_service__WEBPACK_IMPORTED_MODULE_10__["HelpersService"] },
-    { type: src_app_shared_services_app_service__WEBPACK_IMPORTED_MODULE_11__["AppService"] }
+    { type: src_app_shared_services_app_service__WEBPACK_IMPORTED_MODULE_11__["AppService"] },
+    { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["NgbModal"] }
 ];
 SignUpPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -241,7 +242,7 @@ SignUpPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".background-image {\n  --background: url('login.png') center top no-repeat;\n  background-size: cover;\n  max-width: 100%;\n}\n\n.sign-up {\n  margin: 20px 0;\n}\n\n.sign-up h3 {\n  text-align: left !important;\n  font-size: 22px;\n  font-weight: 500;\n  text-transform: uppercase;\n  color: #000;\n  padding-left: 10px;\n}\n\n.sign-up .form-group {\n  position: relative;\n}\n\n.sign-up .form-group label {\n  display: block;\n  padding-bottom: 10px;\n  font-size: 16px;\n  font-weight: 600;\n  color: #000;\n}\n\n.sign-up .form-group input, .sign-up .form-group select {\n  width: 100%;\n  height: 50px;\n  border-radius: 30px;\n  border: 1px solid #C4C4C4;\n  padding: 0 10px;\n  color: #000 !important;\n  position: relative;\n  font-size: 16px;\n  font-weight: 500;\n}\n\n.sign-up .form-group input[type=file] {\n  border: none !important;\n  background-color: #fff;\n  padding-top: 13px;\n}\n\n.sign-up .form-group ion-icon.icon-eye {\n  color: #000;\n  font-size: 25px !important;\n  position: absolute;\n  right: 20px;\n  top: 43px;\n  cursor: pointer;\n}\n\n.sign-up ion-button {\n  --background: var(--ion-color-second-app)!important;\n  --border-radius: 50px!important;\n  font-size: 18px !important;\n  font-weight: 400;\n  width: 100%;\n  height: 50px;\n  --box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.16);\n}\n\n.sign-up p.no-account {\n  color: var(--ion-color-second-app) !important;\n  font-size: 16px;\n  text-align: center;\n  padding-bottom: 20px;\n}\n\n.sign-up p.no-account span {\n  color: #8AFA6F;\n}\n\n.sign-up p.no-account span a {\n  color: #8AFA6F !important;\n  font-weight: 600;\n  text-decoration: none;\n}\n\n.ios .form ion-item ion-label {\n  margin: 0;\n  font-size: 12px;\n}\n\n.ios input.native-input.sc-ion-input-ios {\n  font-size: 12px !important;\n  padding: 0;\n}\n\n.ios ion-text.error {\n  font-size: 11px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NpZ24tdXAucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbURBQUE7RUFJQSxzQkFBQTtFQUNBLGVBQUE7QUFDRjs7QUFFQTtFQUVFLGNBQUE7QUFBRjs7QUFFRTtFQUNFLDJCQUFBO0VBQ0EsZUFBQTtFQUNBLGdCQUFBO0VBQ0EseUJBQUE7RUFDQSxXQUFBO0VBQ0Esa0JBQUE7QUFBSjs7QUFHRTtFQUdFLGtCQUFBO0FBSEo7O0FBS0k7RUFDRSxjQUFBO0VBQ0Esb0JBQUE7RUFDQSxlQUFBO0VBQ0EsZ0JBQUE7RUFDQSxXQUFBO0FBSE47O0FBTUk7RUFDRSxXQUFBO0VBQ0EsWUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7RUFDQSxlQUFBO0VBQ0Esc0JBQUE7RUFDQSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxnQkFBQTtBQUpOOztBQU9JO0VBQ0UsdUJBQUE7RUFDQSxzQkFBQTtFQUNBLGlCQUFBO0FBTE47O0FBUUk7RUFDRSxXQUFBO0VBQ0EsMEJBQUE7RUFDQSxrQkFBQTtFQUNBLFdBQUE7RUFDQSxTQUFBO0VBQ0EsZUFBQTtBQU5OOztBQVVFO0VBQ0UsbURBQUE7RUFDQSwrQkFBQTtFQUNBLDBCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLCtDQUFBO0FBUko7O0FBV0U7RUFDRSw2Q0FBQTtFQUNBLGVBQUE7RUFDQSxrQkFBQTtFQUNBLG9CQUFBO0FBVEo7O0FBV0k7RUFDRSxjQUFBO0FBVE47O0FBVU07RUFDRSx5QkFBQTtFQUNBLGdCQUFBO0VBQ0EscUJBQUE7QUFSUjs7QUFnQkE7RUFDRSxTQUFBO0VBQ0EsZUFBQTtBQWJGOztBQWdCQTtFQUNFLDBCQUFBO0VBQ0EsVUFBQTtBQWJGOztBQWdCQTtFQUNFLDBCQUFBO0FBYkYiLCJmaWxlIjoic2lnbi11cC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYmFja2dyb3VuZC1pbWFnZXtcbiAgLS1iYWNrZ3JvdW5kOiB1cmwoLi4vLi4vLi4vYXNzZXRzL2ltYWdlcy9sb2dpbi5wbmcpIGNlbnRlciB0b3Agbm8tcmVwZWF0O1xuICAtd2Via2l0LWJhY2tncm91bmQtc2l6ZTogY292ZXI7XG4gIC1tb3otYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgLW8tYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgbWF4LXdpZHRoOiAxMDAlO1xufVxuXG4uc2lnbi11cCB7XG5cbiAgbWFyZ2luOiAyMHB4IDA7XG5cbiAgaDMge1xuICAgIHRleHQtYWxpZ246IGxlZnQgIWltcG9ydGFudDtcbiAgICBmb250LXNpemU6IDIycHg7XG4gICAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIGNvbG9yOiAjMDAwO1xuICAgIHBhZGRpbmctbGVmdDogMTBweDtcbiAgfVxuXG4gIC5mb3JtLWdyb3VwIHtcblxuICAgIC8vIG1hcmdpbjogMzBweCAwO1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuICAgIGxhYmVsIHtcbiAgICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgICAgcGFkZGluZy1ib3R0b206IDEwcHg7XG4gICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgY29sb3I6ICMwMDA7XG4gICAgfVxuXG4gICAgaW5wdXQsIHNlbGVjdCB7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIGhlaWdodDogNTBweDtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCAjQzRDNEM0O1xuICAgICAgcGFkZGluZzogMCAxMHB4O1xuICAgICAgY29sb3I6ICMwMDAgIWltcG9ydGFudDtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XG4gICAgfVxuXG4gICAgaW5wdXRbdHlwZT1cImZpbGVcIl17XG4gICAgICBib3JkZXI6IG5vbmUgIWltcG9ydGFudDtcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XG4gICAgICBwYWRkaW5nLXRvcDogMTNweDtcbiAgICB9XG5cbiAgICBpb24taWNvbi5pY29uLWV5ZSB7XG4gICAgICBjb2xvcjogIzAwMDtcbiAgICAgIGZvbnQtc2l6ZTogMjVweCFpbXBvcnRhbnQ7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIHRvcDogNDNweDtcbiAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICB9XG4gIH1cblxuICBpb24tYnV0dG9uIHtcbiAgICAtLWJhY2tncm91bmQgOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kLWFwcCkhaW1wb3J0YW50O1xuICAgIC0tYm9yZGVyLXJhZGl1czogNTBweCFpbXBvcnRhbnQ7XG4gICAgZm9udC1zaXplOiAxOHB4ICFpbXBvcnRhbnQ7XG4gICAgZm9udC13ZWlnaHQ6IDQwMDtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBoZWlnaHQ6IDUwcHg7XG4gICAgLS1ib3gtc2hhZG93OiAycHggNHB4IDZweCAwIHJnYmEoMCwgMCwgMCwgMC4xNik7XG4gIH1cblxuICBwLm5vLWFjY291bnQge1xuICAgIGNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kLWFwcCkhaW1wb3J0YW50O1xuICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgcGFkZGluZy1ib3R0b206IDIwcHg7XG5cbiAgICBzcGFuIHtcbiAgICAgIGNvbG9yOiAjOEFGQTZGO1xuICAgICAgYSB7XG4gICAgICAgIGNvbG9yOiAjOEFGQTZGICFpbXBvcnRhbnQ7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cblxuXG5cbi5pb3MgLmZvcm0gaW9uLWl0ZW0gaW9uLWxhYmVse1xuICBtYXJnaW46IDA7XG4gIGZvbnQtc2l6ZTogMTJweDtcbn1cblxuLmlvcyBpbnB1dC5uYXRpdmUtaW5wdXQuc2MtaW9uLWlucHV0LWlvcyB7XG4gIGZvbnQtc2l6ZTogMTJweCFpbXBvcnRhbnQ7XG4gIHBhZGRpbmc6IDA7XG59XG5cbi5pb3MgaW9uLXRleHQuZXJyb3Ige1xuICBmb250LXNpemU6IDExcHghaW1wb3J0YW50O1xufVxuXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".background-image {\n  --background: url('login.png') center top no-repeat;\n  background-size: cover;\n  max-width: 100%;\n}\n\n.sign-up {\n  margin: 20px 0;\n}\n\n.sign-up h3 {\n  text-align: left !important;\n  font-size: 22px;\n  font-weight: 500;\n  text-transform: uppercase;\n  color: #000;\n  padding-left: 10px;\n}\n\n.sign-up .form-group {\n  position: relative;\n}\n\n.sign-up .form-group label {\n  display: block;\n  padding-bottom: 5px;\n  font-size: 14px;\n  font-weight: 600;\n  color: #000;\n}\n\n.sign-up .form-group input, .sign-up .form-group select {\n  width: 100%;\n  height: 50px;\n  border-radius: 30px;\n  border: 1px solid #C4C4C4;\n  padding: 0 10px;\n  color: #000 !important;\n  position: relative;\n  font-size: 14px;\n  font-weight: 500;\n}\n\n.sign-up .form-group input[type=file] {\n  border: none !important;\n  background-color: #fff;\n  padding-top: 13px;\n}\n\n.sign-up .form-group ion-icon.icon-eye {\n  color: #000;\n  font-size: 25px !important;\n  position: absolute;\n  right: 20px;\n  top: 43px;\n  cursor: pointer;\n}\n\n.sign-up ion-button {\n  --background: var(--ion-color-second-app)!important;\n  --border-radius: 50px!important;\n  font-size: 18px !important;\n  font-weight: 400;\n  width: 100%;\n  height: 50px;\n  --box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.16);\n}\n\n.sign-up p.no-account {\n  color: var(--ion-color-second-app) !important;\n  font-size: 16px;\n  text-align: center;\n  padding-bottom: 20px;\n}\n\n.sign-up p.no-account span {\n  color: #8AFA6F;\n}\n\n.sign-up p.no-account span a {\n  color: #8AFA6F !important;\n  font-weight: 600;\n  text-decoration: none;\n}\n\n.ios .form ion-item ion-label {\n  margin: 0;\n  font-size: 12px;\n}\n\n.ios input.native-input.sc-ion-input-ios {\n  font-size: 12px !important;\n  padding: 0;\n}\n\n.ios ion-text.error {\n  font-size: 11px !important;\n}\n\n.form-group {\n  margin-bottom: 0 !important;\n}\n\n.lang-bg {\n  margin: 30px 0;\n}\n\n.lang-bg .lang-img {\n  width: 40px;\n  height: 40px;\n  margin: auto;\n  cursor: pointer;\n  border-radius: 40px;\n  -web-transition: all 0.3s ease-in-out;\n  transition: all 0.3s ease-in-out;\n}\n\n.lang-bg h3 {\n  text-align: center;\n  font-size: 16px;\n  font-weight: 500;\n  margin: 10px 0;\n  text-transform: capitalize;\n}\n\n.active {\n  transform: scale(1.3);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3NpZ24tdXAucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbURBQUE7RUFJQSxzQkFBQTtFQUNBLGVBQUE7QUFDRjs7QUFFQTtFQUVFLGNBQUE7QUFBRjs7QUFFRTtFQUNFLDJCQUFBO0VBQ0EsZUFBQTtFQUNBLGdCQUFBO0VBQ0EseUJBQUE7RUFDQSxXQUFBO0VBQ0Esa0JBQUE7QUFBSjs7QUFHRTtFQUdFLGtCQUFBO0FBSEo7O0FBT0k7RUFDRSxjQUFBO0VBQ0EsbUJBQUE7RUFDQSxlQUFBO0VBQ0EsZ0JBQUE7RUFDQSxXQUFBO0FBTE47O0FBUUk7RUFDRSxXQUFBO0VBQ0EsWUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7RUFDQSxlQUFBO0VBQ0Esc0JBQUE7RUFDQSxrQkFBQTtFQUNBLGVBQUE7RUFDQSxnQkFBQTtBQU5OOztBQVNJO0VBQ0UsdUJBQUE7RUFDQSxzQkFBQTtFQUNBLGlCQUFBO0FBUE47O0FBVUk7RUFDRSxXQUFBO0VBQ0EsMEJBQUE7RUFDQSxrQkFBQTtFQUNBLFdBQUE7RUFDQSxTQUFBO0VBQ0EsZUFBQTtBQVJOOztBQVlFO0VBQ0UsbURBQUE7RUFDQSwrQkFBQTtFQUNBLDBCQUFBO0VBQ0EsZ0JBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLCtDQUFBO0FBVko7O0FBYUU7RUFDRSw2Q0FBQTtFQUNBLGVBQUE7RUFDQSxrQkFBQTtFQUNBLG9CQUFBO0FBWEo7O0FBYUk7RUFDRSxjQUFBO0FBWE47O0FBWU07RUFDRSx5QkFBQTtFQUNBLGdCQUFBO0VBQ0EscUJBQUE7QUFWUjs7QUFrQkE7RUFDRSxTQUFBO0VBQ0EsZUFBQTtBQWZGOztBQWtCQTtFQUNFLDBCQUFBO0VBQ0EsVUFBQTtBQWZGOztBQWtCQTtFQUNFLDBCQUFBO0FBZkY7O0FBa0JBO0VBQ0UsMkJBQUE7QUFmRjs7QUFrQkE7RUFFRSxjQUFBO0FBaEJGOztBQWtCRTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0EsWUFBQTtFQUNBLGVBQUE7RUFDQSxtQkFBQTtFQUNBLHFDQUFBO0VBR0EsZ0NBQUE7QUFoQko7O0FBbUJFO0VBQ0Usa0JBQUE7RUFDQSxlQUFBO0VBQ0EsZ0JBQUE7RUFDQSxjQUFBO0VBQ0EsMEJBQUE7QUFqQko7O0FBcUJBO0VBS0UscUJBQUE7QUFsQkYiLCJmaWxlIjoic2lnbi11cC5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYmFja2dyb3VuZC1pbWFnZXtcbiAgLS1iYWNrZ3JvdW5kOiB1cmwoLi4vLi4vLi4vYXNzZXRzL2ltYWdlcy9sb2dpbi5wbmcpIGNlbnRlciB0b3Agbm8tcmVwZWF0O1xuICAtd2Via2l0LWJhY2tncm91bmQtc2l6ZTogY292ZXI7XG4gIC1tb3otYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgLW8tYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgbWF4LXdpZHRoOiAxMDAlO1xufVxuXG4uc2lnbi11cCB7XG5cbiAgbWFyZ2luOiAyMHB4IDA7XG5cbiAgaDMge1xuICAgIHRleHQtYWxpZ246IGxlZnQgIWltcG9ydGFudDtcbiAgICBmb250LXNpemU6IDIycHg7XG4gICAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIGNvbG9yOiAjMDAwO1xuICAgIHBhZGRpbmctbGVmdDogMTBweDtcbiAgfVxuXG4gIC5mb3JtLWdyb3VwIHtcblxuICAgIC8vIG1hcmdpbjogMzBweCAwO1xuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcblxuXG5cbiAgICBsYWJlbCB7XG4gICAgICBkaXNwbGF5OiBibG9jaztcbiAgICAgIHBhZGRpbmctYm90dG9tOiA1cHg7XG4gICAgICBmb250LXNpemU6IDE0cHg7XG4gICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgY29sb3I6ICMwMDA7XG4gICAgfVxuXG4gICAgaW5wdXQsIHNlbGVjdCB7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIGhlaWdodDogNTBweDtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDMwcHg7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCAjQzRDNEM0O1xuICAgICAgcGFkZGluZzogMCAxMHB4O1xuICAgICAgY29sb3I6ICMwMDAgIWltcG9ydGFudDtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XG4gICAgfVxuXG4gICAgaW5wdXRbdHlwZT1cImZpbGVcIl17XG4gICAgICBib3JkZXI6IG5vbmUgIWltcG9ydGFudDtcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XG4gICAgICBwYWRkaW5nLXRvcDogMTNweDtcbiAgICB9XG5cbiAgICBpb24taWNvbi5pY29uLWV5ZSB7XG4gICAgICBjb2xvcjogIzAwMDtcbiAgICAgIGZvbnQtc2l6ZTogMjVweCFpbXBvcnRhbnQ7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICByaWdodDogMjBweDtcbiAgICAgIHRvcDogNDNweDtcbiAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICB9XG4gIH1cblxuICBpb24tYnV0dG9uIHtcbiAgICAtLWJhY2tncm91bmQgOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kLWFwcCkhaW1wb3J0YW50O1xuICAgIC0tYm9yZGVyLXJhZGl1czogNTBweCFpbXBvcnRhbnQ7XG4gICAgZm9udC1zaXplOiAxOHB4ICFpbXBvcnRhbnQ7XG4gICAgZm9udC13ZWlnaHQ6IDQwMDtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBoZWlnaHQ6IDUwcHg7XG4gICAgLS1ib3gtc2hhZG93OiAycHggNHB4IDZweCAwIHJnYmEoMCwgMCwgMCwgMC4xNik7XG4gIH1cblxuICBwLm5vLWFjY291bnQge1xuICAgIGNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kLWFwcCkhaW1wb3J0YW50O1xuICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgcGFkZGluZy1ib3R0b206IDIwcHg7XG5cbiAgICBzcGFuIHtcbiAgICAgIGNvbG9yOiAjOEFGQTZGO1xuICAgICAgYSB7XG4gICAgICAgIGNvbG9yOiAjOEFGQTZGICFpbXBvcnRhbnQ7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cblxuXG5cbi5pb3MgLmZvcm0gaW9uLWl0ZW0gaW9uLWxhYmVse1xuICBtYXJnaW46IDA7XG4gIGZvbnQtc2l6ZTogMTJweDtcbn1cblxuLmlvcyBpbnB1dC5uYXRpdmUtaW5wdXQuc2MtaW9uLWlucHV0LWlvcyB7XG4gIGZvbnQtc2l6ZTogMTJweCFpbXBvcnRhbnQ7XG4gIHBhZGRpbmc6IDA7XG59XG5cbi5pb3MgaW9uLXRleHQuZXJyb3Ige1xuICBmb250LXNpemU6IDExcHghaW1wb3J0YW50O1xufVxuXG4uZm9ybS1ncm91cCB7XG4gIG1hcmdpbi1ib3R0b206IDAgIWltcG9ydGFudDtcbn1cblxuLmxhbmctYmcge1xuXG4gIG1hcmdpbjogMzBweCAwO1xuXG4gIC5sYW5nLWltZyB7XG4gICAgd2lkdGg6IDQwcHg7XG4gICAgaGVpZ2h0OiA0MHB4O1xuICAgIG1hcmdpbjogYXV0bztcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgYm9yZGVyLXJhZGl1czogNDBweDtcbiAgICAtd2ViLXRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2UtaW4tb3V0O1xuICAgIC1tb3otdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZS1pbi1vdXQ7XG4gICAgLW8tdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZS1pbi1vdXQ7XG4gICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZS1pbi1vdXQ7XG4gIH1cblxuICBoMyB7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICBmb250LXdlaWdodDogNTAwO1xuICAgIG1hcmdpbjogMTBweCAwO1xuICAgIHRleHQtdHJhbnNmb3JtOiBjYXBpdGFsaXplO1xuICB9XG59XG5cbi5hY3RpdmV7XG4gIC1tb3otdHJhbnNmb3JtOiBzY2FsZSgxLjMpO1xuICAtd2Via2l0LXRyYW5zZm9ybTogc2NhbGUoMS4zKTtcbiAgLW8tdHJhbnNmb3JtOiBzY2FsZSgxLjMpO1xuICAtbXMtdHJhbnNmb3JtOiBzY2FsZSgxLjMpO1xuICB0cmFuc2Zvcm06IHNjYWxlKDEuMyk7XG59Il19 */");
 
 /***/ }),
 
@@ -1946,6 +1947,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_components_file_input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular-material-components/file-input */ "NYG7");
 /* harmony import */ var _angular_material_input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/input */ "e6WT");
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ "TSSN");
+/* harmony import */ var src_app_shared_shared_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/app/shared/shared.module */ "PCNd");
+
 
 
 
@@ -1970,7 +1973,8 @@ SignUpPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _angular_material_components_file_input__WEBPACK_IMPORTED_MODULE_8__["NgxMatFileInputModule"],
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"],
             _angular_material_input__WEBPACK_IMPORTED_MODULE_9__["MatInputModule"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"]
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
+            src_app_shared_shared_module__WEBPACK_IMPORTED_MODULE_11__["SharedModule"]
         ],
         declarations: [_sign_up_page__WEBPACK_IMPORTED_MODULE_7__["SignUpPage"]]
     })
@@ -1989,7 +1993,7 @@ SignUpPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content class=\"background-image\">\n\n  <div class=\"sign-up\">\n\n    <h3> Signup </h3>\n\n    <form  [formGroup]=\"registerForm\" (ngSubmit)=\"onRegisterFormSubmit(registerForm.value)\">\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"6\" *ngIf=\"flagsToggle['firstnameFlag']\">\n          <div class=\"form-group\">\n            <label >Firstname</label>\n            <input type=\"text\" formControlName=\"FirstName\" required />\n            <ion-text color=\"danger\" class=\"error ion-padding\" *ngIf=\"registerFormErrors.FirstName\">\n              {{registerFormErrors.FirstName }}\n            </ion-text>\n          </div>\n        </ion-col>\n\n        <ion-col size=\"6\" *ngIf=\"flagsToggle['lastnameFlag']\">\n          <div class=\"form-group\">\n            <label>Lastname</label>\n            <input type=\"text\" formControlName=\"LastName\" required />\n            <ion-text color=\"danger\" class=\"error ion-padding\" *ngIf=\"registerFormErrors.LastName\">\n              {{ registerFormErrors.LastName }}\n            </ion-text>\n          </div>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['phonNumberFlag']\">\n          <div class=\"form-group\">\n            <label> Phone Number </label>\n            <input type=\"text\" formControlName=\"PhoneNumber\" minlength=\"11\" required />\n            <ion-text color=\"danger\" *ngIf=\"registerFormErrors.PhoneNumber\">\n              {{ registerFormErrors.PhoneNumber }}\n            </ion-text>\n            <ion-text color=\"danger\" *ngIf=\"registerForm.controls.PhoneNumber.hasError('minlength')\">\n              The phone number must be 12 numbers\n            </ion-text>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['emailFlag']\">\n          <div class=\"form-group\">\n            <label>Email</label>\n            <input type=\"email\" formControlName=\"email\" required />\n            <ion-text color=\"danger\" *ngIf=\"registerFormErrors.email\"> {{ registerFormErrors.email }}</ion-text>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['dateOfBirthFlag']\">\n          <div class=\"form-group\">\n            <label> Birthday </label>\n            <input type=\"date\" formControllName=\"Birthdate\" required />\n            <ion-text *ngIf=\"registerFormErrors.Birthdate\"> {{ registerFormErrors.Birthdate }}</ion-text>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <div class=\"form-group\">\n            <label> Password </label>\n            <input type=\"password\" formControlName=\"password\" required />\n            <ion-text *ngIf=\"registerFormErrors.password\">{{ registerFormErrors.password }}</ion-text>\n            <ion-text *ngIf=\"registerForm.controls.password.hasError('minlength')\">{{ 'passMin' | translate }}</ion-text>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <div class=\"form-group\">\n            <label>Confirm password</label>\n            <input formControlName=\"confirmPassword\" type=\"password\" required />\n            <ion-text color=\"danger\" *ngIf=\"registerFormErrors.confirmPassword\">{{registerFormErrors.confirmPassword }}</ion-text>\n            <ion-text color=\"danger\" *ngIf=\"registerForm.controls.confirmPassword.hasError('mismatchedPasswords')\">{{ 'notMatch' | translate }}</ion-text>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['genderFlag']\">\n          <div>\n            <ion-radio-group formControlName=\"Gender\" value=\"gender\">\n              <ion-list-header>\n                <ion-label> Gender </ion-label>\n              </ion-list-header>\n\n                <ion-row>\n                  <ion-col size=\"6\" *ngFor=\"let genderItem of gender\">\n                    <ion-item>\n                      <ion-label>{{ genderItem.name }}</ion-label>\n                      <ion-radio slot=\"start\" [value]=\"genderItem.value\"></ion-radio>\n                    </ion-item>\n                  </ion-col>\n\n                </ion-row>\n\n            </ion-radio-group>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['recommendedByFlag']\">\n          <div class=\"form-group\">\n              <label>{{ 'Recommended' | translate}}</label>\n              <select formControlName=\"recommendedbyId\" value=\"brown\" okText=\"Okay\" cancelText=\"Dismiss\" required>\n                <option *ngFor=\"let item of allRecommended\" [ngValue]=\"item.id\">\n                  {{ item.recommendedByTranslations[0].description }}\n                </option>\n              </select>\n            </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['uploadImageFlag']\">\n          <div class=\"form-group\">\n            <label>Upload image</label>\n            <input\n              type=\"file\"\n              class=\"custom-file-input\"\n              multiple=\"false\"\n              accept=\"image/*\"\n              (change)=\"uploadImg($event)\" />\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <ion-item>\n              <ion-label>{{ 'acceptTerms' | translate }}</ion-label>\n              <ion-checkbox formControlName=\"acceptTerms\" slot=\"start\" required></ion-checkbox>\n              <ion-text *ngIf=\"registerFormErrors.acceptTerms\"> {{ registerFormErrors.acceptTerms }}</ion-text>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row ion-align-items-center>\n        <ion-col size=\"12\">\n          <ion-button\n          (click)=\"onRegisterFormSubmit(registerForm.value)\"\n          >\n            Signup\n          </ion-button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row ion-align-items-center>\n        <ion-col size=\"12\">\n          <p class=\"no-account\">\n            Do you have an account? <span>\n              <a [routerLink]=\"['/auth/sign-in']\"> Sign in </a>\n            </span>\n          </p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </form>\n\n  </div>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content class=\"background-image\">\n\n  <div class=\"sign-up\">\n\n    <h3> Signup </h3>\n\n    <form  [formGroup]=\"registerForm\" (ngSubmit)=\"onRegisterFormSubmit(registerForm.value)\">\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"6\" *ngIf=\"flagsToggle['firstnameFlag']\">\n          <div class=\"form-group\">\n            <label >Firstname</label>\n            <input type=\"text\" formControlName=\"FirstName\" required />\n            <div *ngIf=\"inputControl['FirstName'].touched && inputControl['FirstName'].invalid\">\n              <ion-text *ngIf=\"inputControl['FirstName'].errors['required']\" color=\"danger\" class=\"error\">\n                Firstname is required\n              </ion-text>\n            </div>\n          </div>\n        </ion-col>\n\n        <ion-col size=\"6\" *ngIf=\"flagsToggle['lastnameFlag']\">\n          <div class=\"form-group\">\n            <label>Lastname</label>\n            <input type=\"text\" formControlName=\"LastName\" required />\n            <div *ngIf=\"inputControl['LastName'].touched && inputControl['LastName'].invalid\">\n              <ion-text *ngIf=\"inputControl['LastName'].errors['required']\" color=\"danger\" class=\"error\">\n                Lastname is required\n              </ion-text>\n            </div>\n          </div>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['phonNumberFlag']\">\n          <div class=\"form-group\">\n            <label> Phone Number </label>\n            <input type=\"text\" formControlName=\"PhoneNumber\" minlength=\"11\" />\n            <!-- <ion-text color=\"danger\" *ngIf=\"registerForm.controls.PhoneNumber.hasError('minlength')\">\n              The phone number must be 12 numbers\n            </ion-text> -->\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['emailFlag']\">\n          <div class=\"form-group\">\n            <label>Email</label>\n            <input type=\"email\" formControlName=\"email\" required />\n            <div *ngIf=\"inputControl['email'].touched && inputControl['email'].invalid\">\n              <ion-text *ngIf=\"inputControl['email'].errors['required']\" color=\"danger\" class=\"error\">\n                Email is required\n              </ion-text>\n              <ion-text *ngIf=\"inputControl['email'].errors && inputControl['email'].errors['invalidEmail']\" color=\"danger\" class=\"error\">\n                Please add valid email\n              </ion-text>\n            </div>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    \n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['dateOfBirthFlag']\">\n          <div class=\"form-group\">\n            <label> Birthday </label>\n            <input type=\"date\" formControllName=\"Birthdate\" required />\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    \n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <div class=\"form-group\">\n            <label> Password </label>\n            <input type=\"password\" formControlName=\"password\" required />\n            <div *ngIf=\"inputControl['password'].touched && inputControl['password'].invalid\">\n              <ion-text *ngIf=\"inputControl['password'].errors['required']\" color=\"danger\" class=\"error\">\n                Passowrod is required\n              </ion-text>\n            </div>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <div class=\"form-group\">\n            <label>Confirm password</label>\n            <input formControlName=\"confirmPassword\" type=\"password\" required />\n            <div *ngIf=\"inputControl['confirmPassword'].touched && inputControl['confirmPassword'].invalid\">\n              <ion-text *ngIf=\"inputControl['confirmPassword'].errors['required']\" color=\"danger\" class=\"error\">\n                Confirm Password is required\n              </ion-text>\n              <ion-text *ngIf=\"inputControl['confirmPassword'].errors && inputControl['confirmPassword'].errors['mismatchedPasswords']\" color=\"danger\" class=\"error\">\n                Password no match\n              </ion-text>\n            </div>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    \n    <ion-grid >\n      <ion-row>\n        <ion-col size=\"12\">\n          <div class=\"form-group\">\n            <label> Nickname </label>\n            <input type=\"text\" formControlName=\"Nickname\" required />\n            <div *ngIf=\"inputControl['Nickname'].touched && inputControl['Nickname'].invalid\">\n              <ion-text *ngIf=\"inputControl['Nickname'].errors['required']\" color=\"danger\" class=\"error\">\n                Nickname is required\n              </ion-text>\n            </div>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    \n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['genderFlag']\">\n          <div>\n            <ion-radio-group formControlName=\"Gender\" value=\"gender\">\n              <ion-list-header>\n                <ion-label> Gender </ion-label>\n              </ion-list-header>\n\n                <ion-row>\n                  <ion-col size=\"6\" *ngFor=\"let genderItem of gender\">\n                    <ion-item>\n                      <ion-label>{{ genderItem.name }}</ion-label>\n                      <ion-radio slot=\"start\" [value]=\"genderItem.value\"></ion-radio>\n                    </ion-item>\n                  </ion-col>\n\n                </ion-row>\n\n            </ion-radio-group>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['recommendedByFlag']\">\n          <div class=\"form-group\">\n              <label>{{ 'Recommended' | translate}}</label>\n              <select formControlName=\"recommendedbyId\" value=\"brown\" okText=\"Okay\" cancelText=\"Dismiss\">\n                <option *ngFor=\"let item of allRecommended\" [ngValue]=\"item.id\">\n                  {{ item.recommendedByTranslations[0].description }}\n                </option>\n              </select>\n            </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"flagsToggle\">\n      <ion-row>\n        <ion-col size=\"12\" *ngIf=\"flagsToggle['uploadImageFlag']\">\n          <div class=\"form-group\">\n            <label>Upload image</label>\n            <input\n              type=\"file\"\n              class=\"custom-file-input\"\n              multiple=\"false\"\n              accept=\"image/*\"\n              (change)=\"uploadImg($event)\" />\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <ion-list>\n            <ion-item>\n            <ion-label style=\"cursor: pointer;\" (click)=\"openChooseLanguage(content)\">Choose Language: <b> {{ languageTitle }} </b></ion-label>\n            </ion-item>\n          </ion-list>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col size=\"12\">\n          <ion-item>\n              <ion-label>I agree to</ion-label>\n              <ion-checkbox formControlName=\"acceptTerms\" slot=\"start\"></ion-checkbox>\n              <ion-text\n              style=\"cursor: pointer; \n              z-index: 20000000000;\" (click)=\"open(contentTerms)\"> Terms & Conditions \n              </ion-text>\n          </ion-item>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row ion-align-items-center>\n        <ion-col size=\"12\">\n          <ion-button\n          [disabled]=\"registerForm.invalid\"\n          (click)=\"onRegisterFormSubmit(registerForm.value)\"\n          >\n            Signup\n          </ion-button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row ion-align-items-center>\n        <ion-col size=\"12\">\n          <p class=\"no-account\">\n            Do you have an account? <span>\n              <a [routerLink]=\"['/auth/sign-in']\"> Sign in </a>\n            </span>\n          </p>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </form>\n\n  </div>\n\n</ion-content>\n\n <!-- Terms And Condition -->\n <ng-template #contentTerms let-modal>\n  <div class=\"modal-header\">\n    <h4 class=\"modal-title\" id=\"modal-basic-title\">Terms & Conditions</h4>\n    <button type=\"button\" class=\"btn-close\" aria-label=\"Close\" (click)=\"modal.dismiss('Cross click')\"></button>\n  </div>\n  <div class=\"modal-body\">\n    <ion-text \n    [innerHTML]=\"termsAndConditionsText['termsAndConditionsTranslation'][0].content | sanitizeHtml\" >\n    </ion-text>\n  </div>\n  <!-- <div class=\"modal-footer\">\n    <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"modal.close('Save click')\">Agr</button>\n  </div> -->\n</ng-template>\n<!-- Terms And Condition -->\n\n  <!-- Choose language -->\n  <ng-template #content let-modal>\n    <div class=\"modal-header\">\n      <h4 class=\"modal-title\" id=\"modal-basic-title\">Choose Language </h4>\n      <button type=\"button\" class=\"btn-close\" aria-label=\"Close\" (click)=\"modal.dismiss('Cross click')\"></button>\n    </div>\n    <div class=\"modal-body\">\n      <ion-grid class=\"lang-bg\">\n        <ion-row>\n          <ion-col style=\"text-align: center;\" *ngFor=\"let item of langItems; let i = index\"  size-xs=\"4\" size-md=\"3\">\n            <ion-img\n              [ngClass]=\"{'active': isActive(item)}\"\n              (click)=\"getLanguageId(item)\"\n              [src]=\"item.icon\" class=\"lang-img\"></ion-img>\n            <h3> <ion-text color=\"primary\"> {{ item.name }} </ion-text> </h3>\n          </ion-col>\n        </ion-row>\n  \n      </ion-grid>\n    </div>\n  </ng-template>\n  <!-- Choose language -->");
 
 /***/ })
 

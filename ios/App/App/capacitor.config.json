@@ -1,6 +1,6 @@
 {
-	"appId": "app.io.easylearn",
-	"appName": "e-asy learn",
+	"appId": "app.easylearning.com",
+	"appName": "E-asylearn",
 	"bundledWebRuntime": false,
 	"npmClient": "npm",
 	"webDir": "www",

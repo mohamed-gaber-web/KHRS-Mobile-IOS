@@ -70,7 +70,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_models_audioObject__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/models/audioObject */ "9rX2");
 /* harmony import */ var src_app_shared_services_exercise_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/services/exercise.service */ "4YRF");
 /* harmony import */ var src_app_shared_services_storage_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/shared/services/storage.service */ "fbMX");
-/* harmony import */ var _help_modal_help_modal_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../help-modal/help-modal.component */ "kxUF");
+/* harmony import */ var src_app_shared_services_utility_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/shared/services/utility.service */ "A9xy");
 
 
 
@@ -84,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SingleChoicePage = class SingleChoicePage {
-    constructor(toastController, storageService, exerciseService, route, fb, navController, modalController) {
+    constructor(toastController, storageService, exerciseService, route, fb, navController, modalController, utilityService) {
         this.toastController = toastController;
         this.storageService = storageService;
         this.exerciseService = exerciseService;
@@ -92,6 +92,7 @@ let SingleChoicePage = class SingleChoicePage {
         this.fb = fb;
         this.navController = navController;
         this.modalController = modalController;
+        this.utilityService = utilityService;
         this.subs = [];
         this.lengthQuestion = 0;
         this.offset = 0;
@@ -136,7 +137,7 @@ let SingleChoicePage = class SingleChoicePage {
             this.exerciseItems = response['result'];
             this.lengthQuestion = response['length'];
             if (this.lengthQuestion == 0) {
-                this.errorMessage("There are no available questions in this exercise");
+                this.utilityService.successText("There are no available questions in this exercise");
                 setTimeout(() => {
                     this.navController.navigateRoot(['/exercise', { courseId: this.courseId }]);
                 }, 100);
@@ -219,7 +220,7 @@ let SingleChoicePage = class SingleChoicePage {
             this.resultAnswer = response['success'];
             if (this.resultAnswer === true) {
                 // message and voice success
-                this.successMessage('The answer is correct');
+                this.utilityService.successMessage("<img src='../../../assets/images/22.gif' />");
                 this.currentIndex += 1;
                 if (this.exerciseItems[0].audioElement) {
                     this.exerciseItems[0].audioElement.audio.pause();
@@ -234,7 +235,7 @@ let SingleChoicePage = class SingleChoicePage {
                 this.getQuestion();
                 this.slides.slideNext();
                 if (this.currentIndex === this.lengthQuestion) {
-                    this.successMessage('Thanks for resolving questions');
+                    this.utilityService.successText('Thanks for resolving questions');
                     setTimeout(() => {
                         this.navController.navigateRoot(['/exercise', { courseId: this.courseId }]);
                     }, 100);
@@ -242,7 +243,7 @@ let SingleChoicePage = class SingleChoicePage {
             }
             else if (this.resultAnswer === false) {
                 // message and voice error
-                this.errorMessage('The answer is wrong and please choose correct answer');
+                this.utilityService.errorMessage("<img src='../../../assets/images/wr.gif' />");
             }
         })));
     }
@@ -257,31 +258,6 @@ let SingleChoicePage = class SingleChoicePage {
                 color: 'success'
             });
             toast.present();
-        });
-    }
-    errorMessage(msg) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.audio.load();
-            this.audio.play();
-            const toast = yield this.toastController.create({
-                message: msg,
-                duration: 500,
-                cssClass: 'ion-error',
-                color: 'danger',
-            });
-            toast.present();
-        });
-    }
-    presentModal() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const modal = yield this.modalController.create({
-                component: _help_modal_help_modal_component__WEBPACK_IMPORTED_MODULE_10__["HelpModalComponent"],
-                componentProps: {
-                    "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
-                    "modalTitle": "Single Choice Tutorial"
-                }
-            });
-            return yield modal.present();
         });
     }
     slidePrev() {
@@ -302,7 +278,8 @@ SingleChoicePage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },
     { type: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__["NavController"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__["ModalController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__["ModalController"] },
+    { type: src_app_shared_services_utility_service__WEBPACK_IMPORTED_MODULE_10__["UtilityService"] }
 ];
 SingleChoicePage.propDecorators = {
     slides: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ViewChild"], args: ['slides',] }]
