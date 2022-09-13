@@ -26,6 +26,16 @@
               (cdkDropListDropped)="drop($event)">
 
               <div *ngFor="let item2 of item" [cdkDragDisabled]="item2.disabled" cdkDrag>
+                <div class="sound" *ngIf="item2.voicePath">
+                  <div class="sound-bg">
+                    <div class="img-volume">
+                      <ion-icon
+                        class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item2.audioElement.status? 'play' : 'stop'" (click)="playAudio(item2)" >
+                      </ion-icon>
+                    </div>
+                  </div>
+                  <img class="danish-flag" [src]="item2.flag" alt="" />
+                </div>
                 <ion-text color="primary"> {{ item2.text }} </ion-text>
               </div>
             </ion-col>
@@ -42,8 +52,17 @@
             (cdkDropListDropped)="drop($event)">
 
             <div class="puzzle-fix" *ngFor="let item of answersArray" cdkDrag>
-
               <div class="title"> {{ item.text }} </div>
+              <div class="sound" *ngIf="item.voicePath">
+                <div class="sound-bg">
+                    <div class="img-volume">
+                      <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item.audioElement.status? 'play' : 'stop'" (click)="playAudio(item)" >
+                      </ion-icon>
+                    </div>
+                  </div>
+                  <img [src]="item.flag" alt="" />
+                </div>
+
             </div>
 
           </ion-col>
@@ -57,6 +76,8 @@
 
     </ion-slide>
     </ion-slides>
+
+
     <app-test-finished *ngIf="lengthItems === pageNumber"></app-test-finished>
 
 

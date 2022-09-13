@@ -42,6 +42,31 @@
                           >
                           <div class="puzzle-fix" cdkDrag [cdkDragDisabled]="false">
                             <div class="title"> {{ item2.keyword }}</div>
+                            <!-- Start Sound -->
+
+                            <div class="sound" *ngIf="item2.voicePath">
+                              <div class="sound-bg">
+                                <div class="img-volume">
+                                  <ion-img
+                                  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item2.voicePath)">
+                                </ion-img>
+                                </div>
+                              </div>
+                              <img class="danish-flag" [src]="userInfo.languageIcon" alt="" />
+                            </div>
+                            <div class="sound" *ngIf="item2.voicePathDanish">
+                              <div class="sound-bg">
+                                <div class="img-volume">
+                                  <ion-img
+                                  loading="lazy"
+                                  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item2.voicePathDanish)">
+                                </ion-img>
+                                </div>
+                              </div>
+                              <img loading="lazy" class="danish-flag" src="../../../assets/icon/da.png" alt="" />
+                            </div>
+
+                            <!-- Start Sound  -->
                           </div>
                         </ion-col>
 
@@ -70,6 +95,30 @@
                   <div class="puzzle-fix"*ngFor="let item of answersArray" cdkDrag>
 
                   <div class="title"> {{ item.keyword }}</div>
+
+                  <!-- Start Sound -->
+                  <div class="sound" *ngIf="item.voicePath">
+                    <div class="sound-bg">
+                      <div class="img-volume">
+                        <ion-img
+                        class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item.voicePath)">
+                      </ion-img>
+                      </div>
+                    </div>
+                    <img class="danish-flag" [src]="userInfo.languageIcon" alt="" />
+                  </div>
+                  <div class="sound" *ngIf="item.voicePathDanish">
+                    <div class="sound-bg">
+                      <div class="img-volume">
+                        <ion-img
+                        loading="lazy"
+                        class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item.voicePathDanish)">
+                      </ion-img>
+                      </div>
+                    </div>
+                    <img loading="lazy" class="danish-flag" src="../../../assets/icon/da.png" alt="" />
+                  </div>
+                  <!-- End Sound -->
 
                   </div>
                 </ion-col>

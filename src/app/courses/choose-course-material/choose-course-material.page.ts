@@ -40,7 +40,6 @@ export class ChooseCourseMaterialPage implements OnInit {
 
   ngOnInit() {
     this.userInfo = JSON.parse(localStorage.getItem('user'));
-    console.log(this.userInfo)
     this.isLoading = true;
     this.courseId = JSON.parse(this.route.snapshot.paramMap.get('courseId'));
     this.redOffset = this.route.snapshot.paramMap.get('testOffset');
@@ -48,7 +47,6 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
         .subscribe(response => {
-        console.log(response)
         if(response['success'] === false) {
           this.checkCourseData = false;
           this.isLoading = false;

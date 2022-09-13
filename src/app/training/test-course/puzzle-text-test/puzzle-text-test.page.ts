@@ -3,7 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AudioElement } from 'src/app/shared/models/audioObject';
 import { PuzzleTextTranslations } from 'src/app/shared/models/puzzleTextTranslations';
+import { StorageService } from 'src/app/shared/services/storage.service';
 import { TestService } from 'src/app/shared/services/test.service';
 
 @Component({
@@ -49,10 +51,13 @@ export class PuzzleTextTestPage implements OnInit {
   constructor(
     private testService: TestService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
+    this.userInfo = this.storageService.getUser();
+
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
     this.getQuestionAndAnswer();
   }
@@ -88,7 +93,19 @@ export class PuzzleTextTestPage implements OnInit {
            qpz.id = this.questionAndAnswerItems.puzzleText[index].id;
            qpz.text = this.questionAndAnswerItems.puzzleText[index].text;
            qpz.type = "question";
+           qpz.flag = "../../../assets/icon/da.png";
+
            qpz.disabled = true;
+
+          // Sound
+          qpz.voicePath = this.questionAndAnswerItems.puzzleText[index].voicePath;
+          if(this.questionAndAnswerItems.puzzleText[index].voicePath != null && this.questionAndAnswerItems.puzzleText[index].voicePath != "" ){
+           qpz.audioElement = new AudioElement();
+           qpz.audioElement.status = false;
+           var audio = new Audio(`${qpz.voicePath}`);
+           qpz.audioElement.audio = audio;
+           qpz.audioElement.audio.load();
+          }
 
            arr.push(qpz);
            this.questionsArray.push(arr);
@@ -101,7 +118,19 @@ export class PuzzleTextTestPage implements OnInit {
           apz.id = this.questionAndAnswerItems.puzzleTextTranslations[index].id;
           apz.text = this.questionAndAnswerItems.puzzleTextTranslations[index].text;
           apz.type = "answer";
+          apz.flag = this.userInfo.languageIcon;
           apz.disabled = false;
+          
+          // Sound
+          apz.voicePath = this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath;
+          if(this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath != null && this.questionAndAnswerItems.puzzleTextTranslations[index].voicePath != "" ){
+            apz.audioElement = new AudioElement();
+            apz.audioElement.status = false;
+            var audio = new Audio(`${apz.voicePath}`);
+            apz.audioElement.audio = audio;
+            apz.audioElement.audio.load();
+  
+          }
           this.answersArray.push(apz);
         }
 
@@ -127,6 +156,11 @@ export class PuzzleTextTestPage implements OnInit {
         }
       }
 
+  if (this.answersArray.length === 0) {
+    this.nextButton = true;
+  } else {
+    this.nextButton = false;
+  }
     }
 
   }
@@ -155,6 +189,10 @@ export class PuzzleTextTestPage implements OnInit {
     .subscribe(response => {
       this.userTestId = response['result'].userTestId;
       this.pageNumber += 1;
+      
+      // Stop sound
+      this.stopAllAudios();
+      
       // ** check last question
       if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
         console.log('this is last number');
@@ -172,39 +210,69 @@ export class PuzzleTextTestPage implements OnInit {
 
   }
 
-  slidePrev() {
-    this.pageNumber -= 1;
-    this.getQuestionAndAnswer();
-    this.slides.slidePrev();
-  }
+slidePrev() {
+  this.pageNumber -= 1;
+  this.getQuestionAndAnswer();
+  this.slides.slidePrev();
+}
 
-  finishSlidePrev() {
-    this.pageNumber -= 1;
-    // this.getQuestionAndAnswer();
-    // this.slides.slidePrev();
-  }
+finishSlidePrev() {
+  this.pageNumber -= 1;
+  // this.getQuestionAndAnswer();
+  // this.slides.slidePrev();
+}
 
-  ScapeSlidePrev() {
-    this.pageNumber += 1;
-    if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
-      console.log('this is last number');
-      localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
-      localStorage.setItem('courseId', JSON.stringify(this.courseId))
-      localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
-      return;
+ScapeSlidePrev() {
+  this.pageNumber += 1;
+  if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
+    console.log('this is last number');
+    localStorage.setItem('userTestId', JSON.stringify(this.userTestId))
+    localStorage.setItem('courseId', JSON.stringify(this.courseId))
+    localStorage.setItem('pageNumber', JSON.stringify(this.pageNumber))
+    return;
+  }
+  this.getQuestionAndAnswer();
+  this.slides.slideNext();
+}
+
+finishedTest() {
+  this.testService.finishedTest(this.userTestId)
+  .subscribe(response => {
+    localStorage.removeItem('courseId')
+    localStorage.removeItem('pageNumber')
+    this.router.navigate(['/courses/tabs/my-courses']);
+    console.log(response);
+  })
+}
+
+  // Sound 
+  playAudio(item:any){
+    this.stopAllAudios(item);
+    if(item.audioElement.status == false){
+      item.audioElement.audio.play();
+      item.audioElement.status = true;
+    }else{
+      item.audioElement.audio.pause();
+      item.audioElement.status = false;
     }
-    this.getQuestionAndAnswer();
-    this.slides.slideNext();
-  }
+    }
+  
+  stopAllAudios(item?:any){
+  this.questionsArray.forEach(element => {
+    element.forEach(element2 => {
+      if (element2.audioElement && element2.audioElement.status == true && element2 != item) {
+        element2.audioElement.audio.pause();
+        element2.audioElement.status = false;
+      }
+    });
 
-  finishedTest() {
-    this.testService.finishedTest(this.userTestId)
-    .subscribe(response => {
-      localStorage.removeItem('courseId')
-      localStorage.removeItem('pageNumber')
-      this.router.navigate(['/courses/tabs/my-courses']);
-      console.log(response);
-    })
+  });
+  this.answersArray.forEach(element => {
+    if (element.audioElement && element.audioElement.status == true && element != item) {
+      element.audioElement.audio.pause();
+      element.audioElement.status = false;
+    }
+  });
   }
 
 

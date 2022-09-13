@@ -4,63 +4,196 @@
     font-size: 28px;
   }
 
+  /* header Top */
+  ion-header ion-img {
+    width: 35px;
+    height: auto;
+    margin-top: 10px;
+  }
+
+  /* end header top */
+
+  ion-toolbar {
+    ion-icon {
+      color: var(--ion-color-second-app);
+      font-size: 30px;
+      margin-right: 20px;
+      margin-top: 24px;
+    }
+  }
+
+  .multi-choice {
+
+    ion-text{
+      color: var(--ion-color-second-app);
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      text-transform: none;
+      margin: 20px 0 50px 0;
+    }
+
+    ion-label{
+      color: var(--ion-color-second-app);
+      font-size: 14px;
+      font-weight: 500;
+      margin: 10px 0;
+      max-width: 60%;
+    }
+
+    ion-radio {
+      --color: var(--ion-color-second-app);
+      margin: 20px 0;
+    }
 
 
-.multi-choice {
-  ion-text{
-    color: var(--ion-color-second-app);
+
+  .sound {
+    border: 2px dotted var(--ion-color-second-app);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 27%;
+    max-width: 80%;
+    padding: 7px 0;
+    margin: 0px 0 0 60px;
+
+    img.langauge-img{
+      width: 30px;
+      height: auto;
+      max-width: 70%;
+    }
+
+
+    .img-volume {
+      @extend .ext-icon-vlume;
+    }
+  }
+
+  }
+
+  .total-result {
     font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    text-transform: capitalize;
-    margin: 20px 0 50px 0;
-  }
-
-  ion-label{
+    font-weight: 900;
     color: var(--ion-color-second-app);
-    font-size: 16px;
-    font-weight: 500;
-    margin: 10px 0;
+    text-align: center;
+    margin-left: 50px;
   }
 
-  ion-radio {
-    --color: var(--ion-color-second-app);
-    margin: 20px 0;
+  .img-langauge {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 13px;
+    top: 14px;
+    border: 1px solid #ccc;
+  }
+
+  .hideButtonNext {
+    display: none;
+  }
+
+  .showButtonNext {
+    display: block;
+  }
+
+  .total-result {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--ion-color-second-app);
+    text-align: center;
+    margin-left: 50px;
   }
 
 
-}
 
-.total-result {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--ion-color-second-app);
-  text-align: center;
-  margin-left: 50px;
-}
+  .sound-question {
+    border: 2px solid var(--ion-color-second-app);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    // width: 20%;
+    // min-width: 27%;
+    // max-width: 80%;
+    padding: 7px 0;
+    margin-left: 10px;
+    margin-top: 30px;
 
-.img-langauge {
-  width: 40px;
-  height: 40px;
+    img.danish-flag {
+      width: 30px;
+      height: auto;
+      max-width: 70%;
+    }
+
+    img.langauge-img{
+      width: 30px;
+      height: auto;
+      max-width: 70%;
+    }
+
+
+    .img-volume {
+      @extend .ext-icon-vlume;
+    }
+  }
+
+  ion-radio-group {
+    position: relative;
+  }
+  
+
+  // Animation Element
+
+.select-dots {
+  background-color: #062F87;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
   position: absolute;
-  right: 13px;
-  top: 14px;
-  border: 1px solid #ccc;
+  bottom: 26px;
+  right: 95%;
+  z-index: 2000000000;
+  // -webkit-animation: selectAnimate 3s ease-in 3 forwards;
+  // -o-animation: selectAnimate 3s ease-in 3 forwards;
+  // -moz-animation: selectAnimate 3s ease-in 3 forwards;
+  // animation: selectAnimate 3s ease-in 3 forwards;
 }
 
-.hideButtonNext {
-  display: none;
+.select-animate {
+  position: absolute;
+  z-index: 20000000000000000;
+  bottom: 60px;
+  right: 35%;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-animation: selectAnimate 2s ease-in 4 forwards;
+  -o-animation: selectAnimate 2s ease-in 4 forwards;
+  -moz-animation: selectAnimate 2s ease-in 4 forwards;
+  animation: selectAnimate 2s ease-in 4 forwards;
+
+  img {
+    width: 150px;
+    height: 150px;
+  }
 }
 
-.showButtonNext {
-  display: block;
+@keyframes selectAnimate {
+0% {
+  opacity: 0;
+}
+25% {
+  opacity: 1;
+}
+50% {
+  opacity: 0;
+}
+100% {
+  opacity: 1;
+  visibility: hidden;
+}
 }
 
-.total-result {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--ion-color-second-app);
-  text-align: center;
-  margin-left: 50px;
-}
+// Animation Element
 

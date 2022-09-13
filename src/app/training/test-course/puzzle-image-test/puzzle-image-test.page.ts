@@ -9,6 +9,9 @@ import { Subscription } from 'rxjs';
 import { PuzzleImageTranslations } from 'src/app/shared/models/puzzleImageTranslation';
 import { PuzzleImageZoomComponent } from './puzzle-image-zoom/puzzle-image-zoom.component';
 
+import { Howl } from 'howler';
+
+
 @Component({
   selector: 'app-puzzle-image-test',
   templateUrl: './puzzle-image-test.page.html',
@@ -29,6 +32,15 @@ export class PuzzleImageTestPage implements OnInit {
   lengthItems: number = 0;
   questionAndAnswerItems: any;
   userTestId: number;
+
+
+  //howler
+  player: Howl = null;
+  isPlaying: boolean = false;
+  voicePath: string;
+  voicePathDanish: string;
+  activeTrack: string;
+
 
   @Input('pageNumber') pageNumber;
   @Output() questionData = new EventEmitter<any>();
@@ -63,6 +75,7 @@ export class PuzzleImageTestPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.userInfo = this.storageService.getUser();
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
     this.getQuestionAndAnswer();
   }
@@ -80,7 +93,7 @@ getQuestionAndAnswer() {
       )
       .subscribe((response) => {
         this.isLoading = false;
-        // console.log('puzzle image response', response)
+        console.log('puzzle image response', response)
         this.questionType = response['questionType'];
         this.testId = response['testId'];
         this.lengthItems = response['length'];
@@ -136,6 +149,17 @@ getQuestionAndAnswer() {
               ].imageGuidId;
             apz.type = 'answer';
             apz.disabled = false;
+
+            // Sound
+              apz.voicePath =
+                this.questionAndAnswerItems.puzzleImagesTranslation[
+                  index
+                ].voicePath;
+              apz.voicePathDanish =
+                this.questionAndAnswerItems.puzzleImagesTranslation[
+                  index
+                ].voicePathDanish;
+            // Sound
 
             this.answersArray.push(apz);
           }
@@ -211,7 +235,13 @@ slideNext() {
       }
     )
     .subscribe((response) => {
-      console.log(response)
+      console.log(response);
+      // Stop sound when next questin
+      if (this.player) {
+        this.player.stop();
+      }
+      // Stop sound when next questin
+
       this.userTestId = response['result'].userTestId;
       this.pageNumber += 1;
       // ** check last question
@@ -287,12 +317,32 @@ finishedTest() {
   })
 }
 
+// Start Audio 
+startAudio(voicePath: string) {
+  if (this.player) {
+    this.player.stop();
+  }
+  this.player = new Howl({
+    html5: true,
+    src: voicePath,
+    onplay: () => {
+      this.activeTrack = voicePath;
+      this.isPlaying = true;
+    },
+    onend: () => {},
+  });
+  this.player.play();
+}
+
 
 
 ngOnDestroy() {
   this.subs.forEach(e => {
     e.unsubscribe();
-  })
+  });
+  if (this.player) {
+    this.player.stop();
+  }
 }
 
 }

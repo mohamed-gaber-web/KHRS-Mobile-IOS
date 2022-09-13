@@ -14,8 +14,37 @@
     <ion-slide>
     <ion-grid *ngIf="allTestData">
       <ion-list class="multi-choice">
-        <ion-list-header>
 
+          <!-- Start Sound -->
+          <ion-grid class="sound-group">
+            <ion-row>
+            <ion-col size="4">
+                <div *ngIf="exerciseItems[0].voiceDanishPath">
+                  <div class="sound-question">
+                      <div class="img-volume">
+                        <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!exerciseItems[0].audioElementDanish.status? 'play' : 'stop'" (click)="playAudio(exerciseItems[0].audioElementDanish,1)">
+                        </ion-icon>
+                      </div>
+                    <img class="danish-flag" src="../../../assets/icon/da.png" alt="" />
+                  </div>
+                </div>
+          </ion-col>
+          <ion-col size="4">
+            <div *ngIf="exerciseItems[0].multiChoiceTranslations[0]?.voicePath">
+              <div class="sound-question">
+                  <div class="img-volume">
+                    <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!exerciseItems[0].audioElement.status? 'play' : 'stop'" (click)="playAudio(exerciseItems[0].audioElement,1,'native')">
+                    </ion-icon>
+                  </div>
+                <img class="img-lang" [src]="userInfo.languageIcon" alt="" />
+              </div>
+            </div>
+          </ion-col>
+          </ion-row>
+          </ion-grid>
+          <!-- End Sound -->
+
+        <ion-list-header>
           <ion-text>
             {{ allTestData['multiChoice'].question }}
           </ion-text>
@@ -24,9 +53,20 @@
 
         <ion-radio-group formControlName="answer">
           <div class="answer" *ngFor="let item of allTestData['multiChoice']['multiChoiceAnswers']">
-            <ion-item >
+            <ion-item (click)="playAudio(item,2)"> 
               <ion-label>{{ item.answer }}</ion-label>
               <ion-radio [value]="item.id"></ion-radio>
+              <!-- Sound  -->
+              <div  class="sound" *ngIf="item.audioElement.audio">
+                <div class="sound-bg">
+                      <div class="img-volume">
+                        <ion-icon  class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" [name]="!item.audioElement.status? 'play' : 'stop'" >
+                        </ion-icon>
+                      </div>
+                  </div>
+                  <img class="langauge-img" [src]="userInfo.languageIcon" alt="" />
+                </div>
+              <!-- Sound -->
             </ion-item>
         </div>
       </ion-radio-group>
