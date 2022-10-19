@@ -113,7 +113,7 @@
               (click)="sendIdToExercisePage()">
               <img class="img-icon" src="../../../assets/images/exercise-icon.png" alt="exercise" /> Exercise </ion-button>
             <ion-button 
-                [disabled]="CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' " *ngIf="CourseDetails.status !== 1" (click)="sendIdToFinalTestPage()">
+                [disabled]="CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' && btnDisabled !== 'open'" *ngIf="CourseDetails.status !== 1" (click)="sendIdToFinalTestPage()">
                 <img class="img-icon" src="../../../assets/images/final-test.png" alt="final test" />
                 Final Test
             </ion-button>

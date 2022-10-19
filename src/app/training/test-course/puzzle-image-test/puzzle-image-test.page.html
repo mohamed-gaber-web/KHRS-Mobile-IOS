@@ -23,13 +23,13 @@
                   cdkDropListOrientation="horizontal"
                   (cdkDropListDropped)="drop($event)"
                 >
-                <div *ngFor="let item2 of item">
+                <div *ngFor="let item2 of item" cdkDrag [cdkDragDisabled]="true">
 
                   <ion-img
                     class="image-question"
                     loading="lazy" *ngIf="item2.type === 'question' "
                     (click)="presentPopover($event, item2)"
-                    [src]="item2.imagePath" cdkDrag [cdkDragDisabled]="true">
+                    [src]="item2.imagePath">
                   </ion-img>
 
 
@@ -129,14 +129,21 @@
         </ion-row>
       </ion-grid>
 
-
-
-
-
-
     </div>
   </ion-slide>
 </ion-slides>
+
+
+<!-- Single inal test -->
+
+
+
+
+
+
+
+
+
 <app-test-finished *ngIf="lengthItems === pageNumber"></app-test-finished>
 
 
@@ -165,7 +172,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid style="position: relative; top: -150px;" *ngIf="lengthItems === pageNumber">
+  <ion-grid *ngIf="lengthItems === pageNumber">
     <ion-row class="ion-align-items-center slide-button">
 
       <ion-col size="6">

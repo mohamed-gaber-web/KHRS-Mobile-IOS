@@ -35,6 +35,7 @@ export class MultiTestPage implements OnInit {
   sub: Subscription[] = [];
   @Input('pageNumber') pageNumber;
   @Output() questionData = new EventEmitter<any>();
+  courseName: string;
 
   disablePrevBtn = true;
   disableNextBtn = false;
@@ -62,6 +63,8 @@ export class MultiTestPage implements OnInit {
     this.userInfo = this.storageService.getUser();
     this.buildMultiForm();
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
+    this.courseName = localStorage.getItem('courseName');
+
     this.getTestType();
   }
 

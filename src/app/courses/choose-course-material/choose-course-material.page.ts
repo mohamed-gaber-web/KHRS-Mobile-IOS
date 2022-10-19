@@ -6,6 +6,7 @@ import { userCourse } from 'src/app/shared/models/userCourse';
 import { CourseService } from 'src/app/shared/services/courses.service';
 import { AlertController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { TestService } from 'src/app/shared/services/test.service';
 
 @Component({
   selector: 'app-choose-course-material',
@@ -16,6 +17,7 @@ export class ChooseCourseMaterialPage implements OnInit {
 
   userId: number;
   courseId: number;
+  coursesName: any;
   subs: Subscription[] = [];
   userCourseDetails: userCourse[];
   CourseDetails: any;
@@ -27,6 +29,7 @@ export class ChooseCourseMaterialPage implements OnInit {
   checkCourseData: boolean;
   isOpen: boolean = false;
   userInfo: any;
+  btnDisabled: string = 'open';
 
   constructor(
     private courseService: CourseService,
@@ -34,7 +37,8 @@ export class ChooseCourseMaterialPage implements OnInit {
     private router: Router,
     public alertController: AlertController,
     private trackingService: TrackingUserService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private testService: TestService
 
     ) { }
 
@@ -54,6 +58,8 @@ export class ChooseCourseMaterialPage implements OnInit {
         }
         this.isLoading = false;
         this.userCourseDetails = response['result'].userCourse;
+        // get and send course name in exercise
+        this.coursesName = response['result'].course['courseTranslations'][0].title;
         let startDate = new Date(this.userCourseDetails['startDate']);
         let endDate = new Date(this.userCourseDetails['endDate']);
          let date = endDate.getTime() - startDate.getTime();
@@ -78,12 +84,16 @@ export class ChooseCourseMaterialPage implements OnInit {
 
   // ** Send course id to exercise page
   sendIdToExercisePage() {
-    this.router.navigate(['/exercise', {courseId: this.courseId}])
+    this.router.navigate(['/exercise', {courseId: this.courseId}]);
+    localStorage.setItem('courseName', this.coursesName);
+
   }
 
   // ** Send course id to final test page_event
   sendIdToFinalTestPage() {
    this.presentAlertConfirm();
+   localStorage.setItem('courseName', this.coursesName);
+
   }
 
   async presentAlertConfirm() {
@@ -102,8 +112,16 @@ export class ChooseCourseMaterialPage implements OnInit {
         }, {
           text: 'start',
           handler: () => {
-            this.router.navigate(['/exercise/test-course', {courseId: this.courseId}])
-          }
+           // add request final test
+           this.testService.startTest(this.courseId)
+           .subscribe(response => {
+             console.log(response)
+             if(response['success'] === false) {
+              //  console.log(response)
+               this.btnDisabled = 'close';
+             }
+             this.router.navigate(['/exercise/test-course', {courseId: this.courseId}])
+           })          }
         }
       ]
     });

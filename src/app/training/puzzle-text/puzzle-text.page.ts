@@ -23,6 +23,7 @@ export class PuzzleTextPage implements OnInit {
 
   userInfo: any;
   courseId: number;
+  courseName: string;
   exerciseType: number;
   questionAndAnswerItems: any;
   questions:PuzzleTextTranslations[];
@@ -65,6 +66,7 @@ export class PuzzleTextPage implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
+    this.courseName = localStorage.getItem('courseName');
 
     // ** get courseId And exerciseId
     this.courseId = +this.route.snapshot.paramMap.get('courseId');

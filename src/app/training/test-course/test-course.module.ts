@@ -16,6 +16,8 @@ import { PuzzleImageTestPage } from './puzzle-image-test/puzzle-image-test.page'
 import { PuzzleImageZoomComponent } from './puzzle-image-test/puzzle-image-zoom/puzzle-image-zoom.component';
 import { TestFinishedPage } from './test-finished/test-finished.page';
 
+import { PuzzleSoundTestComponent } from './puzzle-image-test/puzzle-sound-test/puzzle-sound-test.component';
+import { PuzzleSoundTestModule } from './puzzle-image-test/puzzle-sound-test/puzzle-sound-test.module';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CdTimerModule } from 'angular-cd-timer';
@@ -30,10 +32,11 @@ import { CdTimerModule } from 'angular-cd-timer';
     ReactiveFormsModule,
     DragDropModule,
     CdTimerModule,
-    SharedModule
+    SharedModule,
+    PuzzleSoundTestModule
 
   ],
-  entryComponents: [TestFinishedPage],
+  entryComponents: [TestFinishedPage, PuzzleSoundTestComponent],
   declarations: [
     TestCoursePage,
     SingleTestPage,
@@ -41,7 +44,7 @@ import { CdTimerModule } from 'angular-cd-timer';
     PuzzleTextTestPage,
     PuzzleImageTestPage,
     PuzzleImageZoomComponent,
-    TestFinishedPage
+    TestFinishedPage,
   ],
 })
 export class TestCoursePageModule {}

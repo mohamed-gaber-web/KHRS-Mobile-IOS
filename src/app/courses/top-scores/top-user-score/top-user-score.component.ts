@@ -20,7 +20,6 @@ export class TopUserScoreComponent implements OnInit {
         this.topStudents = response['result']['topStudents'];
         this.topStudent = this.topStudents.slice(0, 3)
        this.obj = Object.assign({}, this.topStudent); // {0:"a", 1:"b", 2:"c"}
-        console.log('3 values', this.obj)
       });
   }
 

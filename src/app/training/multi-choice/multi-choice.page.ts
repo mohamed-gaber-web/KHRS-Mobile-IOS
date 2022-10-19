@@ -41,6 +41,7 @@ export class MultiChoicePage implements OnInit {
   loadedCharacter: {};
   ChooseAnswerId: number;
   resultAnswerItems: any;
+  courseName: string;
 
   @ViewChild('slides') slides: IonSlides;
 
@@ -65,6 +66,7 @@ export class MultiChoicePage implements OnInit {
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
+    this.courseName = localStorage.getItem('courseName');
 
     // ** get courseId And exerciseId
     this.courseId = +this.route.snapshot.paramMap.get('courseId');

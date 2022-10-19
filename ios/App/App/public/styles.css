@@ -1353,7 +1353,7 @@ ion-toolbar {
   text-align: center;
   display: flex;
   justify-content: center;
-  margin: 0 auto 20px auto;
+  margin: 0 auto;
 }
 .title {
   text-align: center;
@@ -1609,12 +1609,22 @@ video {
 ion-radio {
   --color-checked: #48b95e;
 }
+.item-number-and-help {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
 .total-result {
   font-size: 16px;
   font-weight: 800;
   color: var(--ion-color-second-app);
-  text-align: center;
-  margin-left: 50px;
+  text-align: center !important;
+  margin: 5px auto !important;
+  background-color: #8afa6f;
+  width: 100px;
+  padding: 10px 0;
+  border-radius: 10px;
 }
 /************* Media Query Desktop *****************/
 @media (max-width: 767px) {

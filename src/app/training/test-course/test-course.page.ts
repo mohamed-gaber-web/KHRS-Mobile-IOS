@@ -6,6 +6,7 @@ import { IonSlides, NavController, ToastController } from '@ionic/angular';
 import { CdTimerComponent } from 'angular-cd-timer';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { TestService } from 'src/app/shared/services/test.service';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 @Component({
   selector: 'app-test-course',
   templateUrl: './test-course.page.html',
@@ -39,6 +40,8 @@ export class TestCoursePage implements OnInit {
     public toastController: ToastController,
     public navController: NavController,
     private testService: TestService,
+    private utilityService: UtilityService,
+
 
   ) { }
 
@@ -55,19 +58,50 @@ export class TestCoursePage implements OnInit {
   }
 
   // ** get test type
-  getTestType() {
+  // getTestType() {
 
+  //   if(this.activeCourse == true) {
+  //     console.log('redirect in this ')
+  //     this.testService.getTestType(this.courseId, this.redOffset)
+  //     .subscribe(response => {
+  //       this.questionType = response['questionType'];
+  //       this.allTestData = response;
+  //     })
+  //   } else {
+
+  //     this.testService.getTestType(this.courseId, this.pageNumber)
+  //     .subscribe(response => {
+  //       if (response['questionType'] == 0) {
+  //         this.router.navigate(['courses/tabs/my-courses']);
+  //       }
+
+  //       this.questionType = response['questionType'];
+  //       this.allTestData = response;
+  //       // debugger;
+  //     })
+
+  //   }
+  // }
+
+  getTestType() {
     if(this.activeCourse == true) {
-      console.log('redirect in this ')
       this.testService.getTestType(this.courseId, this.redOffset)
       .subscribe(response => {
         this.questionType = response['questionType'];
         this.allTestData = response;
+
       })
     } else {
 
       this.testService.getTestType(this.courseId, this.pageNumber)
       .subscribe(response => {
+
+        if(response['success'] === false) {
+          this.utilityService.errorText(response['arrayMessage'][0])
+          this.router.navigate(['courses/tabs/choose-course-material', {courseId: this.courseId}]);
+        }
+
+
         if (response['questionType'] == 0) {
           this.router.navigate(['courses/tabs/my-courses']);
         }
@@ -78,8 +112,6 @@ export class TestCoursePage implements OnInit {
       })
 
     }
-
-
   }
 
 

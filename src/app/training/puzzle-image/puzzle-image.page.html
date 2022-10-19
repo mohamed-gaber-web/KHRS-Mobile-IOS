@@ -2,11 +2,13 @@
 
 <div class="ios-toolbar">
   <ion-title>
-    Puzzle image
-    <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+    {{ courseName }}
   </ion-title>
 </div>
-<ion-icon class="help-icon" (click)="presentModal()" name="help-circle-outline"></ion-icon>
+<div class="item-number-and-help">
+  <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+  <ion-icon class="help-icon" (click)="presentModal()" name="help-circle-outline"></ion-icon>
+</div>
 
 <ion-content>
 
@@ -34,13 +36,13 @@
                 cdkDropListSortingDisabled
                 (cdkDropListDropped)="drop($event)"
               >
-              <div *ngFor="let item2 of item" >
+              <div *ngFor="let item2 of item"  cdkDrag [cdkDragDisabled]="true">
 
                 <ion-img
                 class="image-question"
                 loading="lazy" *ngIf="item2.type === 'question' "
                 (click)="presentPopover($event, item2)"
-                [src]="item2.imagePath" cdkDrag [cdkDragDisabled]="true">
+                [src]="item2.imagePath" >
 
                 </ion-img>
 
@@ -67,7 +69,8 @@
                               <div class="img-volume">
                                 <ion-img
                                 loading="lazy"
-                                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" src="../../../assets/icon/Vector.png" (click)="startAudio(item2.voicePathDanish)">
+                                class="animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2" 
+                                src="../../../assets/icon/Vector.png" (click)="startAudio(item2.voicePathDanish)">
                               </ion-img>
                               </div>
                             </div>

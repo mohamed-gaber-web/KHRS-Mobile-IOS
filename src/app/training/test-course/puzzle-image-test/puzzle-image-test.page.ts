@@ -10,6 +10,7 @@ import { PuzzleImageTranslations } from 'src/app/shared/models/puzzleImageTransl
 import { PuzzleImageZoomComponent } from './puzzle-image-zoom/puzzle-image-zoom.component';
 
 import { Howl } from 'howler';
+import { PuzzleSoundTestComponent } from './puzzle-sound-test/puzzle-sound-test.component';
 
 
 @Component({
@@ -236,14 +237,14 @@ slideNext() {
     )
     .subscribe((response) => {
       console.log(response);
+      this.userTestId = response['result'].userTestId;
+      this.pageNumber += 1;
+      
       // Stop sound when next questin
       if (this.player) {
         this.player.stop();
       }
-      // Stop sound when next questin
-
-      this.userTestId = response['result'].userTestId;
-      this.pageNumber += 1;
+      
       // ** check last question
       if(this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
         console.log('this is last number');
@@ -287,7 +288,7 @@ finishSlidePrev() {
 // ** when to zoom image
 async presentPopover(ev: any, item: any) {
   const popover = await this.popoverController.create({
-    component: PuzzleImageZoomComponent,
+    component: PuzzleSoundTestComponent,
     componentProps: {
       imagePath: item.imagePath,
     },

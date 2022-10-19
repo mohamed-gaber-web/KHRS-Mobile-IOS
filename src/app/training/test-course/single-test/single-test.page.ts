@@ -163,7 +163,6 @@ export class SingleTestPage implements OnInit {
           if(this.exerciseItems[0].audioElementDanish){
             this.exerciseItems[0].audioElementDanish.audio.pause();
             this.exerciseItems[0].audioElementDanish.audio = null;
-
           }
           
           // ** check last question

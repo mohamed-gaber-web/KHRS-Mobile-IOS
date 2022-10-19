@@ -52,4 +52,16 @@ export class UtilityService {
     return toast.present();
   }
 
+  async errorText(msg: string) {
+    // this.audio.load();
+    // this.audio.play()
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      cssClass:'error-text',
+      color: 'danger',
+    });
+    return toast.present();
+  }
+
 }

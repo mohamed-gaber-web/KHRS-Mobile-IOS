@@ -39,6 +39,7 @@ export class SingleChoicePage implements OnInit {
   isLoading: boolean = false;
   limit: number = 1;
   resultAnswer: boolean = null;
+  courseName: string;
 
   @ViewChild('slides') slides: IonSlides;
 
@@ -79,6 +80,8 @@ export class SingleChoicePage implements OnInit {
     // ** get info user from localstorage
     this.userInfo = this.storageService.getUser();
     this.courseId = +this.route.snapshot.paramMap.get('courseId');
+    this.courseName = localStorage.getItem('courseName');
+
     this.exerciseType = +this.route.snapshot.paramMap.get('exerciseId');
 
     //**  Single Form run
@@ -251,6 +254,17 @@ export class SingleChoicePage implements OnInit {
     this.getQuestion();
     this.slides.slidePrev();
 
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: HelpModalComponent,
+      componentProps: {
+        "modalLink": "https://khrs-admin.sdex.online/assets/tutorials/single_choice_tutorial.mp4",
+        "modalTitle": "Multi Choice Tutorial"
+      }
+    });
+    return await modal.present();
   }
 
   ngOnDestroy() {

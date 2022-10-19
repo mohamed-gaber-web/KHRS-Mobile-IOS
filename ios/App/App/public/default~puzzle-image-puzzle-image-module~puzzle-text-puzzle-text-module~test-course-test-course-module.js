@@ -1,5 +1,93 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~puzzle-image-puzzle-image-module~puzzle-text-puzzle-text-module~test-course-test-course-module"],{
 
+/***/ "A9xy":
+/*!****************************************************!*\
+  !*** ./src/app/shared/services/utility.service.ts ***!
+  \****************************************************/
+/*! exports provided: UtilityService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UtilityService", function() { return UtilityService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "8Y7J");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
+
+
+
+let UtilityService = class UtilityService {
+    constructor(toastController) {
+        this.toastController = toastController;
+        this.audio = null;
+        this.audio = new Audio('../../../assets/iphone_ding.mp3');
+    }
+    ngOnInit() {
+    }
+    successMessage(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.audio.load();
+            this.audio.play();
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 4000,
+                cssClass: 'success-msg',
+            });
+            return toast.present();
+        });
+    }
+    successText(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.audio.load();
+            this.audio.play();
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 4000,
+                cssClass: 'success-text',
+                color: 'success'
+            });
+            return toast.present();
+        });
+    }
+    errorMessage(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.audio.load();
+            this.audio.play();
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 4000,
+                cssClass: 'ion-error',
+            });
+            return toast.present();
+        });
+    }
+    errorText(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            // this.audio.load();
+            // this.audio.play()
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 2000,
+                cssClass: 'error-text',
+                color: 'danger',
+            });
+            return toast.present();
+        });
+    }
+};
+UtilityService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"] }
+];
+UtilityService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root',
+    })
+], UtilityService);
+
+
+
+/***/ }),
+
 /***/ "ltgo":
 /*!*********************************************************!*\
   !*** ./node_modules/@angular/cdk/fesm2015/drag-drop.js ***!

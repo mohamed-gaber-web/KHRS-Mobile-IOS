@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"top_score_block\" *ngFor=\"let item of studentsData\">\n    <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n    <div class=\"top_score_block__image\" >\n      <img *ngIf=\"item.imagePath !== null \" [src]=\"item.imagePath\" loading=\"lazy\" alt=\"\"  />\n      <img *ngIf=\"item.imagePath == null \" src=\"../../../../assets/images/img-profile.png\" loading=\"lazy\" alt=\"\"  />\n      <span> {{ item.userName }} </span>\n    </div>\n    <div class=\"top_score_block__text\">\n        <h5> <b style=\"font-size: 18px;\">  {{ item.finalResult }}</b> points </h5>\n    </div>\n  </div>\n  ");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"top_score_block\" *ngFor=\"let item of studentsData\">\n    <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n    <div class=\"top_score_block__image\" >\n      <img *ngIf=\"item.imagePath !== null \" [src]=\"item.imagePath\" loading=\"lazy\" alt=\"\"  />\n      <img *ngIf=\"item.imagePath == null \" src=\"../../../../assets/images/img-profile.png\" loading=\"lazy\" alt=\"\"  />\n      <span> {{ item.nickname }} </span>\n    </div>\n    <div class=\"top_score_block__text\">\n        <h5> <b style=\"font-size: 18px;\">  {{ item.finalResult }}</b> points </h5>\n    </div>\n  </div>\n  ");
 
 /***/ }),
 
@@ -176,7 +176,7 @@ TopScoresPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decora
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"top_score_user\">\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\" *ngIf=\"obj\">\n      <ion-col  size-lg=\"1\" size-md=\"4\" size-sm=\"3\" size-xs=\"3\"  class=\"top_score_user__second\">\n        <img  *ngIf=\"obj[1].imagePath !== null\" [src]=\"obj[1].imagePath\" />\n        <img *ngIf=\"obj[1].imagePath === null\" src=\"../../../../assets/images/img-profile.png\" />\n        <h3> 2 </h3>\n        <h4> {{ obj[1].userName }} </h4>\n        <p> {{ obj[1].finalResult  }} </p>\n      </ion-col>\n      <ion-col size-lg=\"1\" size-md=\"4\" size-sm=\"3\" size-xs=\"3\" class=\"top_score_user__first\">\n        <img  *ngIf=\"obj[0].imagePath !== null\" [src]=\"obj[0].imagePath\" />\n        <img *ngIf=\"obj[0].imagePath === null\" src=\"../../../../assets/images/img-profile.png\" />\n        <h3> 1 </h3>\n        <h4> {{ obj[0].userName }}  </h4>\n        <p> {{ obj[0].finalResult }} </p>\n      </ion-col>\n      <ion-col size-lg=\"1\" size-md=\"4\" size-sm=\"3\" size-xs=\"3\" class=\"top_score_user__third\">\n        <img  *ngIf=\"obj[2].imagePath !== null\" [src]=\"obj[2].imagePath\" />\n        <img *ngIf=\"obj[2].imagePath === null\" src=\"../../../../assets/images/img-profile.png\" />\n        <h3> 3 </h3>\n        <h4> {{ obj[2].userName }} </h4>\n        <p> {{ obj[2].finalResult  }} </p>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"top_score_user\">\n  <ion-grid>\n    <ion-row class=\"ion-justify-content-center\" *ngIf=\"obj\">\n      <ion-col  size-lg=\"1\" size-md=\"4\" size-sm=\"3\" size-xs=\"3\"  class=\"top_score_user__second\">\n        <img  *ngIf=\"obj[1].imagePath !== null\" [src]=\"obj[1].imagePath\" />\n        <img *ngIf=\"obj[1].imagePath === null\" src=\"../../../../assets/images/img-profile.png\" />\n        <h3> 2 </h3>\n        <h4> {{ obj[1].nickname }} </h4>\n        <p> {{ obj[1].finalResult  }} </p>\n      </ion-col>\n      <ion-col size-lg=\"1\" size-md=\"4\" size-sm=\"3\" size-xs=\"3\" class=\"top_score_user__first\">\n        <img  *ngIf=\"obj[0].imagePath !== null\" [src]=\"obj[0].imagePath\" />\n        <img *ngIf=\"obj[0].imagePath === null\" src=\"../../../../assets/images/img-profile.png\" />\n        <h3> 1 </h3>\n        <h4> {{ obj[0].nickname }}  </h4>\n        <p> {{ obj[0].finalResult }} </p>\n      </ion-col>\n      <ion-col size-lg=\"1\" size-md=\"4\" size-sm=\"3\" size-xs=\"3\" class=\"top_score_user__third\">\n        <img  *ngIf=\"obj[2].imagePath !== null\" [src]=\"obj[2].imagePath\" />\n        <img *ngIf=\"obj[2].imagePath === null\" src=\"../../../../assets/images/img-profile.png\" />\n        <h3> 3 </h3>\n        <h4> {{ obj[2].nickname }} </h4>\n        <p> {{ obj[2].finalResult  }} </p>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</div>\n");
 
 /***/ }),
 
@@ -574,7 +574,6 @@ let TopUserScoreComponent = class TopUserScoreComponent {
             this.topStudents = response['result']['topStudents'];
             this.topStudent = this.topStudents.slice(0, 3);
             this.obj = Object.assign({}, this.topStudent); // {0:"a", 1:"b", 2:"c"}
-            console.log('3 values', this.obj);
         });
     }
 };

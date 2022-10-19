@@ -91,7 +91,7 @@ export class CourseMaterialPage implements OnInit {
   }
 
   // ** Move to Next slide
-  slideNext() {
+  async slideNext() {
     if (this.player) {
       this.activeTrack = null;
       this.player.unload();
@@ -100,6 +100,16 @@ export class CourseMaterialPage implements OnInit {
     this.offset += 1;
     this.getMaterialCourse();
     this.slides.slideNext();
+
+    if(this.offset === this.materialCourseLength) {
+      var toast = await this.toastController.create({
+      message: 'Material pages is finished !',
+      duration: 5000,
+      color: 'success',
+      });
+      toast.present();
+      // this.router.navigate(['/courses/tabs/my-courses']);
+    }
   }
 
   // ** Move to previous slide

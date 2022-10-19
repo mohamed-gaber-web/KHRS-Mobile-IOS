@@ -69,6 +69,42 @@ PuzzleImageZoomComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
 
 /***/ }),
 
+/***/ "4ypJ":
+/*!******************************************************************************************************!*\
+  !*** ./src/app/training/test-course/puzzle-image-test/puzzle-sound-test/puzzle-sound-test.module.ts ***!
+  \******************************************************************************************************/
+/*! exports provided: PuzzleSoundTestModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PuzzleSoundTestModule", function() { return PuzzleSoundTestModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "SVse");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "8Y7J");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
+/* harmony import */ var _puzzle_sound_test_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./puzzle-sound-test.component */ "vqQO");
+
+
+
+
+
+let PuzzleSoundTestModule = class PuzzleSoundTestModule {
+};
+PuzzleSoundTestModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"],
+        ],
+        declarations: [_puzzle_sound_test_component__WEBPACK_IMPORTED_MODULE_4__["PuzzleSoundTestComponent"]]
+    })
+], PuzzleSoundTestModule);
+
+
+
+/***/ }),
+
 /***/ "83Ks":
 /*!************************************************************************!*\
   !*** ./src/app/training/test-course/single-test/single-test.page.scss ***!
@@ -155,6 +191,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
 /* harmony import */ var src_app_shared_services_storage_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/services/storage.service */ "fbMX");
 /* harmony import */ var src_app_shared_services_test_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/services/test.service */ "V1Po");
+/* harmony import */ var src_app_shared_services_utility_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/services/utility.service */ "A9xy");
+
 
 
 
@@ -165,13 +203,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let TestCoursePage = class TestCoursePage {
-    constructor(storageService, route, router, toastController, navController, testService) {
+    constructor(storageService, route, router, toastController, navController, testService, utilityService) {
         this.storageService = storageService;
         this.route = route;
         this.router = router;
         this.toastController = toastController;
         this.navController = navController;
         this.testService = testService;
+        this.utilityService = utilityService;
         this.pageNumber = 0;
         this.counterStart = 0;
         this.finishedTime = false;
@@ -188,9 +227,28 @@ let TestCoursePage = class TestCoursePage {
         // this.activeTest = JSON.parse(localStorage.getItem('activeTest'));
     }
     // ** get test type
+    // getTestType() {
+    //   if(this.activeCourse == true) {
+    //     console.log('redirect in this ')
+    //     this.testService.getTestType(this.courseId, this.redOffset)
+    //     .subscribe(response => {
+    //       this.questionType = response['questionType'];
+    //       this.allTestData = response;
+    //     })
+    //   } else {
+    //     this.testService.getTestType(this.courseId, this.pageNumber)
+    //     .subscribe(response => {
+    //       if (response['questionType'] == 0) {
+    //         this.router.navigate(['courses/tabs/my-courses']);
+    //       }
+    //       this.questionType = response['questionType'];
+    //       this.allTestData = response;
+    //       // debugger;
+    //     })
+    //   }
+    // }
     getTestType() {
         if (this.activeCourse == true) {
-            console.log('redirect in this ');
             this.testService.getTestType(this.courseId, this.redOffset)
                 .subscribe(response => {
                 this.questionType = response['questionType'];
@@ -200,6 +258,10 @@ let TestCoursePage = class TestCoursePage {
         else {
             this.testService.getTestType(this.courseId, this.pageNumber)
                 .subscribe(response => {
+                if (response['success'] === false) {
+                    this.utilityService.errorText(response['arrayMessage'][0]);
+                    this.router.navigate(['courses/tabs/choose-course-material', { courseId: this.courseId }]);
+                }
                 if (response['questionType'] == 0) {
                     this.router.navigate(['courses/tabs/my-courses']);
                 }
@@ -226,7 +288,8 @@ TestCoursePage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["ToastController"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"] },
-    { type: src_app_shared_services_test_service__WEBPACK_IMPORTED_MODULE_7__["TestService"] }
+    { type: src_app_shared_services_test_service__WEBPACK_IMPORTED_MODULE_7__["TestService"] },
+    { type: src_app_shared_services_utility_service__WEBPACK_IMPORTED_MODULE_8__["UtilityService"] }
 ];
 TestCoursePage.propDecorators = {
     slideData: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Output"] }],
@@ -253,7 +316,7 @@ TestCoursePage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n\n  <ion-slides *ngIf=\"lengthItems != pageNumber\" class=\"swiper-no-swiping\" [pager]=\"false\" #slides [options]=\"slideOpts\">\n    <ion-slide>\n\n    <div cdkDropListGroup class=\"drag-group\">\n\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-grid>\n\n              <ion-row>\n\n                <ion-col size=\"12\"\n                  class=\"example-box\"\n                  cdkDropList\n                  *ngFor=\"let item of questionsArray\"\n                  [cdkDropListData]=\"item\"\n                  cdkDropListSortingDisabled\n                  cdkDropListOrientation=\"horizontal\"\n                  (cdkDropListDropped)=\"drop($event)\"\n                >\n                <div *ngFor=\"let item2 of item\">\n\n                  <ion-img\n                    class=\"image-question\"\n                    loading=\"lazy\" *ngIf=\"item2.type === 'question' \"\n                    (click)=\"presentPopover($event, item2)\"\n                    [src]=\"item2.imagePath\" cdkDrag [cdkDragDisabled]=\"true\">\n                  </ion-img>\n\n\n                  <div class=\"drag-answer\" *ngIf=\"item2.type === 'answer' \">\n                    <ion-grid class=\"puzzle-answer\">\n                      <ion-row>\n\n                        <ion-col\n                          size=\"12\"\n                          >\n                          <div class=\"puzzle-fix\" cdkDrag [cdkDragDisabled]=\"false\">\n                            <div class=\"title\"> {{ item2.keyword }}</div>\n                            <!-- Start Sound -->\n\n                            <div class=\"sound\" *ngIf=\"item2.voicePath\">\n                              <div class=\"sound-bg\">\n                                <div class=\"img-volume\">\n                                  <ion-img\n                                  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item2.voicePath)\">\n                                </ion-img>\n                                </div>\n                              </div>\n                              <img class=\"danish-flag\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n                            </div>\n                            <div class=\"sound\" *ngIf=\"item2.voicePathDanish\">\n                              <div class=\"sound-bg\">\n                                <div class=\"img-volume\">\n                                  <ion-img\n                                  loading=\"lazy\"\n                                  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item2.voicePathDanish)\">\n                                </ion-img>\n                                </div>\n                              </div>\n                              <img loading=\"lazy\" class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n                            </div>\n\n                            <!-- Start Sound  -->\n                          </div>\n                        </ion-col>\n\n                      </ion-row>\n                    </ion-grid>\n\n                  </div>\n                </div>\n\n                </ion-col>\n\n              </ion-row>\n\n            </ion-grid>\n          </ion-col>\n\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-grid class=\"puzzle-answer\">\n              <ion-row>\n                <ion-col\n                  size=\"12\"\n                  cdkDropList\n                  [cdkDropListData]=\"answersArray\"\n                  (cdkDropListDropped)=\"drop($event)\"\n                  >\n                  <div class=\"puzzle-fix\"*ngFor=\"let item of answersArray\" cdkDrag>\n\n                  <div class=\"title\"> {{ item.keyword }}</div>\n\n                  <!-- Start Sound -->\n                  <div class=\"sound\" *ngIf=\"item.voicePath\">\n                    <div class=\"sound-bg\">\n                      <div class=\"img-volume\">\n                        <ion-img\n                        class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item.voicePath)\">\n                      </ion-img>\n                      </div>\n                    </div>\n                    <img class=\"danish-flag\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n                  </div>\n                  <div class=\"sound\" *ngIf=\"item.voicePathDanish\">\n                    <div class=\"sound-bg\">\n                      <div class=\"img-volume\">\n                        <ion-img\n                        loading=\"lazy\"\n                        class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item.voicePathDanish)\">\n                      </ion-img>\n                      </div>\n                    </div>\n                    <img loading=\"lazy\" class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n                  </div>\n                  <!-- End Sound -->\n\n                  </div>\n                </ion-col>\n\n              </ion-row>\n            </ion-grid>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n\n\n\n\n\n\n    </div>\n  </ion-slide>\n</ion-slides>\n<app-test-finished *ngIf=\"lengthItems === pageNumber\"></app-test-finished>\n\n\n  <ion-grid *ngIf=\"lengthItems !== pageNumber\">\n    <ion-row class=\"ion-align-items-center slide-button\">\n\n      <ion-col size=\"4\">\n        <ion-button\n        *ngIf=\"nextButton\"\n        (click)=\"slidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n      </ion-col>\n\n      <ion-col size=\"4\">\n        <ion-button\n          (click)=\"ScapeSlidePrev()\"\n          >  Escape <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n      </ion-col>\n\n      <ion-col size=\"4\">\n        <ion-button\n        *ngIf=\"nextButton\"\n          (click)=\"slideNext()\"\n          >  next <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid style=\"position: relative; top: -150px;\" *ngIf=\"lengthItems === pageNumber\">\n    <ion-row class=\"ion-align-items-center slide-button\">\n\n      <ion-col size=\"6\">\n        <ion-button\n        *ngIf=\"nextButton\"\n        (click)=\"finishSlidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n      </ion-col>\n\n      <ion-col size=\"6\">\n        <ion-button\n        *ngIf=\"nextButton\"\n          (click)=\"finishedTest()\"\n          >  Submit <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n\n  <ion-slides *ngIf=\"lengthItems != pageNumber\" class=\"swiper-no-swiping\" [pager]=\"false\" #slides [options]=\"slideOpts\">\n    <ion-slide>\n\n    <div cdkDropListGroup class=\"drag-group\">\n\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-grid>\n\n              <ion-row>\n\n                <ion-col size=\"12\"\n                  class=\"example-box\"\n                  cdkDropList\n                  *ngFor=\"let item of questionsArray\"\n                  [cdkDropListData]=\"item\"\n                  cdkDropListSortingDisabled\n                  cdkDropListOrientation=\"horizontal\"\n                  (cdkDropListDropped)=\"drop($event)\"\n                >\n                <div *ngFor=\"let item2 of item\" cdkDrag [cdkDragDisabled]=\"true\">\n\n                  <ion-img\n                    class=\"image-question\"\n                    loading=\"lazy\" *ngIf=\"item2.type === 'question' \"\n                    (click)=\"presentPopover($event, item2)\"\n                    [src]=\"item2.imagePath\">\n                  </ion-img>\n\n\n                  <div class=\"drag-answer\" *ngIf=\"item2.type === 'answer' \">\n                    <ion-grid class=\"puzzle-answer\">\n                      <ion-row>\n\n                        <ion-col\n                          size=\"12\"\n                          >\n                          <div class=\"puzzle-fix\" cdkDrag [cdkDragDisabled]=\"false\">\n                            <div class=\"title\"> {{ item2.keyword }}</div>\n                            <!-- Start Sound -->\n\n                            <div class=\"sound\" *ngIf=\"item2.voicePath\">\n                              <div class=\"sound-bg\">\n                                <div class=\"img-volume\">\n                                  <ion-img\n                                  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item2.voicePath)\">\n                                </ion-img>\n                                </div>\n                              </div>\n                              <img class=\"danish-flag\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n                            </div>\n                            <div class=\"sound\" *ngIf=\"item2.voicePathDanish\">\n                              <div class=\"sound-bg\">\n                                <div class=\"img-volume\">\n                                  <ion-img\n                                  loading=\"lazy\"\n                                  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item2.voicePathDanish)\">\n                                </ion-img>\n                                </div>\n                              </div>\n                              <img loading=\"lazy\" class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n                            </div>\n\n                            <!-- Start Sound  -->\n                          </div>\n                        </ion-col>\n\n                      </ion-row>\n                    </ion-grid>\n\n                  </div>\n                </div>\n\n                </ion-col>\n\n              </ion-row>\n\n            </ion-grid>\n          </ion-col>\n\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-grid class=\"puzzle-answer\">\n              <ion-row>\n                <ion-col\n                  size=\"12\"\n                  cdkDropList\n                  [cdkDropListData]=\"answersArray\"\n                  (cdkDropListDropped)=\"drop($event)\"\n                  >\n                  <div class=\"puzzle-fix\"*ngFor=\"let item of answersArray\" cdkDrag>\n\n                  <div class=\"title\"> {{ item.keyword }}</div>\n\n                  <!-- Start Sound -->\n                  <div class=\"sound\" *ngIf=\"item.voicePath\">\n                    <div class=\"sound-bg\">\n                      <div class=\"img-volume\">\n                        <ion-img\n                        class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item.voicePath)\">\n                      </ion-img>\n                      </div>\n                    </div>\n                    <img class=\"danish-flag\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n                  </div>\n                  <div class=\"sound\" *ngIf=\"item.voicePathDanish\">\n                    <div class=\"sound-bg\">\n                      <div class=\"img-volume\">\n                        <ion-img\n                        loading=\"lazy\"\n                        class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" src=\"../../../assets/icon/Vector.png\" (click)=\"startAudio(item.voicePathDanish)\">\n                      </ion-img>\n                      </div>\n                    </div>\n                    <img loading=\"lazy\" class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n                  </div>\n                  <!-- End Sound -->\n\n                  </div>\n                </ion-col>\n\n              </ion-row>\n            </ion-grid>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n\n    </div>\n  </ion-slide>\n</ion-slides>\n\n\n<!-- Single inal test -->\n\n\n\n\n\n\n\n\n\n<app-test-finished *ngIf=\"lengthItems === pageNumber\"></app-test-finished>\n\n\n  <ion-grid *ngIf=\"lengthItems !== pageNumber\">\n    <ion-row class=\"ion-align-items-center slide-button\">\n\n      <ion-col size=\"4\">\n        <ion-button\n        *ngIf=\"nextButton\"\n        (click)=\"slidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n      </ion-col>\n\n      <ion-col size=\"4\">\n        <ion-button\n          (click)=\"ScapeSlidePrev()\"\n          >  Escape <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n      </ion-col>\n\n      <ion-col size=\"4\">\n        <ion-button\n        *ngIf=\"nextButton\"\n          (click)=\"slideNext()\"\n          >  next <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid *ngIf=\"lengthItems === pageNumber\">\n    <ion-row class=\"ion-align-items-center slide-button\">\n\n      <ion-col size=\"6\">\n        <ion-button\n        *ngIf=\"nextButton\"\n        (click)=\"finishSlidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n      </ion-col>\n\n      <ion-col size=\"6\">\n        <ion-button\n        *ngIf=\"nextButton\"\n          (click)=\"finishedTest()\"\n          >  Submit <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n\n\n</ion-content>");
 
 /***/ }),
 
@@ -609,6 +672,19 @@ CdTimerModule.decorators = [
 
 /***/ }),
 
+/***/ "K2rq":
+/*!***********************************************************************************************************!*\
+  !*** ./src/app/training/test-course/puzzle-image-test/puzzle-sound-test/puzzle-sound-test.component.scss ***!
+  \***********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (".popover-content.sc-ion-popover-md {\n  position: static !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3B1enpsZS1zb3VuZC10ZXN0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQXdDQTtFQUNFLDJCQUFBO0FBdkNGIiwiZmlsZSI6InB1enpsZS1zb3VuZC10ZXN0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gLmV4dC1pY29uLXZsdW1lIHtcbi8vICAgd2lkdGg6IDI0cHg7XG4vLyAgIGhlaWdodDogMjRweDtcbi8vIH1cblxuXG5cblxuLy8gLnNvdW5kLXBvcHVwIHtcblxuXG5cbi8vICAgcGFkZGluZzogMjBweDtcblxuLy8gICAuc291bmQge1xuLy8gICAgIGRpc3BsYXk6IGZsZXg7XG4vLyAgICAgYm9yZGVyOiAycHggc29saWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xuLy8gICAgIGJvcmRlci1yYWRpdXM6MTBweDtcbi8vICAgICBwYWRkaW5nOiA1cHggNHB4O1xuLy8gICAgIG1hcmdpbjogMTBweDtcblxuLy8gICAgIC5zb3VuZC1iZyB7XG4vLyAgICAgICB3aWR0aDogMjBweDtcbi8vICAgICAgIGhlaWdodDogMjBweDtcbi8vICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbi8vICAgICAgIGJvcmRlci1yYWRpdXM6IDUwcHg7XG4vLyAgICAgICBtYXJnaW4tcmlnaHQ6IDEwcHg7XG5cbi8vICAgICAgIC5pbWctdm9sdW1lIHtcbi8vICAgICAgICAgQGV4dGVuZCAuZXh0LWljb24tdmx1bWU7XG4vLyAgICAgICB9XG4vLyAgICAgfVxuLy8gICB9XG4vLyB9XG5cbi8vIC5kYW5pc2gtZmxhZyB7XG4vLyAgIHdpZHRoOiAzMHB4O1xuLy8gICBoZWlnaHQ6IGF1dG87XG4vLyB9XG5cbi5wb3BvdmVyLWNvbnRlbnQuc2MtaW9uLXBvcG92ZXItbWQge1xuICBwb3NpdGlvbjogc3RhdGljIWltcG9ydGFudDtcbn1cbiJdfQ== */");
+
+/***/ }),
+
 /***/ "MrdW":
 /*!************************************************************!*\
   !*** ./src/app/training/test-course/test-course.module.ts ***!
@@ -633,8 +709,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _puzzle_image_test_puzzle_image_test_page__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./puzzle-image-test/puzzle-image-test.page */ "xRh5");
 /* harmony import */ var _puzzle_image_test_puzzle_image_zoom_puzzle_image_zoom_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./puzzle-image-test/puzzle-image-zoom/puzzle-image-zoom.component */ "3niU");
 /* harmony import */ var _test_finished_test_finished_page__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./test-finished/test-finished.page */ "5s1J");
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/cdk/drag-drop */ "ltgo");
-/* harmony import */ var angular_cd_timer__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! angular-cd-timer */ "Gj54");
+/* harmony import */ var _puzzle_image_test_puzzle_sound_test_puzzle_sound_test_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./puzzle-image-test/puzzle-sound-test/puzzle-sound-test.component */ "vqQO");
+/* harmony import */ var _puzzle_image_test_puzzle_sound_test_puzzle_sound_test_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./puzzle-image-test/puzzle-sound-test/puzzle-sound-test.module */ "4ypJ");
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/cdk/drag-drop */ "ltgo");
+/* harmony import */ var angular_cd_timer__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! angular-cd-timer */ "Gj54");
+
+
 
 
 
@@ -661,11 +741,12 @@ TestCoursePageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
             _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["IonicModule"],
             _test_course_routing_module__WEBPACK_IMPORTED_MODULE_6__["TestCoursePageRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"],
-            _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_14__["DragDropModule"],
-            angular_cd_timer__WEBPACK_IMPORTED_MODULE_15__["CdTimerModule"],
-            _shared_shared_module__WEBPACK_IMPORTED_MODULE_1__["SharedModule"]
+            _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_16__["DragDropModule"],
+            angular_cd_timer__WEBPACK_IMPORTED_MODULE_17__["CdTimerModule"],
+            _shared_shared_module__WEBPACK_IMPORTED_MODULE_1__["SharedModule"],
+            _puzzle_image_test_puzzle_sound_test_puzzle_sound_test_module__WEBPACK_IMPORTED_MODULE_15__["PuzzleSoundTestModule"]
         ],
-        entryComponents: [_test_finished_test_finished_page__WEBPACK_IMPORTED_MODULE_13__["TestFinishedPage"]],
+        entryComponents: [_test_finished_test_finished_page__WEBPACK_IMPORTED_MODULE_13__["TestFinishedPage"], _puzzle_image_test_puzzle_sound_test_puzzle_sound_test_component__WEBPACK_IMPORTED_MODULE_14__["PuzzleSoundTestComponent"]],
         declarations: [
             _test_course_page__WEBPACK_IMPORTED_MODULE_7__["TestCoursePage"],
             _single_test_single_test_page__WEBPACK_IMPORTED_MODULE_8__["SingleTestPage"],
@@ -673,12 +754,25 @@ TestCoursePageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
             _puzzle_text_test_puzzle_text_test_page__WEBPACK_IMPORTED_MODULE_10__["PuzzleTextTestPage"],
             _puzzle_image_test_puzzle_image_test_page__WEBPACK_IMPORTED_MODULE_11__["PuzzleImageTestPage"],
             _puzzle_image_test_puzzle_image_zoom_puzzle_image_zoom_component__WEBPACK_IMPORTED_MODULE_12__["PuzzleImageZoomComponent"],
-            _test_finished_test_finished_page__WEBPACK_IMPORTED_MODULE_13__["TestFinishedPage"]
+            _test_finished_test_finished_page__WEBPACK_IMPORTED_MODULE_13__["TestFinishedPage"],
         ],
     })
 ], TestCoursePageModule);
 
 
+
+/***/ }),
+
+/***/ "OtTT":
+/*!*************************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/training/test-course/puzzle-image-test/puzzle-sound-test/puzzle-sound-test.component.html ***!
+  \*************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- <div  class=\"sound-popup\">\n<div class=\"sound\" *ngIf=\"voicePath\">\n  <div class=\"sound-bg\">\n    <div class=\"img-volume\">\n      <ion-img\n      class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite\"\n      (click)=\"startAudio(voicePath)\" src=\"../../../assets/icon/Vector.png\">\n    </ion-img>\n    </div>\n  </div>\n  <img class=\"danish-flag\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n</div>\n<div class=\"sound\" *ngIf=\"voicePathDanish\">\n  <div class=\"sound-bg\">\n    <div class=\"img-volume\">\n      <ion-img\n      class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__infinite\"\n      (click)=\"startAudio(voicePathDanish)\" src=\"../../../assets/icon/Vector.png\">\n    </ion-img>\n    </div>\n  </div>\n  <img class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n</div>\n</div> -->\n\n\n<ion-grid>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-img class=\"image-question\" loading=\"lazy\" [src]=\"imagePath\"></ion-img>\n    </ion-col>\n  </ion-row>\n</ion-grid>\n");
 
 /***/ }),
 
@@ -751,6 +845,14 @@ let TestService = class TestService {
     finishedTest(userTestId) {
         const params = `?userTestId=${userTestId}`;
         return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["finishedTest"]}` + params, {});
+    }
+    /**
+   * send answer question
+   *
+   */
+    startTest(courseId) {
+        const params = `?courseId=${courseId}`;
+        return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["startTest"]}` + params, {});
     }
     /**
      * Get Certificate
@@ -1357,7 +1459,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n  <!-- Single final Test -->\n  <form [formGroup]=\"singleForm\" >\n  <ion-slides *ngIf=\"lengthItems != pageNumber\" [pager]=\"false\" #slides [options]=\"slideOpts\">\n    <ion-slide *ngFor=\"let singleItem of exerciseItems\">\n\n\n    <ion-grid>\n\n      <ion-list class=\"single-choice\">\n        <!-- Sound  -->\n        <ion-grid class=\"sound-group\">\n          <ion-row>\n          <ion-col size=\"4\">\n              <div *ngIf=\"singleItem.voiceDanishPath\">\n                <div class=\"sound-question\">\n                    <div class=\"img-volume\">\n                      <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!singleItem.audioElementDanish.status? 'play' : 'stop'\" (click)=\"playAudio('',singleItem)\">\n                      </ion-icon>\n                    </div>\n                  <img class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n                </div>\n              </div>\n          </ion-col>\n        <ion-col size=\"4\" >\n          <div *ngIf=\"singleItem.singleChoiceTranslations[0]?.voicePath\">\n            <div class=\"sound-question\">\n                <div class=\"img-volume\">\n                  <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!singleItem.audioElement.status? 'play' : 'stop'\" (click)=\"playAudio('native',singleItem)\">\n                  </ion-icon>\n                </div>\n              <img class=\"img-lang\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n            </div>\n          </div>\n        </ion-col>\n        </ion-row>\n        </ion-grid>\n        <!-- Sound  -->\n        <ion-radio-group formControlName=\"answer\">\n\n          <ion-list-header>\n            <ion-text *ngIf=\"allTestData\"> {{ allTestData['singleChoice'].question }} </ion-text>\n          </ion-list-header>\n\n          <ion-item>\n            <ion-label>JA</ion-label>\n            <ion-radio [value]=\"true\"></ion-radio>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>NEJ</ion-label>\n            <ion-radio [value]=\"false\"></ion-radio>\n          </ion-item>\n\n          <ion-text color=\"danger\" *ngIf=\"singleFormErrors.answer\">{{singleFormErrors.answer}}</ion-text>\n        </ion-radio-group>\n\n      </ion-list>\n    </ion-grid>\n\n\n  </ion-slide>\n</ion-slides>\n</form>\n\n<!-- <ion-grid>\n  <ion-row class=\"ion-align-items-center slide-button\">\n\n    <ion-col size=\"6\">\n      <ion-button\n      [disabled]=\"singleForm.invalid\"\n      (click)=\"slidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n    </ion-col>\n\n    <ion-col size=\"6\">\n      <ion-button\n        [disabled]=\"singleForm.invalid\"\n        (click)=\"slideNext(allTestData['singleChoice']['singleChoiceTranslations'][0].singleChoiceId)\"\n        >  next <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-grid> -->\n\n\n<app-test-finished *ngIf=\"lengthItems === pageNumber\"></app-test-finished>\n\n\n<ion-grid *ngIf=\"lengthItems !== pageNumber\">\n  <ion-row class=\"ion-align-items-center slide-button\">\n\n    <ion-col size=\"4\">\n      <ion-button\n      (click)=\"slidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n    </ion-col>\n\n    <ion-col size=\"4\">\n      <ion-button\n        (click)=\"ScapeSlidePrev()\"\n        >  Escape <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n\n    <ion-col size=\"4\">\n      <ion-button\n        [disabled]=\"singleForm.invalid\"\n        (click)=\"slideNext(allTestData['singleChoice']['singleChoiceTranslations'][0].singleChoiceId)\"\n        >  next <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n\n\n  </ion-row>\n</ion-grid>\n\n<ion-grid style=\"position: relative; top: -150px;\" *ngIf=\"lengthItems === pageNumber\">\n  <ion-row class=\"ion-align-items-center slide-button\">\n\n    <ion-col size=\"6\">\n      <ion-button\n      (click)=\"finishSlidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n    </ion-col>\n\n    <ion-col size=\"6\">\n      <ion-button\n        (click)=\"finishedTest()\"\n        >  Submit <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n\n  </ion-row>\n</ion-grid>\n\n\n\n\n<!-- Single inal test -->\n\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-content>\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n  <!-- Single final Test -->\n  <form [formGroup]=\"singleForm\" >\n  <ion-slides *ngIf=\"lengthItems != pageNumber\" [pager]=\"false\" #slides [options]=\"slideOpts\">\n    <ion-slide *ngFor=\"let singleItem of exerciseItems\">\n\n\n    <ion-grid>\n\n      <ion-list class=\"single-choice\">\n        <!-- Sound  -->\n        <ion-grid class=\"sound-group\">\n          <ion-row>\n          <ion-col size=\"4\">\n              <div *ngIf=\"singleItem.voiceDanishPath\">\n                <div class=\"sound-question\">\n                    <div class=\"img-volume\">\n                      <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!singleItem.audioElementDanish.status? 'play' : 'stop'\" (click)=\"playAudio('',singleItem)\">\n                      </ion-icon>\n                    </div>\n                  <img class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n                </div>\n              </div>\n          </ion-col>\n        <ion-col size=\"4\" >\n          <div *ngIf=\"singleItem.singleChoiceTranslations[0]?.voicePath\">\n            <div class=\"sound-question\">\n                <div class=\"img-volume\">\n                  <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!singleItem.audioElement.status? 'play' : 'stop'\" (click)=\"playAudio('native',singleItem)\">\n                  </ion-icon>\n                </div>\n              <img class=\"img-lang\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n            </div>\n          </div>\n        </ion-col>\n        </ion-row>\n        </ion-grid>\n        <!-- Sound  -->\n        <ion-radio-group formControlName=\"answer\">\n\n          <ion-list-header>\n            <ion-text *ngIf=\"allTestData\"> {{ allTestData['singleChoice'].question }} </ion-text>\n          </ion-list-header>\n\n          <ion-item>\n            <ion-label>JA</ion-label>\n            <ion-radio [value]=\"true\"></ion-radio>\n          </ion-item>\n\n          <ion-item>\n            <ion-label>NEJ</ion-label>\n            <ion-radio [value]=\"false\"></ion-radio>\n          </ion-item>\n\n          <ion-text color=\"danger\" *ngIf=\"singleFormErrors.answer\">{{singleFormErrors.answer}}</ion-text>\n        </ion-radio-group>\n\n      </ion-list>\n    </ion-grid>\n\n\n  </ion-slide>\n</ion-slides>\n</form>\n\n<!-- <ion-grid>\n  <ion-row class=\"ion-align-items-center slide-button\">\n\n    <ion-col size=\"6\">\n      <ion-button\n      [disabled]=\"singleForm.invalid\"\n      (click)=\"slidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n    </ion-col>\n\n    <ion-col size=\"6\">\n      <ion-button\n        [disabled]=\"singleForm.invalid\"\n        (click)=\"slideNext(allTestData['singleChoice']['singleChoiceTranslations'][0].singleChoiceId)\"\n        >  next <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n  </ion-row>\n</ion-grid> -->\n\n\n<app-test-finished *ngIf=\"lengthItems === pageNumber\"></app-test-finished>\n\n\n<ion-grid *ngIf=\"lengthItems !== pageNumber\">\n  <ion-row class=\"ion-align-items-center slide-button\">\n\n    <ion-col size=\"4\">\n      <ion-button\n      (click)=\"slidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n    </ion-col>\n\n    <ion-col size=\"4\">\n      <ion-button\n        (click)=\"ScapeSlidePrev()\"\n        >  Escape <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n\n    <ion-col size=\"4\">\n      <ion-button\n        [disabled]=\"singleForm.invalid\"\n        (click)=\"slideNext(allTestData['singleChoice']['singleChoiceTranslations'][0].singleChoiceId)\"\n        >  next <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n\n\n  </ion-row>\n</ion-grid>\n\n<ion-grid style=\"position: relative; top: -150px;\" *ngIf=\"lengthItems === pageNumber\">\n  <ion-row class=\"ion-align-items-center slide-button\">\n\n    <ion-col size=\"6\">\n      <ion-button\n      (click)=\"finishSlidePrev()\"> <ion-icon name=\"chevron-back-outline\"></ion-icon> prev </ion-button>\n    </ion-col>\n\n    <ion-col size=\"6\">\n      <ion-button\n        (click)=\"finishedTest()\"\n        >  Submit <ion-icon name=\"chevron-forward-outline\"></ion-icon> </ion-button>\n    </ion-col>\n\n  </ion-row>\n</ion-grid>\n\n<!-- Single inal test -->\n\n</ion-content>");
 
 /***/ }),
 
@@ -1371,6 +1473,84 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (".ext-icon-vlume, .puzzle-answer .puzzle-fix .sound .sound-bg .img-volume {\n  width: 24px;\n  height: 24px;\n  display: flex;\n  align-items: center;\n  padding: 15px 0px;\n}\n\nion-grid {\n  padding: 0;\n}\n\nion-toolbar ion-icon {\n  color: var(--ion-color-second-app);\n  font-size: 30px;\n  margin-right: 20px;\n  margin-top: 24px;\n}\n\nion-img.image-question {\n  width: 60px;\n  height: auto;\n  padding: 0;\n  margin: 0;\n}\n\n.puzzle-answer {\n  margin-top: 20px;\n}\n\n.puzzle-answer .puzzle-fix {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  background-color: #fff;\n  padding: 5px 10px;\n  margin: 10px 0;\n  border: 2px solid #003182a6;\n  height: 50px;\n  border-radius: 10px;\n}\n\n.puzzle-answer .puzzle-fix .title {\n  font-size: 13px;\n  font-weight: 500;\n  text-align: left;\n  color: var(--ion-color-second-app);\n}\n\n.puzzle-answer .puzzle-fix .sound {\n  display: flex;\n}\n\n.puzzle-answer .puzzle-fix .sound .sound-bg {\n  width: 20px;\n  height: 20px;\n  text-align: center;\n  border-radius: 50px;\n  margin-right: 10px;\n}\n\n.img-langauge {\n  width: 40px;\n  height: 40px;\n  position: absolute;\n  right: 13px;\n  top: 14px;\n  border: 1px solid #ccc;\n}\n\n.drag-answer .puzzle-img ion-img {\n  width: 20px !important;\n  height: 20px !important;\n}\n\n.drag-answer .puzzle-answer {\n  margin-top: 0;\n  padding: 5px 0 !important;\n}\n\n.drag-answer .title {\n  margin-top: 0 !important;\n}\n\n.drag-answer .sound {\n  display: flex;\n}\n\n.drag-answer .sound .sound-bg img {\n  width: 50px !important;\n  height: auto;\n}\n\n.drag-answer .sound .img-volume ion-img {\n  width: 20px;\n  height: auto;\n}\n\n/************* DRAG AND DROP *****************/\n\n.example-box {\n  border: 2px solid #8afa6f !important;\n  color: rgba(0, 0, 0, 0.87);\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  cursor: move;\n  background: white;\n  font-size: 16px;\n  border-radius: 0;\n  margin: 5px 0;\n  height: 70px;\n  padding: 0;\n  overflow: hidden;\n  white-space: nowrap;\n  width: 100%;\n  border-radius: 10px;\n  overflow: hidden;\n}\n\n.example-box .sound {\n  padding: 0 5px 0 10px;\n}\n\n.example-box .title {\n  margin-right: 5px;\n}\n\n.example-box img.danish-flag {\n  width: 24px;\n  height: auto;\n}\n\n.example-box .drag-answer ion-img {\n  width: 50px;\n  height: auto;\n  position: relative;\n  top: -2px;\n}\n\n.cdk-drag-preview {\n  box-sizing: border-box;\n  border-radius: 4px;\n  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);\n  background-color: white;\n  padding: 10px !important;\n  width: 80% !important;\n  margin: auto;\n  height: auto !important;\n  font-size: 13px;\n  font-weight: 600;\n  color: var(--ion-color-second-app);\n}\n\n.cdk-drag-preview .sound-bg {\n  display: inline-block;\n  width: 40px;\n  height: 40px;\n}\n\n.cdk-drag-preview .img-volume {\n  width: 28px;\n  height: 28px;\n  position: relative;\n  top: 15px;\n}\n\n.cdk-drag-preview .puzzle-fix .title {\n  font-weight: 600 !important;\n  padding: 0 5px !important;\n  width: 30% !important;\n}\n\n.cdk-drag-preview .puzzle-fix img.danish-flag {\n  width: 24px;\n  height: 24px;\n  max-width: 50%;\n}\n\n.cdk-drop-list-receiving {\n  height: auto;\n  color: var(--ion-color-second-app);\n}\n\n.cdk-drop-list-dragging {\n  background-color: rgba(167, 247, 129, 0.6);\n  height: 150px;\n  width: 100%;\n  border: 3px dotted var(--ion-color-second-app);\n  color: var(--ion-color-second-app);\n}\n\n.cdk-drag-placeholder {\n  opacity: 0;\n}\n\n.cdk-drag-animating {\n  transition: transform 120ms cubic-bezier(0, 0, 0.2, 3);\n}\n\n.example-box:last-child {\n  border: none;\n}\n\n.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);\n}\n\n/************* DRAG AND DROP *****************/\n\n.popover-content.sc-ion-popover-md {\n  position: static !important;\n}\n\n.drag-group {\n  width: 100%;\n}\n\n@media (min-width: 767px) {\n  .cdk-drag-preview {\n    width: 30% !important;\n  }\n}\n\n@media (max-width: 370px) {\n  ion-img.image-question {\n    width: 70px;\n    height: auto;\n  }\n\n  .title {\n    font-size: 16px !important;\n  }\n\n  .ion-text-center {\n    font-size: 14px;\n  }\n\n  .cdk-drag-preview {\n    box-sizing: border-box;\n    width: 80% !important;\n  }\n  .cdk-drag-preview .sound-bg {\n    display: inline-block;\n    width: 30px;\n    height: 30px;\n    margin: 0;\n  }\n  .cdk-drag-preview .img-volume {\n    width: 20px;\n    height: 20px;\n    padding: 10px 0;\n  }\n  .cdk-drag-preview .puzzle-fix .title {\n    font-weight: 600 !important;\n    padding: 0 5px !important;\n    width: 30% !important;\n    font-size: 16px;\n  }\n  .cdk-drag-preview .puzzle-fix img.danish-flag {\n    width: 24px;\n    height: 24px;\n    max-width: 50%;\n  }\n\n  .example-box {\n    margin: 10px 0;\n  }\n  .example-box .puzzle-answer .puzzle-fix {\n    padding: 5px 0px !important;\n  }\n  .example-box .puzzle-answer .puzzle-fix .sound {\n    display: flex;\n    border: 2px dotted var(--ion-color-second-app);\n    border-radius: 10px;\n    padding: 5px 0px;\n    margin: 0;\n  }\n  .example-box .title {\n    width: 35% !important;\n  }\n\n  .cdk-drop-list-receiving {\n    height: auto;\n    color: var(--ion-color-second-app);\n  }\n\n  .cdk-drop-list-dragging {\n    background-color: rgba(167, 247, 129, 0.6);\n    height: 150px;\n    width: 100%;\n    border: 3px dotted var(--ion-color-second-app);\n    color: var(--ion-color-second-app);\n  }\n}\n\n@media (min-width: 768px) and (max-width: 2000px) {\n  .example-box {\n    height: 90px;\n  }\n}\n\n@media (max-width: 449px) {\n  .example-box .puzzle-answer .puzzle-fix .sound {\n    border: none !important;\n  }\n\n  .example-box .puzzle-fix .title {\n    width: 100% !important;\n  }\n\n  .example-box .puzzle-fix {\n    width: 225px;\n  }\n\n  .example-box .puzzle-answer .puzzle-fix .sound {\n    width: 66%;\n    padding: 0;\n    margin: 0;\n  }\n\n  .example-box .puzzle-answer .puzzle-fix .title {\n    font-size: 12px !important;\n  }\n\n  .title {\n    font-size: 11px !important;\n  }\n}\n\n@media (min-width: 420px) and (max-width: 450px) {\n  .example-box .puzzle-fix {\n    width: 330px;\n  }\n}\n\n@media (min-width: 450px) and (max-width: 600px) {\n  .example-box .puzzle-answer .puzzle-fix .sound {\n    border: none !important;\n  }\n\n  .example-box .puzzle-fix .title {\n    width: 100% !important;\n  }\n\n  .example-box .puzzle-fix {\n    width: 400px;\n  }\n\n  .example-box .puzzle-answer .puzzle-fix .sound {\n    width: 45%;\n    padding: 0;\n    margin: 0;\n  }\n\n  .example-box .puzzle-answer .puzzle-fix .title {\n    font-size: 12px !important;\n  }\n\n  .title {\n    font-size: 12px !important;\n  }\n}\n\n@media (min-width: 600px) and (max-width: 900px) {\n  .example-box .puzzle-fix {\n    width: 260px;\n  }\n\n  .example-box .puzzle-answer .puzzle-fix .sound {\n    width: 20%;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3B1enpsZS1pbWFnZS10ZXN0LnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsaUJBQUE7QUFDRjs7QUFFQTtFQUNFLFVBQUE7QUFDRjs7QUFJRTtFQUNFLGtDQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0VBQ0EsZ0JBQUE7QUFESjs7QUFLRTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0EsVUFBQTtFQUNBLFNBQUE7QUFGSjs7QUFLQTtFQUNFLGdCQUFBO0FBRkY7O0FBSUU7RUFFRSxhQUFBO0VBQ0EsOEJBQUE7RUFDQSxtQkFBQTtFQUNBLHNCQUFBO0VBQ0EsaUJBQUE7RUFDQSxjQUFBO0VBQ0EsMkJBQUE7RUFDQSxZQUFBO0VBQ0EsbUJBQUE7QUFISjs7QUFLSTtFQUNFLGVBQUE7RUFDQSxnQkFBQTtFQUNBLGdCQUFBO0VBQ0Esa0NBQUE7QUFITjs7QUFRSTtFQUNFLGFBQUE7QUFOTjs7QUFRTTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7RUFDQSxtQkFBQTtFQUNBLGtCQUFBO0FBTlI7O0FBbUJBO0VBQ0UsV0FBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtFQUNBLFdBQUE7RUFDQSxTQUFBO0VBQ0Esc0JBQUE7QUFqQkY7O0FBd0JFO0VBQ0Usc0JBQUE7RUFDQSx1QkFBQTtBQXJCSjs7QUF3QkU7RUFDRSxhQUFBO0VBQ0EseUJBQUE7QUF0Qko7O0FBeUJFO0VBQ0Usd0JBQUE7QUF2Qko7O0FBMEJFO0VBQ0UsYUFBQTtBQXhCSjs7QUE0Qk07RUFDRSxzQkFBQTtFQUNBLFlBQUE7QUExQlI7O0FBOEJJO0VBQ0UsV0FBQTtFQUNBLFlBQUE7QUE1Qk47O0FBb0NBLDhDQUFBOztBQUVBO0VBQ0Usb0NBQUE7RUFDQSwwQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7RUFDQSxZQUFBO0VBQ0EsaUJBQUE7RUFDQSxlQUFBO0VBQ0EsZ0JBQUE7RUFDQSxhQUFBO0VBQ0EsWUFBQTtFQUNBLFVBQUE7RUFDQSxnQkFBQTtFQUNBLG1CQUFBO0VBQ0EsV0FBQTtFQUNBLG1CQUFBO0VBQ0EsZ0JBQUE7QUFsQ0Y7O0FBb0NFO0VBQ0UscUJBQUE7QUFsQ0o7O0FBcUNFO0VBQVEsaUJBQUE7QUFsQ1Y7O0FBb0NFO0VBQ0UsV0FBQTtFQUNBLFlBQUE7QUFsQ0o7O0FBcUNBO0VBQ0UsV0FBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtFQUNBLFNBQUE7QUFuQ0Y7O0FBdUNBO0VBRUUsc0JBQUE7RUFDQSxrQkFBQTtFQUNBLHFIQUFBO0VBR0EsdUJBQUE7RUFDQSx3QkFBQTtFQUNBLHFCQUFBO0VBQ0EsWUFBQTtFQUNBLHVCQUFBO0VBQ0EsZUFBQTtFQUNBLGdCQUFBO0VBQ0Esa0NBQUE7QUF2Q0Y7O0FBMkNFO0VBQ0UscUJBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtBQXpDSjs7QUE2Q0U7RUFDRSxXQUFBO0VBQ0EsWUFBQTtFQUNBLGtCQUFBO0VBQ0EsU0FBQTtBQTNDSjs7QUErQ0k7RUFDRSwyQkFBQTtFQUNBLHlCQUFBO0VBQ0EscUJBQUE7QUE3Q047O0FBZ0RJO0VBQ0UsV0FBQTtFQUNBLFlBQUE7RUFDQSxjQUFBO0FBOUNOOztBQXFEQTtFQUVFLFlBQUE7RUFDQSxrQ0FBQTtBQW5ERjs7QUFzREE7RUFDRSwwQ0FBQTtFQUNBLGFBQUE7RUFDQSxXQUFBO0VBQ0EsOENBQUE7RUFDQSxrQ0FBQTtBQW5ERjs7QUF1REE7RUFDRSxVQUFBO0FBcERGOztBQXVEQTtFQUNFLHNEQUFBO0FBcERGOztBQXVEQTtFQUNFLFlBQUE7QUFwREY7O0FBdURBO0VBQ0Usc0RBQUE7QUFwREY7O0FBeURBLDhDQUFBOztBQUdBO0VBQ0EsMkJBQUE7QUF4REE7O0FBMkRBO0VBQ0UsV0FBQTtBQXhERjs7QUE0REE7RUFDRTtJQUNFLHFCQUFBO0VBekRGO0FBQ0Y7O0FBK0RBO0VBQ0U7SUFDRSxXQUFBO0lBQ0EsWUFBQTtFQTdERjs7RUFnRUE7SUFDRSwwQkFBQTtFQTdERjs7RUFpRUY7SUFDRSxlQUFBO0VBOURBOztFQWtFQTtJQUVFLHNCQUFBO0lBQ0EscUJBQUE7RUFoRUY7RUFrRUU7SUFDRSxxQkFBQTtJQUNBLFdBQUE7SUFDQSxZQUFBO0lBQ0EsU0FBQTtFQWhFSjtFQW1FRTtJQUNFLFdBQUE7SUFDQSxZQUFBO0lBQ0EsZUFBQTtFQWpFSjtFQXVFSTtJQUNFLDJCQUFBO0lBQ0EseUJBQUE7SUFDQSxxQkFBQTtJQUNBLGVBQUE7RUFyRU47RUF3RUk7SUFDRSxXQUFBO0lBQ0EsWUFBQTtJQUNBLGNBQUE7RUF0RU47O0VBNkVBO0lBQ0UsY0FBQTtFQTFFRjtFQTRFRTtJQUNFLDJCQUFBO0VBMUVKO0VBNkVFO0lBQ0UsYUFBQTtJQUNBLDhDQUFBO0lBQ0EsbUJBQUE7SUFDQSxnQkFBQTtJQUNBLFNBQUE7RUEzRUo7RUE4RUU7SUFFRSxxQkFBQTtFQTdFSjs7RUFpRkE7SUFFRSxZQUFBO0lBQ0Esa0NBQUE7RUEvRUY7O0VBa0ZBO0lBQ0UsMENBQUE7SUFDQSxhQUFBO0lBQ0EsV0FBQTtJQUNBLDhDQUFBO0lBQ0Esa0NBQUE7RUEvRUY7QUFDRjs7QUFzRkE7RUFDRTtJQUNFLFlBQUE7RUFwRkY7QUFDRjs7QUErRkE7RUFDRTtJQUNFLHVCQUFBO0VBN0ZGOztFQWdHQTtJQUNFLHNCQUFBO0VBN0ZGOztFQWdHRjtJQUEwQixZQUFBO0VBNUZ4Qjs7RUE2RkY7SUFBZ0QsVUFBQTtJQUFZLFVBQUE7SUFBWSxTQUFBO0VBdkZ0RTs7RUF3RkY7SUFBZ0QsMEJBQUE7RUFwRjlDOztFQXFGRjtJQUNFLDBCQUFBO0VBbEZBO0FBQ0Y7O0FBc0ZBO0VBRUE7SUFBMEIsWUFBQTtFQXBGeEI7QUFDRjs7QUF3RkE7RUFDRTtJQUNFLHVCQUFBO0VBdEZGOztFQXlGQTtJQUNFLHNCQUFBO0VBdEZGOztFQXlGRjtJQUEwQixZQUFBO0VBckZ4Qjs7RUFzRkY7SUFBZ0QsVUFBQTtJQUFZLFVBQUE7SUFBWSxTQUFBO0VBaEZ0RTs7RUFpRkY7SUFBZ0QsMEJBQUE7RUE3RTlDOztFQThFRjtJQUNFLDBCQUFBO0VBM0VBO0FBQ0Y7O0FBK0VBO0VBRUU7SUFBMEIsWUFBQTtFQTdFMUI7O0VBOEVBO0lBQWdELFVBQUE7RUExRWhEO0FBQ0YiLCJmaWxlIjoicHV6emxlLWltYWdlLXRlc3QucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmV4dC1pY29uLXZsdW1lIHtcbiAgd2lkdGg6IDI0cHg7XG4gIGhlaWdodDogMjRweDtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgcGFkZGluZzogMTVweCAwcHg7XG59XG5cbmlvbi1ncmlkIHtcbiAgcGFkZGluZzogMDtcbn1cblxuaW9uLXRvb2xiYXIge1xuXG4gIGlvbi1pY29uIHtcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xuICAgIGZvbnQtc2l6ZTogMzBweDtcbiAgICBtYXJnaW4tcmlnaHQ6IDIwcHg7XG4gICAgbWFyZ2luLXRvcDogMjRweDtcbiAgfVxufVxuXG4gIGlvbi1pbWcuaW1hZ2UtcXVlc3Rpb24ge1xuICAgIHdpZHRoOiA2MHB4O1xuICAgIGhlaWdodDogYXV0bztcbiAgICBwYWRkaW5nOiAwO1xuICAgIG1hcmdpbjogMDtcbiAgfVxuXG4ucHV6emxlLWFuc3dlciB7XG4gIG1hcmdpbi10b3A6IDIwcHg7XG5cbiAgLnB1enpsZS1maXgge1xuXG4gICAgZGlzcGxheTogZmxleDtcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xuICAgIHBhZGRpbmc6IDVweCAxMHB4O1xuICAgIG1hcmdpbjogMTBweCAwO1xuICAgIGJvcmRlcjogMnB4IHNvbGlkICMwMDMxODJhNjtcbiAgICBoZWlnaHQ6IDUwcHg7XG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcblxuICAgIC50aXRsZSB7XG4gICAgICBmb250LXNpemU6IDEzcHg7XG4gICAgICBmb250LXdlaWdodDogNTAwO1xuICAgICAgdGV4dC1hbGlnbjogbGVmdDtcbiAgICAgIGNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kLWFwcCk7XG5cbiAgICAgIC8vIG1hcmdpbi10b3A6IDE3cHg7XG4gICAgfVxuXG4gICAgLnNvdW5kIHtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG5cbiAgICAgIC5zb3VuZC1iZyB7XG4gICAgICAgIHdpZHRoOiAyMHB4O1xuICAgICAgICBoZWlnaHQ6IDIwcHg7XG4gICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNTBweDtcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xuXG4gICAgICAgIC5pbWctdm9sdW1lIHtcbiAgICAgICAgICBAZXh0ZW5kIC5leHQtaWNvbi12bHVtZTtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cblxuICB9XG5cbn1cblxuXG4uaW1nLWxhbmdhdWdlIHtcbiAgd2lkdGg6IDQwcHg7XG4gIGhlaWdodDogNDBweDtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICByaWdodDogMTNweDtcbiAgdG9wOiAxNHB4O1xuICBib3JkZXI6IDFweCBzb2xpZCAjY2NjO1xufVxuXG5cbi5kcmFnLWFuc3dlciB7XG5cblxuICAucHV6emxlLWltZyBpb24taW1ne1xuICAgIHdpZHRoOiAyMHB4IWltcG9ydGFudDtcbiAgICBoZWlnaHQ6IDIwcHghaW1wb3J0YW50O1xuICB9XG5cbiAgLnB1enpsZS1hbnN3ZXJ7XG4gICAgbWFyZ2luLXRvcDogMDtcbiAgICBwYWRkaW5nOiA1cHggMCAhaW1wb3J0YW50O1xuICB9XG5cbiAgLnRpdGxlIHtcbiAgICBtYXJnaW4tdG9wOiAwICFpbXBvcnRhbnQ7XG4gIH1cblxuICAuc291bmR7XG4gICAgZGlzcGxheTogZmxleDtcblxuICAgIC5zb3VuZC1iZyB7XG5cbiAgICAgIGltZyB7XG4gICAgICAgIHdpZHRoOiA1MHB4IWltcG9ydGFudDtcbiAgICAgICAgaGVpZ2h0OiBhdXRvO1xuICAgICAgfVxuICAgIH1cblxuICAgIC5pbWctdm9sdW1lIGlvbi1pbWcge1xuICAgICAgd2lkdGg6IDIwcHg7XG4gICAgICBoZWlnaHQ6IGF1dG87XG4gIH1cbiAgfVxuXG5cbn1cblxuXG4vKioqKioqKioqKioqKiBEUkFHIEFORCBEUk9QICoqKioqKioqKioqKioqKioqL1xuXG4uZXhhbXBsZS1ib3gge1xuICBib3JkZXI6IDJweCBzb2xpZCAjOGFmYTZmIWltcG9ydGFudDtcbiAgY29sb3I6IHJnYmEoMCwgMCwgMCwgMC44Nyk7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiByb3c7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcbiAgY3Vyc29yOiBtb3ZlO1xuICBiYWNrZ3JvdW5kOiB3aGl0ZTtcbiAgZm9udC1zaXplOiAxNnB4O1xuICBib3JkZXItcmFkaXVzOiAwO1xuICBtYXJnaW46IDVweCAwO1xuICBoZWlnaHQ6IDcwcHg7XG4gIHBhZGRpbmc6IDA7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIHdpZHRoOiAxMDAlO1xuICBib3JkZXItcmFkaXVzOiAxMHB4O1xuICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gIC5zb3VuZCB7XG4gICAgcGFkZGluZzogMCA1cHggMCAxMHB4O1xuICB9XG5cbiAgLnRpdGxlIHttYXJnaW4tcmlnaHQ6IDVweDt9XG5cbiAgaW1nLmRhbmlzaC1mbGFnIHtcbiAgICB3aWR0aDogMjRweDtcbiAgICBoZWlnaHQ6IGF1dG87XG59XG5cbi5kcmFnLWFuc3dlciBpb24taW1ne1xuICB3aWR0aDogNTBweDtcbiAgaGVpZ2h0OiBhdXRvO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIHRvcDogLTJweDtcbn1cbn1cblxuLmNkay1kcmFnLXByZXZpZXcge1xuXG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIGJvcmRlci1yYWRpdXM6IDRweDtcbiAgYm94LXNoYWRvdzogMCA1cHggNXB4IC0zcHggcmdiYSgwLCAwLCAwLCAwLjIpLFxuICAgICAgICAgICAgICAwIDhweCAxMHB4IDFweCByZ2JhKDAsIDAsIDAsIDAuMTQpLFxuICAgICAgICAgICAgICAwIDNweCAxNHB4IDJweCByZ2JhKDAsIDAsIDAsIDAuMTIpO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbiAgcGFkZGluZzogMTBweCFpbXBvcnRhbnQ7XG4gIHdpZHRoOiA4MCUhaW1wb3J0YW50O1xuICBtYXJnaW46IGF1dG87XG4gIGhlaWdodDogYXV0byFpbXBvcnRhbnQ7XG4gIGZvbnQtc2l6ZTogMTNweDtcbiAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgY29sb3I6IHZhcigtLWlvbi1jb2xvci1zZWNvbmQtYXBwKTtcblxuXG5cbiAgLnNvdW5kLWJnIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgd2lkdGg6IDQwcHg7XG4gICAgaGVpZ2h0OiA0MHB4O1xuICAgIC8vIG1hcmdpbjogMTBweCAyMHB4O1xuICB9XG5cbiAgLmltZy12b2x1bWUge1xuICAgIHdpZHRoOiAyOHB4O1xuICAgIGhlaWdodDogMjhweDtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgdG9wOiAxNXB4O1xuICB9XG5cbiAgLnB1enpsZS1maXgge1xuICAgIC50aXRsZXtcbiAgICAgIGZvbnQtd2VpZ2h0OiA2MDAhaW1wb3J0YW50O1xuICAgICAgcGFkZGluZzogMCA1cHghaW1wb3J0YW50O1xuICAgICAgd2lkdGg6IDMwJSFpbXBvcnRhbnQ7XG4gICAgfVxuXG4gICAgaW1nLmRhbmlzaC1mbGFnIHtcbiAgICAgIHdpZHRoOiAyNHB4O1xuICAgICAgaGVpZ2h0OiAyNHB4O1xuICAgICAgbWF4LXdpZHRoOiA1MCU7XG4gICAgfVxuXG4gIH1cblxufVxuXG4uY2RrLWRyb3AtbGlzdC1yZWNlaXZpbmcge1xuICAvLyBiYWNrZ3JvdW5kLWNvbG9yOnJnYmEoMTY3LCAyNDcsIDEyOSwgMC42KTtcbiAgaGVpZ2h0OiBhdXRvO1xuICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xufVxuXG4uY2RrLWRyb3AtbGlzdC1kcmFnZ2luZ3tcbiAgYmFja2dyb3VuZC1jb2xvcjpyZ2JhKDE2NywgMjQ3LCAxMjksIDAuNik7XG4gIGhlaWdodDogMTUwcHg7XG4gIHdpZHRoOiAxMDAlO1xuICBib3JkZXI6IDNweCBkb3R0ZWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xuICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xufVxuXG5cbi5jZGstZHJhZy1wbGFjZWhvbGRlciB7XG4gIG9wYWNpdHk6IDA7XG59XG5cbi5jZGstZHJhZy1hbmltYXRpbmcge1xuICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMTIwbXMgY3ViaWMtYmV6aWVyKDAsIDAsIDAuMiwgMyk7XG59XG5cbi5leGFtcGxlLWJveDpsYXN0LWNoaWxkIHtcbiAgYm9yZGVyOiBub25lO1xufVxuXG4uZXhhbXBsZS1saXN0LmNkay1kcm9wLWxpc3QtZHJhZ2dpbmcgLmV4YW1wbGUtYm94Om5vdCguY2RrLWRyYWctcGxhY2Vob2xkZXIpIHtcbiAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDI1MG1zIGN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpO1xufVxuXG5cblxuLyoqKioqKioqKioqKiogRFJBRyBBTkQgRFJPUCAqKioqKioqKioqKioqKioqKi9cblxuXG4ucG9wb3Zlci1jb250ZW50LnNjLWlvbi1wb3BvdmVyLW1kIHtcbnBvc2l0aW9uOiBzdGF0aWMhaW1wb3J0YW50O1xufVxuXG4uZHJhZy1ncm91cCB7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG5cbkBtZWRpYSAobWluLXdpZHRoOiA3NjdweCkge1xuICAuY2RrLWRyYWctcHJldmlldyB7XG4gICAgd2lkdGg6IDMwJSFpbXBvcnRhbnQ7XG4gICAgfVxuXG59XG5cblxuXG5AbWVkaWEobWF4LXdpZHRoOiAzNzBweCkge1xuICBpb24taW1nLmltYWdlLXF1ZXN0aW9ue1xuICAgIHdpZHRoOiA3MHB4O1xuICAgIGhlaWdodDogYXV0bztcbiAgfVxuXG4gIC50aXRsZSB7XG4gICAgZm9udC1zaXplOiAxNnB4IWltcG9ydGFudDtcbiAgfVxuXG5cbi5pb24tdGV4dC1jZW50ZXIge1xuICBmb250LXNpemU6IDE0cHg7XG59XG5cblxuICAuY2RrLWRyYWctcHJldmlldyB7XG5cbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuICAgIHdpZHRoOiA4MCUhaW1wb3J0YW50O1xuXG4gICAgLnNvdW5kLWJnIHtcbiAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICAgIHdpZHRoOiAzMHB4O1xuICAgICAgaGVpZ2h0OiAzMHB4O1xuICAgICAgbWFyZ2luOiAwO1xuICAgIH1cblxuICAgIC5pbWctdm9sdW1lIHtcbiAgICAgIHdpZHRoOiAyMHB4O1xuICAgICAgaGVpZ2h0OiAyMHB4O1xuICAgICAgcGFkZGluZzogMTBweCAwO1xuICAgIH1cblxuICAgIC5wdXp6bGUtZml4IHtcblxuXG4gICAgICAudGl0bGV7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDAhaW1wb3J0YW50O1xuICAgICAgICBwYWRkaW5nOiAwIDVweCFpbXBvcnRhbnQ7XG4gICAgICAgIHdpZHRoOiAzMCUhaW1wb3J0YW50O1xuICAgICAgICBmb250LXNpemU6IDE2cHg7XG4gICAgICB9XG5cbiAgICAgIGltZy5kYW5pc2gtZmxhZyB7XG4gICAgICAgIHdpZHRoOiAyNHB4O1xuICAgICAgICBoZWlnaHQ6IDI0cHg7XG4gICAgICAgIG1heC13aWR0aDogNTAlO1xuICAgICAgfVxuXG4gICAgfVxuXG4gIH1cblxuICAuZXhhbXBsZS1ib3gge1xuICAgIG1hcmdpbjogMTBweCAwO1xuXG4gICAgLnB1enpsZS1hbnN3ZXIgLnB1enpsZS1maXgge1xuICAgICAgcGFkZGluZzogNXB4IDBweCFpbXBvcnRhbnQ7XG4gICAgfVxuXG4gICAgLnB1enpsZS1hbnN3ZXIgLnB1enpsZS1maXggLnNvdW5kIHtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBib3JkZXI6IDJweCBkb3R0ZWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xuICAgICAgYm9yZGVyLXJhZGl1czogMTBweDtcbiAgICAgIHBhZGRpbmc6IDVweCAwcHg7XG4gICAgICBtYXJnaW46IDA7XG59XG5cbiAgICAudGl0bGUge1xuICAgICAgLy8gbWFyZ2luLXJpZ2h0OiA1cHg7XG4gICAgICB3aWR0aDogMzUlIWltcG9ydGFudDtcbiAgICB9XG4gIH1cblxuICAuY2RrLWRyb3AtbGlzdC1yZWNlaXZpbmcge1xuICAgIC8vIGJhY2tncm91bmQtY29sb3I6cmdiYSgxNjcsIDI0NywgMTI5LCAwLjYpO1xuICAgIGhlaWdodDogYXV0bztcbiAgICBjb2xvcjogdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xuICB9XG5cbiAgLmNkay1kcm9wLWxpc3QtZHJhZ2dpbmd7XG4gICAgYmFja2dyb3VuZC1jb2xvcjpyZ2JhKDE2NywgMjQ3LCAxMjksIDAuNik7XG4gICAgaGVpZ2h0OiAxNTBweDtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBib3JkZXI6IDNweCBkb3R0ZWQgdmFyKC0taW9uLWNvbG9yLXNlY29uZC1hcHApO1xuICAgIGNvbG9yOiB2YXIoLS1pb24tY29sb3Itc2Vjb25kLWFwcCk7XG4gIH1cblxuXG5cblxufVxuXG5AbWVkaWEobWluLXdpZHRoOiA3NjhweCkgYW5kIChtYXgtd2lkdGg6IDIwMDBweCkge1xuICAuZXhhbXBsZS1ib3gge1xuICAgIGhlaWdodDogOTBweDtcbiAgfVxufVxuXG4vLyBAbWVkaWEgKG1heC13aWR0aDogNTAwcHgpIHtcbi8vICAgLnNjcm9sbGFibGUge1xuLy8gICAgIGhlaWdodDogMjMwcHg7XG4vLyAgICAgb3ZlcmZsb3c6IGF1dG87XG4vLyAgIH1cbi8vIH1cblxuXG5AbWVkaWEobWF4LXdpZHRoOiA0NDlweCkge1xuICAuZXhhbXBsZS1ib3ggLnB1enpsZS1hbnN3ZXIgLnB1enpsZS1maXggLnNvdW5kIHtcbiAgICBib3JkZXI6IG5vbmUhaW1wb3J0YW50O1xuICB9XG5cbiAgLmV4YW1wbGUtYm94IC5wdXp6bGUtZml4IC50aXRsZSB7XG4gICAgd2lkdGg6IDEwMCUhaW1wb3J0YW50O1xufVxuXG4uZXhhbXBsZS1ib3ggLnB1enpsZS1maXgge3dpZHRoOiAyMjVweDt9XG4uZXhhbXBsZS1ib3ggLnB1enpsZS1hbnN3ZXIgLnB1enpsZS1maXggLnNvdW5kIHt3aWR0aDogNjYlOyBwYWRkaW5nOiAwOyBtYXJnaW46IDA7fVxuLmV4YW1wbGUtYm94IC5wdXp6bGUtYW5zd2VyIC5wdXp6bGUtZml4IC50aXRsZSB7Zm9udC1zaXplOiAxMnB4ICFpbXBvcnRhbnQ7fVxuLnRpdGxle1xuICBmb250LXNpemU6IDExcHggIWltcG9ydGFudDtcbn1cbn1cblxuXG5AbWVkaWEobWluLXdpZHRoOiA0MjBweCkgYW5kIChtYXgtd2lkdGg6IDQ1MHB4KSB7XG5cbi5leGFtcGxlLWJveCAucHV6emxlLWZpeCB7d2lkdGg6IDMzMHB4O31cbn1cblxuXG5cbkBtZWRpYShtaW4td2lkdGg6IDQ1MHB4KSBhbmQgKG1heC13aWR0aDogNjAwcHgpIHtcbiAgLmV4YW1wbGUtYm94IC5wdXp6bGUtYW5zd2VyIC5wdXp6bGUtZml4IC5zb3VuZCB7XG4gICAgYm9yZGVyOiBub25lIWltcG9ydGFudDtcbiAgfVxuXG4gIC5leGFtcGxlLWJveCAucHV6emxlLWZpeCAudGl0bGUge1xuICAgIHdpZHRoOiAxMDAlIWltcG9ydGFudDtcbn1cblxuLmV4YW1wbGUtYm94IC5wdXp6bGUtZml4IHt3aWR0aDogNDAwcHg7fVxuLmV4YW1wbGUtYm94IC5wdXp6bGUtYW5zd2VyIC5wdXp6bGUtZml4IC5zb3VuZCB7d2lkdGg6IDQ1JTsgcGFkZGluZzogMDsgbWFyZ2luOiAwO31cbi5leGFtcGxlLWJveCAucHV6emxlLWFuc3dlciAucHV6emxlLWZpeCAudGl0bGUge2ZvbnQtc2l6ZTogMTJweCAhaW1wb3J0YW50O31cbi50aXRsZXtcbiAgZm9udC1zaXplOiAxMnB4ICFpbXBvcnRhbnQ7XG59XG59XG5cblxuQG1lZGlhKG1pbi13aWR0aDogNjAwcHgpIGFuZCAobWF4LXdpZHRoOiA5MDBweCkge1xuXG4gIC5leGFtcGxlLWJveCAucHV6emxlLWZpeCB7d2lkdGg6IDI2MHB4O31cbiAgLmV4YW1wbGUtYm94IC5wdXp6bGUtYW5zd2VyIC5wdXp6bGUtZml4IC5zb3VuZCB7d2lkdGg6IDIwJTt9XG59XG5cbiJdfQ== */");
+
+/***/ }),
+
+/***/ "vqQO":
+/*!*********************************************************************************************************!*\
+  !*** ./src/app/training/test-course/puzzle-image-test/puzzle-sound-test/puzzle-sound-test.component.ts ***!
+  \*********************************************************************************************************/
+/*! exports provided: PuzzleSoundTestComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PuzzleSoundTestComponent", function() { return PuzzleSoundTestComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_puzzle_sound_test_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./puzzle-sound-test.component.html */ "OtTT");
+/* harmony import */ var _puzzle_sound_test_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./puzzle-sound-test.component.scss */ "K2rq");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "8Y7J");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
+/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! howler */ "HlzF");
+/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/auth/auth.service */ "qXBG");
+
+
+
+
+
+
+
+let PuzzleSoundTestComponent = class PuzzleSoundTestComponent {
+    constructor(modalController, navParams, authService) {
+        this.modalController = modalController;
+        this.navParams = navParams;
+        this.authService = authService;
+        //howler
+        this.player = null;
+        this.isPlaying = false;
+    }
+    ngOnInit() {
+        this.userInfo = this.authService.getUser();
+        this.voicePath = this.navParams.data.voicePath;
+        this.voicePathDanish = this.navParams.data.voicePathDanish;
+        this.imagePath = this.navParams.data.imagePath;
+    }
+    startAudio(voicePath) {
+        if (this.player) {
+            this.player.stop();
+        }
+        this.player = new howler__WEBPACK_IMPORTED_MODULE_5__["Howl"]({
+            html5: true,
+            src: voicePath,
+            onplay: () => {
+                this.activeTrack = voicePath;
+                this.isPlaying = true;
+            },
+            onend: () => { },
+        });
+        this.player.play();
+    }
+    ngOnDestroy() {
+        if (this.player) {
+            this.player.stop();
+        }
+    }
+};
+PuzzleSoundTestComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavParams"] },
+    { type: src_app_auth_auth_service__WEBPACK_IMPORTED_MODULE_6__["AuthService"] }
+];
+PuzzleSoundTestComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-puzzle-sound',
+        template: _raw_loader_puzzle_sound_test_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_puzzle_sound_test_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], PuzzleSoundTestComponent);
+
+
 
 /***/ }),
 
@@ -1430,6 +1610,7 @@ let MultiTestPage = class MultiTestPage {
         this.userInfo = this.storageService.getUser();
         this.buildMultiForm();
         this.courseId = +this.route.snapshot.paramMap.get('courseId');
+        this.courseName = localStorage.getItem('courseName');
         this.getTestType();
     }
     // ** get test type
@@ -1709,9 +1890,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_services_storage_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/services/storage.service */ "fbMX");
 /* harmony import */ var src_app_shared_services_test_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/services/test.service */ "V1Po");
 /* harmony import */ var src_app_shared_models_puzzleImageTranslation__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/shared/models/puzzleImageTranslation */ "yFRR");
-/* harmony import */ var _puzzle_image_zoom_puzzle_image_zoom_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./puzzle-image-zoom/puzzle-image-zoom.component */ "3niU");
-/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! howler */ "HlzF");
-/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! howler */ "HlzF");
+/* harmony import */ var howler__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(howler__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _puzzle_sound_test_puzzle_sound_test_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./puzzle-sound-test/puzzle-sound-test.component */ "vqQO");
 
 
 
@@ -1871,13 +2052,12 @@ let PuzzleImageTestPage = class PuzzleImageTestPage {
         })
             .subscribe((response) => {
             console.log(response);
+            this.userTestId = response['result'].userTestId;
+            this.pageNumber += 1;
             // Stop sound when next questin
             if (this.player) {
                 this.player.stop();
             }
-            // Stop sound when next questin
-            this.userTestId = response['result'].userTestId;
-            this.pageNumber += 1;
             // ** check last question
             if (this.lengthItems === this.pageNumber) { // length item = 5 // page numer = 5
                 console.log('this is last number');
@@ -1917,7 +2097,7 @@ let PuzzleImageTestPage = class PuzzleImageTestPage {
     presentPopover(ev, item) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const popover = yield this.popoverController.create({
-                component: _puzzle_image_zoom_puzzle_image_zoom_component__WEBPACK_IMPORTED_MODULE_10__["PuzzleImageZoomComponent"],
+                component: _puzzle_sound_test_puzzle_sound_test_component__WEBPACK_IMPORTED_MODULE_11__["PuzzleSoundTestComponent"],
                 componentProps: {
                     imagePath: item.imagePath,
                 },
@@ -1950,7 +2130,7 @@ let PuzzleImageTestPage = class PuzzleImageTestPage {
         if (this.player) {
             this.player.stop();
         }
-        this.player = new howler__WEBPACK_IMPORTED_MODULE_11__["Howl"]({
+        this.player = new howler__WEBPACK_IMPORTED_MODULE_10__["Howl"]({
             html5: true,
             src: voicePath,
             onplay: () => {

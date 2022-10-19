@@ -61,18 +61,18 @@
         <ion-button *ngIf="offset > 0" (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
       </ion-col>
 
-      <ion-col>
+      <ion-col *ngIf="this.offset !== this.materialCourseLength">
         <ion-button *ngIf="!disableNextBtn" (click)="slideNext()">  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
       </ion-col>
 
     </ion-row>
 
     <ion-row>
-      <ion-col>
+      <ion-col *ngIf="this.offset !== this.materialCourseLength">
         <ion-button *ngIf="offset > 0" (click)="amDoneToday()"> Pause </ion-button>
       </ion-col>
 
-      <ion-col>
+      <ion-col *ngIf="this.offset !== this.materialCourseLength">
         <ion-button *ngIf="offset !== 0" (click)="startFromZero()"> Start over </ion-button>
       </ion-col>
     </ion-row>

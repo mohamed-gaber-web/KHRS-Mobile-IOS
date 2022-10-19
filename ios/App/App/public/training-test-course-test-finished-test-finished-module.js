@@ -135,6 +135,14 @@ let TestService = class TestService {
         return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["finishedTest"]}` + params, {});
     }
     /**
+   * send answer question
+   *
+   */
+    startTest(courseId) {
+        const params = `?courseId=${courseId}`;
+        return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["startTest"]}` + params, {});
+    }
+    /**
      * Get Certificate
      * courseId [ number ]
      *

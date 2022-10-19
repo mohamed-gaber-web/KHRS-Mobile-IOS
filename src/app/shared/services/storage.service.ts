@@ -127,6 +127,7 @@ export class StorageService {
     this.user = new User();
     this.user.firstname = value.firstname;
     this.user.lastname = value.lastname;
+    this.user.nickname = value.nickname;
     this.user.phoneNumber = value.phoneNumber;
     this.user.gender = value.gender;
     this.user.birthdate = value.birthdate;

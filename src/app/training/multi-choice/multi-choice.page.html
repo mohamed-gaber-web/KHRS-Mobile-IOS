@@ -3,11 +3,14 @@
 
 <div class="ios-toolbar">
   <ion-title>
-    Multi choice
-    <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+    {{ courseName }}
   </ion-title>
 </div>
-<ion-icon class="help-icon" (click)="presentModal()" name="help-circle-outline"></ion-icon>
+<div class="item-number-and-help">
+  <ion-text class="total-result"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>
+  <ion-icon class="help-icon" (click)="presentModal()" name="help-circle-outline"></ion-icon>
+</div>
+
 
 <ion-content>
 

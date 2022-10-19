@@ -236,6 +236,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "iInd");
 /* harmony import */ var src_app_shared_services_courses_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/services/courses.service */ "QOFr");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
+/* harmony import */ var src_app_shared_services_test_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/services/test.service */ "V1Po");
+
 
 
 
@@ -246,17 +248,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ChooseCourseMaterialPage = class ChooseCourseMaterialPage {
-    constructor(courseService, route, router, alertController, trackingService, modalCtrl) {
+    constructor(courseService, route, router, alertController, trackingService, modalCtrl, testService) {
         this.courseService = courseService;
         this.route = route;
         this.router = router;
         this.alertController = alertController;
         this.trackingService = trackingService;
         this.modalCtrl = modalCtrl;
+        this.testService = testService;
         this.subs = [];
         this.isLoading = false;
         this.offset = 0;
         this.isOpen = false;
+        this.btnDisabled = 'open';
     }
     ngOnInit() {
         this.userInfo = JSON.parse(localStorage.getItem('user'));
@@ -273,6 +277,8 @@ let ChooseCourseMaterialPage = class ChooseCourseMaterialPage {
             }
             this.isLoading = false;
             this.userCourseDetails = response['result'].userCourse;
+            // get and send course name in exercise
+            this.coursesName = response['result'].course['courseTranslations'][0].title;
             let startDate = new Date(this.userCourseDetails['startDate']);
             let endDate = new Date(this.userCourseDetails['endDate']);
             let date = endDate.getTime() - startDate.getTime();
@@ -292,10 +298,12 @@ let ChooseCourseMaterialPage = class ChooseCourseMaterialPage {
     // ** Send course id to exercise page
     sendIdToExercisePage() {
         this.router.navigate(['/exercise', { courseId: this.courseId }]);
+        localStorage.setItem('courseName', this.coursesName);
     }
     // ** Send course id to final test page_event
     sendIdToFinalTestPage() {
         this.presentAlertConfirm();
+        localStorage.setItem('courseName', this.coursesName);
     }
     presentAlertConfirm() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -314,7 +322,16 @@ let ChooseCourseMaterialPage = class ChooseCourseMaterialPage {
                     }, {
                         text: 'start',
                         handler: () => {
-                            this.router.navigate(['/exercise/test-course', { courseId: this.courseId }]);
+                            // add request final test
+                            this.testService.startTest(this.courseId)
+                                .subscribe(response => {
+                                console.log(response);
+                                if (response['success'] === false) {
+                                    //  console.log(response)
+                                    this.btnDisabled = 'close';
+                                }
+                                this.router.navigate(['/exercise/test-course', { courseId: this.courseId }]);
+                            });
                         }
                     }
                 ]
@@ -358,7 +375,8 @@ ChooseCourseMaterialPage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["AlertController"] },
     { type: _shared_services_tracking_user_service__WEBPACK_IMPORTED_MODULE_3__["TrackingUserService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["ModalController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__["ModalController"] },
+    { type: src_app_shared_services_test_service__WEBPACK_IMPORTED_MODULE_8__["TestService"] }
 ];
 ChooseCourseMaterialPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({
@@ -367,6 +385,101 @@ ChooseCourseMaterialPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
         styles: [_choose_course_material_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
     })
 ], ChooseCourseMaterialPage);
+
+
+
+/***/ }),
+
+/***/ "V1Po":
+/*!*************************************************!*\
+  !*** ./src/app/shared/services/test.service.ts ***!
+  \*************************************************/
+/*! exports provided: TestService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestService", function() { return TestService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "8Y7J");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "IheW");
+/* harmony import */ var _api_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../../api.constants */ "1Lwo");
+
+
+
+
+let TestService = class TestService {
+    constructor(http) {
+        this.http = http;
+        this.offset = 1;
+    }
+    /**
+     * Get Test
+     * courseId [ number ]
+     * offset [ number ]
+     *
+     */
+    getTestType(courseId, offset) {
+        const params = `?courseId=${courseId}&offset=${offset}`;
+        return this.http.get(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["getTextType"]}` + params);
+    }
+    /**
+   * Get check user test
+   * return isActive [ boolean ]
+   * return testApi [  ]
+   *
+   */
+    checkUserTest() {
+        return this.http.get(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["getUserActiveTest"]}`);
+    }
+    /**
+   * send answer question
+   *
+   */
+    sendAnswerTesting(answerObj) {
+        return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["sendAnswerTest"]}`, answerObj);
+    }
+    /**
+   * send answer question
+   *
+   */
+    finishedTest(userTestId) {
+        const params = `?userTestId=${userTestId}`;
+        return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["finishedTest"]}` + params, {});
+    }
+    /**
+   * send answer question
+   *
+   */
+    startTest(courseId) {
+        const params = `?courseId=${courseId}`;
+        return this.http.post(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["startTest"]}` + params, {});
+    }
+    /**
+     * Get Certificate
+     * courseId [ number ]
+     *
+   */
+    getCertificate(courseId) {
+        this.authKey = localStorage.getItem('access_token');
+        const httpOptions = {
+            responseType: 'blob',
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                'Authorization': this.authKey,
+            })
+        };
+        const params = `?courseId=${courseId}`;
+        return this.http.get(`${_api_constants__WEBPACK_IMPORTED_MODULE_3__["getCertificate"]}` + params, httpOptions);
+    }
+};
+TestService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+];
+TestService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root',
+    })
+], TestService);
 
 
 
@@ -431,7 +544,7 @@ ChooseCourseMaterialPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0_
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-content>\n\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n  <div>\n    <ion-grid *ngIf=\"CourseDetails\">\n      <ion-row>\n        <h2 id=\"title\" class=\"font-title-desktop ion-text-center\"> {{ CourseDetails.courseTranslations[0].title }} </h2>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"CourseDetails\">\n      <ion-row class=\"ion-justify-content-center\">\n        <ion-col size-md=\"3\">\n          <div *ngIf=\"CourseDetails.courseTranslations[0]?.introVoicePath\" class=\"sound-inro\">\n            <div class=\"img-person\">\n              <img class=\"intro-logo\" src=\"../../assets/images/char-person.png\" />\n            </div>\n          <div class=\"icon-sound\">\n            <div class=\"img-volume\">\n              <ion-img\n              class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3\"\n              (click)=\"startAudio(CourseDetails.courseTranslations[0]?.introVoicePath)\" src=\"../../../assets/icon/Vector.png\">\n            </ion-img>\n            </div>\n          </div>\n        </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n\n    <ion-grid *ngIf=\"CourseDetails\">\n      <ion-row class=\"ion-justify-content-center ion-padding-top\">\n        <ion-col size-sm=\"8\" size-xs=\"8\">\n          <ion-img class=\"course-details_img\" loading=\"lazy\" [src]=\"CourseDetails.imagePath\"></ion-img>\n        </ion-col>\n\n          <ion-grid>\n            <ion-row class=\"valid\">\n              <ion-col>\n                <ion-list class=\"course-date\">\n                  <ion-item class=\"time-valid\" lines=\"none\">\n                    <div class=\"icon-valid\">\n                      <ion-icon slot=\"start\" name=\"alarm-outline\"></ion-icon>\n                    </div>\n                    <ion-label *ngIf=\"userCourseDetails\" color=\"primary\"> <strong> From: </strong>\n                      {{ userCourseDetails['startDate'] | date }}\n                    </ion-label>\n                  </ion-item>\n\n                  <ion-item class=\"time-valid\" lines=\"none\">\n                    <div class=\"icon-valid\">\n                      <ion-icon slot=\"start\" name=\"alarm-outline\"></ion-icon>\n                    </div>\n                    <ion-label *ngIf=\"userCourseDetails\" color=\"primary\"> <strong> To: </strong>\n                      {{ userCourseDetails['endDate'] | date }}\n                    </ion-label>\n                  </ion-item>\n\n                  <ion-item class=\"time-valid\" lines=\"none\">\n                    <div class=\"icon-valid\">\n                      <ion-icon slot=\"start\" name=\"alarm-outline\"></ion-icon>\n                    </div>\n                    <ion-label color=\"primary\"> <strong> Valid For: </strong>\n                      {{ validCourse }} Day\n                    </ion-label>\n                  </ion-item>\n                </ion-list>\n\n              </ion-col>\n            </ion-row>\n          </ion-grid>\n\n        <ion-col\n          *ngIf=\"CourseDetails.courseTranslations[0].description !== null \"\n          class=\"ion-margin-top\" size=\"12\" size-md=\"8\" size-lg=\"7\">\n          <div class=\"desc\">\n            <ion-text>\n              {{ CourseDetails.courseTranslations[0].description }}\n            </ion-text>\n          </div>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <div class=\"video-inro\" *ngIf=\"CourseDetails\">\n            <video *ngIf=\"CourseDetails?.courseTranslations[0]?.introVideoPath\" width=\"100%\" height=\"230\" controls>\n              <source [src]=\"CourseDetails.courseTranslations[0].introVideoPath\" type=\"video/mp4\">\n            </video>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row class=\"ion-justify-content-center\">\n        <ion-col size=\"8\">\n          <div *ngIf=\"CourseDetails\">\n            <ion-button\n              [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin'\"\n              [routerLink]=\"['/courses/course-material',\n              CourseDetails.courseTranslations[0].courseId]\" [queryParams]=\"{offset: offset}\" routerDirection=\"root\">\n                <img class=\"img-icon\" src=\"../../../assets/images/material.png\" alt=\"material\" />\n                Material\n            </ion-button>\n            <ion-button \n              [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' \"\n              (click)=\"sendIdToExercisePage()\">\n              <img class=\"img-icon\" src=\"../../../assets/images/exercise-icon.png\" alt=\"exercise\" /> Exercise </ion-button>\n            <ion-button \n                [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' \" *ngIf=\"CourseDetails.status !== 1\" (click)=\"sendIdToFinalTestPage()\">\n                <img class=\"img-icon\" src=\"../../../assets/images/final-test.png\" alt=\"final test\" />\n                Final Test\n            </ion-button>\n\n            <!-- *ngIf=\"CourseDetails.status === 1\" -->\n\n            <ion-button \n                [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin'\"  \n                *ngIf=\"CourseDetails.status === 1\" (click)=\"toggleModal()\">\n                <img class=\"img-icon\" src=\"../../../assets/images/rating.png\" alt=\"rating\" />\n                Rating\n            </ion-button>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n  <div class=\"no-result\" *ngIf=\"checkCourseData === false\">\n    <img src=\"../../../../assets/images/sorry.png\" alt=\"\" loading=\"lazy\" />\n    <p> There is no data  </p>\n  </div>\n\n<ion-grid *ngIf=\"CourseDetails\">\n    <div [ngClass]=\"!isOpen ? 'overlay hide' : 'overlay show' \">\n      <div class=\"close\" (click)=\"closeModal()\"> <ion-icon name=\"close-circle\"></ion-icon> </div>\n      <app-course-rating [courseName]=\"CourseDetails.courseTranslations[0].title\" [courseIdRate]=\"courseId\"></app-course-rating>\n    </div>\n</ion-grid>\n\n</ion-content>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<ion-content>\n\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n  <div>\n    <ion-grid *ngIf=\"CourseDetails\">\n      <ion-row>\n        <h2 id=\"title\" class=\"font-title-desktop ion-text-center\"> {{ CourseDetails.courseTranslations[0].title }} </h2>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid *ngIf=\"CourseDetails\">\n      <ion-row class=\"ion-justify-content-center\">\n        <ion-col size-md=\"3\">\n          <div *ngIf=\"CourseDetails.courseTranslations[0]?.introVoicePath\" class=\"sound-inro\">\n            <div class=\"img-person\">\n              <img class=\"intro-logo\" src=\"../../assets/images/char-person.png\" />\n            </div>\n          <div class=\"icon-sound\">\n            <div class=\"img-volume\">\n              <ion-img\n              class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-3\"\n              (click)=\"startAudio(CourseDetails.courseTranslations[0]?.introVoicePath)\" src=\"../../../assets/icon/Vector.png\">\n            </ion-img>\n            </div>\n          </div>\n        </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n\n    <ion-grid *ngIf=\"CourseDetails\">\n      <ion-row class=\"ion-justify-content-center ion-padding-top\">\n        <ion-col size-sm=\"8\" size-xs=\"8\">\n          <ion-img class=\"course-details_img\" loading=\"lazy\" [src]=\"CourseDetails.imagePath\"></ion-img>\n        </ion-col>\n\n          <ion-grid>\n            <ion-row class=\"valid\">\n              <ion-col>\n                <ion-list class=\"course-date\">\n                  <ion-item class=\"time-valid\" lines=\"none\">\n                    <div class=\"icon-valid\">\n                      <ion-icon slot=\"start\" name=\"alarm-outline\"></ion-icon>\n                    </div>\n                    <ion-label *ngIf=\"userCourseDetails\" color=\"primary\"> <strong> From: </strong>\n                      {{ userCourseDetails['startDate'] | date }}\n                    </ion-label>\n                  </ion-item>\n\n                  <ion-item class=\"time-valid\" lines=\"none\">\n                    <div class=\"icon-valid\">\n                      <ion-icon slot=\"start\" name=\"alarm-outline\"></ion-icon>\n                    </div>\n                    <ion-label *ngIf=\"userCourseDetails\" color=\"primary\"> <strong> To: </strong>\n                      {{ userCourseDetails['endDate'] | date }}\n                    </ion-label>\n                  </ion-item>\n\n                  <ion-item class=\"time-valid\" lines=\"none\">\n                    <div class=\"icon-valid\">\n                      <ion-icon slot=\"start\" name=\"alarm-outline\"></ion-icon>\n                    </div>\n                    <ion-label color=\"primary\"> <strong> Valid For: </strong>\n                      {{ validCourse }} Day\n                    </ion-label>\n                  </ion-item>\n                </ion-list>\n\n              </ion-col>\n            </ion-row>\n          </ion-grid>\n\n        <ion-col\n          *ngIf=\"CourseDetails.courseTranslations[0].description !== null \"\n          class=\"ion-margin-top\" size=\"12\" size-md=\"8\" size-lg=\"7\">\n          <div class=\"desc\">\n            <ion-text>\n              {{ CourseDetails.courseTranslations[0].description }}\n            </ion-text>\n          </div>\n        </ion-col>\n\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <div class=\"video-inro\" *ngIf=\"CourseDetails\">\n            <video *ngIf=\"CourseDetails?.courseTranslations[0]?.introVideoPath\" width=\"100%\" height=\"230\" controls>\n              <source [src]=\"CourseDetails.courseTranslations[0].introVideoPath\" type=\"video/mp4\">\n            </video>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n    <ion-grid>\n      <ion-row class=\"ion-justify-content-center\">\n        <ion-col size=\"8\">\n          <div *ngIf=\"CourseDetails\">\n            <ion-button\n              [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin'\"\n              [routerLink]=\"['/courses/course-material',\n              CourseDetails.courseTranslations[0].courseId]\" [queryParams]=\"{offset: offset}\" routerDirection=\"root\">\n                <img class=\"img-icon\" src=\"../../../assets/images/material.png\" alt=\"material\" />\n                Material\n            </ion-button>\n            <ion-button \n              [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' \"\n              (click)=\"sendIdToExercisePage()\">\n              <img class=\"img-icon\" src=\"../../../assets/images/exercise-icon.png\" alt=\"exercise\" /> Exercise </ion-button>\n            <ion-button \n                [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin' && btnDisabled !== 'open'\" *ngIf=\"CourseDetails.status !== 1\" (click)=\"sendIdToFinalTestPage()\">\n                <img class=\"img-icon\" src=\"../../../assets/images/final-test.png\" alt=\"final test\" />\n                Final Test\n            </ion-button>\n\n            <!-- *ngIf=\"CourseDetails.status === 1\" -->\n\n            <ion-button \n                [disabled]=\"CourseDetails.remainingDayes === 0 && userInfo.role !== 'Admin'\"  \n                *ngIf=\"CourseDetails.status === 1\" (click)=\"toggleModal()\">\n                <img class=\"img-icon\" src=\"../../../assets/images/rating.png\" alt=\"rating\" />\n                Rating\n            </ion-button>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n  <div class=\"no-result\" *ngIf=\"checkCourseData === false\">\n    <img src=\"../../../../assets/images/sorry.png\" alt=\"\" loading=\"lazy\" />\n    <p> There is no data  </p>\n  </div>\n\n<ion-grid *ngIf=\"CourseDetails\">\n    <div [ngClass]=\"!isOpen ? 'overlay hide' : 'overlay show' \">\n      <div class=\"close\" (click)=\"closeModal()\"> <ion-icon name=\"close-circle\"></ion-icon> </div>\n      <app-course-rating [courseName]=\"CourseDetails.courseTranslations[0].title\" [courseIdRate]=\"courseId\"></app-course-rating>\n    </div>\n</ion-grid>\n\n</ion-content>\n\n");
 
 /***/ }),
 

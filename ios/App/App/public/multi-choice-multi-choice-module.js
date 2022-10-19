@@ -1,5 +1,93 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["multi-choice-multi-choice-module"],{
 
+/***/ "A9xy":
+/*!****************************************************!*\
+  !*** ./src/app/shared/services/utility.service.ts ***!
+  \****************************************************/
+/*! exports provided: UtilityService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UtilityService", function() { return UtilityService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "8Y7J");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "sZkV");
+
+
+
+let UtilityService = class UtilityService {
+    constructor(toastController) {
+        this.toastController = toastController;
+        this.audio = null;
+        this.audio = new Audio('../../../assets/iphone_ding.mp3');
+    }
+    ngOnInit() {
+    }
+    successMessage(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.audio.load();
+            this.audio.play();
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 4000,
+                cssClass: 'success-msg',
+            });
+            return toast.present();
+        });
+    }
+    successText(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.audio.load();
+            this.audio.play();
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 4000,
+                cssClass: 'success-text',
+                color: 'success'
+            });
+            return toast.present();
+        });
+    }
+    errorMessage(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.audio.load();
+            this.audio.play();
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 4000,
+                cssClass: 'ion-error',
+            });
+            return toast.present();
+        });
+    }
+    errorText(msg) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            // this.audio.load();
+            // this.audio.play()
+            const toast = yield this.toastController.create({
+                message: msg,
+                duration: 2000,
+                cssClass: 'error-text',
+                color: 'danger',
+            });
+            return toast.present();
+        });
+    }
+};
+UtilityService.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["ToastController"] }
+];
+UtilityService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root',
+    })
+], UtilityService);
+
+
+
+/***/ }),
+
 /***/ "Ahbo":
 /*!************************************************************!*\
   !*** ./src/app/training/multi-choice/multi-choice.page.ts ***!
@@ -64,6 +152,7 @@ let MultiChoicePage = class MultiChoicePage {
     }
     ngOnInit() {
         this.userInfo = this.storageService.getUser();
+        this.courseName = localStorage.getItem('courseName');
         // ** get courseId And exerciseId
         this.courseId = +this.route.snapshot.paramMap.get('courseId');
         this.exerciseType = +this.route.snapshot.paramMap.get('exerciseId');
@@ -413,7 +502,7 @@ MultiChoicePageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__deco
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-top-header></app-top-header>\n\n\n<div class=\"ios-toolbar\">\n  <ion-title>\n    Multi choice\n    <ion-text class=\"total-result\"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>\n  </ion-title>\n</div>\n<ion-icon class=\"help-icon\" (click)=\"presentModal()\" name=\"help-circle-outline\"></ion-icon>\n\n<ion-content>\n\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n\n<form *ngIf=\"exerciseItems\" [formGroup]=\"multiForm\">\n  <!-- Animation Element -->\n  <div class=\"select-animate\">\n    <img src=\"../../../assets/images/select.png\" />\n    </div>\n    <!-- Animation Element -->\n    \n  <ion-slides [pager]=\"false\" #slides [options]=\"slideOpts\">\n  <ion-slide >\n\n  <ion-grid>\n    <ion-list class=\"multi-choice\">\n      <ion-grid class=\"sound-group\">\n        <ion-row>\n         <ion-col size=\"4\">\n            <div *ngIf=\"exerciseItems[0].voiceDanishPath\">\n              <div class=\"sound-question\">\n                  <div class=\"img-volume\">\n                    <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!exerciseItems[0].audioElementDanish.status? 'play' : 'stop'\" (click)=\"playAudio(exerciseItems[0].audioElementDanish,1)\">\n                    </ion-icon>\n                  </div>\n                <img class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n              </div>\n            </div>\n      </ion-col>\n      <ion-col size=\"4\">\n        <div *ngIf=\"exerciseItems[0].multiChoiceTranslations[0]?.voicePath\">\n          <div class=\"sound-question\">\n              <div class=\"img-volume\">\n                <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!exerciseItems[0].audioElement.status? 'play' : 'stop'\" (click)=\"playAudio(exerciseItems[0].audioElement,1,'native')\">\n                </ion-icon>\n              </div>\n            <img class=\"img-lang\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n          </div>\n        </div>\n      </ion-col>\n      </ion-row>\n      </ion-grid>\n\n      <ion-list-header>\n\n        <ion-text>\n          {{ exerciseItems[0].question }}\n        </ion-text>\n\n      </ion-list-header>\n\n      <ion-radio-group formControlName=\"answer\">\n        <div class=\"answer\" *ngFor=\"let item of resultAnswerItems\">\n        <ion-item (click)=\"playAudio(item,2)\">\n          <ion-label>{{ item.answer }}</ion-label>\n          <ion-radio [value]=\"item.id\"></ion-radio>\n          <div class=\"sound\" *ngIf=\"item.audioElement.audio\">\n            <div class=\"sound-bg\">\n                  <div class=\"img-volume\">\n                    <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!item.audioElement.status? 'play' : 'stop'\" >\n                    </ion-icon>\n                  </div>\n              </div>\n              <img class=\"langauge-img\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n            </div>\n      </ion-item>\n\n    </div>\n  </ion-radio-group>\n\n      <ion-grid>\n        <ion-row class=\"ion-padding ion-justify-content-center\">\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-button\n              [ngClass]=\"{'hideButtonNext': multiForm.invalid}\"\n              (click)=\"slidePrev()\">\n                Prev\n              <ion-icon name=\"chevron-forward-outline\"></ion-icon>\n            </ion-button>\n          </ion-col>\n\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-button\n            [ngClass]=\"{'hideButtonNext': multiForm.invalid }\"\n            (click)=\"slideNext(exerciseItems[0].id, multiForm.value.answer)\">\n              Next\n              <ion-icon name=\"chevron-forward-outline\"></ion-icon>\n            </ion-button>\n          </ion-col>\n        </ion-row>\n\n      </ion-grid>\n\n    </ion-list>\n  </ion-grid>\n</ion-slide>\n</ion-slides>\n</form>\n</ion-content>\n\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-top-header></app-top-header>\n\n\n<div class=\"ios-toolbar\">\n  <ion-title>\n    {{ courseName }}\n  </ion-title>\n</div>\n<div class=\"item-number-and-help\">\n  <ion-text class=\"total-result\"> {{ lengthQuestion + ' / ' + (currentIndex+1) }} </ion-text>\n  <ion-icon class=\"help-icon\" (click)=\"presentModal()\" name=\"help-circle-outline\"></ion-icon>\n</div>\n\n\n<ion-content>\n\n  <ion-spinner *ngIf='isLoading' color=\"primary\" name=\"crescent\"></ion-spinner>\n\n<form *ngIf=\"exerciseItems\" [formGroup]=\"multiForm\">\n  <!-- Animation Element -->\n  <div class=\"select-animate\">\n    <img src=\"../../../assets/images/select.png\" />\n    </div>\n    <!-- Animation Element -->\n    \n  <ion-slides [pager]=\"false\" #slides [options]=\"slideOpts\">\n  <ion-slide >\n\n  <ion-grid>\n    <ion-list class=\"multi-choice\">\n      <ion-grid class=\"sound-group\">\n        <ion-row>\n         <ion-col size=\"4\">\n            <div *ngIf=\"exerciseItems[0].voiceDanishPath\">\n              <div class=\"sound-question\">\n                  <div class=\"img-volume\">\n                    <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!exerciseItems[0].audioElementDanish.status? 'play' : 'stop'\" (click)=\"playAudio(exerciseItems[0].audioElementDanish,1)\">\n                    </ion-icon>\n                  </div>\n                <img class=\"danish-flag\" src=\"../../../assets/icon/da.png\" alt=\"\" />\n              </div>\n            </div>\n      </ion-col>\n      <ion-col size=\"4\">\n        <div *ngIf=\"exerciseItems[0].multiChoiceTranslations[0]?.voicePath\">\n          <div class=\"sound-question\">\n              <div class=\"img-volume\">\n                <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!exerciseItems[0].audioElement.status? 'play' : 'stop'\" (click)=\"playAudio(exerciseItems[0].audioElement,1,'native')\">\n                </ion-icon>\n              </div>\n            <img class=\"img-lang\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n          </div>\n        </div>\n      </ion-col>\n      </ion-row>\n      </ion-grid>\n\n      <ion-list-header>\n\n        <ion-text>\n          {{ exerciseItems[0].question }}\n        </ion-text>\n\n      </ion-list-header>\n\n      <ion-radio-group formControlName=\"answer\">\n        <div class=\"answer\" *ngFor=\"let item of resultAnswerItems\">\n        <ion-item (click)=\"playAudio(item,2)\">\n          <ion-label>{{ item.answer }}</ion-label>\n          <ion-radio [value]=\"item.id\"></ion-radio>\n          <div class=\"sound\" *ngIf=\"item.audioElement.audio\">\n            <div class=\"sound-bg\">\n                  <div class=\"img-volume\">\n                    <ion-icon  class=\"animate__animated animate__jello animate__delay-2s animate__bounce animate__repeat-2\" [name]=\"!item.audioElement.status? 'play' : 'stop'\" >\n                    </ion-icon>\n                  </div>\n              </div>\n              <img class=\"langauge-img\" [src]=\"userInfo.languageIcon\" alt=\"\" />\n            </div>\n      </ion-item>\n\n    </div>\n  </ion-radio-group>\n\n      <ion-grid>\n        <ion-row class=\"ion-padding ion-justify-content-center\">\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-button\n              [ngClass]=\"{'hideButtonNext': multiForm.invalid}\"\n              (click)=\"slidePrev()\">\n                Prev\n              <ion-icon name=\"chevron-forward-outline\"></ion-icon>\n            </ion-button>\n          </ion-col>\n\n          <ion-col size=\"12\" size-lg=\"6\">\n            <ion-button\n            [ngClass]=\"{'hideButtonNext': multiForm.invalid }\"\n            (click)=\"slideNext(exerciseItems[0].id, multiForm.value.answer)\">\n              Next\n              <ion-icon name=\"chevron-forward-outline\"></ion-icon>\n            </ion-button>\n          </ion-col>\n        </ion-row>\n\n      </ion-grid>\n\n    </ion-list>\n  </ion-grid>\n</ion-slide>\n</ion-slides>\n</form>\n</ion-content>\n\n\n");
 
 /***/ })
 

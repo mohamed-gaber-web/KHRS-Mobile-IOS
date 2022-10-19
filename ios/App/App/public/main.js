@@ -16,7 +16,7 @@ module.exports = __webpack_require__(/*! /Users/sdex/Desktop/KHRA MOBILE IOS/KHR
 /*!**********************************!*\
   !*** ./src/app/api.constants.ts ***!
   \**********************************/
-/*! exports provided: baseUrl, imagesBaseUrl, loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword, getProfileData, getLanguage, getAllCoursesAPI, getUsersCoursesAPI, getCourseDetails, createApplyCourse, getUserCourseDetails, courseMaterials, getCourseCategories, getExercise, checkAnswerSingleChoise, getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText, checkAnswerPuzzleImage, getTextType, getUserActiveTest, sendAnswerTest, finishedTest, getCertificate, faqPage, policyPage, getGeneratedVidoes, start, end, getAllByUser, createUserCourseRate, successBoard, topScores, termsAndConditions */
+/*! exports provided: baseUrl, imagesBaseUrl, loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword, getProfileData, getLanguage, getAllCoursesAPI, getUsersCoursesAPI, getCourseDetails, createApplyCourse, getUserCourseDetails, courseMaterials, getCourseCategories, getExercise, checkAnswerSingleChoise, getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText, checkAnswerPuzzleImage, getTextType, getUserActiveTest, sendAnswerTest, finishedTest, getCertificate, startTest, faqPage, policyPage, getGeneratedVidoes, start, end, getAllByUser, createUserCourseRate, successBoard, topScores, termsAndConditions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49,6 +49,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sendAnswerTest", function() { return sendAnswerTest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "finishedTest", function() { return finishedTest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCertificate", function() { return getCertificate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "startTest", function() { return startTest; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "faqPage", function() { return faqPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "policyPage", function() { return policyPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGeneratedVidoes", function() { return getGeneratedVidoes; });
@@ -95,6 +96,7 @@ const getUserActiveTest = `${baseUrl}/api/Test/GetUserActiveTest`;
 const sendAnswerTest = `${baseUrl}/api/Test/Answer`;
 const finishedTest = `${baseUrl}/api/Test/Finished`;
 const getCertificate = `${baseUrl}/api/UserTest/GetCertificate`;
+const startTest = `${baseUrl}/api/Test/StartTest`;
 // pages
 const faqPage = `${baseUrl}/api/Faq/GetFaq`;
 const policyPage = `${baseUrl}/api/Policy/GetPolicy`;
@@ -200,7 +202,7 @@ const environment = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("  <div class=\"success-reviews\" *ngFor=\"let reviewItem of allSuccessRating\">\n    <div class=\"user-course-status__left\">\n      <img [src]=\"reviewItem.userImage\" loading=\"lazy\" [alt]=\"reviewItem.courseName\" loading=\"lazy\" />\n    </div>\n\n    <div class=\"user-course-status__center\">\n      <h4> {{ reviewItem.username }} </h4>\n      <h3> {{ reviewItem.courseName }} </h3>\n      <p *ngIf=\"reviewItem.comment !== null\">  {{ reviewItem.comment }} </p>\n    </div>\n\n    <div class=\"user-course-status__right\">\n      <div>\n        <ngb-rating style=\"color: #FFCC26; font-size: 15px;\" [(rate)]=\"reviewItem.rate\" [max]=\"5\" [readonly]=\"true\" ></ngb-rating>\n      </div>\n    </div>\n  </div>\n\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("  <div class=\"success-reviews\" *ngFor=\"let reviewItem of allSuccessRating\">\n    <div class=\"user-course-status__left\">\n      <img [src]=\"reviewItem.userImage\" loading=\"lazy\" [alt]=\"reviewItem.courseName\" loading=\"lazy\" />\n    </div>\n\n    <div class=\"user-course-status__center\">\n      <h4> {{ reviewItem.nickname }} </h4>\n      <h3> {{ reviewItem.courseName }} </h3>\n      <p *ngIf=\"reviewItem.comment !== null\">  {{ reviewItem.comment }} </p>\n    </div>\n\n    <div class=\"user-course-status__right\">\n      <div>\n        <ngb-rating style=\"color: #FFCC26; font-size: 15px;\" [(rate)]=\"reviewItem.rate\" [max]=\"5\" [readonly]=\"true\" ></ngb-rating>\n      </div>\n    </div>\n  </div>\n\n\n");
 
 /***/ }),
 
@@ -982,6 +984,7 @@ let StorageService = class StorageService {
         this.user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"]();
         this.user.firstname = value.firstname;
         this.user.lastname = value.lastname;
+        this.user.nickname = value.nickname;
         this.user.phoneNumber = value.phoneNumber;
         this.user.gender = value.gender;
         this.user.birthdate = value.birthdate;

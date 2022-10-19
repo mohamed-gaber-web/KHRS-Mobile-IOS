@@ -5148,7 +5148,7 @@ let ApplyCoursePage = class ApplyCoursePage {
         this.subs.push(this.courseService.createCourseApply(Object.assign(Object.assign({}, this.applyForm.value), { courseId: this.id })).subscribe((response) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (response['arrayMessage'] === null) {
                 var toast = yield this.toastController.create({
-                    message: 'Thanks for apply course!',
+                    message: 'Thanks for applying',
                     duration: 2000,
                     color: 'success',
                 });
