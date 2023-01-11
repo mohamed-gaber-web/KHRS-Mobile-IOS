@@ -6,7 +6,7 @@
 
   <div class="sign-in-form">
     <div class="sign-in-title">
-      <h3> Login </h3>
+      <h3> Sign in </h3>
     </div>
     <ion-grid [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit(loginForm.value)" class="padding">
       <ion-row class="ion-justify-content-center">
@@ -37,7 +37,7 @@
               <a style="color: #fff;text-decoration: none" href="/auth/forget-password"> Forgot Password ? </a> </p>
 
           <ion-button (click)="onLoginFormSubmit(loginForm.value)" [disabled]="isLoading || !loginForm.valid">
-            {{ 'Login' | translate }}
+            {{ 'Sign in' | translate }}
           </ion-button>
         </ion-col>
       </ion-row>

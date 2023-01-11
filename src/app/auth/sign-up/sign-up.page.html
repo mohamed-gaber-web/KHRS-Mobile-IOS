@@ -2,7 +2,7 @@
 
   <div class="sign-up">
 
-    <h3> Signup </h3>
+    <h3> Sign up </h3>
 
     <form  [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
     <ion-grid *ngIf="flagsToggle">
@@ -221,7 +221,7 @@
           [disabled]="registerForm.invalid"
           (click)="onRegisterFormSubmit(registerForm.value)"
           >
-            Signup
+            Sign up
           </ion-button>
         </ion-col>
       </ion-row>

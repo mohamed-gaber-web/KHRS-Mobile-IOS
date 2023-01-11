@@ -101,7 +101,8 @@ export class CourseMaterialPage implements OnInit {
     this.getMaterialCourse();
     this.slides.slideNext();
 
-    if(this.offset === this.materialCourseLength) {
+    if(this.offset === (this.materialCourseLength - 1)) {
+      console.log(this.offset)
       var toast = await this.toastController.create({
       message: 'Material pages is finished !',
       duration: 5000,

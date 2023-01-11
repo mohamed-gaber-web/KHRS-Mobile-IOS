@@ -4,6 +4,9 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { StorageService } from '../../services/storage.service';
 import { TrackingUserService } from './../../services/tracking-user.service';
 import { NavController } from '@ionic/angular';
+import {Location} from '@angular/common';
+import { Router } from '@angular/router';
+
 
 
 
@@ -27,11 +30,14 @@ export class TopHeaderComponent implements OnInit {
     private trackingService: TrackingUserService,
     private renderer: Renderer2,
     private navCtrl: NavController,
+    private location: Location,
+    private router: Router
     ) { }
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
     this.getUserAmDoneToday();
+    console.log(this.router.routerState.snapshot.url)
   }
 
     // * getUserAmDoneToday
@@ -69,10 +75,14 @@ export class TopHeaderComponent implements OnInit {
     }
   }
 
-  back() {
+  async back() {
     if(this.currentRoute === '/courses/tabs/all-courses') {
       return;
+    } if(this.currentRoute === '/courses/course-material/18?offset=0') {
+      console.log('hhhhhhhhh')
+      await this.router.navigate(['/courses/tabs/my-courses'])
     }
-    this.navCtrl.back();
+    await this.navCtrl.pop();
+    // const backLocation =  await this.location.back();
   }
 }

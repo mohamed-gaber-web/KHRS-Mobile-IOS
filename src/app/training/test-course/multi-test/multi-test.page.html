@@ -99,7 +99,7 @@
 
 
 </form>
-<app-test-finished *ngIf="lengthItems === pageNumber"></app-test-finished>
+<!-- <app-test-finished *ngIf="lengthItems === pageNumber"></app-test-finished> -->
 
   <ion-grid *ngIf="lengthItems !== pageNumber">
     <ion-row class="ion-align-items-center slide-button">
@@ -108,12 +108,12 @@
         <ion-button
         (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
       </ion-col>
-
+<!-- 
       <ion-col size="4">
         <ion-button
           (click)="ScapeSlidePrev()"
           >  Escape <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
-      </ion-col>
+      </ion-col> -->
 
       <ion-col size="4">
         <ion-button
@@ -125,7 +125,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid style="position: relative; top: -150px;" *ngIf="lengthItems === pageNumber">
+  <ion-grid *ngIf="lengthItems === pageNumber">
     <ion-row class="ion-align-items-center slide-button">
 
       <ion-col size="6">

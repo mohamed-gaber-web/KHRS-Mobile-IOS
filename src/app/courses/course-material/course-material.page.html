@@ -1,15 +1,16 @@
-<app-top-header></app-top-header>
 
 <ion-content>
+  <app-top-header></app-top-header>
 
-  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
-
+  
   <div class="course-material-count">
     <h4> <b>  {{ offset }} - {{ materialCourseLength }} Pages </b>   </h4>
   </div>
-
+  
+  <ion-spinner *ngIf='isLoading' color="primary" name="crescent"></ion-spinner>
+  
   <ion-slides (ionSlideWillChange)="doCheck()" #slides pager="false" [options]="slideOpts">
-
+    
     <ion-slide *ngFor="let course of courseMaterial" class="course__material">
 
       <ion-grid>
@@ -61,18 +62,18 @@
         <ion-button *ngIf="offset > 0" (click)="slidePrev()"> <ion-icon name="chevron-back-outline"></ion-icon> prev </ion-button>
       </ion-col>
 
-      <ion-col *ngIf="this.offset !== this.materialCourseLength">
-        <ion-button *ngIf="!disableNextBtn" (click)="slideNext()">  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
+      <ion-col>
+        <ion-button [disabled]="offset === (materialCourseLength - 1)" *ngIf="!disableNextBtn" (click)="slideNext()">  next <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button>
       </ion-col>
 
     </ion-row>
 
     <ion-row>
-      <ion-col *ngIf="this.offset !== this.materialCourseLength">
+      <ion-col>
         <ion-button *ngIf="offset > 0" (click)="amDoneToday()"> Pause </ion-button>
       </ion-col>
 
-      <ion-col *ngIf="this.offset !== this.materialCourseLength">
+      <ion-col>
         <ion-button *ngIf="offset !== 0" (click)="startFromZero()"> Start over </ion-button>
       </ion-col>
     </ion-row>

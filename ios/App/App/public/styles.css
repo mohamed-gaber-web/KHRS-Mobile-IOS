@@ -1250,6 +1250,13 @@ sub {
 body, * {
   font-family: "Montserrat", sans-serif !important;
 }
+.sign-up input {
+  color: #fff !important;
+}
+.ios-toolbar {
+  position: relative;
+  margin: 20px 0 40px 0;
+}
 .no-result {
   text-align: center;
   margin: 50px 0;

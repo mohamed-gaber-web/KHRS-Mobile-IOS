@@ -29,7 +29,7 @@ export class ChooseCourseMaterialPage implements OnInit {
   checkCourseData: boolean;
   isOpen: boolean = false;
   userInfo: any;
-  btnDisabled: string = 'open';
+  btnDisabled: boolean;
 
   constructor(
     private courseService: CourseService,
@@ -51,9 +51,12 @@ export class ChooseCourseMaterialPage implements OnInit {
     this.subs.push(
       this.courseService.getUserCoursesDetails(this.courseId)
         .subscribe(response => {
+          console.log(response)
         if(response['success'] === false) {
           this.checkCourseData = false;
           this.isLoading = false;
+          this.btnDisabled = response['result'].isOwnedTest;
+          console.log(response['result'].isOwnedTest)
           return;
         }
         this.isLoading = false;
@@ -117,8 +120,9 @@ export class ChooseCourseMaterialPage implements OnInit {
            .subscribe(response => {
              console.log(response)
              if(response['success'] === false) {
-              //  console.log(response)
-               this.btnDisabled = 'close';
+              console.log(this.btnDisabled)
+               this.btnDisabled;
+               return;
              }
              this.router.navigate(['/exercise/test-course', {courseId: this.courseId}])
            })          }
