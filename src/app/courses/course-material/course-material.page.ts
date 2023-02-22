@@ -189,11 +189,10 @@ export class CourseMaterialPage implements OnInit {
         endDate
       })
       )).subscribe(async (response) => {
-      console.log('am done today', response);
         if (response['success'] === true) {
           // localStorage.setItem('courseMaterialOffset', JSON.stringify(this.offset))
           const toast = await this.toastController.create({
-            message: `Your stoped in page ${ this.offset }` ,
+            message: `Your stoped in page ${ this.offset + 1 }` ,
             duration: 4000,
             position: 'top',
             color: 'success'
