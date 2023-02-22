@@ -52,6 +52,10 @@ const routes = [
                 path: ':courseId',
                 loadChildren: () => Promise.all(/*! import() | course-details-course-details-module */[__webpack_require__.e("default~all-courses-all-courses-module~course-details-course-details-module~course-material-course-m~068b0c45"), __webpack_require__.e("default~course-details-course-details-module~my-courses-my-courses-module"), __webpack_require__.e("course-details-course-details-module")]).then(__webpack_require__.bind(null, /*! ./course-details/course-details.module */ "4PMM")).then(m => m.CourseDetailsPageModule)
             },
+            {
+                path: 'course-by-category/:categoryId',
+                loadChildren: () => __webpack_require__.e(/*! import() | course-by-category-course-by-category-module */ "course-by-category-course-by-category-module").then(__webpack_require__.bind(null, /*! ./course-by-category/course-by-category.module */ "Hi3V")).then(m => m.CourseByCategoryPageModule)
+            },
         ]
     },
     {
@@ -128,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<app-top-header></app-top-header>\n<ion-menu-button>\n    <ion-icon name=\"play\"></ion-icon>\n</ion-menu-button>\n<ion-content>\n\n<ion-tabs class=\"tabs-icons tabs-naviagte-icons\">\n\n  <ion-tab-bar style=\"border-radius: 20px 20px 0 0; padding: 10px 0;\" slot=\"bottom\">\n    <ion-tab-button tab=\"all-courses\">\n      <!-- <ion-icon name=\"grid-outline\"></ion-icon> -->\n      <img src=\"../../../assets/images/all-courses-icon.png\" alt=\"all-courses-icon\" />\n      <p>All Courses</p>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"top-scores\">\n      <img class=\"img-tab\" src=\"../../../assets/images/top-score.png\" alt=\"top-score-icon\" />\n      <p>Top score</p>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"setting\">\n      <img class=\"img-tab\" src=\"../../../assets/images/settings.png\" alt=\"all-courses-icon\" />\n      <p>Settings</p>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"my-courses\">\n      <!-- <ion-icon name=\"documents-outline\"></ion-icon> -->\n      <img class=\"img-tab\" src=\"../../../assets/images/my-courses-icon.png\" alt=\"all-courses-icon\" />\n      <p>My Courses</p>\n    </ion-tab-button>\n\n  </ion-tab-bar>\n\n</ion-tabs>\n\n</ion-content>\n\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<app-top-header></app-top-header>\n<ion-menu-button>\n    <ion-icon name=\"play\"></ion-icon>\n</ion-menu-button>\n<ion-content>\n\n<ion-tabs class=\"tabs-icons tabs-naviagte-icons\">\n\n  <ion-tab-bar style=\"border-radius: 20px 20px 0 0; padding: 10px 0;\" slot=\"bottom\">\n    <ion-tab-button tab=\"all-courses\">\n      <!-- <ion-icon name=\"grid-outline\"></ion-icon> -->\n      <img src=\"../../../assets/images/all-courses-icon.png\" alt=\"all-courses-icon\" />\n      <p>All courses</p>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"top-scores\">\n      <img class=\"img-tab\" src=\"../../../assets/images/top-score.png\" alt=\"top-score-icon\" />\n      <p>Top score</p>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"setting\">\n      <img class=\"img-tab\" src=\"../../../assets/images/settings.png\" alt=\"all-courses-icon\" />\n      <p>Settings</p>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"my-courses\">\n      <!-- <ion-icon name=\"documents-outline\"></ion-icon> -->\n      <img class=\"img-tab\" src=\"../../../assets/images/my-courses-icon.png\" alt=\"all-courses-icon\" />\n      <p>My courses</p>\n    </ion-tab-button>\n\n  </ion-tab-bar>\n\n</ion-tabs>\n\n</ion-content>\n\n\n");
 
 /***/ }),
 

@@ -251,7 +251,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"ios-toolbar category-title\">\n  <h3>\n    <img class=\"title-icon\" src=\"../../../assets/images/category-icon.png\" alt=\"all-courses-icon\" />\n    Courses by category\n  </h3>\n</div>\n\n<ion-grid>\n  <ion-row class=\"ion-justify-content-center\">\n    <ion-col size-lg=\"9\" size-sm=\"12\" size=\"12\">\n      <div class=\"category\" *ngIf=\"categoriesCount > 0\">\n        <ion-slides pager=\"true\" [options]=\"slideOpts\">\n          <ion-slide *ngFor=\"let cat of categories\">\n            <div class=\"category-item\" [routerLink]=\"['/courses/course-by-category/', cat.id]\">\n              <h1>{{ cat.categoryTranslations[0].name }}</h1>\n            </div>\n          </ion-slide>\n        </ion-slides>\n      </div>\n\n      <div class=\"no-data\" *ngIf=\"categoriesCount <= 0\"> No category now !! </div>\n\n    </ion-col>\n  </ion-row>\n</ion-grid>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"ios-toolbar category-title\">\n  <h3>\n    <img class=\"title-icon\" src=\"../../../assets/images/category-icon.png\" alt=\"all-courses-icon\" />\n    Courses by category\n  </h3>\n</div>\n\n<ion-grid>\n  <ion-row class=\"ion-justify-content-center\">\n    <ion-col size-lg=\"9\" size-sm=\"12\" size=\"12\">\n      <div class=\"category\" *ngIf=\"categoriesCount > 0\">\n        <ion-slides pager=\"true\" [options]=\"slideOpts\">\n          <ion-slide *ngFor=\"let cat of categories\">\n            <div class=\"category-item\" [routerLink]=\"['/courses/tabs/course-by-category/', cat.id]\">\n              <h1>{{ cat.categoryTranslations[0].name }}</h1>\n            </div>\n          </ion-slide>\n        </ion-slides>\n      </div>\n\n      <div class=\"no-data\" *ngIf=\"categoriesCount <= 0\"> No category now !! </div>\n\n    </ion-col>\n  </ion-row>\n</ion-grid>\n");
 
 /***/ }),
 
@@ -404,6 +404,10 @@ let CourseService = class CourseService {
     // ** get top scores
     getTopScores() {
         return this.http.get(`${src_app_api_constants__WEBPACK_IMPORTED_MODULE_3__["topScores"]}`);
+    }
+    // ** get courses by category
+    getCoursesByCategories(offset, limit, catId) {
+        return this.http.get(`${src_app_api_constants__WEBPACK_IMPORTED_MODULE_3__["getCoursesByCategory"]}?Offset=${offset}&Limit=${limit}&categoryId=${catId}`);
     }
 };
 CourseService.ctorParameters = () => [

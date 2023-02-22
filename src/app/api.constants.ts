@@ -26,6 +26,8 @@ export const createApplyCourse = `${baseUrl}/api/UserCourse/Create`;
 export const getUserCourseDetails = `${baseUrl}/api/UserCourse/Details`;
 export const courseMaterials = `${baseUrl}/api/Course/CourseMaterial`;
 export const getCourseCategories = `${baseUrl}/api/Category/GetCategories`;
+export const getCoursesByCategory = `${baseUrl}/api/Course/GetCoursesByCategory`;
+
 
 // exercise
 export const getExercise = `${baseUrl}/api/Exercise/Get`;

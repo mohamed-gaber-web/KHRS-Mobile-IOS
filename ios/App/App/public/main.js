@@ -16,7 +16,7 @@ module.exports = __webpack_require__(/*! /Users/sdex/Desktop/KHRA MOBILE IOS/KHR
 /*!**********************************!*\
   !*** ./src/app/api.constants.ts ***!
   \**********************************/
-/*! exports provided: baseUrl, imagesBaseUrl, loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword, getProfileData, getLanguage, getAllCoursesAPI, getUsersCoursesAPI, getCourseDetails, createApplyCourse, getUserCourseDetails, courseMaterials, getCourseCategories, getExercise, checkAnswerSingleChoise, getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText, checkAnswerPuzzleImage, getTextType, getUserActiveTest, sendAnswerTest, finishedTest, getCertificate, startTest, faqPage, policyPage, getGeneratedVidoes, start, end, getAllByUser, createUserCourseRate, successBoard, topScores, termsAndConditions */
+/*! exports provided: baseUrl, imagesBaseUrl, loginAPI, registerAPI, recommendedBy, userChangePassword, updatedUserInfo, resetPassword, getProfileData, getLanguage, getAllCoursesAPI, getUsersCoursesAPI, getCourseDetails, createApplyCourse, getUserCourseDetails, courseMaterials, getCourseCategories, getCoursesByCategory, getExercise, checkAnswerSingleChoise, getMultiChoiceAnswer, checkAnswerMultipleChoice, checkAnswerPuzzleText, checkAnswerPuzzleImage, getTextType, getUserActiveTest, sendAnswerTest, finishedTest, getCertificate, startTest, faqPage, policyPage, getGeneratedVidoes, start, end, getAllByUser, createUserCourseRate, successBoard, topScores, termsAndConditions */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38,6 +38,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUserCourseDetails", function() { return getUserCourseDetails; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "courseMaterials", function() { return courseMaterials; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCourseCategories", function() { return getCourseCategories; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCoursesByCategory", function() { return getCoursesByCategory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getExercise", function() { return getExercise; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkAnswerSingleChoise", function() { return checkAnswerSingleChoise; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMultiChoiceAnswer", function() { return getMultiChoiceAnswer; });
@@ -83,6 +84,7 @@ const createApplyCourse = `${baseUrl}/api/UserCourse/Create`;
 const getUserCourseDetails = `${baseUrl}/api/UserCourse/Details`;
 const courseMaterials = `${baseUrl}/api/Course/CourseMaterial`;
 const getCourseCategories = `${baseUrl}/api/Category/GetCategories`;
+const getCoursesByCategory = `${baseUrl}/api/Course/GetCoursesByCategory`;
 // exercise
 const getExercise = `${baseUrl}/api/Exercise/Get`;
 const checkAnswerSingleChoise = `${baseUrl}/api/Exercise/SingleChoice/Answer`;

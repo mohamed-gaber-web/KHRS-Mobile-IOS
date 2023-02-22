@@ -1,0 +1,55 @@
+h2#title {
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: none;
+  text-align: center;
+  margin: 15px auto;
+  color: var(--ion-color-second-title);
+}
+
+.course-category 
+{
+  margin: 40px 0 ;
+  .course-block {
+
+    position: relative;
+    margin: 20px 0;
+
+    ion-img {
+      border: 2px solid var(--ion-color-primary);
+      border-radius: 20px;
+      max-width: 90%;
+      height: 170px;
+      padding: 0;
+      margin: 0 auto;
+      object-fit: initial;
+      overflow: hidden;
+    }
+
+    h3 {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: none;
+      background-color: #fff;
+      padding: 0;
+      border-radius: 20px;
+      color: #000;
+      border: 2px solid #8AFA6F;
+      position: absolute;
+      bottom: -20px;
+      width: 85%;
+      margin: auto;
+      height: 60px;
+      left: 0;
+      right: 0;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  }
+
+
+
+}

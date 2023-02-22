@@ -2,18 +2,18 @@
 
   <div class="sign-up">
 
-    <h3> Sign up </h3>
+    <h3> Sign Up </h3>
 
     <form  [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
     <ion-grid *ngIf="flagsToggle">
       <ion-row>
         <ion-col size="6" *ngIf="flagsToggle['firstnameFlag']">
           <div class="form-group">
-            <label >Firstname</label>
+            <label >First name</label>
             <input type="text" formControlName="FirstName" required />
             <div *ngIf="inputControl['FirstName'].touched && inputControl['FirstName'].invalid">
               <ion-text *ngIf="inputControl['FirstName'].errors['required']" color="danger" class="error">
-                Firstname is required
+                First name is required
               </ion-text>
             </div>
           </div>
@@ -21,11 +21,11 @@
 
         <ion-col size="6" *ngIf="flagsToggle['lastnameFlag']">
           <div class="form-group">
-            <label>Lastname</label>
+            <label>Last name</label>
             <input type="text" formControlName="LastName" required />
             <div *ngIf="inputControl['LastName'].touched && inputControl['LastName'].invalid">
               <ion-text *ngIf="inputControl['LastName'].errors['required']" color="danger" class="error">
-                Lastname is required
+                Last name is required
               </ion-text>
             </div>
           </div>
@@ -203,11 +203,11 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-              <ion-label>I agree to</ion-label>
+              <!-- <ion-label>I agree to</ion-label> -->
               <ion-checkbox formControlName="acceptTerms" slot="start"></ion-checkbox>
               <ion-text
               style="cursor: pointer; 
-              z-index: 20000000000;" (click)="open(contentTerms)"> Terms & Conditions 
+              z-index: 20000000000;" (click)="open(contentTerms)"> I agree with terms and conditions 
               </ion-text>
           </ion-item>
         </ion-col>
@@ -221,7 +221,7 @@
           [disabled]="registerForm.invalid"
           (click)="onRegisterFormSubmit(registerForm.value)"
           >
-            Sign up
+            Sign Up
           </ion-button>
         </ion-col>
       </ion-row>
@@ -232,7 +232,7 @@
         <ion-col size="12">
           <p class="no-account">
             Do you have an account? <span>
-              <a [routerLink]="['/auth/sign-in']"> Sign in </a>
+              <a [routerLink]="['/auth/sign-in']"> LOG IN </a>
             </span>
           </p>
         </ion-col>

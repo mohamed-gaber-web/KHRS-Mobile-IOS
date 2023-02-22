@@ -1,0 +1,18 @@
+<ion-content>
+
+  <h2 id="title" class="font-title-desktop">
+    Courses by category
+  </h2>
+
+  <ion-grid class="course-category">
+    <ion-row class="ion-text-center">
+      <ion-col *ngFor="let course of coursesByCategory" size-sm="6" size-xs="6">
+        <div class="course-block animate__animated animate__flash  hvr-grow">
+          <ion-img [routerLink]="['/courses/tabs/', course.id]" class="img-all-course" loading="lazy" src="{{course.imagePath}}"></ion-img>
+          <h3 class="course-title"> {{course.courseTranslations[0]?.title}} </h3>  
+          </div>
+      </ion-col>
+      <div class="alert alert-danger" *ngIf="courseCategoryLength <= 0"> No courses is this category  </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

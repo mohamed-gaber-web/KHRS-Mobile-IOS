@@ -37,6 +37,10 @@ const routes: Routes = [
       path: ':courseId',
       loadChildren: () => import('./course-details/course-details.module').then( m => m.CourseDetailsPageModule)
     },
+    {
+      path: 'course-by-category/:categoryId',
+      loadChildren: () => import('./course-by-category/course-by-category.module').then( m => m.CourseByCategoryPageModule)
+    },
 
 
     ]
@@ -51,6 +55,7 @@ const routes: Routes = [
     path: 'course-material/:courseId',
     loadChildren: () => import('./course-material/course-material.module').then( m => m.CourseMaterialPageModule)
   },
+ 
 
 ];
 

@@ -308,6 +308,10 @@ let CourseService = class CourseService {
     getTopScores() {
         return this.http.get(`${src_app_api_constants__WEBPACK_IMPORTED_MODULE_3__["topScores"]}`);
     }
+    // ** get courses by category
+    getCoursesByCategories(offset, limit, catId) {
+        return this.http.get(`${src_app_api_constants__WEBPACK_IMPORTED_MODULE_3__["getCoursesByCategory"]}?Offset=${offset}&Limit=${limit}&categoryId=${catId}`);
+    }
 };
 CourseService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }

@@ -44,7 +44,7 @@
                     <div class="icon-valid">
                       <ion-icon slot="start" name="alarm-outline"></ion-icon>
                     </div>
-                    <ion-label *ngIf="userCourseDetails" color="primary"> <strong> From: </strong>
+                    <ion-label *ngIf="userCourseDetails"> <strong> From: </strong>
                       {{ userCourseDetails['startDate'] | date }}
                     </ion-label>
                   </ion-item>
@@ -53,7 +53,7 @@
                     <div class="icon-valid">
                       <ion-icon slot="start" name="alarm-outline"></ion-icon>
                     </div>
-                    <ion-label *ngIf="userCourseDetails" color="primary"> <strong> To: </strong>
+                    <ion-label *ngIf="userCourseDetails"> <strong> To: </strong>
                       {{ userCourseDetails['endDate'] | date }}
                     </ion-label>
                   </ion-item>
@@ -62,7 +62,7 @@
                     <div class="icon-valid">
                       <ion-icon slot="start" name="alarm-outline"></ion-icon>
                     </div>
-                    <ion-label color="primary"> <strong> Valid For: </strong>
+                    <ion-label> <strong> Valid For: </strong>
                       {{ validCourse }} Day
                     </ion-label>
                   </ion-item>

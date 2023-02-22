@@ -9,7 +9,8 @@ import {
   getUserCourseDetails,
   getCourseCategories,
   createUserCourseRate,
-  topScores} from 'src/app/api.constants';
+  topScores,
+  getCoursesByCategory} from 'src/app/api.constants';
 import { Course } from '../models/course';
 import { MyCourse } from '../models/myCourse';
 import { IRating } from '../models/rating.model';
@@ -82,4 +83,9 @@ export class CourseService {
   getTopScores() {
     return this.http.get(`${topScores}`);
   }
+
+    // ** get courses by category
+    getCoursesByCategories(offset: number, limit: number, catId: number) {
+      return this.http.get(`${ getCoursesByCategory }?Offset=${offset}&Limit=${limit}&categoryId=${catId}`)
+    }
 }

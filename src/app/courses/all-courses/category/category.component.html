@@ -11,7 +11,7 @@
       <div class="category" *ngIf="categoriesCount > 0">
         <ion-slides pager="true" [options]="slideOpts">
           <ion-slide *ngFor="let cat of categories">
-            <div class="category-item" [routerLink]="['/courses/course-by-category/', cat.id]">
+            <div class="category-item" [routerLink]="['/courses/tabs/course-by-category/', cat.id]">
               <h1>{{ cat.categoryTranslations[0].name }}</h1>
             </div>
           </ion-slide>
