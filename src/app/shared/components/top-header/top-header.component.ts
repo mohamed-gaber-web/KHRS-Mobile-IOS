@@ -31,13 +31,13 @@ export class TopHeaderComponent implements OnInit {
     private renderer: Renderer2,
     private navCtrl: NavController,
     private location: Location,
-    private router: Router
+    public router: Router
     ) { }
 
   ngOnInit() {
     this.userInfo = this.storageService.getUser();
     this.getUserAmDoneToday();
-    console.log(this.router.routerState.snapshot.url)
+    console.log(this.router.url)
   }
 
     // * getUserAmDoneToday
@@ -76,13 +76,12 @@ export class TopHeaderComponent implements OnInit {
   }
 
   async back() {
-    if(this.currentRoute === '/courses/tabs/all-courses') {
-      return;
-    } if(this.currentRoute === '/courses/course-material/18?offset=0') {
-      console.log('hhhhhhhhh')
-      await this.router.navigate(['/courses/tabs/my-courses'])
-    }
-    await this.navCtrl.pop();
-    // const backLocation =  await this.location.back();
+    this.location.back();
+    // if(this.currentRoute === '/courses/tabs/all-courses') {
+    //   return;
+    // } if(this.currentRoute === '/courses/course-material/18?offset=0') {
+    //   await this.router.navigate(['/courses/tabs/my-courses'])
+    // }
+    // await this.navCtrl.pop();
   }
 }

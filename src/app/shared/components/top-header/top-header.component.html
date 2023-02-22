@@ -1,6 +1,6 @@
 <ion-toolbar color="primary">
-  <ion-buttons slot="start">
-    <ion-back-button mode="ios" defaultHref="/courses/tabs/my-courses" (click)="back()"> </ion-back-button>
+  <ion-buttons slot="start" *ngIf="router.url !== '/courses/tabs/all-courses' ">
+    <ion-back-button mode="ios" defaultHref="" (click)="back()"> </ion-back-button>
   </ion-buttons>
 
   <ion-toggle (ionChange)="onToggleColorTheme($event)" color="primary"></ion-toggle>
