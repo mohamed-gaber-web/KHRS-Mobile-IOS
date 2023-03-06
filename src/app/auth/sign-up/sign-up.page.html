@@ -2,7 +2,7 @@
 
   <div class="sign-up">
 
-    <h3> Sign Up </h3>
+      <h3> {{ 'Signup' | translate }} </h3>
 
     <form  [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
     <ion-grid *ngIf="flagsToggle">
@@ -52,14 +52,14 @@
       <ion-row>
         <ion-col size="12" *ngIf="flagsToggle['emailFlag']">
           <div class="form-group">
-            <label>Email</label>
+            <label>E-mail</label>
             <input type="email" formControlName="email" required />
             <div *ngIf="inputControl['email'].touched && inputControl['email'].invalid">
               <ion-text *ngIf="inputControl['email'].errors['required']" color="danger" class="error">
-                Email is required
+                E-mail is required
               </ion-text>
               <ion-text *ngIf="inputControl['email'].errors && inputControl['email'].errors['invalidEmail']" color="danger" class="error">
-                Please add valid email
+                Please add valid E-mail
               </ion-text>
             </div>
           </div>
@@ -155,7 +155,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
+<!-- 
     <ion-grid *ngIf="flagsToggle">
       <ion-row>
         <ion-col size="12" *ngIf="flagsToggle['recommendedByFlag']">
@@ -169,7 +169,7 @@
             </div>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
 
     <ion-grid *ngIf="flagsToggle">
       <ion-row>
@@ -192,7 +192,9 @@
         <ion-col size="12">
           <ion-list>
             <ion-item>
-            <ion-label style="cursor: pointer;" (click)="openChooseLanguage(content)">Choose Language: <b> {{ languageTitle }} </b></ion-label>
+            <ion-label style="cursor: pointer;" (click)="openChooseLanguage(content)">Choose Language: 
+              <img [src]="languageIcon" width="30px" />
+            </ion-label>
             </ion-item>
           </ion-list>
         </ion-col>

@@ -38,6 +38,7 @@ export class SignUpPage implements OnInit {
   toggleInputs: any;
   selected: any;
   languageTitle: string = '';
+  languageIcon: string = '';
   langItems: any;
   subs: Subscription[] = []
   gender = [
@@ -69,7 +70,7 @@ export class SignUpPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getRecommendeBy();
+    // this.getRecommendeBy();
     this.getFlagsInputs();
     // ** invoke function getTermsAndConditionText()
     this.getTermsAndConditionText();
@@ -93,7 +94,7 @@ export class SignUpPage implements OnInit {
       'Gender': [0],
       'password': ['', Validators.required],
       'confirmPassword': ['', Validators.required],
-      'recommendedbyId': [3, Validators.required],
+      // 'recommendedbyId': [3, Validators.required],
       'acceptTerms': [null],
       'languageId': [JSON.parse(localStorage.getItem('languageId'))],
       file : this.formBuilder.group({
@@ -145,12 +146,12 @@ export class SignUpPage implements OnInit {
   }
 
  // ** get recomended by list
- getRecommendeBy() {
-   this.subs.push(
-     this.auth.recommendedBy()
-       .subscribe(data => { this.allRecommended = data['result']; })
-   );
- }
+//  getRecommendeBy() {
+//    this.subs.push(
+//      this.auth.recommendedBy()
+//        .subscribe(data => { this.allRecommended = data['result']; })
+//    );
+//  }
   
   // ** make flags inputs
   getFlagsInputs() {
@@ -176,6 +177,7 @@ export class SignUpPage implements OnInit {
     localStorage.setItem('languageId', item.id);
     this.selected = item;
     this.languageTitle = item.name;
+    this.languageIcon = item.icon;
   }
 
     // ** Get All Language

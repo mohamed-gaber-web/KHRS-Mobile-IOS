@@ -6,7 +6,6 @@
 
   <div class="sign-in-form">
     <div class="sign-in-title">
-      <h3> LOG IN</h3>
     </div>
     <ion-grid [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit(loginForm.value)" class="padding">
       <ion-row class="ion-justify-content-center">
@@ -14,7 +13,7 @@
         <ion-col size="12" size-lg="6" >
           <div class="form-group" #theItem>
             <label>
-              Email
+              E-mail
               <!-- <ion-icon name="person"></ion-icon> {{ 'Email' | translate }} -->
             </label>
             <input type="text" formControlName="Email" required  />
@@ -34,7 +33,7 @@
           </div>
 
           <p style="text-align: center; font-size: 16px; font-weight: 600;">
-              <a style="color: #fff;text-decoration: none" routerLink="/auth/forget-password"> Forgotten password? </a> </p>
+              <a style="color: #fff;text-decoration: none" routerLink="/auth/forget-password"> Forgot your password? </a> </p>
 
           <ion-button (click)="onLoginFormSubmit(loginForm.value)" [disabled]="isLoading || !loginForm.valid">
             LOG IN
@@ -44,7 +43,6 @@
     </ion-grid>
   </div>
   <p class="no-account">
-  By continuing, you agree to accept our
   <a routerLink="/policy" style="color: #8AFA6F;"> Privacy Policy & Terms of Service. </a><br /><br />
   Don't have an account?<br />
 
